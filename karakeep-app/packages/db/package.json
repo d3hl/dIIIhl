@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@karakeep/db",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "migrate": "tsx migrate.ts",
+    "studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@auth/core": "^0.27.0",
+    "@karakeep/shared": "workspace:*",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "better-sqlite3": "^11.3.0",
+    "dotenv": "^16.4.1",
+    "drizzle-orm": "^0.38.3",
+    "tsx": "^4.7.1"
+  },
+  "devDependencies": {
+    "@karakeep/eslint-config": "workspace:^0.2.0",
+    "@karakeep/prettier-config": "workspace:^0.1.0",
+    "@karakeep/tsconfig": "workspace:^0.1.0",
+    "@tsconfig/node22": "^22.0.0",
+    "@types/better-sqlite3": "^7.6.11",
+    "drizzle-kit": "^0.30.01"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@karakeep/eslint-config/base"
+    ]
+  },
+  "prettier": "@karakeep/prettier-config"
+}
