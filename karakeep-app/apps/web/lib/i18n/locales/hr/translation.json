@@ -1,0 +1,356 @@
+{
+  "admin": {
+    "users_list": {
+      "num_bookmarks": "Broj oznaka",
+      "reset_password": "Ponovno postavljanje lozinke",
+      "local_user": "Lokalni korisnik",
+      "users_list": "Popis korisnika",
+      "delete_user": "Izbriši korisnika",
+      "confirm_password": "Potvrdi lozinku",
+      "create_user": "Kreiraj korisnika",
+      "change_role": "Promijeni ulogu",
+      "asset_sizes": "Veličine resursa"
+    },
+    "admin_settings": "Postavke administratora",
+    "server_stats": {
+      "server_stats": "Statistike servera",
+      "total_users": "Ukupno korisnika",
+      "total_bookmarks": "Ukupno oznaka",
+      "server_version": "Verzija servera"
+    },
+    "background_jobs": {
+      "background_jobs": "Pozadinski zadaci",
+      "crawler_jobs": "Zadaci pregledavanja",
+      "indexing_jobs": "Zadaci indeksiranja",
+      "job": "Zadatak",
+      "pending": "Na čekanju",
+      "queued": "U čekanju",
+      "failed": "Neuspješno",
+      "inference_jobs": "Zadaci zaključivanja",
+      "tidy_assets_jobs": "Zadaci čišćenja resursa",
+      "video_jobs": "Poslovi preuzimanja videozapisa",
+      "asset_preprocessing_jobs": "Poslovi preprocesiranja resursa",
+      "feed_jobs": "RSS Feed poslovi",
+      "webhook_jobs": "Webhook poslovi"
+    },
+    "actions": {
+      "recrawl_failed_links_only": "Ponovno pregledavanje samo neuspjelih veza",
+      "regenerate_ai_tags_for_failed_bookmarks_only": "Ponovno generiranje AI oznaka samo za neuspjele oznake",
+      "reindex_all_bookmarks": "Ponovno indeksiranje svih oznaka",
+      "recrawl_all_links": "Ponovno pregledavanje svih veza",
+      "regenerate_ai_tags_for_all_bookmarks": "Ponovno generiranje AI oznaka za sve oznake",
+      "without_inference": "Bez zaključivanja",
+      "compact_assets": "Kompaktiranje resursa",
+      "reprocess_assets_fix_mode": "Ponovno postupanje s resursima (fiksni mod)"
+    }
+  },
+  "layouts": {
+    "compact": "Kompaktan",
+    "grid": "Mreža",
+    "masonry": "Masonerija",
+    "list": "Popis"
+  },
+  "common": {
+    "roles": {
+      "admin": "Administrator",
+      "user": "Korisnik"
+    },
+    "name": "Ime",
+    "email": "Mail",
+    "password": "Lozinka",
+    "action": "Akcija",
+    "actions": "Akcije",
+    "created_at": "Kreirano",
+    "key": "Kljuc",
+    "role": "Uloga",
+    "something_went_wrong": "Greška se desila",
+    "experimental": "Eksperimentalno",
+    "search": "Potraži",
+    "url": "URL",
+    "note": "Napomena",
+    "attachments": "Privici",
+    "highlights": "Istaknuto",
+    "source": "Izvor",
+    "screenshot": "Snimka ekrana",
+    "video": "Video",
+    "archive": "Arhiva",
+    "home": "Početna",
+    "tags": "Oznake",
+    "type": "Upiši",
+    "size": "Veličina",
+    "bookmark_types": {
+      "media": "Mediji",
+      "title": "Vrsta oznake",
+      "link": "Poveznica",
+      "text": "Tekst"
+    }
+  },
+  "settings": {
+    "ai": {
+      "tagging_rules": "Pravila označavanja",
+      "tagging_rule_description": "Upiti koje ovdje dodate bit će uključeni kao pravila modelu tijekom generiranja oznaka. Konačne upite možete pregledati u odjeljku za pregled upita.",
+      "ai_settings": "AI Postavke",
+      "prompt_preview": "Pregled upita",
+      "images_prompt": "Vizualni upit",
+      "text_prompt": "Tekst upit",
+      "summarization_prompt": "Sažeti upit",
+      "text_tagging": "Označavanje teksta",
+      "image_tagging": "Označavanje slika",
+      "summarization": "Sažetak",
+      "all_tagging": "Sve oznake"
+    },
+    "import": {
+      "import_bookmarks_from_html_file": "Import knjižnih oznaka iz HTML datoteke",
+      "import_export": "Import / Export",
+      "import_export_bookmarks": "Import / Export knjižnih oznaka",
+      "import_bookmarks_from_linkwarden_export": "Import oznaka iz Linkwarden exporta",
+      "import_bookmarks_from_pocket_export": "Import oznaka iz Pocket exporta",
+      "import_bookmarks_from_karakeep_export": "Import oznaka iz Karakeep exporta",
+      "export_links_and_notes": "Export veza i bilješki",
+      "imported_bookmarks": "Importirane oznake",
+      "import_bookmarks_from_omnivore_export": "Import oznaka iz Omnivore exporta"
+    },
+    "back_to_app": "Povratak u aplikaciju",
+    "user_settings": "Postavke korisnika",
+    "info": {
+      "user_info": "Informacije o korisniku",
+      "basic_details": "Osnovni podaci",
+      "change_password": "Promijeni lozinku",
+      "current_password": "Trenutna lozinka",
+      "new_password": "Nova lozinka",
+      "confirm_new_password": "Potvrdi novu lozinku",
+      "options": "Opcije",
+      "interface_lang": "Jezik sučelja"
+    },
+    "api_keys": {
+      "api_keys": "API ključevi",
+      "new_api_key": "Novi API ključ",
+      "new_api_key_desc": "Dajte svom API ključu jedinstveno ime",
+      "key_success": "Ključ je uspješno kreiran",
+      "key_success_please_copy": "Molimo kopirajte ključ i saćuvajte ga na sigurnom mjestu. Nakon što zatvorite dijalog, više ga nećete moći ponovo pristupiti."
+    },
+    "broken_links": {
+      "broken_links": "Pokidane veze",
+      "last_crawled_at": "Posljednjo pregledano u",
+      "crawling_status": "Status pregledavanja",
+      "crawling_failed": "Pregledavanje nije uspjelo"
+    },
+    "feeds": {
+      "rss_subscriptions": "RSS pretplate",
+      "add_a_subscription": "Dodaj pretplatu"
+    },
+    "webhooks": {
+      "edit_webhook": "Uredi Webhook",
+      "webhook_url": "Webhook URL",
+      "webhooks": "Web-dojave",
+      "description": "Možete koristiti web-dojave za pokretanje radnji kada se stvaraju, mijenjaju ili indeksiraju oznake.",
+      "events": {
+        "title": "Događaji",
+        "crawled": "Puzano",
+        "created": "Kreirano",
+        "edited": "Uređeno"
+      },
+      "auth_token": "Token za autentifikaciju",
+      "add_auth_token": "Dodaj Auth Token",
+      "edit_auth_token": "Uredi Auth Token",
+      "create_webhook": "Napravi Webhook",
+      "delete_webhook": "Izbriši Webhook",
+      "delete_webhook_confirmation": "Jesi li siguran da želiš izbrisati ovaj webhook?"
+    },
+    "manage_assets": {
+      "manage_assets": "Upravljanje resursima",
+      "no_assets": "Još nemaš nikakvih sredstava.",
+      "asset_type": "Vrsta resursa",
+      "bookmark_link": "Poveznica bookmarka",
+      "asset_link": "Poveznica resursa",
+      "delete_asset": "Izbriši sredstvo",
+      "delete_asset_confirmation": "Jesi li siguran da želiš izbrisati ovaj resurs?"
+    }
+  },
+  "actions": {
+    "manage_lists": "Upravljanje popisima",
+    "create": "Kreiraj",
+    "ignore": "Ignoriraj",
+    "favorite": "Omiljeno",
+    "change_layout": "Promijeni raspored",
+    "archive": "Arhiva",
+    "unarchive": "Raz-arhiviraj",
+    "unfavorite": "Oduzmi omiljeno",
+    "delete": "Izbriši",
+    "refresh": "Osvježi",
+    "recrawl": "Ponovno indeksiraj",
+    "download_full_page_archive": "Preuzmi cijeli arhivirani sadržaj stranice",
+    "edit_tags": "Uredi oznake",
+    "add_to_list": "Dodaj na popis",
+    "select_all": "Odaberi sve",
+    "unselect_all": "Oduzmi sve oznake",
+    "copy_link": "Kopiraj link",
+    "close_bulk_edit": "Zatvori masovno uređivanje",
+    "bulk_edit": "Masovno uređivanje",
+    "remove_from_list": "Ukloni s popisa",
+    "save": "Spremi",
+    "add": "Dodaj",
+    "edit": "Uredi",
+    "fetch_now": "Preuzmi odmah",
+    "summarize_with_ai": "Sažmi pomoću AI",
+    "edit_title": "Uredi naslov",
+    "sign_out": "Odjavi se",
+    "close": "Zatvori",
+    "merge": "Spoji",
+    "cancel": "Otkaži",
+    "apply_all": "Primijeni sve",
+    "sort": {
+      "title": "Sortiraj",
+      "newest_first": "Najnovije prvo",
+      "oldest_first": "Najstarije prvo"
+    }
+  },
+  "highlights": {
+    "no_highlights": "Još nemate nijednu istaknutu stavku."
+  },
+  "options": {
+    "dark_mode": "Dark Mode",
+    "light_mode": "Light Mode"
+  },
+  "lists": {
+    "all_lists": "Svi popisi",
+    "favourites": "Omiljeni",
+    "new_list": "Novi popis",
+    "new_nested_list": "Novi ugniježđeni popis",
+    "edit_list": "Uredi popis",
+    "manual_list": "Ručni popis",
+    "smart_list": "Pametni popis",
+    "search_query": "Upit za pretraživanje",
+    "search_query_help": "Saznajte više o jeziku upita za pretraživanje.",
+    "parent_list": "Lista roditelja",
+    "no_parent": "Nema roditelja",
+    "list_type": "Vrsta popisa"
+  },
+  "tags": {
+    "all_tags": "Sve oznake",
+    "your_tags": "Tvoje oznake",
+    "your_tags_info": "Oznake koje si barem jednom priložio ti",
+    "ai_tags": "AI oznake",
+    "ai_tags_info": "Oznake koje su bile priložene samo automatski (od AI-a)",
+    "unused_tags": "Nekorištene oznake",
+    "drag_and_drop_merging": "Spajanje priko drag & drop",
+    "drag_and_drop_merging_info": "Drag and drop oznake jedna na drugu kako biste ih spojili",
+    "sort_by_name": "Sortiraj po imenu",
+    "delete_all_unused_tags": "Izbriši sve neiskorištene oznake",
+    "unused_tags_info": "Oznake koje nisu priložene nijednoj oznaci"
+  },
+  "preview": {
+    "view_original": "Pogledaj orginal",
+    "cached_content": "Keširani sadržaj"
+  },
+  "editor": {
+    "quickly_focus": "Možete brzo fokusirati ovo polje pritiskanjem ⌘ + E",
+    "import_as_text": "Uvoz kao tekstualnu oznaku",
+    "import_as_separate_bookmarks": "Uvoz kao odvojene oznake",
+    "multiple_urls_dialog_title": "Uvoz URL-ova kao odvojene oznake?",
+    "multiple_urls_dialog_desc": "Unos sadrži više URL-ova na odvojenim redovima. Želite li ih uvesti kao odvojene oznake?",
+    "placeholder": "Zalijepite vezu ili sliku, napišite bilješku ili povucite i ispustite sliku ovdje...",
+    "new_item": "NOVI ITEM",
+    "disabled_submissions": "Podnošenja su onemogućena",
+    "text_toolbar": {
+      "undo": "Poništi",
+      "redo": "Ponovi",
+      "bold": "Podebljano",
+      "italic": "Kurziv",
+      "underline": "Podcrtano",
+      "strikethrough": "Prekriženo",
+      "code": "Kod",
+      "highlight": "Označeno",
+      "align_left": "Poravnaj lijevo",
+      "align_center": "Poravnaj centar",
+      "align_right": "Poravnaj desno",
+      "markdown_shortcuts": {
+        "label": "Prečaci za Markdown",
+        "heading": {
+          "label": "Naslov",
+          "example": "# H1, ## H2, ### H3"
+        },
+        "blockquote": {
+          "label": "Citat blokova",
+          "example": "> Citat blokova"
+        },
+        "ordered_list": {
+          "label": "Numerirana lista",
+          "example": "1. Stavka liste"
+        },
+        "unordered_list": {
+          "label": "Nenumirirana lista",
+          "example": "- Stavka liste"
+        },
+        "inline_code": {
+          "label": "Inline kod",
+          "example": "`Kod`"
+        },
+        "block_code": {
+          "label": "Blok kod",
+          "example": "``` + razmak"
+        },
+        "italic": {
+          "example": "*Italic* ili _Italic_ ili CTRL+i",
+          "label": "Kurziv"
+        },
+        "bold": {
+          "example": "**text** ili CTRL+b",
+          "label": "Podebljano"
+        }
+      }
+    }
+  },
+  "toasts": {
+    "bookmarks": {
+      "updated": "Oznaka je ažurirana!",
+      "deleted": "Oznaka je izbrisana!",
+      "refetch": "Ponovno preuzimanje je stavljeno u čekanje!",
+      "full_page_archive": "Pokrenuto je stvaranje potpune arhive stranice",
+      "delete_from_list": "Oznaka je izbrisana s popisa",
+      "clipboard_copied": "Veza je dodana u vaš međuspremnik!"
+    },
+    "lists": {
+      "created": "Popis je kreiran!",
+      "updated": "Popis je ažuriran!"
+    }
+  },
+  "cleanups": {
+    "cleanups": "Čišćenje",
+    "duplicate_tags": {
+      "title": "Duplikatne oznake",
+      "merge_all_suggestions": "Spojiti sve prijedloge?"
+    }
+  },
+  "search": {
+    "is_favorited": "Je li označeno kao omiljeno",
+    "created_on_or_after": "Stvoreno na ili nakon",
+    "not_created_on_or_after": "Nije kreirano na ili nakon",
+    "created_on_or_before": "Kreirano na ili prije",
+    "not_created_on_or_before": "Nije stvoreno na ili prije",
+    "url_contains": "URL sadrži",
+    "is_in_list": "Je na listi",
+    "has_tag": "Ima oznaku",
+    "does_not_have_tag": "Nema oznaku",
+    "full_text_search": "Pretraživanje cijelog teksta",
+    "is_not_favorited": "Nije označen kao favorit",
+    "is_archived": "Je arhivirano",
+    "has_no_tags": "Nema oznaku",
+    "is_in_any_list": "Je li na bilo kojem popisu",
+    "is_not_in_list": "Nije na popisu",
+    "or": "Ili",
+    "has_any_tag": "Ima bilo koji tag",
+    "is_not_archived": "Nije arhivirano",
+    "is_not_in_any_list": "Nije ni na jednom popisu",
+    "url_does_not_contain": "URL ne sadrži",
+    "type_is": "Vrsta je",
+    "type_is_not": "Tip nije",
+    "and": "I"
+  },
+  "dialogs": {
+    "bookmarks": {
+      "delete_confirmation_title": "Izbrisati oznaku?",
+      "delete_confirmation_description": "Jesi ziher da želiš izbrisati ovaj bookmark?"
+    }
+  }
+}
