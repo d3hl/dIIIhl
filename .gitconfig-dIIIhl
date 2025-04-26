@@ -1,0 +1,11 @@
+[user]
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSIn+PaC2XfaYx77fHV/wwCZdi35VZ7ahBaaJwASQ0p
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = "C:/Program Files/1Password/app/8/op-ssh-sign.exe"
+
+[commit]
+  gpgsign = true
