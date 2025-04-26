@@ -1,4 +1,6 @@
 [user]
+  email = 142526178+d3adc3iii@users.noreply.github.com
+  name = Jay Dinh
   signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSIn+PaC2XfaYx77fHV/wwCZdi35VZ7ahBaaJwASQ0p
 
 [gpg]
@@ -9,3 +11,5 @@
 
 [commit]
   gpgsign = true
+[credential]
+	helper = manager
