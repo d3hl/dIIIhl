@@ -7,3 +7,7 @@ endpoints:
     interval: 60
     conditions:
       - status: 200
+  - url: "https://komodo.d3adc3ii.cc"
+    interval: 120
+    conditions:
+      -ssl_expiration: 48
