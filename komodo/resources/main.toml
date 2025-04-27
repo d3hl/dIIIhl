@@ -32,9 +32,6 @@ run_directory = "server13/immich-app"
 additional_env_files = [".env"]
 environment = """
   DB_PASSWORD=[[IMMICH_DB_PASSWORD]]
-  DB_USERNAME=postgres
-  DB_DATABASE_NAME=immich
-  
 """
 
 ##
