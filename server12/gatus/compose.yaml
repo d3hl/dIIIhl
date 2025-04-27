@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  gapostgres:
+  postgres:
     image: postgres
     volumes:
       - ./data/db:/var/lib/postgresql/data
@@ -23,7 +23,7 @@ services:
     networks:
       - web
     depends_on:
-      - gapostgres
+      - postgres
 
 networks:
   web:
