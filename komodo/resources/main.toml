@@ -60,13 +60,6 @@ DB_DATABASE_NAME=immich
 ##
 
 [[stack]]
-name = "jhjlk"
-[stack.config]
-
-
-##
-
-[[stack]]
 name = "karakeep"
 tags = ["karakeep"]
 [stack.config]
