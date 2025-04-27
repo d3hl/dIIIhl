@@ -15,20 +15,25 @@ enabled = true
 ##
 
 [[stack]]
-name = "immich-app"
-tags = ["immich"]
+name = "immich"
 [stack.config]
 server = "server-76ich"
-run_build = true
 poll_for_updates = true
+auto_update = true
 auto_update_all_services = true
-destroy_before_deploy = true
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
 reclone = true
-webhook_force_deploy = true
 run_directory = "server13/immich-app"
-additional_env_files = [".env"]
+environment = """
+UPLOAD_LOCATION=/mnt/zApps/immich-komo/library
+DB_DATA_LOCATION=./postgres
+TZ=Asia/Singapore
+IMMICH_VERSION=release
+DB_PASSWORD=[[IMMICH_DB_PASSWORD]]
+DB_USERNAME=postgres
+DB_DATABASE_NAME=immich
+"""
 
 ##
 
