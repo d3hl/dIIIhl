@@ -24,8 +24,7 @@ services:
       - POSTGRES_USER= ${POSTGRES_USER}
       - POSTGRES_PASSWORD= ${GATUS_POSTGRES_PASSWORD}
     volumes:
-   #   - ./config:/config
-      - ${POSTGRES_DATA}/config:/var/lib/postgresql/data
+       - ${POSTGRES_DATA}/config:/var/lib/postgresql/data
     networks:
       - web
     depends_on:
