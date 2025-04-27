@@ -7,7 +7,7 @@ services:
     image: snipe/snipe-it:${APP_VERSION:-latest}
     restart: unless-stopped
     volumes:
-      - /mnt/zApps/snipeit/storage:/var/lib/snipeit
+      - storage:/var/lib/snipeit
     ports:
       - "${APP_PORT:-8000}:80"
     depends_on:
@@ -21,7 +21,7 @@ services:
     image: mariadb:11.5.2
     restart: unless-stopped
     volumes:
-      - /mnt/zApps/snipeit/data:/var/lib/mysql
+      - /data:/var/lib/mysql
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
