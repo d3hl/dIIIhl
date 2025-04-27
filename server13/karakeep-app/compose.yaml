@@ -6,7 +6,7 @@ services:
     volumes:
       #- data:/data
       #- ${DATA_DIR}:/data
-      -/mnt/zApps/karakeep/data:/data
+      - /mnt/zApps/karakeep/data/:/data
     ports:
       - 3000:3000
     env_file:
