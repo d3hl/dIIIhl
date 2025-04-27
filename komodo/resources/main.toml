@@ -45,6 +45,9 @@ repo = "d3adc3iii/dIIIhl"
 reclone = true
 run_directory = "server12/immich"
 additional_env_files = [".env"]
+environment = """
+  
+"""
 
 ##
 
