@@ -36,23 +36,6 @@ POSTGRES_DATA=/mnt/zApps/gatus/
 ##
 
 [[stack]]
-name = "immich"
-[stack.config]
-server = "komodo2"
-run_build = true
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-destroy_before_deploy = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-reclone = true
-run_directory = "server12/immich"
-additional_env_files = [".env"]
-
-##
-
-[[stack]]
 name = "karakeep"
 tags = ["karakeep"]
 [stack.config]
