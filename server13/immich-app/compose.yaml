@@ -21,6 +21,7 @@ services:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
       - ${UPLOAD_LOCATION2}:/mnt/zApps/immich-external
       - /etc/localtime:/etc/localtime:ro
+    user: 1000:1000
     env_file:
       - .env
     ports:
