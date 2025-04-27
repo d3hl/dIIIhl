@@ -9,11 +9,11 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
-  - package-ecosystem: immich-app
+  - package-ecosystem: "docker"
     directory: "/immich-app"
     schedule:
       interval: "weekly"
-  - package-ecosystem: karakeep-app
+  - package-ecosystem: "docker"
     directory: "/karakeep-app"
     schedule:
       interval: "weekly"
