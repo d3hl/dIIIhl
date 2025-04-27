@@ -115,3 +115,10 @@ git_account = "d3adc3iii"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
 include_variables = true
+
+##
+
+[[variable]]
+name = "IMMICH_DB_PASSWORD"
+value = "5069813x0o6wcbk0x5g2c8wr623gtiom"
+is_secret = true
