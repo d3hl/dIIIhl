@@ -84,7 +84,7 @@ DATA_DIR=/mnt/zApps/karakeep/data
 ##
 
 [[stack]]
-name = "snipeit"
+name = "snipe-it"
 [stack.config]
 server = "komodo2"
 poll_for_updates = true
@@ -94,8 +94,10 @@ git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
 reclone = true
 run_directory = "server12/snipe-it"
-file_paths = []
 additional_env_files = [".env"]
+environment = """
+ 
+"""
 
 ##
 
