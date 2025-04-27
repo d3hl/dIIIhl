@@ -21,6 +21,7 @@ services:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
       - ${UPLOAD_LOCATION2}:/mnt/zApps/immich-external
       - /etc/localtime:/etc/localtime:ro
+    user: root
     env_file:
       - .env
     ports:
@@ -42,6 +43,7 @@ services:
     #   service: cpu # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
     volumes:
       - model-cache:/cache
+    user: root
     env_file:
       - .env
     restart: always
@@ -53,6 +55,7 @@ services:
     image: docker.io/valkey/valkey:8-bookworm@sha256:42cba146593a5ea9a622002c1b7cba5da7be248650cbb64ecb9c6c33d29794b1
     healthcheck:
       test: redis-cli ping || exit 1
+    user: root
     restart: always
 
   database:
@@ -66,7 +69,7 @@ services:
     volumes:
       # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
       - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
-    user: 1001:1001
+    user: root
     healthcheck:
       test: >-
         pg_isready --dbname="$${POSTGRES_DB}" --username="$${POSTGRES_USER}" || exit 1; Chksum="$$(psql --dbname="$${POSTGRES_DB}" --username="$${POSTGRES_USER}" --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')"; echo "checksum failure count is $$Chksum"; [ "$$Chksum" = '0' ] || exit 1
