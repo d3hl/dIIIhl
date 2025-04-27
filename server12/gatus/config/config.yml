@@ -1,42 +1,9 @@
-storage:
-  type: postgres
-  path: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable"
-
-endpoints:
-  - name: back-end
-    group: core
-    url: "https://pve.d3adc3ii.cc/"
-    interval: 5m
-    conditions:
-      - "[STATUS] == 200"
-      - "[CERTIFICATE_EXPIRATION] > 48h"
-
-  - name: monitoring
-    group: internal
-    url: "https://pve.d3adc3ii.cc/"
-    interval: 5m
-    conditions:
-      - "[STATUS] == 200"
-
-  - name: nas
-    group: internal
-    url: "https://192.168.2.7"
-    interval: 5m
-    conditions:
-      - "[STATUS] == 200"
-
-  - name: example-dns-query
-    url: "192.168.2.10" # Address of the DNS server to use
-    interval: 5m
-    dns:
-      query-name: "google.com"
-      query-type: "A"
-    conditions:
-      - "[BODY] == 93.184.215.14"
-      - "[DNS_RCODE] == NOERROR"
-
-  - name: icmp-ping
-    url: "icmp://192.168.2.11"
-    interval: 1m
-    conditions:
-      - "[CONNECTED] == true"
+   alerting:
+     discord:
+       webhook_url: "https://discord.com/api/webhooks/1365942661042671636/FVn1gNB_yImouIAbE2Fy8QaceNi6bjfK24hS1FXNNpr8-BmTslneN0PqngP_2ptiMFfw"
+       default_alert: 3
+   endpoints:
+     - url: "http://example.com"
+       interval: 60
+       conditions:
+         - status: 200

@@ -1,29 +1,12 @@
-version: "3.9"
 services:
-  postgres:
-    image: postgres
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    env_file:
-      - .env
-    networks:
-      - web
-
   gatus:
     image: twinproduction/gatus:latest
-    restart: always
     ports:
       - "8080:8080"
-    env_file:
-      - .env
     volumes:
       - ./config:/config
-    networks:
-      - web
-    depends_on:
-      - postgres
-
-networks:
-  web:
+      - ./data:/data/
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - TZ=Asia/Singapore
