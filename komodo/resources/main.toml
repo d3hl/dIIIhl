@@ -22,6 +22,7 @@ server = "server-76ich"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
+destroy_before_deploy = true
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
 reclone = true
@@ -46,8 +47,7 @@ name = "jhjlk"
 ##
 
 [[stack]]
-name = "kara_stack"
-tags = ["karakeep"]
+name = "karakeep"
 [stack.config]
 server = "server-76ich"
 poll_for_updates = true
@@ -56,14 +56,14 @@ auto_update_all_services = true
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
 reclone = true
-run_directory = "karakeep-app"
+run_directory = "server13/karakeep-app"
 environment = """
 KARAKEEP_VERSION=release
-NEXTAUTH_SECRET=4obmXxlcc8M7RIi95R4gGcqvH2mD29LLLx4C+sXAd7rLvNpM
-MEILI_MASTER_KEY=MwldJwDmieQWtyMZTTVi2yb2T0r2ZHeCNrAdgKeG1vTwpLWy
+NEXTAUTH_SECRET=[[KARA_NEXTAUTH_SECRET]]
+MEILI_MASTER_KEY=[[KARA_MEILI_MASTER_KEY]]
 NEXTAUTH_URL=http://localhost:3000
-OPENAI_API_KEY=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
-
+OPENAI_API_KEY=[[OPENAI_API_KEY]]
+DATA_DIR=/mnt/zApps/karakeep/data
 """
 
 ##
@@ -116,4 +116,25 @@ include_variables = true
 [[variable]]
 name = "IMMICH_DB_PASSWORD"
 value = "5069813x0o6wcbk0x5g2c8wr623gtiom"
+is_secret = true
+
+##
+
+[[variable]]
+name = "OPENAI_API_KEY"
+value = "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"
+is_secret = true
+
+##
+
+[[variable]]
+name = "KARA_MEILI_MASTER_KEY"
+value = "MwldJwDmieQWtyMZTTVi2yb2T0r2ZHeCNrAdgKeG1vTwpLWy"
+is_secret = true
+
+##
+
+[[variable]]
+name = "KARA_NEXTAUTH_SECRET"
+value = "4obmXxlcc8M7RIi95R4gGcqvH2mD29LLLx4C+sXAd7rLvNpM"
 is_secret = true
