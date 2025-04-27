@@ -93,7 +93,9 @@ auto_update_all_services = true
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
 reclone = true
-run_directory = "server12/snipeit"
+run_directory = "server12/snipe-it"
+file_paths = []
+additional_env_files = [".env"]
 
 ##
 
