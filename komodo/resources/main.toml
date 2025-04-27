@@ -16,6 +16,7 @@ enabled = true
 
 [[stack]]
 name = "immich"
+tags = ["immich"]
 [stack.config]
 server = "server-76ich"
 poll_for_updates = true
@@ -26,7 +27,7 @@ repo = "d3adc3iii/dIIIhl"
 reclone = true
 run_directory = "server13/immich-app"
 environment = """
-UPLOAD_LOCATION=/mnt/zApps/immich-komo/library
+UPLOAD_LOCATION=/mnt/zApps/immich-komo
 DB_DATA_LOCATION=./postgres
 TZ=Asia/Singapore
 IMMICH_VERSION=release
