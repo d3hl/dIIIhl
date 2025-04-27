@@ -37,26 +37,16 @@ POSTGRES_DATA=/mnt/zApps/gatus/
 
 [[stack]]
 name = "immich"
-tags = ["immich"]
 [stack.config]
-server = "server-76ich"
+server = "komodo2"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
-destroy_before_deploy = true
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
 reclone = true
-run_directory = "server13/immich-app"
-environment = """
-UPLOAD_LOCATION=/mnt/zApps/immich-komo/
-DB_DATA_LOCATION=./postgres
-TZ=Asia/Singapore
-IMMICH_VERSION=v1.131.1
-DB_PASSWORD=[[IMMICH_DB_PASSWORD]]
-DB_USERNAME=postgres
-DB_DATABASE_NAME=immich
-"""
+run_directory = "server13/immich"
+additional_env_files = [".env"]
 
 ##
 
