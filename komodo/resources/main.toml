@@ -16,6 +16,7 @@ enabled = true
 
 [[stack]]
 name = "gatus"
+tags = ["gatus"]
 [stack.config]
 server = "komodo2"
 poll_for_updates = true
