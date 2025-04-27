@@ -4,7 +4,6 @@ services:
     image: postgres
     volumes:
       - ./data/db:/var/lib/postgresql/data
-#       - ${POSTGRES_DATA}/data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
@@ -24,7 +23,7 @@ services:
       - POSTGRES_USER= ${POSTGRES_USER}
       - POSTGRES_PASSWORD= ${GATUS_POSTGRES_PASSWORD}
     volumes:
-       - ${POSTGRES_DATA}/config:/var/lib/postgresql/data
+       - ./config:/config
     networks:
       - web
     depends_on:
