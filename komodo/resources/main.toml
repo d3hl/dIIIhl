@@ -32,12 +32,6 @@ run_directory = "server13/immich-app"
 additional_env_files = [".env"]
 environment = """
   DB_PASSWORD=[[IMMICH_DB_PASSWORD]]
-  UPLOAD_LOCATION=/mnt/zApps/immich-komo/library
-  DB_DATA_LOCATION=./postgres
-  IMMICH_VERSION=release
-  DB_USERNAME=postgres
-  DB_DATABASE_NAME=immich
-
 """
 
 ##
@@ -108,7 +102,6 @@ params.server_id = "server-76ich"
 
 [[resource_sync]]
 name = "sync"
-tags = ["immich", "karakeep"]
 [resource_sync.config]
 repo = "d3adc3iii/dIIIhl"
 git_account = "d3adc3iii"
