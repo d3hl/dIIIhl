@@ -1,5 +1,5 @@
 [[server]]
-name = "komodo2"
+name = "k-2"
 [server.config]
 address = "https://192.168.2.25:8120"
 enabled = true
@@ -18,7 +18,6 @@ enabled = true
 name = "gatus"
 tags = ["gatus"]
 [stack.config]
-server = "komodo2"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -38,7 +37,6 @@ POSTGRES_DATA=/mnt/zApps/gatus/
 [[stack]]
 name = "immich"
 [stack.config]
-server = "komodo2"
 poll_for_updates = true
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
@@ -75,9 +73,22 @@ DATA_DIR=/mnt/zApps/karakeep/data
 ##
 
 [[stack]]
+name = "periphery"
+[stack.config]
+server = "k-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+reclone = true
+run_directory = "komodo/periphery"
+
+##
+
+[[stack]]
 name = "snipe-it"
 [stack.config]
-server = "komodo2"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
