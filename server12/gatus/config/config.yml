@@ -3,7 +3,7 @@ alerting:
     webhook_url: "https://discord.com/api/webhooks/1365942661042671636/FVn1gNB_yImouIAbE2Fy8QaceNi6bjfK24hS1FXNNpr8-BmTslneN0PqngP_2ptiMFfw"
     default_alert: 3
 endpoints:
-  - url: "http://example.com"
+  - url: "http://pve.d3adc3ii.cc"
     interval: 60
     conditions:
       - status: 200
