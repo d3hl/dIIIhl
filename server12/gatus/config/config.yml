@@ -1,13 +1,6 @@
-alerting:
-  discord:
-    webhook_url: "https://discord.com/api/webhooks/1365942661042671636/FVn1gNB_yImouIAbE2Fy8QaceNi6bjfK24hS1FXNNpr8-BmTslneN0PqngP_2ptiMFfw"
-    default_alert: 3
 endpoints:
-  - url: "https://pve.d3adc3ii.cc"
-    interval: 60
+  - name: komodo
+    url: https://komodo.d3adc3ii.cc
+    interval: 30s
     conditions:
-      - status: 200
-  - url: "https://komodo.d3adc3ii.cc"
-    interval: 120
-    conditions:
-      -ssl_expiration: 48
+      - "[STATUS] == 200"
