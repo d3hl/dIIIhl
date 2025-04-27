@@ -48,6 +48,7 @@ name = "jhjlk"
 
 [[stack]]
 name = "karakeep"
+tags = ["karakeep"]
 [stack.config]
 server = "server-76ich"
 poll_for_updates = true
