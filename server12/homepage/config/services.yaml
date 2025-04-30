@@ -95,6 +95,9 @@
             type: karakeep
             url: https://kara.d3adc3ii.cc
             key: ak1_0a2057e9b40f141217cf_8df52f0d56b037581ac4
+    - Nexterm: 
+        icon: /icons/nexterm.png
+        href: https://nexterm.d3adc3ii.cc
 - PVE12:
   - Info:
       href: https://pve11.d3adc3ii.cc
