@@ -15,6 +15,20 @@ enabled = true
 ##
 
 [[stack]]
+name = "beszel-agent-komodo1"
+[stack.config]
+server = "server-76ich"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+reclone = true
+run_directory = "/server13/beszel_agent13"
+
+##
+
+[[stack]]
 name = "gatus"
 tags = ["gatus"]
 [stack.config]
