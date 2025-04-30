@@ -25,29 +25,19 @@ layout:
     tab: Homelab
     style: row
     columns: 4
- # Monitor:
- #   tab: Homelab
- #   style: row
- #   columns: 4    
-  Smarthome:
-    tab: Homelab
+  2nd Tab:
+    tab: Cloud
     style: row
     columns: 4
-
-  2nd Tab:
-    tab: Monitor
-  PVE1:
-    tab: Monitor
-    style: column
-    columns: 3
-  PVE2:
-    tab: Monitor
-    style: column
-    columns: 3
-  PVE3:
-    tab: Monitor
-    style: column
-    columns: 3
+  M365:
+    tab: Cloud
+    style: row
+    columns: 4
+  Other Cloud:
+    tab: Cloud
+    style: row
+    columns: 4
+  
   3rd Tab:
     tab: Corp
   Network:

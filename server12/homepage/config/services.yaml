@@ -184,6 +184,22 @@
         url: http://192.168.3.13:61208
         version: 4
         metric: sensor:Composite
+- M365:
+    - Intune:
+        icon: /icons/microsoft-365.png 
+        href: https://intune.microsoft.com
+    - Entra:
+        icon: /icons/microsoft-365.png
+        href: https://entra.microsoft.com
+    - Azure Portal:
+        icon: /icons/azure.png
+        href: https://portal.azure.com
+    - AzureDevOps:
+        icon: /icons/azure-devops.png 
+        href: https://dev.azure.com/ntnsg/intune
+- Other Cloud:
+    - Dokkio:
+        href: https://app.dokkio.com/a/2266012572845539026/new
 
 - Network:
     - Fortigate:
