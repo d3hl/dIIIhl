@@ -15,7 +15,7 @@ enabled = true
 ##
 
 [[stack]]
-name = "beszel-agent-komodo1"
+name = "beszel_agent13"
 [stack.config]
 server = "server-76ich"
 poll_for_updates = true
