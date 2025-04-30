@@ -9,12 +9,12 @@ services:
       HOMEPAGE_FILE_SETTINGS: ${HOMEPAGE_FILE_SETTINGS}
       HOMEPAGE_FILE_SERVICES: ${HOMEPAGE_FILE_SERVICES}
       HOMEPAGE_FILE_WIDGETS: ${HOMEPAGE_FILE_WIDGETS}
+      HOMEPAGE_FILE_BOOKMARKS: ${HOMEPAGE_FILE_BOOKMARKS}
     env_file:
       - .env
     ports:
       - 3000:3000
     volumes:
-     # - /mnt/zApps/homepage/:/app/config # Make sure your local config directory exists
       - /home/d3/Github/server12/homepage/config:/app/config # Make sure your local config directory exists
       - /home/d3/Github/server12/homepage/icons:/app/public/icons # Make sure your local data directory exists
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
