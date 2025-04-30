@@ -168,6 +168,17 @@ console.log('🦎 Komodo version:', version.version, '🦎\n');
 
 ##
 
+[[action]]
+name = "sync_homepage"
+[action.config]
+file_contents = """
+// Run actions using the pre initialized 'komodo' client.
+const version: Types.GetVersionResponse = await komodo.read('GetVersion', {});
+console.log('🦎 Komodo version:', version.version, '🦎\n');
+"""
+
+##
+
 [[builder]]
 name = "local"
 [builder.config]
