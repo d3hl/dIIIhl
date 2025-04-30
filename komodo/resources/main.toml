@@ -119,6 +119,13 @@ environment = """
 
 ##
 
+[[build]]
+name = "homepage"
+[build.config]
+builder = "local"
+
+##
+
 [[repo]]
 name = "diiihl"
 [repo.config]
@@ -126,6 +133,7 @@ server = "server-76ich"
 builder = "local"
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
+path = "/home/d3/Github"
 
 ##
 
