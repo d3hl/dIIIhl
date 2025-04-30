@@ -2,11 +2,11 @@
 
 - PVE11:
     - PVE:
-        icon: /app/icons/proxmox.png
+        icon: /icons/proxmox.png
         href: https://pve.d3adc3ii.cc
         ping: 192.168.2.11  
     - Opnsense:
-        icon: /app/icons/opnsense.png
+        icon: /icons/opnsense.png
         href: https://opn.d3adc3ii.cc
         ping: 192.168.2.1  
        # widget:
@@ -15,44 +15,44 @@
        #     username: GUnKTSuel3+ueGnzOAabBh2Vp4XFucg1ffKDQU1odlvkpACnxjM2jU2K4MnUqTkKayXrpf3yJYCnaC9U
        #     password: 58G37tDa8tlbukEzlE9RcNn1DmIJZ76lGTvq/6dxQmP46Sazq1iI68s5pxbKGZtNVBnj0P5E9X3M4Jqq
     - DNS:
-        icon: /app/icons/technitium.png
+        icon: /icons/technitium.png
         href: https://dns.d3adc3ii.cc
         ping: 192.168.2.10
 - PVE12:
     - Guacamole:
-        icon: /app/icons/guacamole.png
+        icon: /icons/guacamole.png
         href: https://guaca.d3adc3ii.cc/guacamole
         ping: 192.168.2.20  
     - Homeassistant:
-        icon: /app/icons/home-assistant.png
+        icon: /icons/home-assistant.png
         href: https://ha.d3adc3ii.cc
         ping: 192.168.99.15  
     - Smokeping:
-        icon: /app/icons/smokeping.png
+        icon: /icons/smokeping.png
         href: http://192.168.2.21/smokeping
         ping: 192.168.2.21  
     - pocketid:
-        icon: /app/icons/pocket-id.png
+        icon: /icons/pocket-id.png
         href: http://pocketid.d3adc3ii.cc
         ping: 192.168.2.16  
     - zabbix:
-        icon: /app/icons/zabbix.png
+        icon: /icons/zabbix.png
         href: http://zabbix.d3adc3ii.cc/zabbix
         ping: 192.168.2.5  
     - checkmk:
         href: http://checkmk.d3adc3ii.cc
         ping: 192.168.2.17  
     - aria2:
-        icon: /app/icons/ariang.png
+        icon: /icons/ariang.png
         href: http://192.168.2.16:6880
         ping: 192.168.2.16 
     - wallos:
-        icon: /app/icons/wallos.png
+        icon: /icons/wallos.png
         href: http://wallos.d3adc3ii.cc
         ping: 192.168.2.19 
 - PVE13:
     - Truenas: 
-        icon: /app/icons/truenas-scale.png
+        icon: /icons/truenas-scale.png
         href: https://truenas.d3adc3ii.cc
         ping: 192.168.2.7
         widget:
@@ -62,11 +62,11 @@
             enablePools: true
             nasType: scale
     - Komodo:
-        icon: /app/icons/komodo.png 
+        icon: /icons/komodo.png 
         href: https://komodo.d3adc3ii.cc
         ping: 192.168.2.23  
     - Qbit: 
-        icon: /app/icons/qbittorrent.png
+        icon: /icons/qbittorrent.png
         href: https://qbit.d3adc3ii.cc
         ping: 192.168.2.22
         widget:
@@ -77,7 +77,7 @@
             password: WCxb2CcykoUmjiNAf3p8
             enableLeechProgress: true
     - Stash:
-        icon: /app/icons/stash.png  
+        icon: /icons/stash.png  
         href: https://stash.d3adc3ii.cc
         ping: 192.168.2.26  
         widget:
@@ -85,11 +85,11 @@
             url: https://stash.d3adc3ii.cc
             stashapikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg
     - PBS: 
-        icon: /app/icons/proxmox.png
+        icon: /icons/proxmox.png
         href: https://pbs.d3adc3ii.cc
         ping: 192.168.2.30  
     - Karakeep: 
-        icon: /app/icons/karakeep.png
+        icon: /icons/karakeep.png
         href: https://kara.d3adc3ii.cc
         widget:
             type: karakeep
