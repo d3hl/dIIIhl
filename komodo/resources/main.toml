@@ -36,10 +36,15 @@ POSTGRES_DATA=/mnt/zApps/gatus/
 
 [[stack]]
 name = "homepage"
+tags = ["homepage"]
 [stack.config]
 server = "k-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
+reclone = true
 run_directory = "server12/homepage"
 
 ##
