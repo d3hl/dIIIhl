@@ -16,5 +16,6 @@ services:
     volumes:
      # - /mnt/zApps/homepage/:/app/config # Make sure your local config directory exists
       - /home/d3/Github/server12/homepage/config:/app/config # Make sure your local config directory exists
+      - /home/d3/Github/server12/homepage/icons:/app/icons # Make sure your local data directory exists
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
     restart: unless-stopped

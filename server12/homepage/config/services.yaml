@@ -5,6 +5,7 @@
         href: https://pve.d3adc3ii.cc
         ping: 192.168.2.11  
     - Opnsense:
+        icon:
         href: https://opn.d3adc3ii.cc
         ping: 192.168.2.1  
        # widget:
