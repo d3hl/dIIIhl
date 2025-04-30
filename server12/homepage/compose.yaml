@@ -9,7 +9,8 @@ services:
       HOMEPAGE_FILE_SETTINGS: ${HOMEPAGE_FILE_SETTINGS}
       HOMEPAGE_FILE_SERVICES: ${HOMEPAGE_FILE_SERVICES}
       HOMEPAGE_FILE_WIDGETS: ${HOMEPAGE_FILE_WIDGETS}
-
+    env_file:
+      - .env
     ports:
       - 3000:3000
     volumes:
