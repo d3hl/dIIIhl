@@ -10,5 +10,8 @@ services:
       - 3000:3000
     volumes:
       - /mnt/zApps/homepage/:/app/config # Make sure your local config directory exists
+      - ${HOMEPAGE_FILE_SETTINGS}:/app/config/settings.yaml
+      - ${HOMEPAGE_FILE_WIDGETS}:/app/config/widgets.yaml
+      - ${HOMEPAGE_FILE_SERVICES}:/app/config/services.yaml
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
     restart: unless-stopped
