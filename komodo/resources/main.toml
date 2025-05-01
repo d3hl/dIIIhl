@@ -18,13 +18,8 @@ enabled = true
 name = "beszel_agent12"
 [stack.config]
 server = "k-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-destroy_before_deploy = true
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
-reclone = true
 run_directory = "/server12/beszel_agent12"
 
 ##
@@ -266,4 +261,22 @@ is_secret = true
 [[user_group]]
 name = "d3"
 users = []
+permissions = []
+
+##
+
+[[user_group]]
+name = "root"
+users = ["d3"]
+all.Action = "Write"
+all.ServerTemplate = "Write"
+all.Stack = "Write"
+all.Builder = "Write"
+all.ResourceSync = "Write"
+all.Procedure = "Write"
+all.Repo = "Write"
+all.Server = "Write"
+all.Build = "Write"
+all.Deployment = "Write"
+all.Alerter = "Write"
 permissions = []
