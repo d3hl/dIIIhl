@@ -20,6 +20,16 @@ run_directory = "server11/homepage"
 ##
 
 [[stack]]
+name = "immich"
+[stack.config]
+server = "server-bkxal"
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+run_directory = "/server11/immich"
+
+##
+
+[[stack]]
 name = "karakeep"
 [stack.config]
 server = "server-bkxal"
