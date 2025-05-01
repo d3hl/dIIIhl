@@ -105,9 +105,6 @@
             type: stash
             url: https://stash.d3adc3ii.cc
             stashapikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg
-    - Nexterm: 
-        icon: /icons/nexterm.png
-        href: https://nexterm.d3adc3ii.cc
 - GL1:
   - Info:
       href: https://pve11.d3adc3ii.cc
