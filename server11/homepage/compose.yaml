@@ -1,0 +1,21 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: homepage.d3adc3ii.cc,192.168.2.31:3000 # required, may need port. See gethomepage.dev/installation/#homepage_allowed_hosts
+      PGID: 1000 # optional, your group id
+      PUID: 1000 # optional, your user id
+      HOMEPAGE_FILE_SETTINGS: ${HOMEPAGE_FILE_SETTINGS}
+      HOMEPAGE_FILE_SERVICES: ${HOMEPAGE_FILE_SERVICES}
+      HOMEPAGE_FILE_WIDGETS: ${HOMEPAGE_FILE_WIDGETS}
+      HOMEPAGE_FILE_BOOKMARKS: ${HOMEPAGE_FILE_BOOKMARKS}
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    volumes:
+      - /etc/komodo/stacks/homepage/server11/homepage/config:/app/config # Make sure your local config directory exists
+      - /etc/komodo/stacks/homepage/server11/homepage/icons:/app/public/icons # Make sure your local data directory exists
+      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
+    restart: unless-stopped
