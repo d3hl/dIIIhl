@@ -162,23 +162,11 @@ builder = "local"
 ##
 
 [[repo]]
-name = "beszel_agent12"
-[repo.config]
-server = "k-2"
-builder = "local"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-
-##
-
-[[repo]]
 name = "diiihl"
 [repo.config]
-server = "k-2"
-builder = "local"
+server = "server-76ich"
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
-path = "/home/d3/Github"
 
 ##
 
@@ -190,7 +178,7 @@ config.schedule = "- Run every day at 4:00 pm"
 name = "Pull Repo"
 enabled = true
 executions = [
-  { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true }
+  { execution.type = "PullRepo", enabled = true }
 ]
 
 [[procedure.config.stage]]
@@ -289,15 +277,15 @@ permissions = []
 [[user_group]]
 name = "root"
 users = ["d3"]
-all.Action = "Write"
-all.Stack = "Write"
-all.ServerTemplate = "Write"
+all.Procedure = "Write"
 all.Server = "Write"
-all.Repo = "Write"
+all.Stack = "Write"
 all.Builder = "Write"
 all.Deployment = "Write"
-all.Alerter = "Write"
-all.ResourceSync = "Write"
-all.Procedure = "Write"
+all.Repo = "Write"
 all.Build = "Write"
+all.ServerTemplate = "Write"
+all.ResourceSync = "Write"
+all.Alerter = "Write"
+all.Action = "Write"
 permissions = []
