@@ -151,6 +151,16 @@ builder = "local"
 ##
 
 [[repo]]
+name = "beszel_agent12"
+[repo.config]
+server = "k-2"
+builder = "local"
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+
+##
+
+[[repo]]
 name = "diiihl"
 [repo.config]
 server = "k-2"
@@ -268,15 +278,15 @@ permissions = []
 [[user_group]]
 name = "root"
 users = ["d3"]
-all.Action = "Write"
-all.ServerTemplate = "Write"
-all.Stack = "Write"
-all.Builder = "Write"
-all.ResourceSync = "Write"
-all.Procedure = "Write"
-all.Repo = "Write"
 all.Server = "Write"
-all.Build = "Write"
+all.ResourceSync = "Write"
+all.Stack = "Write"
+all.Action = "Write"
+all.Procedure = "Write"
 all.Deployment = "Write"
+all.ServerTemplate = "Write"
+all.Repo = "Write"
 all.Alerter = "Write"
+all.Build = "Write"
+all.Builder = "Write"
 permissions = []
