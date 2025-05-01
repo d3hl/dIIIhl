@@ -67,6 +67,15 @@
         href: http://wallos.d3adc3ii.cc
         ping: 192.168.2.19 
 - PVE13:
+    - PBS: 
+        icon: /icons/proxmox.png
+        href: https://pbs.d3adc3ii.cc
+        ping: 192.168.2.35 
+        widget:
+            type: proxmoxbackupserver
+            url: https://pbs.d3adc3ii.cc
+            username: root@pam!homepage_token 
+            password: 8b1821a0-a776-49b7-a4cc-a2a433cee3d7
     - Truenas: 
         icon: /icons/truenas-scale.png
         href: https://truenas.d3adc3ii.cc
@@ -96,15 +105,6 @@
             type: stash
             url: https://stash.d3adc3ii.cc
             stashapikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg
-    - PBS: 
-        icon: /icons/proxmox.png
-        href: https://pbs.d3adc3ii.cc
-        ping: 192.168.2.35 
-        widget:
-            type: proxmoxbackupserver
-            url: https://pbs.d3adc3ii.cc
-            username: root@pam!homepage_token 
-            password: 8b1821a0-a776-49b7-a4cc-a2a433cee3d7
     - Nexterm: 
         icon: /icons/nexterm.png
         href: https://nexterm.d3adc3ii.cc
