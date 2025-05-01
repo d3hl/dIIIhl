@@ -22,6 +22,18 @@
         icon: /icons/beszel.png
         href: https://beszel.d3adc3ii.cc
         ping: 192.168.2.9
+    - Immich:
+        icon: /icons/immich.png
+        href: https://immich.d3adc3ii.cc
+        ping: 192.168.2.31
+    - Karakeep:
+        icon: /icons/karakeep.png
+        href: https://kara.d3adc3ii.cc
+        ping: 192.168.2.31
+        widget:
+            type: karakeep
+            url: https://kara.d3adc3ii.cc
+            key: ak1_f5311205cd5576e21da8_be17bb706fa138b8dc6e 
 - PVE12:
     - Guacamole:
         icon: /icons/guacamole.png
@@ -92,13 +104,6 @@
         icon: /icons/proxmox.png
         href: https://pbs.d3adc3ii.cc
         ping: 192.168.2.30  
-    - Karakeep: 
-        icon: /icons/karakeep.png
-        href: https://kara.d3adc3ii.cc
-        widget:
-            type: karakeep
-            url: https://kara.d3adc3ii.cc
-            key: ak1_f5311205cd5576e21da8_be17bb706fa138b8dc6e 
     - Nexterm: 
         icon: /icons/nexterm.png
         href: https://nexterm.d3adc3ii.cc
