@@ -127,6 +127,17 @@ run_directory = "server13/nexterm"
 ##
 
 [[stack]]
+name = "semaphore"
+[stack.config]
+server = "server-76ich"
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+reclone = true
+run_directory = "/server13/semaphore"
+
+##
+
+[[stack]]
 name = "snipe-it"
 [stack.config]
 poll_for_updates = true
@@ -278,15 +289,15 @@ permissions = []
 [[user_group]]
 name = "root"
 users = ["d3"]
-all.Server = "Write"
-all.ResourceSync = "Write"
-all.Stack = "Write"
 all.Action = "Write"
-all.Procedure = "Write"
-all.Deployment = "Write"
+all.Stack = "Write"
 all.ServerTemplate = "Write"
+all.Server = "Write"
 all.Repo = "Write"
-all.Alerter = "Write"
-all.Build = "Write"
 all.Builder = "Write"
+all.Deployment = "Write"
+all.Alerter = "Write"
+all.ResourceSync = "Write"
+all.Procedure = "Write"
+all.Build = "Write"
 permissions = []
