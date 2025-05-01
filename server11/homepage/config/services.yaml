@@ -79,7 +79,7 @@
             url: https://qbit.d3adc3ii.cc
             username: d3adc3ii
             password: WCxb2CcykoUmjiNAf3p8
-            enableLeechProgress: true
+            enableLeechProgress: false
     - Stash:
         icon: /icons/stash.png  
         href: https://stash.d3adc3ii.cc
@@ -98,11 +98,11 @@
         widget:
             type: karakeep
             url: https://kara.d3adc3ii.cc
-            key: ak1_0a2057e9b40f141217cf_8df52f0d56b037581ac4
+            key: ak1_f5311205cd5576e21da8_be17bb706fa138b8dc6e 
     - Nexterm: 
         icon: /icons/nexterm.png
         href: https://nexterm.d3adc3ii.cc
-- PVE12:
+- GL1:
   - Info:
       href: https://pve11.d3adc3ii.cc
       ping: pve11.int.d3adc3ii.cc
@@ -132,7 +132,7 @@
         url: http://192.168.3.11:61208
         version: 4
         metric: sensor:Composite
-- PVE2:
+- GL2:
   - Info:
       href: https://pve12.d3adc3ii.cc
       ping: pve12.int.d3adc3ii.cc
@@ -161,7 +161,7 @@
         url: http://192.168.3.12:61208
         version: 4
         metric: sensor:Composite
-- PVE3:
+- GL3:
   - Info:
       href: https://pve13.d3adc3ii.cc
       ping: pve13.int.d3adc3ii.cc

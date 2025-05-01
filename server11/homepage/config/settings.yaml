@@ -49,6 +49,21 @@ layout:
     header: true
     tab: Corp
     style: row
-    columns: 4  
+    columns: 4 
+  4th Tab: 
+    tab: Monitoring
+  GL1:
+    tab: Monitoring
+    style: row
+    colums: 4
+  GL2:
+    tab: Monitoring
+    style: row
+    colums: 4
+  GL3:
+    tab: Monitoring
+    style: row
+    colums: 4
+  
 
 
