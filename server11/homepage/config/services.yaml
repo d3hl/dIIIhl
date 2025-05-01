@@ -18,6 +18,10 @@
         icon: /icons/technitium.png
         href: https://dns.d3adc3ii.cc
         ping: 192.168.2.10
+    - Komodo:
+        icon: /icons/komodo.png
+        href: https://komodo.d3adc3ii.cc
+        ping: 192.168.2.31
     - Beszel:
         icon: /icons/beszel.png
         href: https://beszel.d3adc3ii.cc
