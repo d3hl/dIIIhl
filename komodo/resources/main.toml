@@ -1,4 +1,12 @@
 [[server]]
+name = "komodo-2"
+[server.config]
+address = "https://192.168.2.32:8120"
+enabled = true
+
+##
+
+[[server]]
 name = "server-bkxal"
 [server.config]
 address = "https://periphery:8120"
