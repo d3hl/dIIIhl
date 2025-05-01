@@ -25,7 +25,7 @@ name = "immich"
 server = "server-bkxal"
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
-run_directory = "/server11/immich"
+run_directory = "/etc/komodo/stacks/immich/server11/immich"
 
 ##
 
