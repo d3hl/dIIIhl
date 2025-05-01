@@ -21,6 +21,7 @@ server = "k-2"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
+destroy_before_deploy = true
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
 reclone = true
