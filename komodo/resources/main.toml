@@ -58,23 +58,6 @@ DATA_DIR=/mnt/zApps/karakeep/data
 
 ##
 
-[[stack]]
-name = "dumbterm"
-[stack.config]
-server = "komodo-2"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/dumbterm/server12/dumbterm"
-environment = """
-DUMBTERM_TZ=Asia/Singapore
-DUMBTERM_PORT=3002
-DUMBTERM_PIN=1111
-DUMBTERM_BASE_URL=
-DUMBTERM_DATA_DIR="/etc/komodo/stacks/dumbterm/app-data/dumbterm/data"
-DUMBTERM_CONFIG="/etc/komodo/stacks/dumbterm/app-data/dumbterm/data"
-"""
-##
-
 [[deployment]]
 name = "twingate"
 [deployment.config]
