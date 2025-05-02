@@ -76,16 +76,6 @@ DATA_DIR=/mnt/zApps/karakeep/data
 
 ##
 
-[[stack]]
-name = "semaphore"
-[stack.config]
-server = "komodo-2"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/semahore/server12/semaphore"
-
-##
-
 [[deployment]]
 name = "twingate"
 [deployment.config]
