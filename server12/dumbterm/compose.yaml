@@ -6,17 +6,17 @@ iservices:
     ports:
       - ${DUMBTERM_PORT:-3000}:3000
     volumes:
-      - ${DUMBTERM_CONFIG:-./config}:/root/.config
-      - ${DUMBTERM_DATA_DIR:-./data}:/root/data
+      - ${DUMBTERM_CONFIG}:/root/.config
+      - ${DUMBTERM_DATA_DIR}:/root/data
     environment:
       # Container timezone
-      TZ: ${DUMBTERM_TZ:-America/Los_Angeles}
+      TZ: ${DUMBTERM_TZ}
       # The title shown in the web interface
       SITE_TITLE: ${DUMBTERM_SITE_TITLE:-DumbTerm}
       # Recommended PIN protection (leave empty to disable)
-      DUMBTERM_PIN: ${DUMBTERM_PIN:-1234}
+      DUMBTERM_PIN: ${DUMBTERM_PIN}
       # The base URL for the application
-      BASE_URL: ${DUMBTERM_BASE_URL:-http://localhost:3000}
+      BASE_URL: ${DUMBTERM_BASE_URL}
       ENABLE_STARSHIP: ${ENABLE_STARSHIP:-true}
       LOCKOUT_TIME: ${DUMBTERM_LOCKOUT_TIME:-15} # Minutes
       # Session duration in hours before requiring re-authentication
