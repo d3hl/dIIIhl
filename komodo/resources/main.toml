@@ -76,7 +76,6 @@ DATA_DIR=/mnt/zApps/karakeep/data
 
 ##
 
-
 [[stack]]
 name = "semaphore2"
 [stack.config]
