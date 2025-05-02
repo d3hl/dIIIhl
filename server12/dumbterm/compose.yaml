@@ -1,4 +1,4 @@
-iservices:
+services:
   dumbterm:
     image: dumbwareio/dumbterm:latest
     container_name: dumbterm
