@@ -76,14 +76,13 @@ DATA_DIR=/mnt/zApps/karakeep/data
 
 ##
 
-
 [[stack]]
 name = "semaphore2"
 [stack.config]
 server = "komodo-2"
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
-run_directory = "/semaphore2/server12/semaphore2"
+run_directory = "/server12/semaphore2"
 
 ##
 
