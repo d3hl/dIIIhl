@@ -59,7 +59,7 @@ DATA_DIR=/mnt/zApps/karakeep/data
 ##
 
 [[stack]]
-name = "Dumbterm"
+name = "dumbterm"
 [stack.config]
 server = "komodo-2"
 git_account = "d3adc3iii"
