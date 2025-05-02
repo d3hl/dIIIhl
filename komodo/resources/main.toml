@@ -80,7 +80,7 @@ name = "semaphore"
 server = "komodo-2" 
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/semahore/server12/semaphore"
+run_directory = "/etc/komodo/stacks/semaphore/server12/semaphore"
 environment = """
 """
 ##
