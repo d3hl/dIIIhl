@@ -2,4 +2,4 @@
 Homelab Repository Test
 itest ZZ
 test zzz
-test final
+test finall
