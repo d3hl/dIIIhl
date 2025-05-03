@@ -4,6 +4,7 @@
   vars:
     ansible_host_key_checking: false
   become: true
+  become_user: d3
 
   tasks:
     - name: Update and upgrade apt packages
