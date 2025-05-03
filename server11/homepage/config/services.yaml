@@ -16,7 +16,7 @@
        #     password: 58G37tDa8tlbukEzlE9RcNn1DmIJZ76lGTvq/6dxQmP46Sazq1iI68s5pxbKGZtNVBnj0P5E9X3M4Jqq
     - DNS:
         icon: /icons/technitium.png
-        href: https://dns.d3adc3ii.cc
+        href: https://192.168.2.10
         ping: 192.168.2.10
     - Komodo:
         icon: /icons/komodo.png
