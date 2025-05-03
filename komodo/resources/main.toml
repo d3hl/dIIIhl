@@ -97,51 +97,6 @@ environment = """
 
 ##
 
-
-[[deployment]]
-name = "beszel-k11"
-[deployment.config]
-server = "server-bkxal"
-image.type = "Image"
-image.params.image = "henrygd/beszel-agent"
-poll_for_updates = true
-auto_update = true
-restart = "unless-stopped"
-
-##
-
-[[deployment]]
-name = "beszel-k12"
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "henrygd/beszel-agent"
-poll_for_updates = true
-auto_update = true
-restart = "unless-stopped"
-
-##
-
-[[repo]]
-name = "diiihl"
-[repo.config]
-server = "server-bkxal"
-builder = "local"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-
-##
-
-[[repo]]
-name = "diiihl-k2"
-[repo.config]
-server = "komodo-2"
-builder = "local"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-
-##
-
 [[builder]]
 name = "local"
 [builder.config]
