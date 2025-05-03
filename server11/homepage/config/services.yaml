@@ -28,8 +28,12 @@
         ping: 192.168.2.9
     - Immich:
         icon: /icons/immich.png
-        href: https://immich.d3adc3ii.cc
+        href: https://imm.d3adc3ii.cc
         ping: 192.168.2.31
+    - Semaphore:
+        icon: /icons/semaphore.png
+        href: https://semaphore.d3adc3ii.cc
+        ping: 192.168.2.28
     - Karakeep:
         icon: /icons/karakeep.png
         href: https://kara.d3adc3ii.cc
@@ -39,6 +43,10 @@
             url: https://kara.d3adc3ii.cc
             key: ak1_f5311205cd5576e21da8_be17bb706fa138b8dc6e 
 - PVE12:
+    - Dumbterm:
+        icon: /icons/dumbterm.svg
+        href: https://dumbterm.d3adc3ii.cc
+        ping: 192.168.2.20  
     - Guacamole:
         icon: /icons/guacamole.png
         href: https://guaca.d3adc3ii.cc/guacamole
