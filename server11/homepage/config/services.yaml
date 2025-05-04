@@ -18,6 +18,10 @@
         icon: /icons/technitium.png
         href: https://192.168.2.10
         ping: 192.168.2.10
+    - Authentik:
+        icon: /icons/authentik.png
+        href: https://authentik.d3adc3ii.cc
+        ping: 192.168.2.31
     - Komodo:
         icon: /icons/komodo.png
         href: https://komodo.d3adc3ii.cc
