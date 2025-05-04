@@ -94,6 +94,45 @@ environment = """
 ##
 
 [[deployment]]
+name = "beszel-k11"
+[deployment.config]
+server = "server-bkxal"
+image.type = "Image"
+image.params.image = "henrygd/beszel-agent"
+poll_for_updates = true
+auto_update = true
+restart = "unless-stopped"
+volumes = """
+/var/run/docker.sock:/var/run/docker.sock:ro
+"""
+environment = """
+LISTEN=45876
+KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU6cTY/"
+  # VARIABLE = value
+"""
+
+##
+
+[[deployment]]
+name = "beszel-k12"
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "henrygd/beszel-agent"
+poll_for_updates = true
+auto_update = true
+restart = "unless-stopped"
+volumes = """
+/var/run/docker.sock:/var/run/docker.sock:ro
+"""
+environment = """
+LISTEN=45876
+KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU6cTY/"
+"""
+
+##
+
+[[deployment]]
 name = "twingate"
 [deployment.config]
 server = "komodo-2"
@@ -108,6 +147,26 @@ environment = """
   TWINGATE_REFRESH_TOKEN=mrNJNc7hirY3gO3-q9l6dnN_YjYl-8q79XRXg1ffZstYm8EYyH6xNXMIVviMaQ-2-GAa4wuSMv1J5ebEf9KvzIK94jmq7j9QGPH2Tr7ZnjlYADuKrEpKUkrmnbrROkgQy6nzWg
   TWINGATE_LOG_ANALYTICS=v2
 """
+
+##
+
+[[repo]]
+name = "diiihl"
+[repo.config]
+server = "server-bkxal"
+builder = "local"
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+
+##
+
+[[repo]]
+name = "diiihl-k2"
+[repo.config]
+server = "komodo-2"
+builder = "local"
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
 
 ##
 
