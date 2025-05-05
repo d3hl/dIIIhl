@@ -16,12 +16,11 @@ layout:
     style: rơw
     columns: 2 
     header: true
-    Group1:
-      tab: Homelab
-      header: false
-    Group2:
-      tab: Homelab
-      header: false
+  Remote:  
+    tab: Homelab
+    style: row
+    columns: 2
+    header: false
   Mid:
     style: column
     column: 2
