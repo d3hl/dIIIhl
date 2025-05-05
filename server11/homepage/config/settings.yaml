@@ -18,20 +18,20 @@ layout:
     header: true
     Top:
       style: row
-      columns: 4
+      columns: 2
       header: false
     Mid:
       style: row
-      columns: 2
+      columns: 1
       header: false
   Group2:
+    tab: Home
     style: column
     column: 2
     header: true
     Infra:
-    tab: Homelab
-    Monitor:
-      tab: Homelab
+  Monitor:
+      tab: Home
   Bot:
     style: column
     column: 4

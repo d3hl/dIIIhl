@@ -50,49 +50,50 @@
                 icon: /icons/guacamole.png
                 href: https://guaca.d3adc3ii.cc/guacamole
                 ping: 192.168.2.20  
-- Infra:
-    - Opnsense:
-        icon: /icons/opnsense.png
-        href: https://opn.d3adc3ii.cc
-        ping: 192.168.2.1  
+- Group2:
+    - Infra:
+        - Opnsense:
+            icon: /icons/opnsense.png
+            href: https://opn.d3adc3ii.cc
+            ping: 192.168.2.1  
        # widget:
        #     type: opnsenseeee
        #     url: https://192.168.2.1:2184
        #     username: GUnKTSuel3+ueGnzOAabBh2Vp4XFucg1ffKDQU1odlvkpACnxjM2jU2K4MnUqTkKayXrpf3yJYCnaC9U
        #     password: 58G37tDa8tlbukEzlE9RcNn1DmIJZ76lGTvq/6dxQmP46Sazq1iI68s5pxbKGZtNVBnj0P5E9X3M4Jqq
-    - PBS: 
-        icon: /icons/proxmox.png
-        href: https://pbs.d3adc3ii.cc
-        ping: 192.168.2.35 
-        widget:
-            type: proxmoxbackupserver
-            url: https://pbs.d3adc3ii.cc
-            username: root@pam!homepage_token 
-            password: 8b1821a0-a776-49b7-a4cc-a2a433cee3d7
-    - Homeassistant:
-        icon: /icons/home-assistant.png
-        href: https://ha.d3adc3ii.cc
-        ping: 192.168.99.15  
-    - DNS:
-        icon: /icons/technitium.png
-        href: https://192.168.2.10
-        ping: 192.168.2.10
-    - Komodo:
-        icon: /icons/komodo.png
-        href: https://komodo.d3adc3ii.cc
-        ping: 192.168.2.31
-    - Authentik:
-        icon: /icons/authentik.png
-        href: https://auth.d3adc3ii.cc
-        ping: 192.168.2.31
-        widget:
-            type: authentik
-            url: https://auth.d3adc3ii.cc
-            key: Boy9GZM04gnN8zn1RdTDSxgkeDr70a8XqFKmrp1HwVx7A3u4GA2pnVN2aZEO
-    - pocketid:
-        icon: /icons/pocket-id.png
-        href: http://pocketid.d3adc3ii.cc
-        ping: 192.168.2.16  
+        - PBS: 
+            icon: /icons/proxmox.png
+            href: https://pbs.d3adc3ii.cc
+            ping: 192.168.2.35 
+            widget:
+                type: proxmoxbackupserver
+                url: https://pbs.d3adc3ii.cc
+                username: root@pam!homepage_token 
+                password: 8b1821a0-a776-49b7-a4cc-a2a433cee3d7
+        - Homeassistant:
+            icon: /icons/home-assistant.png
+            href: https://ha.d3adc3ii.cc
+            ping: 192.168.99.15  
+        - DNS:
+            icon: /icons/technitium.png
+            href: https://192.168.2.10
+            ping: 192.168.2.10
+        - Komodo:
+            icon: /icons/komodo.png
+            href: https://komodo.d3adc3ii.cc
+            ping: 192.168.2.31
+        - Authentik:
+            icon: /icons/authentik.png
+            href: https://auth.d3adc3ii.cc
+            ping: 192.168.2.31
+            widget:
+                type: authentik
+                url: https://auth.d3adc3ii.cc
+                key: Boy9GZM04gnN8zn1RdTDSxgkeDr70a8XqFKmrp1HwVx7A3u4GA2pnVN2aZEO
+        - pocketid:
+            icon: /icons/pocket-id.png
+            href: http://pocketid.d3adc3ii.cc
+            ping: 192.168.2.16  
 
 - Monitor:
     - zabbix:
