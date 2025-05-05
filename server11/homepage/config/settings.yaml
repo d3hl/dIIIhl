@@ -13,26 +13,38 @@ layout:
 
   1st Tab:
     tab: Homelab
-    Hypervisor:
-      tab: Homelab
-      style: row
-      columns: 2
-    Remote:
-      tab: Homelab
+    Top:
       style: column
-      rows: 2
-    Infra:
-      tab: Homelab
-      style: row
-      columns: 4
-    Monitor:
-      tab: Homelab
-      style: row
-      columns: 4
-    Applications:
-      tab: Homelab
-      style: row
-      columns: 4
+      column: 2
+      header: true
+      Hypervisor:
+        tab: Homelab
+        style: row
+        columns: 2
+      Remote:
+        tab: Homelab
+        style: row
+        columns: 2
+    Mid:
+      style: column
+      column: 2
+      header: true
+      Infra:
+        tab: Homelab
+        style: row
+        columns: 4
+      Monitor:
+        tab: Homelab
+        style: row
+        columns: 4
+    Bot:
+      style: column
+      column: 2
+      header: true
+      Applications:
+        tab: Homelab
+        style: row
+        columns: 4
   2nd Tab:
     tab: Cloud
     style: row
