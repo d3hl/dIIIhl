@@ -127,7 +127,7 @@
         widget:
             type: immich
             url: https://imm.d3adc3ii.cc
-            key: 56vPk72cYlmANQb5LnkB84TQQfzi56i7nfEHdNI5c
+            key: 7zmatjhj9RVRPylp08hKaG1mkYDubUyeqfDlpaUHo 
             version: 2 # optional, default is 1
             fields: ["storage","photos","videos"] 
     - Qbit: 
