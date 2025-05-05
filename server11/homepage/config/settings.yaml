@@ -10,6 +10,15 @@ iconStyle: theme
 target: _self
 headerStyle: boxedWidgets 
 layout:
+  0 Tab:
+    tab: Mon
+    style: row
+    columns: 4
+  Beszel:
+    tab: Mon
+    style: row
+    columns: 4  
+
   1st Tab:
     tab: Homelab
 
