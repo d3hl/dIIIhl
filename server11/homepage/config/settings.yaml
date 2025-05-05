@@ -16,9 +16,13 @@ layout:
     style: column
     columns: 1 
     header: true
+    Root:
+      style: row
+      columns: 1
+      header: false
     Top:
       style: row
-      columns: 4 
+      columns: 3 
       header: false
       useEqualHeights: true
     Mid:
