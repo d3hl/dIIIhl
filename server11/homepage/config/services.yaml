@@ -79,10 +79,6 @@
             icon: /icons/technitium.png
             href: https://192.168.2.10
             ping: 192.168.2.10
-        - Komodo:
-            icon: /icons/komodo.png
-            href: https://komodo.d3adc3ii.cc
-            ping: 192.168.2.31
         - Authentik:
             icon: /icons/authentik.png
             href: https://auth.d3adc3ii.cc
@@ -95,6 +91,10 @@
             icon: /icons/pocket-id.png
             href: http://pocketid.d3adc3ii.cc
             ping: 192.168.2.16  
+        - Komodo:
+            icon: /icons/komodo.png
+            href: https://komodo.d3adc3ii.cc
+            ping: 192.168.2.31
 
     - Monitor:
         - zabbix:
@@ -124,6 +124,12 @@
         icon: /icons/immich.png
         href: https://imm.d3adc3ii.cc
         ping: 192.168.2.31
+        widget:
+            type: immich
+            url: https://imm.d3adc3ii.cc
+            key: 56vPk72cYlmANQb5LnkB84TQQfzi56i7nfEHdNI5c
+            version: 2 # optional, default is 1
+            fields: ["storage","photos","videos"] 
     - Qbit: 
         icon: /icons/qbittorrent.png
         href: https://qbit.d3adc3ii.cc

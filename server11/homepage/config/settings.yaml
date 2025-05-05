@@ -42,7 +42,7 @@ layout:
     Monitor:
       style: row
       columns: 2
-      header: false
+      header: true
   Applications:
     tab: Home
     style: row
