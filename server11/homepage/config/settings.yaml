@@ -15,12 +15,12 @@ layout:
   Hypervisor:
     tab: Homelab
     style: row
-    columns: 4 
+    columns: 1 
     header: true
   Remote:  
     tab: Homelab
     style: row
-    columns: 2
+    columns: 1
     header: false
   Mid:
     style: column
