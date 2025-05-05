@@ -15,7 +15,7 @@ layout:
     tab: Homelab
     Top:
       style: column
-      column: 2 
+      column: 1 
       header: true
       Hypervisor:
         tab: Homelab
@@ -23,7 +23,7 @@ layout:
         tab: Homelab
     Mid:
       style: column
-      column: 3
+      column: 2
       header: true
       Infra:
         tab: Homelab
