@@ -13,19 +13,19 @@ layout:
 
   1st Tab:
     tab: Homelab
-    Top:
-      style: column
-      column: 1 
-      header: true
-      Hypervisor:
-        tab: Homelab
-      Remote:
-        tab: Homelab
+  Top:
+    style: column
+    column: 1 
+    header: true
+    Hypervisor:
+      tab: Homelab
+    Remote:
+      tab: Homelab
   Mid:
     style: column
     column: 2
     header: true
-  Infra:
+    Infra:
     tab: Homelab
     Monitor:
       tab: Homelab
