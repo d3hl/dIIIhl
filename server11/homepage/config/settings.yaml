@@ -13,10 +13,10 @@ layout:
 
   1st Tab:
     tab: Homelab
-  Beszel:
+  Hypervisor:
     tab: Homelab
     style: row
-    columns: 4
+    columns: 3
   PVE11:
     tab: Homelab
     style: row

@@ -1,7 +1,9 @@
 ---
-- Beszel:
-    - pve11-mo:
+- Hypervisor:
+    - pve11:
         icon: /icons/proxmox.png
+        href: https://pve.d3adc3ii.cc
+        ping: 192.168.2.11
         widget:
             type: beszel
             url: https://beszel.d3adc3ii.cc
@@ -9,7 +11,7 @@
             password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
             systemId: pve11 # optional
             version: 2 # optional, default is 1
-    - pve12-mo:
+    - pve12:
         icon: /icons/proxmox.png
         widget:
             type: beszel
@@ -18,7 +20,7 @@
             password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
             systemId: pve12 # optional
             version: 2 # optional, default is 1
-    - pve13-mo:
+    - pve13:
         icon: /icons/proxmox.png
         widget:
             type: beszel
@@ -28,10 +30,6 @@
             systemId: pve13 # optional
             version: 2 # optional, default is 1
 - PVE11:
-    - PVE:
-        icon: /icons/proxmox.png
-        href: https://pve.d3adc3ii.cc
-        ping: 192.168.2.11  
     - Opnsense:
         icon: /icons/opnsense.png
         href: https://opn.d3adc3ii.cc
