@@ -17,26 +17,26 @@ layout:
     columns: 1 
     header: true
     Top:
-      style: column
-      rows: 4 
+      style: row
+      columns: 4 
       header: false
       useEqualHeight: true
     Mid:
-      style: row
-      columns: 2
+      style: column
+      rows: 2
       header: false
   Group2:
     tab: Home
     style: column
-    column: 2
+    columns: 1
     header: true
     Infra:
       style: row
-      columns: 1
+      columns: 4
       header: false
     Monitor:
       style: row
-      columns: 1
+      columns: 4
       header: false
   Applications:
     tab: Homelab
