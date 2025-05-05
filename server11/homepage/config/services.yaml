@@ -1,53 +1,55 @@
 ---
-- Hypervisor:
-    - pve11:
-        icon: /icons/proxmox.png
-        href: https://pve.d3adc3ii.cc
-        ping: 192.168.2.11
-        widget:
-            type: beszel
-            url: https://beszel.d3adc3ii.cc
-            username: d3social@pm.me # email
-            password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
-            systemId: pve11 # optional
-            version: 2 # optional, default is 1
-    - pve12:
-        icon: /icons/proxmox.png
-        widget:
-            type: beszel
-            url: https://beszel.d3adc3ii.cc
-            username: d3social@pm.me # email
-            password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
-            systemId: pve12 # optional
-            version: 2 # optional, default is 1
-    - pve13:
-        icon: /icons/proxmox.png
-        widget:
-            type: beszel
-            url: https://beszel.d3adc3ii.cc
-            username: d3social@pm.me # email
-            password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
-            systemId: pve13 # optional
-            version: 2 # optional, default is 1
-    - Truenas: 
-        icon: /icons/truenas-scale.png
-        href: https://truenas.d3adc3ii.cc
-        ping: 192.168.2.7
-        widget:
-            type: truenas
-            url: https://192.168.2.7
-            key: 1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe
-            enablePools: true
-            nasType: scale
-- Remote:
-    - Dumbterm:
-        icon: /icons/dumbterm.svg
-        href: https://dumbterm.d3adc3ii.cc
-        ping: 192.168.2.20  
-    - Guacamole:
-        icon: /icons/guacamole.png
-        href: https://guaca.d3adc3ii.cc/guacamole
-        ping: 192.168.2.20  
+- Group1:
+    - Top:
+        - pve11:
+            icon: /icons/proxmox.png
+            href: https://pve.d3adc3ii.cc
+            ping: 192.168.2.11
+            widget:
+                type: beszel
+                url: https://beszel.d3adc3ii.cc
+                username: d3social@pm.me # email
+                password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
+                systemId: pve11 # optional
+                version: 2 # optional, default is 1
+        - pve12:
+            icon: /icons/proxmox.png
+            widget:
+                type: beszel
+                url: https://beszel.d3adc3ii.cc
+                username: d3social@pm.me # email
+                password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
+                systemId: pve12 # optional
+                version: 2 # optional, default is 1
+        - pve13:
+            icon: /icons/proxmox.png
+            widget:
+                type: beszel
+                url: https://beszel.d3adc3ii.cc
+                username: d3social@pm.me # email
+                password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
+                systemId: pve13 # optional
+                version: 2 # optional, default is 1
+        - Truenas: 
+            icon: /icons/truenas-scale.png
+            href: https://truenas.d3adc3ii.cc
+            ping: 192.168.2.7
+            widget:
+                type: truenas
+                url: https://192.168.2.7
+                key: 1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe
+                enablePools: true
+                nasType: scale
+    - Mid:
+        - Remote:
+            - Dumbterm:
+                icon: /icons/dumbterm.svg
+                href: https://dumbterm.d3adc3ii.cc
+                ping: 192.168.2.20  
+            - Guacamole:
+                icon: /icons/guacamole.png
+                href: https://guaca.d3adc3ii.cc/guacamole
+                ping: 192.168.2.20  
 - Infra:
     - Opnsense:
         icon: /icons/opnsense.png

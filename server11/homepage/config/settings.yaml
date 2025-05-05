@@ -11,17 +11,20 @@ target: _self
 headerStyle: boxedWidgets 
 layout:
   
-  Hypervisor:
+  Group1:
     tab: Home
-    style: row
-    columns: 4 
+    style: column
+    columns: 1 
     header: true
-  Remote:  
-    tab: Home
-    style: row
-    columns: 2
-    header: false
-  Mid:
+    Top:
+      style: row
+      columns: 4
+      header: false
+    Mid:
+      style: row
+      columns: 2
+      header: false
+  Group2:
     style: column
     column: 2
     header: true
