@@ -19,12 +19,12 @@ layout:
       header: true
       Hypervisor:
         tab: Homelab
-        style: row
-        columns: 2
+        style: column
+        columns: 1
       Remote:
         tab: Homelab
-        style: row
-        columns: 2
+        style: column
+        columns: 1
     Mid:
       style: column
       column: 2
