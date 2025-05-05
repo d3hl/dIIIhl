@@ -15,7 +15,7 @@ layout:
   Hypervisor:
     tab: Homelab
     style: column
-    columns: 2 
+    rows: 4 
     header: true
   Remote:  
     tab: Homelab
