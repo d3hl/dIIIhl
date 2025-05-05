@@ -21,20 +21,20 @@ layout:
         tab: Homelab
       Remote:
         tab: Homelab
-    Mid:
-      style: column
-      column: 2
-      header: true
-      Infra:
-        tab: Homelab
-      Monitor:
-        tab: Homelab
-    Bot:
-      style: column
-      column: 4
-      header: true
-      Applications:
-        tab: Homelab
+  Mid:
+    style: column
+    column: 2
+    header: true
+  Infra:
+    tab: Homelab
+    Monitor:
+      tab: Homelab
+  Bot:
+    style: column
+    column: 4
+    header: true
+    Applications:
+      tab: Homelab
   2nd Tab:
     tab: Cloud
     style: row
