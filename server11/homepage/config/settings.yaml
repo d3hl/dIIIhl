@@ -11,7 +11,7 @@ target: _self
 headerStyle: boxedWidgets 
 layout:
   
-  Group1:
+  Hypervisor:
     tab: Home
     style: column
     columns: 1 
@@ -26,10 +26,10 @@ layout:
       header: false
       useEqualHeights: true
     Mid:
-      style: column
-      rows: 2
+      style: row
+      columns: 2
       header: false
-  Group2:
+  Backend:
     tab: Home
     style: column
     columns: 1
@@ -37,17 +37,18 @@ layout:
     useEqualHeights: true
     Infra:
       style: row
-      columns: 4
+      columns: 2
       header: false
     Monitor:
       style: row
-      columns: 4
+      columns: 2
       header: false
   Applications:
     tab: Home
     style: row
     columns: 4
     header: true
+    useEqualHeights: true
   M365:
     tab: Cloud
     style: row

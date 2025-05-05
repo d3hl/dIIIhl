@@ -1,5 +1,5 @@
 ---
-- Group1:
+- Hypervisor:
     - Root:
         -  Truenas: 
             icon: /icons/truenas-scale.png
@@ -51,7 +51,7 @@
                 icon: /icons/guacamole.png
                 href: https://guaca.d3adc3ii.cc/guacamole
                 ping: 192.168.2.20  
-- Group2:
+- Backend:
     - Infra:
         - Opnsense:
             icon: /icons/opnsense.png
