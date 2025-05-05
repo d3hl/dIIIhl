@@ -15,16 +15,16 @@ layout:
     tab: Homelab
     Top:
       style: column
-      column: 2
+      column: 1 
       header: true
       Hypervisor:
         tab: Homelab
         style: column
-        columns: 1
+        columns: 2
       Remote:
         tab: Homelab
         style: column
-        columns: 1
+        columns: 2
     Mid:
       style: column
       column: 2
