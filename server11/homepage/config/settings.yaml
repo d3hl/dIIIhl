@@ -17,12 +17,13 @@ layout:
     columns: 1 
     header: true
     Top:
-      style: row
-      columns: 2
+      style: column
+      rows: 4 
       header: false
+      useEqualHeight: true
     Mid:
       style: row
-      columns: 1
+      columns: 2
       header: false
   Group2:
     tab: Home
