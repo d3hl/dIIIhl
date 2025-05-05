@@ -10,7 +10,8 @@ iconStyle: theme
 target: _self
 headerStyle: boxedWidgets 
 layout:
-
+  
+  Tab: Homelab
   Hypervisor:
     tab: Homelab
     style: column
