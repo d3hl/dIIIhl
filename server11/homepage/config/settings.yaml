@@ -21,10 +21,10 @@ layout:
       tab: Homelab
       style: column
       rows: 2
-  Infra:
-    tab: Homelab
-    style: row
-    columns: 4
+    Infra:
+      tab: Homelab
+      style: row
+      columns: 4
   Monitor:
     tab: Homelab
     style: row
