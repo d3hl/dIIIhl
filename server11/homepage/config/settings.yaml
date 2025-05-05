@@ -11,14 +11,13 @@ target: _self
 headerStyle: boxedWidgets 
 layout:
   
-  Tab: Homelab
   Hypervisor:
-    tab: Homelab
+    tab: Home
     style: row
     columns: 1 
     header: true
   Remote:  
-    tab: Homelab
+    tab: Home
     style: row
     columns: 1
     header: false
