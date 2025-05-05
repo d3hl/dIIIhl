@@ -13,14 +13,14 @@ layout:
 
   1st Tab:
     tab: Homelab
-  Top:
+  Hypervisor:
     style: column
     column: 1 
     header: true
-    Hypervisor:
-      tab: Homelab
-    Remote:
-      tab: Homelab
+    Group1:
+      header: false
+    Group2:
+      header: fals
   Mid:
     style: column
     column: 2
