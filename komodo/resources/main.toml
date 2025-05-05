@@ -97,6 +97,7 @@ DATA_DIR=/mnt/zApps/karakeep/data
 
 ##
 
+[[stack]]
 name = "battle-of-the-bandwidth"
 [stack.config]
 server = "komodo-2"
