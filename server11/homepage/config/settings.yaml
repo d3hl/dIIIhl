@@ -40,10 +40,6 @@ layout:
   Applications:
     tab: Homelab
     header: true
-  2nd Tab:
-    tab: Cloud
-    style: row
-    columns: 4
   M365:
     tab: Cloud
     style: row
@@ -53,8 +49,6 @@ layout:
     style: row
     columns: 4
   
-  3rd Tab:
-    tab: Corp
   Network:
     header: true
     tab: Corp
@@ -65,8 +59,6 @@ layout:
     tab: Corp
     style: row
     columns: 4 
-  4th Tab: 
-    tab: Monitoring
   GL1:
     tab: Monitoring
     style: row
