@@ -2,15 +2,19 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/latest/configs/service-widgets
 
-- resources:
-    cpu: true
-    memory: true
-    disk: /
+- datetime:
+    format:
+    timeStyle: short
+    hour12: true
+- logo:
+    icon: /icons/d3-logo.png 
 - openmeteo:
-    label: Current
-    latitude: 36.66
-    longitude: -117.51
+    label: Singapore
+    latitude: 1.27
+    longitude: 103.8374
+    timezone: Asia/Singapore
     cache: 5
+    units: metric
 - search:
     provider: duckduckgo
     target: _blank
