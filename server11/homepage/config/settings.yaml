@@ -11,9 +11,8 @@ target: _self
 headerStyle: boxedWidgets 
 layout:
 
-  1st Tab:
-    tab: Homelab
   Hypervisor:
+    tab: Homelab
     style: rơw
     columns: 2 
     header: true
