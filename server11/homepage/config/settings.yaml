@@ -13,10 +13,14 @@ layout:
 
   1st Tab:
     tab: Homelab
-  Hypervisor:
-    tab: Homelab
-    style: row
-    columns: 3
+    Hypervisor:
+      tab: Homelab
+      style: row
+      columns: 2
+    Remote:
+      tab: Homelab
+      style: column
+      rows: 2
   Infra:
     tab: Homelab
     style: row
