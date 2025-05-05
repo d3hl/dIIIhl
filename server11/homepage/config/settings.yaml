@@ -14,7 +14,7 @@ layout:
   1st Tab:
     tab: Homelab
   Hypervisor:
-    style: column
+    style: rơw
     column: 2 
     header: true
     Group1:
