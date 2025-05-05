@@ -17,8 +17,10 @@ layout:
     columns: 2 
     header: true
     Group1:
+      tab: Homelab
       header: false
     Group2:
+      tab: Homelab
       header: false
   Mid:
     style: column
