@@ -15,12 +15,12 @@ layout:
     tab: Homelab
   Hypervisor:
     style: column
-    column: 1 
+    column: 2 
     header: true
     Group1:
       header: false
     Group2:
-      header: fals
+      header: false
   Mid:
     style: column
     column: 2
