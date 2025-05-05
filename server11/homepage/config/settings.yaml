@@ -14,12 +14,12 @@ layout:
   Hypervisor:
     tab: Home
     style: row
-    columns: 1 
+    columns: 4 
     header: true
   Remote:  
     tab: Home
     style: row
-    columns: 1
+    columns: 2
     header: false
   Mid:
     style: column
