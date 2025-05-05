@@ -18,3 +18,12 @@
 - search:
     provider: duckduckgo
     target: _blank
+
+- glances:
+    url: http://192.168.3.11:61208
+    version: 4 # required only if running glances v4 or higher, defaults to 3
+    cpu: true # optional, enabled by default, disable by setting to false
+    mem: true # optional, enabled by default, disable by setting to false
+    cputemp: true # disabled by default
+    uptime: true # disabled by default
+    label: pve11 # optional
