@@ -1,5 +1,5 @@
 ---
--Beszel:
+- Beszel:
     - pve11-mo:
         icon: /icons/beszel.png
         widget:
@@ -9,16 +9,7 @@
             password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
             systemId: pve11 # optional
             version: 2 # optional, default is 1
-    - pve11-mo:
-        icon: /icons/beszel.png
-        widget:
-            type: beszel
-            url: https://beszel.d3adc3ii.cc
-            username: d3social@pm.me # email
-            password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
-            systemId: pve122 # optional
-            version: 2 # optional, default is 1
-    - pve11-mo:
+    - pve12-mo:
         icon: /icons/beszel.png
         widget:
             type: beszel
@@ -26,6 +17,15 @@
             username: d3social@pm.me # email
             password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
             systemId: pve12 # optional
+            version: 2 # optional, default is 1
+    - pve13-mo:
+        icon: /icons/beszel.png
+        widget:
+            type: beszel
+            url: https://beszel.d3adc3ii.cc
+            username: d3social@pm.me # email
+            password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
+            systemId: pve13 # optional
             version: 2 # optional, default is 1
 - PVE11:
     - PVE:
