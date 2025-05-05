@@ -95,29 +95,29 @@
             href: http://pocketid.d3adc3ii.cc
             ping: 192.168.2.16  
 
-- Monitor:
-    - zabbix:
-        icon: /icons/zabbix.png
-        href: http://zabbix.d3adc3ii.cc/zabbix
-        ping: 192.168.2.5  
-    - checkmk:
-        href: http://checkmk.d3adc3ii.cc
-        ping: 192.168.2.17  
-    - Beszel:
-        icon: /icons/beszel.png
-        href: https://beszel.d3adc3ii.cc
-        ping: 192.168.2.9
-        widget:
-            type: beszel
-            url: https://beszel.d3adc3ii.cc
-            username: d3social@pm.me # email
-            password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
-            systemId: pve11 # optional
-            version: 2 # optional, default is 1
-    - Smokeping:
-        icon: /icons/smokeping.png
-        href: http://192.168.2.21/smokeping
-        ping: 192.168.2.21  
+    - Monitor:
+        - zabbix:
+            icon: /icons/zabbix.png
+            href: http://zabbix.d3adc3ii.cc/zabbix
+            ping: 192.168.2.5  
+        - checkmk:
+            href: http://checkmk.d3adc3ii.cc
+            ping: 192.168.2.17  
+        - Beszel:
+            icon: /icons/beszel.png
+            href: https://beszel.d3adc3ii.cc
+            ping: 192.168.2.9
+            widget:
+                type: beszel
+                url: https://beszel.d3adc3ii.cc
+                username: d3social@pm.me # email
+                password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
+                systemId: pve11 # optional
+                version: 2 # optional, default is 1
+        - Smokeping:
+            icon: /icons/smokeping.png
+            href: http://192.168.2.21/smokeping
+            ping: 192.168.2.21  
 - Applications:
     - Immich:
         icon: /icons/immich.png

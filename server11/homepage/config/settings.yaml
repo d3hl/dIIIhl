@@ -30,14 +30,16 @@ layout:
     column: 2
     header: true
     Infra:
-  Monitor:
-      tab: Home
-  Bot:
-    style: column
-    column: 4
+      style: row
+      columns: 1
+      header: false
+    Monitor:
+      style: row
+      columns: 1
+      header: false
+  Applications:
+    tab: Homelab
     header: true
-    Applications:
-      tab: Homelab
   2nd Tab:
     tab: Cloud
     style: row
