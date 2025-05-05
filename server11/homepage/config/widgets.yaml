@@ -7,7 +7,7 @@
     timeStyle: short
     hour12: true
 - logo:
-    icon: /icons/d3-logo.png 
+    icon: /icons/d3logo.png 
 - openmeteo:
     label: Singapore
     latitude: 1.27
