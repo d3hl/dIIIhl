@@ -20,7 +20,7 @@ layout:
       style: row
       columns: 4 
       header: false
-      useEqualHeight: true
+      useEqualHeights: true
     Mid:
       style: column
       rows: 2
@@ -30,6 +30,7 @@ layout:
     style: column
     columns: 1
     header: true
+    useEqualHeights: true
     Infra:
       style: row
       columns: 4
@@ -39,7 +40,9 @@ layout:
       columns: 4
       header: false
   Applications:
-    tab: Homelab
+    tab: Home
+    style: row
+    columns: 4
     header: true
   M365:
     tab: Cloud
