@@ -3,7 +3,7 @@
 // ###############################
 
 // Host Cadvisor on the Docker socket to expose container metrics.
-prometheus.exporter.cadvisor "komodo-2" {
+prometheus.exporter.cadvisor "komodo2" {
   docker_host = "unix:///var/run/docker.sock"
 
   storage_duration = "5m"
