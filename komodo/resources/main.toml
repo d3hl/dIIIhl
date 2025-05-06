@@ -179,6 +179,7 @@ poll_for_updates = true
 auto_update = true
 restart = "unless-stopped"
 volumes = """
+"""
 ##
 
 [[deployment]]
