@@ -12,7 +12,7 @@ prometheus.exporter.cadvisor "komodo2" {
 
 // Configure a prometheus.scrape component to collect cadvisor metrics.
 prometheus.scrape "scraper" {
-  targets    = prometheus.exporter.cadvisor.komodo-2.targets
+  targets    = prometheus.exporter.cadvisor.komodo2.targets
   forward_to = [ prometheus.remote_write.grafanacloud.receiver ]
 
 
