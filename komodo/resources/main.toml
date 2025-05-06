@@ -170,6 +170,18 @@ KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU
 ##
 
 [[deployment]]
+name = "grafrana-alloy"
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "grafana/aloy:latest"
+poll_for_updates = true
+auto_update = true
+restart = "unless-stopped"
+volumes = """
+##
+
+[[deployment]]
 name = "twingate"
 [deployment.config]
 server = "komodo-2"
