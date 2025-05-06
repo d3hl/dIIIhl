@@ -223,7 +223,7 @@ ports = """
 12345:12345
 """
 volumes = """
-/etc/komodo/repos/diiihl-k2/server12/grafana-alloy/config/config.alloy:/etc/alloy/config.alloy
+/etc/komodo/repos/diiihl-k2/server12/alloy/config/config.alloy:/etc/alloy/config.alloy
 """
 environment = """
   # VARIABLE = valu
