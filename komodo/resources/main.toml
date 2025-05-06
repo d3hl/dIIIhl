@@ -209,29 +209,6 @@ KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU
 ##
 
 [[deployment]]
-name = "grafrana-alloy"
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "grafana/alloy:latest"
-poll_for_updates = true
-auto_update = true
-network = "bridge"
-restart = "unless-stopped"
-command = "run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy"
-ports = """
-12345:12345
-"""
-volumes = """
-/etc/komodo/repos/diiihl-k2/server12/alloy/config/config.alloy:/etc/alloy/config.alloy
-"""
-environment = """
-  # VARIABLE = valu
-"""
-
-##
-
-[[deployment]]
 name = "twingate"
 [deployment.config]
 server = "komodo-2"
