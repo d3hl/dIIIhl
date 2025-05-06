@@ -174,7 +174,7 @@ name = "grafrana-alloy"
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
-image.params.image = "grafana/aloy:latest"
+image.params.image = "grafana/alloy:latest"
 poll_for_updates = true
 auto_update = true
 restart = "unless-stopped"
