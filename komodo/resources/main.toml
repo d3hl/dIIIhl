@@ -162,10 +162,10 @@ ports = """
  12345:12345
 """
 volumes = """
-${CONFIG_FILE_PATH}:/etc/alloy/config.alloy
+/etc/komodo/repos/diiihl-k2/server12/alloy/config/config.alloy:/etc/alloy/config.alloy
 """
 environment = """
-CONFIG_FILE_PATH=/etc/komodo/repos/diiihl-k2/server12/alloy/config/config.alloy
+
 """
 
 ##
