@@ -178,8 +178,20 @@ image.params.image = "grafana/aloy:latest"
 poll_for_updates = true
 auto_update = true
 restart = "unless-stopped"
+command = """
+ -p 12345:12345
+ run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data
+ /etc/alloy/config.alloy"""
 volumes = """
+<CONFIG_FILE_PATH>:/etc/alloy/config.alloy
 """
+environment = """
+<CONFIG_FILE_PATH>=/mnt/zApps/grafana-alloy
+"""
+labels = """
+  # your.docker.label: valu
+"""
+
 ##
 
 [[deployment]]
