@@ -122,7 +122,7 @@
 - Applications:
     - Immich:
         icon: /icons/immich.png
-        href: https://imm.d3adc3ii.cc
+        href: https://imm.int.d3adc3ii.cc
         ping: 192.168.2.31
         widget:
             type: immich
