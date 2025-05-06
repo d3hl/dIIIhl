@@ -180,7 +180,8 @@ auto_update = true
 restart = "unless-stopped"
 command = """
  -p 12345:12345
- run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy"""
+ run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data
+ /etc/alloy/config.alloy"""
 volumes = """
 <CONFIG_FILE_PATH>:/etc/alloy/config.alloy
 """
