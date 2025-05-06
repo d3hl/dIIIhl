@@ -155,16 +155,17 @@ image.type = "Image"
 image.params.image = "grafana/alloy:latest"
 poll_for_updates = true
 auto_update = true
+network = "bridge"
 restart = "unless-stopped"
-command = """
- -p 12345:12345
- run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data 
- /etc/alloy/config.alloy"""
+command = "run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data etc/alloy/config.alloy"
+ports = """
+ 12345:12345
+"""
 volumes = """
-<CONFIG_FILE_PATH>:/etc/alloy/config.alloy
+/etc/komodo/repos/diiihl-k2/server12/alloy/config/config.alloy:/etc/alloy/config.alloy
 """
 environment = """
-<CONFIG_FILE_PATH>=/etc/komodo/repos/diiihl-k2/server12/alloy/config/config.alloy
+
 """
 
 ##
