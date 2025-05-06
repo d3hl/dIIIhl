@@ -186,7 +186,7 @@ KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU
 ##
 
 [[deployment]]
-name = "grafrana-alloy"
+name = "alloy"
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
@@ -202,7 +202,7 @@ volumes = """
 <CONFIG_FILE_PATH>:/etc/alloy/config.alloy
 """
 environment = """
-<CONFIG_FILE_PATH>=/etc/komodo/repos/diiihl-k2/server12/grafana-alloy/config/config.alloy
+<CONFIG_FILE_PATH>=/etc/komodo/repos/diiihl-k2/server12/alloy/config/config.alloy
 """
 
 ##
