@@ -188,9 +188,6 @@ volumes = """
 environment = """
 <CONFIG_FILE_PATH>=/mnt/zApps/grafana-alloy
 """
-labels = """
-  # your.docker.label: valu
-"""
 
 ##
 
