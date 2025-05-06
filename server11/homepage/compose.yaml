@@ -3,7 +3,7 @@ services:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     environment:
-      HOMEPAGE_ALLOWED_HOSTS: homepage.d3adc3ii.cc,192.168.2.31:3000 # required, may need port. See gethomepage.dev/installation/#homepage_allowed_hosts
+      HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_ALLOWED_HOSTS} # optional, comma separated list of allowed hosts (e.g. "localhost, 
       PGID: 1000 # optional, your group id
       PUID: 1000 # optional, your user id
       HOMEPAGE_FILE_SETTINGS: ${HOMEPAGE_FILE_SETTINGS}
