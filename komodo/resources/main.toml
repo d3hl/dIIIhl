@@ -41,7 +41,7 @@ auto_update = true
 auto_update_all_services = true
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server11/battle-of-the-bandwidth"
+run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-the-bandwidth"
 
 ##
 
