@@ -36,7 +36,7 @@ layout:
     header: false
     I1:
       style: row
-      columns: 1
+      columns: 2 
       header: false
     I2:
       style: row
