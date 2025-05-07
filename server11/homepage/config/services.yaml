@@ -107,7 +107,6 @@
             icon: /icons/ariang.png
             href: http://192.168.2.16:6880
             ping: 192.168.2.16 
-            ping: 192.168.2.28
 - External:
     - E1i: # Container and Identity Management
         - Authentik:
