@@ -19,7 +19,7 @@ layout:
     useEqualHeights: true
     E1:
       style: row
-      columns: 4
+      columns: 3
       header: false
     E2:
       style: row
