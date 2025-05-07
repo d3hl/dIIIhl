@@ -1,6 +1,6 @@
 ---
-- Hypervisor:
-    - Root:
+- Internal:
+    - I1: # nas
         -  Truenas: 
             icon: /icons/truenas-scale.png
             href: https://truenas.d3adc3ii.cc
@@ -11,7 +11,7 @@
                 key: 1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe
                 enablePools: true
                 nasType: scale
-    - Top:
+    - I2: # hypervisor
         - pve11:
             icon: /icons/proxmox.png
             href: https://pve.int.d3adc3ii.cc
@@ -41,27 +41,6 @@
                 password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
                 systemId: pve13 # optional
                 version: 2 # optional, default is 1
-    - Mid:
-        - Remote:
-            - Dumbterm:
-                icon: /icons/dumbterm.svg
-                href: https://dumbterm.d3adc3ii.cc
-                ping: 192.168.2.20  
-            - Guacamole:
-                icon: /icons/guacamole.png
-                href: https://guaca.d3adc3ii.cc/guacamole
-                ping: 192.168.2.20  
-- Backend:
-    - Infra:
-        - Opnsense:
-            icon: /icons/opnsense.png
-            href: https://opn.int.d3adc3ii.cc
-            ping: 192.168.2.1  
-       # widget:
-       #     type: opnsenseeee
-       #     url: https://192.168.2.1:2184
-       #     username: GUnKTSuel3+ueGnzOAabBh2Vp4XFucg1ffKDQU1odlvkpACnxjM2jU2K4MnUqTkKayXrpf3yJYCnaC9U
-       #     password: 58G37tDa8tlbukEzlE9RcNn1DmIJZ76lGTvq/6dxQmP46Sazq1iI68s5pxbKGZtNVBnj0P5E9X3M4Jqq
         - PBS: 
             icon: /icons/proxmox.png
             href: https://pbs.int.d3adc3ii.cc
@@ -71,6 +50,20 @@
                 url: https://pbs.d3adc3ii.cc
                 username: root@pam!homepage_token 
                 password: 8b1821a0-a776-49b7-a4cc-a2a433cee3d7
+        - Opnsense:
+            icon: /icons/opnsense.png
+            href: https://opn.int.d3adc3ii.cc
+            ping: 192.168.2.1  
+    - I3: # remote
+        - Dumbterm:
+            icon: /icons/dumbterm.svg
+            href: https://dumbterm.d3adc3ii.cc
+            ping: 192.168.2.20  
+        - Guacamole:
+            icon: /icons/guacamole.png
+            href: https://guaca.d3adc3ii.cc/guacamole
+            ping: 192.168.2.20  
+    - I4: # remote
         - Homeassistant:
             icon: /icons/home-assistant.png
             href: https://ha.int.d3adc3ii.cc
@@ -79,6 +72,40 @@
             icon: /icons/technitium.png
             href: https://192.168.2.10
             ping: 192.168.2.10
+        - Immich:
+            icon: /icons/immich.png
+            href: https://imm.int.d3adc3ii.cc
+            ping: 192.168.2.31
+            widget:
+                type: immich
+                url: https://imm.d3adc3ii.cc
+                key: 7zmatjhj9RVRPylp08hKaG1mkYDubUyeqfDlpaUHo 
+                version: 2 # optional, default is 1
+                fields: ["storage","photos","videos"] 
+        - Qbit: 
+            icon: /icons/qbittorrent.png
+            href: https://qbit.int.d3adc3ii.cc
+            ping: 192.168.2.22
+            widget:
+                type: qbittorrent
+                url: https://qbit.d3adc3ii.cc
+                username: d3adc3ii
+                password: WCxb2CcykoUmjiNAf3p8
+                enableLeechProgress: false
+        - Stash:
+            icon: /icons/stash.png  
+            href: https://stash.int.d3adc3ii.cc
+            ping: 192.168.2.26  
+            widget:
+                type: stash
+                url: https://stash.d3adc3ii.cc
+                stashapikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg
+        - Semaphore:
+            icon: /icons/semaphore.png
+            href: https://semaphore.int.d3adc3ii.cc
+            ping: 192.168.2.28
+- External:
+    - E1:
         - Authentik:
             icon: /icons/authentik.png
             href: https://auth.d3adc3ii.cc
@@ -96,7 +123,7 @@
             href: https://komodo.d3adc3ii.cc
             ping: 192.168.2.31
 
-    - Monitor:
+    - E2:
         - zabbix:
             icon: /icons/zabbix.png
             href: http://zabbix.d3adc3ii.cc/zabbix
@@ -119,56 +146,23 @@
             icon: /icons/smokeping.png
             href: http://192.168.2.21/smokeping
             ping: 192.168.2.21  
-- Applications:
-    - Immich:
-        icon: /icons/immich.png
-        href: https://imm.int.d3adc3ii.cc
-        ping: 192.168.2.31
-        widget:
-            type: immich
-            url: https://imm.d3adc3ii.cc
-            key: 7zmatjhj9RVRPylp08hKaG1mkYDubUyeqfDlpaUHo 
-            version: 2 # optional, default is 1
-            fields: ["storage","photos","videos"] 
-    - Qbit: 
-        icon: /icons/qbittorrent.png
-        href: https://qbit.int.d3adc3ii.cc
-        ping: 192.168.2.22
-        widget:
-            type: qbittorrent
-            #url: http://192.168.2.22:8090
-            url: https://qbit.d3adc3ii.cc
-            username: d3adc3ii
-            password: WCxb2CcykoUmjiNAf3p8
-            enableLeechProgress: false
-    - Stash:
-        icon: /icons/stash.png  
-        href: https://stash.int.d3adc3ii.cc
-        ping: 192.168.2.26  
-        widget:
-            type: stash
-            url: https://stash.d3adc3ii.cc
-            stashapikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg
-    - Semaphore:
-        icon: /icons/semaphore.png
-        href: https://semaphore.int.d3adc3ii.cc
-        ping: 192.168.2.28
-    - Karakeep:
-        icon: /icons/karakeep.png
-        href: https://kara.d3adc3ii.cc
-        ping: 192.168.2.31
-        widget:
-            type: karakeep
-            url: https://kara.d3adc3ii.cc
-            key: ak1_411b5823702403a7a8bb_eb8537be7733011a2203 
-    - aria2:
-        icon: /icons/ariang.png
-        href: http://192.168.2.16:6880
-        ping: 192.168.2.16 
-    - wallos:
-        icon: /icons/wallos.png
-        href: http://wallos.d3adc3ii.cc
-        ping: 192.168.2.19 
+    - E3:
+        - Karakeep:
+            icon: /icons/karakeep.png
+            href: https://kara.d3adc3ii.cc
+            ping: 192.168.2.31
+            widget:
+                type: karakeep
+                url: https://kara.d3adc3ii.cc
+                key: ak1_411b5823702403a7a8bb_eb8537be7733011a2203 
+        - aria2:
+            icon: /icons/ariang.png
+            href: http://192.168.2.16:6880
+            ping: 192.168.2.16 
+        - wallos:
+            icon: /icons/wallos.png
+            href: http://wallos.d3adc3ii.cc
+            ping: 192.168.2.19 
 - GL1:
   - Info:
       href: https://pve11.d3adc3ii.cc

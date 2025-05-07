@@ -11,44 +11,46 @@ target: _self
 headerStyle: boxedWidgets 
 layout:
   
-  Hypervisor:
-    tab: Home
+  Internal:
+    tab: Internal
     style: column
     columns: 1 
-    header: true
-    Root:
+    header: false
+    I1:
       style: row
       columns: 1
       header: false
-    Top:
+    I2:
       style: row
       columns: 3 
       header: false
       useEqualHeights: true
-    Mid:
+    I3:
       style: row
       columns: 2
       header: false
-  Backend:
-    tab: Home
+    I4:
+      style: row
+      columns: 2
+      header: false
+  External:
+    tab: External
     style: column
     columns: 1
-    header: true
+    header: false
     useEqualHeights: true
-    Infra:
+    E1:
       style: row
       columns: 2
       header: false
-    Monitor:
+    E2:
       style: row
       columns: 2
       header: true
-  Applications:
-    tab: Home
-    style: row
-    columns: 4
-    header: true
-    useEqualHeights: true
+    E3:
+      style: row
+      columns: 2
+      header: true
   M365:
     tab: Cloud
     style: row
