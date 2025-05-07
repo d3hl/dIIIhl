@@ -1,6 +1,14 @@
 ---
 - Internal:
     - I1: # nas
+        - Opnsense:
+            icon: /icons/opnsense.png
+            href: https://opn.int.d3adc3ii.cc
+            ping: 192.168.2.1  
+        - DNS:
+            icon: /icons/technitium.png
+            href: https://192.168.2.10
+            ping: 192.168.2.10
         -  Truenas: 
             icon: /icons/truenas-scale.png
             href: https://truenas.d3adc3ii.cc
@@ -11,14 +19,6 @@
                 key: 1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe
                 enablePools: true
                 nasType: scale
-        - Opnsense:
-            icon: /icons/opnsense.png
-            href: https://opn.int.d3adc3ii.cc
-            ping: 192.168.2.1  
-        - DNS:
-            icon: /icons/technitium.png
-            href: https://192.168.2.10
-            ping: 192.168.2.10
     - I2: # proxmox
         - pve11:
             icon: /icons/proxmox.png
