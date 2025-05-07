@@ -108,7 +108,7 @@
             href: http://192.168.2.16:6880
             ping: 192.168.2.16 
 - External:
-    - E1i: # Container and Identity Management
+    - E1: # Container and Identity Management
         - Pangolin:
             icon: /icons/pangolin.png
             href: https://pangolin.d3adc3ii.cc
