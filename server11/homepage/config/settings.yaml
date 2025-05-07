@@ -17,10 +17,10 @@ layout:
     columns: 1
     header: false
     useEqualHeights: true
-    E1:
+    Cloud Backend:
       style: row
       columns: 4
-      header: false
+      header: true
     E2:
       style: row
       columns: 2

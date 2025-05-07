@@ -108,15 +108,15 @@
             href: http://192.168.2.16:6880
             ping: 192.168.2.16 
 - External:
-    - E1: # Container and Identity Management
+    - Cloud Backend: # Container and Identity Management
         - Pangolin:
             icon: /icons/pangolin.png
             href: https://pangolin.d3adc3ii.cc
-            ping: 149.28.139.46
+            sitemonitor: https://pangolin.d3adc3ii.cc
         - Authentik:
             icon: /icons/authentik.png
             href: https://auth.d3adc3ii.cc
-            ping: 192.168.2.31
+            sitemonitor: https://auth.d3adc3ii.cc 
             widget:
                 type: authentik
                 url: https://auth.d3adc3ii.cc
@@ -124,7 +124,11 @@
         - Komodo:
             icon: /icons/komodo.png
             href: https://komodo.d3adc3ii.cc
-            ping: 192.168.2.31
+            sitemonitor: https://komodo.d3adc3ii.cc
+        - ControlD:
+            icon: /icons/dumbterm.svg
+            href: https://controld.com/dashboard/statistics 
+            sitemonitor: https://controld.com/dashboard/statistics 
         - Dumbterm:
             icon: /icons/dumbterm.svg
             href: https://dumbterm.d3adc3ii.cc
