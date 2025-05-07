@@ -15,6 +15,10 @@
             icon: /icons/opnsense.png
             href: https://opn.int.d3adc3ii.cc
             ping: 192.168.2.1  
+        - DNS:
+            icon: /icons/technitium.png
+            href: https://192.168.2.10
+            ping: 192.168.2.10
     - I2: # proxmox
         - pve11:
             icon: /icons/proxmox.png
@@ -54,10 +58,6 @@
                 url: https://pbs.d3adc3ii.cc
                 username: root@pam!homepage_token 
                 password: 8b1821a0-a776-49b7-a4cc-a2a433cee3d7
-        - DNS:
-            icon: /icons/technitium.png
-            href: https://192.168.2.10
-            ping: 192.168.2.10
     - I3: # remote
         - Dumbterm:
             icon: /icons/dumbterm.svg
