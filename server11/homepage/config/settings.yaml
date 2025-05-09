@@ -12,7 +12,7 @@ headerStyle: boxedWidgets
 layout:
   
   External:
-    tab: External
+    tab: Homelab
     style: column
     columns: 1
     header: false
@@ -30,7 +30,7 @@ layout:
       columns: 2
       header: true
   Internal:
-    tab: Internal
+    tab: Homelab
     style: column
     columns: 1 
     header: false
