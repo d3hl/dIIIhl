@@ -108,7 +108,7 @@
             href: http://192.168.2.16:6880
             ping: 192.168.2.16 
 - External:
-    - Cloud Backend: # Container and Identity Management
+    - Cloud: # Container and Identity Management
         - Pangolin:
             icon: /icons/pangolin.png
             href: https://pangolin.d3adc3ii.cc
@@ -133,14 +133,10 @@
             icon: /icons/dumbterm.svg
             href: https://dumbterm.d3adc3ii.cc
             ping: 192.168.2.20  
-    - E2:
-        - zabbix:
-            icon: /icons/zabbix.png
-            href: http://zabbix.d3adc3ii.cc/zabbix
-            ping: 192.168.2.5  
-        - checkmk:
-            href: http://checkmk.d3adc3ii.cc
-            ping: 192.168.2.17  
+    - Monitor-Dashboard:
+        - Grafana:
+            icon: /icons/grafana.png
+            href: https://d3adc3ii.grafana.net/dashboards 
         - Beszel:
             icon: /icons/beszel.png
             href: https://beszel.d3adc3ii.cc
@@ -152,6 +148,13 @@
                 password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
                 systemId: pve11 # optional
                 version: 2 # optional, default is 1
+        - zabbix:
+            icon: /icons/zabbix.png
+            href: http://zabbix.d3adc3ii.cc/zabbix
+            ping: 192.168.2.5  
+        - checkmk:
+            href: http://checkmk.d3adc3ii.cc
+            ping: 192.168.2.17  
     - E3: # Applications
         - Karakeep:
             icon: /icons/karakeep.png

@@ -17,18 +17,18 @@ layout:
     columns: 1
     header: false
     useEqualHeights: true
-    Cloud Backend:
+    Cloud:
       style: row
       columns: 4
       header: true
-    E2:
+    Monitor:
       style: row
       columns: 2
       header: true
     E3:
       style: row
       columns: 2
-      header: true
+      header: false
   Internal:
     tab: Internal
     style: column
