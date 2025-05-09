@@ -147,24 +147,6 @@ ALLOY_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/conf
 
 ##
 
-[[development]]
-name = "omni-tools"
-[development.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "iib0011/omni-tools:latest"
-poll_for_updates = true
-auto_update = true
-network = "bridge"
-restart = "unless-stopped"
-ports = """
- 8080:80
-"""
-environment = """
-
-"""
-##
-
 [[deployment]]
 name = "alloy"
 [deployment.config]
