@@ -152,7 +152,7 @@ name = "omni-tools"
 [development.config]
 server = "komodo-2"
 image.type = "Image"
-image.params.image = "d3adc3iii/omni-tools:latest"
+image.params.image = "iib0011/omni-tools:latest"
 poll_for_updates = true
 auto_update = true
 network = "bridge"
