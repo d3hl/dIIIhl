@@ -214,16 +214,26 @@ name = "twingate"
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
+image.params.image = "iib0011/omni-tools:latest"
+poll_for_updates = true
+auto_update = true
+restart = "unless-stopped"
+environment = """
+"""
+
+##
+
+
+[[deployment]]
+name = "omni-tooys"
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
 image.params.image = "twingate/connector:latest"
 poll_for_updates = true
 auto_update = true
 restart = "unless-stopped"
 environment = """
-  TWINGATE_NETWORK=d3net
-  TWINGATE_ACCESS_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6Inp3dkU1dHpJZzV4X2pSVEU4RTFWQll6MW0tX2g1dXlMZlhTV1VSS1BEVE0iLCJ0eXAiOiJEQVQifQ.eyJudCI6IkFOIiwiYWlkIjoiNTExMjE5IiwiZGlkIjoiMjE5MTEwMCIsImp0aSI6ImIxZjU3N2FkLTZmNDItNDYyYS05ZGIzLTY1NTE5ZmQyMTJlNCIsImlzcyI6InR3aW5nYXRlIiwiYXVkIjoiZDNuZXQiLCJleHAiOjE3NDYxNDQ5MDAsImlhdCI6MTc0NjE0MTMwMCwidmVyIjoiNCIsInRpZCI6IjEwMzU2NCIsInJudyI6MTc0NjE0MTU3OCwicm5ldGlkIjoiMTM1OTMxIn0.OxT4qXnqonLPGb1GwJTRcYoSwZG16x2JGA_Xu2pOo0dZH3jpqfd1SkjWy8JjcVePboTum2e0WEdNu4SFcJUy_A
-  TWINGATE_REFRESH_TOKEN=mrNJNc7hirY3gO3-q9l6dnN_YjYl-8q79XRXg1ffZstYm8EYyH6xNXMIVviMaQ-2-GAa4wuSMv1J5ebEf9KvzIK94jmq7j9QGPH2Tr7ZnjlYADuKrEpKUkrmnbrROkgQy6nzWg
-  TWINGATE_LOG_ANALYTICS=v2
-"""
 
 ##
 
