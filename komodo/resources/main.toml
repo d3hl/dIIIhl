@@ -214,7 +214,7 @@ name = "twingate"
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
-image.params.image = "iib0011/omni-tools:latest"
+image.params.image = "twingate/connector:latest"
 poll_for_updates = true
 auto_update = true
 restart = "unless-stopped"
@@ -233,7 +233,7 @@ name = "omni-tooys"
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
-image.params.image = "twingate/connector:latest"
+image.params.image = "iib0011/omni-tools:latest"
 poll_for_updates = true
 auto_update = true
 restart = "unless-stopped"
