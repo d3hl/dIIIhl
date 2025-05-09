@@ -229,7 +229,7 @@ environment = """
 
 
 [[deployment]]
-name = "omni-tooys"
+name = "omni-tools"
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
@@ -237,12 +237,12 @@ image.params.image = "iib0011/omni-tools:latest"
 poll_for_updates = true
 auto_update = true
 restart = "unless-stopped"
-environment = """
-"""
 network = "bridge"
 restart = "unless-stopped"
 ports = """
 8281:80
+"""
+environment = """
 """
 ##
 
