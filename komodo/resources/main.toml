@@ -239,6 +239,11 @@ auto_update = true
 restart = "unless-stopped"
 environment = """
 """
+network = "bridge"
+restart = "unless-stopped"
+ports = """
+8281:80
+"""
 ##
 
 [[repo]]
