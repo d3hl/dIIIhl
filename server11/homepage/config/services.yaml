@@ -27,7 +27,7 @@
             sitemonitor: https://pve.int.d3adc3ii.cc
             widget:
                 type: beszel
-                url: https://beszel.d3adc3ii.cc
+                url: https://beszel.int.d3adc3ii.cc
                 username: d3social@pm.me # email
                 password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
                 systemId: pve11 # optional
@@ -37,7 +37,7 @@
             ping: 192.168.2.12
             widget:
                 type: beszel
-                url: https://beszel.d3adc3ii.cc
+                url: https://beszel.int.d3adc3ii.cc
                 username: d3social@pm.me # email
                 password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
                 systemId: pve12 # optional
@@ -47,7 +47,7 @@
             ping: 192.168.2.13
             widget:
                 type: beszel
-                url: https://beszel.d3adc3ii.cc
+                url: https://beszel.int.d3adc3ii.cc
                 username: d3social@pm.me # email
                 password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
                 systemId: pve13 # optional
