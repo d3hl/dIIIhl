@@ -19,7 +19,7 @@ layout:
     useEqualHeights: true
     Admin:
       style: row
-      columns: 2
+      columns: 4
       header: true
       #useEqualHeights: true
     Monitoring:
