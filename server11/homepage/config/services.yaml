@@ -147,7 +147,6 @@
                 url: https://beszel.d3adc3ii.cc
                 username: d3social@pm.me # email
                 password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
-                systemId: pve11 # optional
                 version: 2 # optional, default is 1
         - zabbix:
             icon: /icons/zabbix.png
