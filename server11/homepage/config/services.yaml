@@ -1,14 +1,6 @@
 ---
 - Internal:
-    - I1: # nas
-        - Opnsense:
-            icon: /icons/opnsense.png
-            href: https://opn.int.d3adc3ii.cc
-            ping: 192.168.2.1  
-        - DNS:
-            icon: /icons/technitium.png
-            href: https://192.168.2.10
-            ping: 192.168.2.10
+    - Nas:
         -  Truenas: 
             icon: /icons/truenas-scale.png
             href: https://truenas.int.d3adc3ii.cc
@@ -19,6 +11,15 @@
                 key: 1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe
                 enablePools: true
                 nasType: scale
+    - I1: # nas
+        - Opnsense:
+            icon: /icons/opnsense.png
+            href: https://opn.int.d3adc3ii.cc
+            ping: 192.168.2.1  
+        - DNS:
+            icon: /icons/technitium.png
+            href: https://ns1.int.d3adc3ii.cc
+            sitemonitor: https://ns1.int.d3adc3ii.cc 
     - I2: # proxmox
         - pve11:
             icon: /icons/proxmox.png
@@ -108,7 +109,7 @@
             href: http://192.168.2.16:6880
             ping: 192.168.2.16 
 - External:
-    - Cloud: # Container and Identity Management
+    - Admnin: # Container and Identity Management
         - Pangolin:
             icon: /icons/pangolin.png
             href: https://pangolin.d3adc3ii.cc
@@ -133,7 +134,7 @@
             icon: /icons/dumbterm.svg
             href: https://dumbterm.d3adc3ii.cc
             ping: 192.168.2.20  
-    - Monitor-Dashboard:
+    - Monitoring:
         - Grafana:
             icon: /icons/grafana.png
             href: https://d3adc3ii.grafana.net/dashboards 
@@ -155,7 +156,7 @@
         - checkmk:
             href: http://checkmk.d3adc3ii.cc
             ping: 192.168.2.17  
-    - E3: # Applications
+    - Apps: # Applications
         - Karakeep:
             icon: /icons/karakeep.png
             href: https://kara.d3adc3ii.cc

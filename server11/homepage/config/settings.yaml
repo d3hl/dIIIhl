@@ -17,26 +17,31 @@ layout:
     columns: 1
     header: false
     useEqualHeights: true
-    Cloud:
+    Admin:
+      style: row
+      columns: 2
+      header: true
+      useEqualHeights: true
+    Monitoring:
       style: row
       columns: 4
       header: true
-    Monitor:
+    Apps:
       style: row
       columns: 2
       header: true
-    E3:
-      style: row
-      columns: 2
-      header: false
   Internal:
     tab: Homelab
     style: column
     columns: 1 
-    header: false
+    header: true
     I1:
       style: row
       columns: 2 
+      header: false
+    Nas:
+      style: row
+      columns: 1 
       header: false
     I2:
       style: row
@@ -50,7 +55,7 @@ layout:
     I4:
       style: row
       columns: 4
-      header: false
+      header: true
   M365:
     tab: Cloud
     style: row
