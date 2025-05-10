@@ -144,7 +144,8 @@
             ping: 192.168.2.9
             widget:
                 type: beszel
-                url: https://beszel.d3adc3ii.cc
+                #url: https://beszel.d3adc3ii.cc
+                url: http://192.168.2.9:8090
                 username: d3social@pm.me # email
                 password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
                 version: 2 # optional, default is 1
