@@ -52,7 +52,7 @@
              #   url: https://pbs.int.d3adc3ii.cc
               #  username: root@pam!homepage_token 
                # password: 8b1821a0-a776-49b7-a4cc-a2a433cee3d7
-    - Monit0ring : # remote
+    - M0nit0ring : # remote
         - Smokeping:
             icon: /icons/smokeping.png
             href: http://192.168.2.21/smokeping
