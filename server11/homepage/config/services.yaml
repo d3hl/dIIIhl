@@ -144,6 +144,8 @@
             href: https://d3net.twinget.com
 
     - Placeholder:
+        -Place1:
+            href: http://google.com
     - Monitoring:
         - Grafana:
             icon: /icons/grafana.png
