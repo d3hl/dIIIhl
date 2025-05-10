@@ -73,7 +73,7 @@
         - Battle of the badwidth:
             icon: /icons/smokeping.png
             href: https://botb.int.d3adc3ii.cc
-    - I4: # remote
+    - Local Apps: # remote
         - Homeassistant:
             icon: /icons/home-assistant.png
             href: https://ha.int.d3adc3ii.cc

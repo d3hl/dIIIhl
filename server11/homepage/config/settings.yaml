@@ -52,7 +52,7 @@ layout:
       style: row
       columns: 2
       header: false
-    Apps:
+    Local Apps:
       style: row
       columns: 4
       header: true
