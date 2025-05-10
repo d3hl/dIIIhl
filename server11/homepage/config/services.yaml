@@ -52,16 +52,7 @@
                 url: https://pbs.d3adc3ii.cc
                 username: root@pam!homepage_token 
                 password: 8b1821a0-a776-49b7-a4cc-a2a433cee3d7
-    - I1: 
-        - Opnsense:
-            icon: /icons/opnsense.png
-            href: https://opn.int.d3adc3ii.cc
-            ping: 192.168.2.1  
-        - DNS:
-            icon: /icons/technitium.png
-            href: https://ns1.int.d3adc3ii.cc
-            sitemonitor: https://ns1.int.d3adc3ii.cc 
-    - I3: # remote
+    - Monit0ring : # remote
         - Smokeping:
             icon: /icons/smokeping.png
             href: http://192.168.2.21/smokeping
@@ -73,6 +64,15 @@
         - Battle of the badwidth:
             icon: /icons/smokeping.png
             href: https://botb.int.d3adc3ii.cc
+    - I1: 
+        - Opnsense:
+            icon: /icons/opnsense.png
+            href: https://opn.int.d3adc3ii.cc
+            ping: 192.168.2.1  
+        - DNS:
+            icon: /icons/technitium.png
+            href: https://ns1.int.d3adc3ii.cc
+            sitemonitor: https://ns1.int.d3adc3ii.cc 
     - Local Apps: # remote
         - Homeassistant:
             icon: /icons/home-assistant.png
@@ -94,7 +94,7 @@
             ping: 192.168.2.22
             widget:
                 type: qbittorrent
-                url: https://qbit.d3adc3ii.cc
+                url: https://qbit.int.d3adc3ii.cc
                 username: d3adc3ii
                 password: WCxb2CcykoUmjiNAf3p8
                 enableLeechProgress: false

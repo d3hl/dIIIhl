@@ -43,12 +43,12 @@ layout:
       style: row
       columns: 4 
       header: false
-    I1:
+    M0nitoring:
       style: row
       columns: 2 
       header: false
       useEqualHeights: true
-    I3:
+    I1:
       style: row
       columns: 2
       header: false
