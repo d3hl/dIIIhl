@@ -49,7 +49,7 @@
             ping: 192.168.2.35 
             widget:
                 type: proxmoxbackupserver
-                url: https://pbs.d3adc3ii.cc
+                url: https://pbs.int.d3adc3ii.cc
                 username: root@pam!homepage_token 
                 password: 8b1821a0-a776-49b7-a4cc-a2a433cee3d7
     - Monit0ring : # remote
