@@ -50,7 +50,7 @@ layout:
     M0nit0ring:
       style: row
       columns: 2 
-      header: false
+      header: true
       useEqualHeights: true
     I1:
       style: row
