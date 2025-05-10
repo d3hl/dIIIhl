@@ -140,7 +140,7 @@
             href: https://dumbterm.d3adc3ii.cc
             ping: 192.168.2.20  
         - Twingate:
-            icon: /icons/dumbterm.svg
+            icon: /icons/twingate.png
             href: https://d3net.twinget.com
     - Monitoring:
         - Grafana:
