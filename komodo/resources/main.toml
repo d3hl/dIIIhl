@@ -118,19 +118,6 @@ DATA_DIR=/mnt/zApps/karakeep/data
 ##
 
 [[stack]]
-name = "newt1"
-[stack.config]
-server = "server-bkxal"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/newt1/server11/newt1"
-
-##
-
-[[stack]]
 name = "prom-ga-alloy"
 [stack.config]
 server = "komodo-2"
@@ -259,6 +246,22 @@ environment = """
   NEWT_ID=[[NEWT_ID2]]
   NEWT_SECRET=[[NEWT_SECRET2]]
 """
+##
+
+[[deployment]]
+name = "newt1"
+[deployment.config]
+server = "server-bkxal"
+image.type = "Image"
+image.params.image = "fosrl/newt" 
+poll_for_updates = true
+auto_update = true
+restart = "unless-stopped"
+environment = """
+  PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
+  NEWT_ID=[[NEWT_ID1]]
+  NEWT_SECRET=[[NEWT_SECRET1]]
+"""
 
 ##
 
@@ -361,6 +364,20 @@ is_secret = true
 [[variable]]
 name = "NEWT_SECRET2"
 value = "fynufrzgj21byeusity9xojmox07l1fr6yoe2fpsg0dg7kwd"
+is_secret = true
+
+##
+
+[[variable]]
+name = "NEWT_ID1"
+value = "sc90bcxcbkg0smq" 
+is_secret = true
+
+##
+
+[[variable]]
+name = "NEWT_SECRET1"
+value = "v5mkixs9kuz5oydxut39c17tody3ksttjk5b9utld02b8lwd"
 is_secret = true
 
 ##
