@@ -162,7 +162,7 @@
             href: http://zabbix.d3adc3ii.cc/zabbix
             ping: 192.168.2.5  
         - checkmk:
-            href: http://checkmk.d3adc3ii.cc
+            href: http://checkmk.int.d3adc3ii.cc
             ping: 192.168.2.17  
     - Apps: # Applications
         - Karakeep:
