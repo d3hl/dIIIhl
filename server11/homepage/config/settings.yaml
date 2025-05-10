@@ -49,7 +49,7 @@ layout:
       header: false
     M0nit0ring:
       style: row
-      columns: 2 
+      columns: 4 
       header: true
       useEqualHeights: true
     I1:
