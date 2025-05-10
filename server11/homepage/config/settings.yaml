@@ -35,24 +35,24 @@ layout:
     style: column
     columns: 1 
     header: true
-    I1:
-      style: row
-      columns: 2 
-      header: false
     Nas:
       style: row
       columns: 1 
       header: false
-    I2:
+    Pve:
       style: row
       columns: 4 
+      header: false
+    I1:
+      style: row
+      columns: 2 
       header: false
       useEqualHeights: true
     I3:
       style: row
       columns: 2
       header: false
-    I4:
+    Apps:
       style: row
       columns: 4
       header: true

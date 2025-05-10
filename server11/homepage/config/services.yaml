@@ -11,16 +11,7 @@
                 key: 1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe
                 enablePools: true
                 nasType: scale
-    - I1: # nas
-        - Opnsense:
-            icon: /icons/opnsense.png
-            href: https://opn.int.d3adc3ii.cc
-            ping: 192.168.2.1  
-        - DNS:
-            icon: /icons/technitium.png
-            href: https://ns1.int.d3adc3ii.cc
-            sitemonitor: https://ns1.int.d3adc3ii.cc 
-    - I2: # proxmox
+    - Pve: # proxmox
         - pve11:
             icon: /icons/proxmox.png
             href: https://pve.int.d3adc3ii.cc
@@ -61,6 +52,15 @@
                 url: https://pbs.d3adc3ii.cc
                 username: root@pam!homepage_token 
                 password: 8b1821a0-a776-49b7-a4cc-a2a433cee3d7
+    - I1: 
+        - Opnsense:
+            icon: /icons/opnsense.png
+            href: https://opn.int.d3adc3ii.cc
+            ping: 192.168.2.1  
+        - DNS:
+            icon: /icons/technitium.png
+            href: https://ns1.int.d3adc3ii.cc
+            sitemonitor: https://ns1.int.d3adc3ii.cc 
     - I3: # remote
         - Smokeping:
             icon: /icons/smokeping.png
@@ -70,6 +70,9 @@
             icon: /icons/guacamole.png
             href: https://guaca.int.d3adc3ii.cc/guacamole
             ping: 192.168.2.20  
+        - Battle of the badwidth:
+            icon: /icons/smokeping.png
+            href: https://botb.int.d3adc3ii.cc
     - I4: # remote
         - Homeassistant:
             icon: /icons/home-assistant.png
@@ -136,6 +139,9 @@
             icon: /icons/dumbterm.svg
             href: https://dumbterm.d3adc3ii.cc
             ping: 192.168.2.20  
+        - Twingate:
+            icon: /icons/dumbterm.svg
+            href: https://d3net.twinget.com
     - Monitoring:
         - Grafana:
             icon: /icons/grafana.png
@@ -170,6 +176,10 @@
         - wallos:
             icon: /icons/wallos.png
             href: http://wallos.d3adc3ii.cc
+            ping: 192.168.2.19 
+        - Omni-tools:
+            icon: /icons/omni-tools.png
+            href: http://omnitools.d3adc3ii.cc
             ping: 192.168.2.19 
 - GL1:
   - Info:
