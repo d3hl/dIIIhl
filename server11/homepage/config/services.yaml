@@ -142,10 +142,6 @@
             icon: /icons/dumbterm.svg
             href: https://dumbterm.d3adc3ii.cc
             ping: 192.168.2.20  
-
-    - Placeholder:
-        -Place1:
-            href: http://google.com
     - Monitoring:
         - Grafana:
             icon: /icons/grafana.png

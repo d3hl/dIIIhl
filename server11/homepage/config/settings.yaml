@@ -22,10 +22,6 @@ layout:
       columns: 3
       header: true
       #useEqualHeights: true
-    Placeholder:
-      style: row
-      columns: 1
-      header: false
     Monitoring:
       style: row
       columns: 4
