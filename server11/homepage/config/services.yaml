@@ -132,7 +132,7 @@
             href: https://komodo.d3adc3ii.cc
             sitemonitor: https://komodo.d3adc3ii.cc
         - ControlD:
-            icon: /icons/dumbterm.svg
+            icon: /icons/controld.png
             href: https://controld.com/dashboard/statistics 
             sitemonitor: https://controld.com/dashboard/statistics 
         - Twingate:
