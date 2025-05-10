@@ -346,3 +346,21 @@ is_secret = true
 name = "PG_PASS"
 value = "RAMKPLQF6F5FGKBZ6IH4UP4UPFPO6W2M"
 is_secret = true
+
+##
+
+[[variable]]
+name = "NEWT_ID2"
+description = "for newt 2"
+value = "n04e204hc6rp5yk"
+is_secret = true
+
+
+##
+
+[[variable]]
+name = "NEWT_SECRET2"
+value = "fynufrzgj21byeusity9xojmox07l1fr6yoe2fpsg0dg7kwd"
+is_secret = true
+
+##
