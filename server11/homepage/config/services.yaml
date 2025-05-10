@@ -142,6 +142,8 @@
         - Twingate:
             icon: /icons/twingate.png
             href: https://d3net.twinget.com
+
+    - Placeholder:
     - Monitoring:
         - Grafana:
             icon: /icons/grafana.png
