@@ -21,7 +21,7 @@ layout:
       style: row
       columns: 2
       header: true
-      useEqualHeights: true
+      #useEqualHeights: true
     Monitoring:
       style: row
       columns: 4
