@@ -24,7 +24,7 @@
         - pve11:
             icon: /icons/proxmox.png
             href: https://pve.int.d3adc3ii.cc
-            ping: 192.168.2.11
+            sitemonitor: https://pve.int.d3adc3ii.cc
             widget:
                 type: beszel
                 url: https://beszel.d3adc3ii.cc
@@ -34,6 +34,7 @@
                 version: 2 # optional, default is 1
         - pve12:
             icon: /icons/proxmox.png
+            ping: 192.168.2.12
             widget:
                 type: beszel
                 url: https://beszel.d3adc3ii.cc
@@ -43,6 +44,7 @@
                 version: 2 # optional, default is 1
         - pve13:
             icon: /icons/proxmox.png
+            ping: 192.168.2.13
             widget:
                 type: beszel
                 url: https://beszel.d3adc3ii.cc
