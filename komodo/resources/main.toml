@@ -54,6 +54,23 @@ run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-t
 ##
 
 [[stack]]
+name = "corecontrol"
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+run_directory = "server13/corecontrol"
+environment = """
+JWT_SECRET=[[CORECONTROL_JWT_SECRET]]
+POSTGRES_DATA=/mnt/zApps/corecontrol/data
+"""
+
+##
+
+[[stack]]
 name = "dumbterm"
 [stack.config]
 server = "komodo-2"
@@ -159,23 +176,6 @@ run_directory = "server12/prom-gra-alloy"
 environment = """
 LOKI_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/loki-config.yaml
 ALLOY_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/config.alloy
-"""
-
-##
-
-[[stack]]
-name = "corecontrol"
-[stack.config]
-server = "komodo-3"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "server13/corecontrol"
-environment = """
-JWT_SECRET=[[CORECONTROL_JWT_SECRET]]
-POSTGRES_DATA=/mnt/zApps/corecontrol/data
 """
 
 ##
@@ -348,6 +348,15 @@ repo = "d3adc3iii/dIIIhl"
 
 ##
 
+[[repo]]
+name = "diiihl-k3"
+[repo.config]
+server = "komodo-3"
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+
+##
+
 [[builder]]
 name = "local"
 [builder.config]
@@ -461,4 +470,11 @@ is_secret = true
 [[variable]]
 name = "PORTNOTE_LOGIN_PASSWORD"
 value = "jp2Pt7CG0AX5Y3Q0P3Inx8ESxyYUtVT2"
+is_secret = true
+
+##
+
+[[variable]]
+name = "CORECONTROL_JWT_SECRET"
+value = "^yv&5>qxi0#?C#^zqIqz(#81xBvY8?LEQkxj?U:Sd,uk^,K&>B=^zts*xT|~O|p"
 is_secret = true
