@@ -4,9 +4,8 @@ services:
     image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
     restart: unless-stopped
     volumes:
-      #- data:/data
-      #- ${DATA_DIR}:/data
-      - /etc/komodo/repos/diiihl/app-data/karakeep-data:/data
+      #- /etc/komodo/repos/diiihl/app-data/karakeep-data:/data
+      - ${DATA_DIR}:/data
     ports:
       - 3333:3000
     env_file:
