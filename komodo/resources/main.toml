@@ -7,6 +7,14 @@ enabled = true
 ##
 
 [[server]]
+name = "komodo-3"
+[server.config]
+address = "https://192.168.2.33:8120"
+enabled = true
+
+##
+
+[[server]]
 name = "server-bkxal"
 [server.config]
 address = "https://periphery:8120"
@@ -118,23 +126,6 @@ DATA_DIR=/mnt/zApps/karakeep/data
 ##
 
 [[stack]]
-name = "prom-ga-alloy"
-[stack.config]
-server = "komodo-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "server12/prom-gra-alloy"
-environment = """
-LOKI_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/loki-config.yaml
-ALLOY_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/config.alloy
-"""
-
-##
-
-[[stack]]
 name = "portnote"
 [stack.config]
 server = "komodo-3"
@@ -151,6 +142,23 @@ LOGIN_USERNAME=d3
 LOGIN_PASSWORD=[[PORTNOTE_LOGIN_PASSWORD]]
 DATABASE_URL="postgresql://postgres:postgres@db:5432/postgres"
 POSTGRES_DATA=/mnt/zApps/portnote/data
+"""
+
+##
+
+[[stack]]
+name = "prom-ga-alloy"
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+run_directory = "server12/prom-gra-alloy"
+environment = """
+LOKI_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/loki-config.yaml
+ALLOY_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/config.alloy
 """
 
 ##
@@ -218,23 +226,47 @@ KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU
 ##
 
 [[deployment]]
-name = "twingate"
+name = "nessus"
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
-image.params.image = "twingate/connector:latest"
+image.params.image = "tenable/nessus:latest-ubuntu"
+
+##
+
+[[deployment]]
+name = "newt1"
+[deployment.config]
+server = "server-bkxal"
+image.type = "Image"
+image.params.image = "fosrl/newt"
 poll_for_updates = true
 auto_update = true
 restart = "unless-stopped"
 environment = """
-  TWINGATE_NETWORK=d3net
-  TWINGATE_ACCESS_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6Inp3dkU1dHpJZzV4X2pSVEU4RTFWQll6MW0tX2g1dXlMZlhTV1VSS1BEVE0iLCJ0eXAiOiJEQVQifQ.eyJudCI6IkFOIiwiYWlkIjoiNTExMjE5IiwiZGlkIjoiMjE5MTEwMCIsImp0aSI6ImIxZjU3N2FkLTZmNDItNDYyYS05ZGIzLTY1NTE5ZmQyMTJlNCIsImlzcyI6InR3aW5nYXRlIiwiYXVkIjoiZDNuZXQiLCJleHAiOjE3NDYxNDQ5MDAsImlhdCI6MTc0NjE0MTMwMCwidmVyIjoiNCIsInRpZCI6IjEwMzU2NCIsInJudyI6MTc0NjE0MTU3OCwicm5ldGlkIjoiMTM1OTMxIn0.OxT4qXnqonLPGb1GwJTRcYoSwZG16x2JGA_Xu2pOo0dZH3jpqfd1SkjWy8JjcVePboTum2e0WEdNu4SFcJUy_A
-  TWINGATE_REFRESH_TOKEN=mrNJNc7hirY3gO3-q9l6dnN_YjYl-8q79XRXg1ffZstYm8EYyH6xNXMIVviMaQ-2-GAa4wuSMv1J5ebEf9KvzIK94jmq7j9QGPH2Tr7ZnjlYADuKrEpKUkrmnbrROkgQy6nzWg
-  TWINGATE_LOG_ANALYTICS=v2
+  PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
+  NEWT_ID=[[NEWT_ID1]]
+  NEWT_SECRET=[[NEWT_SECRET1]]
 """
 
 ##
 
+[[deployment]]
+name = "newt2"
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "fosrl/newt"
+poll_for_updates = true
+auto_update = true
+restart = "unless-stopped"
+environment = """
+  PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
+  NEWT_ID=[[NEWT_ID2]]
+  NEWT_SECRET=[[NEWT_SECRET2]]
+"""
+
+##
 
 [[deployment]]
 name = "omni-tools"
@@ -244,44 +276,10 @@ image.type = "Image"
 image.params.image = "iib0011/omni-tools:latest"
 poll_for_updates = true
 auto_update = true
-restart = "unless-stopped"
 network = "bridge"
+restart = "unless-stopped"
 ports = """
 8281:80
-"""
-environment = """
-"""
-##
-
-[[deployment]]
-name = "newt2"
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "fosrl/newt" 
-poll_for_updates = true
-auto_update = true
-restart = "unless-stopped"
-environment = """
-  PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
-  NEWT_ID=[[NEWT_ID2]]
-  NEWT_SECRET=[[NEWT_SECRET2]]
-"""
-##
-
-[[deployment]]
-name = "newt1"
-[deployment.config]
-server = "server-bkxal"
-image.type = "Image"
-image.params.image = "fosrl/newt" 
-poll_for_updates = true
-auto_update = true
-restart = "unless-stopped"
-environment = """
-  PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
-  NEWT_ID=[[NEWT_ID1]]
-  NEWT_SECRET=[[NEWT_SECRET1]]
 """
 
 ##
@@ -296,11 +294,20 @@ image.params.image = "rustscan/rustscan:latest"
 ##
 
 [[deployment]]
-name = "nessus"
+name = "twingate"
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
-image.params.image = "tenable/nessus:latest-ubuntu"
+image.params.image = "twingate/connector:latest"
+poll_for_updates = true
+auto_update = true
+restart = "unless-stopped"
+environment = """
+  TWINGATE_NETWORK=d3net
+  TWINGATE_ACCESS_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6Inp3dkU1dHpJZzV4X2pSVEU4RTFWQll6MW0tX2g1dXlMZlhTV1VSS1BEVE0iLCJ0eXAiOiJEQVQifQ.eyJudCI6IkFOIiwiYWlkIjoiNTExMjE5IiwiZGlkIjoiMjE5MTEwMCIsImp0aSI6ImIxZjU3N2FkLTZmNDItNDYyYS05ZGIzLTY1NTE5ZmQyMTJlNCIsImlzcyI6InR3aW5nYXRlIiwiYXVkIjoiZDNuZXQiLCJleHAiOjE3NDYxNDQ5MDAsImlhdCI6MTc0NjE0MTMwMCwidmVyIjoiNCIsInRpZCI6IjEwMzU2NCIsInJudyI6MTc0NjE0MTU3OCwicm5ldGlkIjoiMTM1OTMxIn0.OxT4qXnqonLPGb1GwJTRcYoSwZG16x2JGA_Xu2pOo0dZH3jpqfd1SkjWy8JjcVePboTum2e0WEdNu4SFcJUy_A
+  TWINGATE_REFRESH_TOKEN=mrNJNc7hirY3gO3-q9l6dnN_YjYl-8q79XRXg1ffZstYm8EYyH6xNXMIVviMaQ-2-GAa4wuSMv1J5ebEf9KvzIK94jmq7j9QGPH2Tr7ZnjlYADuKrEpKUkrmnbrROkgQy6nzWg
+  TWINGATE_LOG_ANALYTICS=v2
+"""
 
 ##
 
@@ -397,7 +404,6 @@ description = "for newt 2"
 value = "n04e204hc6rp5yk"
 is_secret = true
 
-
 ##
 
 [[variable]]
@@ -409,7 +415,7 @@ is_secret = true
 
 [[variable]]
 name = "NEWT_ID1"
-value = "sc90bcxcbkg0smq" 
+value = "sc90bcxcbkg0smq"
 is_secret = true
 
 ##
@@ -420,3 +426,22 @@ value = "v5mkixs9kuz5oydxut39c17tody3ksttjk5b9utld02b8lwd"
 is_secret = true
 
 ##
+
+[[variable]]
+name = "PORTNOTE_JWT_SECRET"
+value = "XxockagcY8ApPXCUh6Ujo1Qu4sdrXwcb"
+is_secret = true
+
+##
+
+[[variable]]
+name = "PORTNOTE_USER_SECRET"
+value = "NBcMXXPJrGb7OPIzrRGgbCgvG5Gja2kK"
+is_secret = true
+
+##
+
+[[variable]]
+name = "PORTNOTE_LOGIN_PASSWORD"
+value = "jp2Pt7CG0AX5Y3Q0P3Inx8ESxyYUtVT2"
+is_secret = true
