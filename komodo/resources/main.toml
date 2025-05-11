@@ -265,6 +265,14 @@ environment = """
 
 ##
 
+[[deployment]]
+name = "rustscan"
+[deployment.config]
+server = "server-bkxal"
+image.type = "Image"
+image.params.image = "rustscan/rustscan:latest"
+##
+
 [[repo]]
 name = "diiihl"
 [repo.config]
