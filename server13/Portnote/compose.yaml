@@ -2,7 +2,7 @@ services:
   web:
     image: haedlessdev/portnote:latest
     ports:
-      - "3000:3000"
+      - "3033:3000"
     env_file:
       - .env
   agent:
