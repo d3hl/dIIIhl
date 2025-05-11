@@ -271,6 +271,16 @@ name = "rustscan"
 server = "server-bkxal"
 image.type = "Image"
 image.params.image = "rustscan/rustscan:latest"
+
+##
+
+[[deployment]]
+name = "nessus"
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "tenable/nessus:latest-ubuntu"
+
 ##
 
 [[repo]]
