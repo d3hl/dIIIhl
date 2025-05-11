@@ -1,0 +1,24 @@
+services:
+  web:
+    image: haedlessdev/portnote:latest
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+  agent:
+    image: haedlessdev/portnote-agent:latest
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres"
+
+  db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ${POSTGRES_DATA}:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

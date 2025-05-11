@@ -134,6 +134,27 @@ ALLOY_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/conf
 
 ##
 
+[[stack]]
+name = "PortNote"
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+run_directory = "server13/Portnote"
+environment = """
+JWT_SECRET=[[PORTNOTE_JWT_SECRET]]
+USER_SECRET=[[PORTNOTE_USER_SECRET]]
+LOGIN_USERNAME=d3
+LOGIN_PASSWORD=[[PORTNOTE_LOGIN_PASSWORD]]
+DATABASE_URL="postgresql://postgres:postgres@db:5432/postgres"
+POSTGRES_DATA=/mnt/zApps/portnote/data
+"""
+
+##
+
 [[deployment]]
 name = "alloy"
 [deployment.config]
