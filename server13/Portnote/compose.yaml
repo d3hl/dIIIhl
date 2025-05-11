@@ -14,6 +14,8 @@ services:
     image: postgres:17
     restart: always
     environment:
+      PGID: 1000 # optional, your group id
+      PUID: 1000 # optional, your user id
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
