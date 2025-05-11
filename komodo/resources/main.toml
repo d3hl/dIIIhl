@@ -135,7 +135,7 @@ ALLOY_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/conf
 ##
 
 [[stack]]
-name = "PortNote"
+name = "portnote"
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
