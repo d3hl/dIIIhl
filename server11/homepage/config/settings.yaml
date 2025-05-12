@@ -2,7 +2,7 @@
 title: d3 Homelab
 
 backgorund: 
-  image: /images/purple_mountain.jpg
+  image: https://images.pexels.com/photos/18683304/pexels-photo-18683304/free-photo-of-a-small-owl-sitting-on-a-branch-in-the-dark.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2 
   blur: sm # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur
   saturate: 50 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
   brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
