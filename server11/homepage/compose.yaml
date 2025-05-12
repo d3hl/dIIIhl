@@ -4,7 +4,7 @@ services:
     container_name: homepage
     environment:
       ALLOWED_HOSTS: ${ALLOWED_HOSTS}
-      DATA_DIR: ${DATA_DIR}
+      #DATA_DIR: ${DATA_DIR}
       PGID: 1000 # optional, your group id
       PUID: 1000 # optional, your user id
 #      HOMEPAGE_FILE_SETTINGS: ${HOMEPAGE_FILE_SETTINGS}
@@ -16,7 +16,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-    #  - $(DATA_DIR):/app/config # Make sure your local config directory exists
-      - ${ICON_DIR}:/app/public/icons # Make sure your local data directory exists
+      - $(DATA_DIR)/config:/app/config # Make sure your local config directory exists
+      - ${ICON_DIR}/icons:/app/public/icons # Make sure your local data directory exists
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
     restart: unless-stopped
