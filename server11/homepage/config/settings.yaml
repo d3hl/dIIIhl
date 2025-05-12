@@ -4,7 +4,7 @@
 # https://gethomepage.dev/latest/configs/settings
 title: d3 Homepage
 
-backgorund: https://i.imgur.com/L2qaxsm.jpeg 
+backgorund: /images/sunset.png
 theme: dark
 iconStyle: theme
 target: _self
