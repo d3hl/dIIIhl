@@ -2,7 +2,7 @@
 title: d3 Homelab
 
 backgorund: 
-  image: /images/sunset.png
+  image: /images/purple_mountain.jpg
   blur: sm # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur
   saturate: 50 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
   brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
@@ -11,7 +11,7 @@ backgorund:
 theme: dark
 iconStyle: theme
 target: _self
-headerStyle: underlined
+headerStyle: boxedWidgets
 fullWidth: true
 showStats: true
 hideErrors: true
