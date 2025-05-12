@@ -16,7 +16,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - $(DATA_DIR):/app/config # Make sure your local config directory exists
+    #  - $(DATA_DIR):/app/config # Make sure your local config directory exists
       - ${ICON_DIR}:/app/public/icons # Make sure your local data directory exists
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
     restart: unless-stopped
