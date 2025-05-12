@@ -10,6 +10,8 @@ services:
       HOMEPAGE_FILE_SERVICES: ${HOMEPAGE_FILE_SERVICES}
       HOMEPAGE_FILE_WIDGETS: ${HOMEPAGE_FILE_WIDGETS}
       HOMEPAGE_FILE_BOOKMARKS: ${HOMEPAGE_FILE_BOOKMARKS}
+      HOMEPAGE_DATA_DIR: ${HOMEPAGE_DATA_DIR} # optional, path to your local config directory
+      HOMEPAGE_ICON_DIR: ${HOMEPAGE_ICON_DIR} # optional, path to your local data directory
     env_file:
       - .env
     ports:
