@@ -1,7 +1,4 @@
 ---
-# For configuration options and examples, please see:
-# https://gethomepage.dev/latest/configs/service-widgets
-
 
 - logo:
     icon: /icons/d3logo.png 
