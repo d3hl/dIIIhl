@@ -103,6 +103,7 @@ repo = "d3adc3iii/dIIIhl"
 run_directory = "server11/homepage"
 environment = """
 SERVER=server11
+HOMEPAGE_DATA_DIR=/etc/komodo/stacks/homepage/${server}/homepage
 HOMEPAGE_FILE_SETTINGS=/etc/komodo/stacks/homepage/${server}/homepage/config/settings.yaml
 HOMEPAGE_FILE_SERVICES=/etc/komodo/stacks/homepage/${server}/homepage/config/servicess.yaml
 HOMEPAGE_FILE_WIDGETS=/etc/komodo/stacks/homepage/${server}/homepage/config/widgets.yaml
