@@ -104,10 +104,6 @@ run_directory = "server11/homepage"
 environment = """
 HOMEPAGE_DATA_DIR=/etc/komodo/stacks/homepage/server11/homepage/config
 HOMEPAGE_ICON_DIR=/etc/komodo/stacks/homepage/server11/homepage/icons
-HOMEPAGE_FILE_SETTINGS=/etc/komodo/stacks/homepage/server11/homepage/config/settings.yaml
-HOMEPAGE_FILE_SERVICES=/etc/komodo/stacks/homepage/server11/homepage/config/servicess.yaml
-HOMEPAGE_FILE_WIDGETS=/etc/komodo/stacks/homepage/server11/homepage/config/widgets.yaml
-HOMEPAGE_FILE_BOOKMARKS=/etc/komodo/stacks/homepage/server11/homepage/config/bookmarks.yaml
 HOMEPAGE_ALLOWED_HOSTS= homepage.d3adc3ii.cc,192.168.2.31:3000
 """
 
