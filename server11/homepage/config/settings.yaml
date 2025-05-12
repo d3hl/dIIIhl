@@ -2,7 +2,7 @@
 
 # For configuration options and examples, please see:
 # https://gethomepage.dev/latest/configs/settings
-title: d3 Homepage
+title: d3 Homelab
 
 backgorund: /images/sunset.png
 theme: dark
