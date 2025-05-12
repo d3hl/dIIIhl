@@ -102,11 +102,12 @@ git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
 run_directory = "server11/homepage"
 environment = """
-HOMEPAGE_DATA_DIR=/etc/komodo/stacks/homepage/server11/homepage
-HOMEPAGE_FILE_SETTINGS=${HOMEPAGE_DATA_DIR}/config/settings.yaml
-HOMEPAGE_FILE_SERVICES=${HOMEPAGE_DATA_DIR}/config/servicess.yaml
-HOMEPAGE_FILE_WIDGETS=${HOMEPAGE_DATA_DIR}/config/widgets.yaml
-HOMEPAGE_FILE_BOOKMARKS=${HOMEPAGE_DATA_DIR}/config/bookmarks.yaml
+HOMEPAGE_DATA_DIR=/etc/komodo/stacks/homepage/server11/homepage/config
+HOMEPAGE_ICON_DIR=/etc/komodo/stacks/homepage/server11/homepage/icons
+HOMEPAGE_FILE_SETTINGS=${HOMEPAGE_DATA_DIR}/settings.yaml
+HOMEPAGE_FILE_SERVICES=${HOMEPAGE_DATA_DIR}/servicess.yaml
+HOMEPAGE_FILE_WIDGETS=${HOMEPAGE_DATA_DIR}/widgets.yaml
+HOMEPAGE_FILE_BOOKMARKS=${HOMEPAGE_DATA_DIR}/bookmarks.yaml
 HOMEPAGE_ALLOWED_HOSTS= homepage.d3adc3ii.cc,192.168.2.31:3000
 """
 

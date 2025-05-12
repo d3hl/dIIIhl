@@ -15,8 +15,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - $(HOMEPAGE_DATA_DIR)/config:/app/config # Make sure your local config directory exists
-      #- /etc/komodo/stacks/homepage/server11/homepage/icons:/app/public/icons # Make sure your local data directory exists
-      - ${HOMEPAGE_DATA_DIR}/icons:/app/public/icons # Make sure your local data directory exists
+      - $(HOMEPAGE_DATA_DIR):/app/config # Make sure your local config directory exists
+      - ${HOMEPAGE_ICON_DIR}:/app/public/icons # Make sure your local data directory exists
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
     restart: unless-stopped
