@@ -102,8 +102,7 @@ git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
 run_directory = "server11/homepage"
 environment = """
-DATA_DIR=/etc/komodo/stacks/homepage/server11/homepage/config
-ICON_DIR=/etc/komodo/stacks/homepage/server11/homepage/icons
+DATA_DIR=/etc/komodo/repos/diiihl/server11/homepage/
 ALLOWED_HOSTS= homepage.d3adc3ii.cc,192.168.2.31:3000
 """
 
