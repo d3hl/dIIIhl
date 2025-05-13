@@ -164,7 +164,7 @@ environment = """
 NZBGET_USER= [[NZBGET_USER]]
 NZBGET_PASS= [[NZBGET_PASS]]
 NZBGET_CONFIG= /mnt/zApps/nzbget/config
-NZBGET_DL= /mnt/zApps/nzbget/downloads
+NZBGET_DL= /mnt/zApps/nzbget/download
 """
 
 ##
