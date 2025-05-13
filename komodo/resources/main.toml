@@ -24,6 +24,7 @@ enabled = true
 
 [[stack]]
 name = "authentik"
+tags = ["external", "critical"]
 [stack.config]
 server = "server-bkxal"
 poll_for_updates = true
@@ -42,6 +43,11 @@ PG_PASS= [[PG_PASS]]
 
 [[stack]]
 name = "battle-of-the-bandwidth"
+tags = [
+  "internal",
+  "testing",
+  "monitoring"
+]
 [stack.config]
 server = "komodo-2"
 poll_for_updates = true
@@ -55,6 +61,7 @@ run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-t
 
 [[stack]]
 name = "corecontrol"
+tags = ["internal", "testing"]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -72,6 +79,7 @@ POSTGRES_DATA=/mnt/zApps/corecontrol/data
 
 [[stack]]
 name = "dumbterm"
+tags = ["external", "production"]
 [stack.config]
 server = "komodo-2"
 poll_for_updates = true
@@ -93,6 +101,7 @@ environment = """
 
 [[stack]]
 name = "homepage"
+tags = ["external", "production"]
 [stack.config]
 server = "server-bkxal"
 poll_for_updates = true
@@ -110,6 +119,7 @@ ALLOWED_HOSTS= homepage.d3adc3ii.cc,192.168.2.31:3000
 
 [[stack]]
 name = "immich"
+tags = ["internal", "production"]
 [stack.config]
 server = "server-bkxal"
 git_account = "d3adc3iii"
@@ -120,6 +130,7 @@ run_directory = "/etc/komodo/stacks/immich/server11/immich"
 
 [[stack]]
 name = "karakeep"
+tags = ["external", "production"]
 [stack.config]
 server = "server-bkxal"
 poll_for_updates = true
@@ -141,6 +152,11 @@ DATA_DIR=/mnt/zApps/karakeep/data
 
 [[stack]]
 name = "portnote"
+tags = [
+  "internal",
+  "testing",
+  "monitoring"
+]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -221,6 +237,7 @@ environment = """
 
 [[deployment]]
 name = "beszel-k11"
+tags = ["internal", "monitoring"]
 [deployment.config]
 server = "server-bkxal"
 image.type = "Image"
@@ -241,6 +258,7 @@ KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU
 
 [[deployment]]
 name = "beszel-k12"
+tags = ["internal", "monitoring"]
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
@@ -260,6 +278,7 @@ KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU
 
 [[deployment]]
 name = "nessus"
+tags = ["internal", "testing"]
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
@@ -269,6 +288,7 @@ image.params.image = "tenable/nessus:latest-ubuntu"
 
 [[deployment]]
 name = "newt1"
+tags = ["external", "production"]
 [deployment.config]
 server = "server-bkxal"
 image.type = "Image"
@@ -286,6 +306,7 @@ environment = """
 
 [[deployment]]
 name = "newt2"
+tags = ["external", "production"]
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
@@ -303,6 +324,7 @@ environment = """
 
 [[deployment]]
 name = "omni-tools"
+tags = ["external", "testing"]
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
@@ -318,16 +340,8 @@ ports = """
 ##
 
 [[deployment]]
-name = "rustscan"
-[deployment.config]
-server = "server-bkxal"
-image.type = "Image"
-image.params.image = "rustscan/rustscan:latest"
-
-##
-
-[[deployment]]
 name = "twingate"
+tags = ["external", "production"]
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
@@ -364,12 +378,10 @@ repo = "d3adc3iii/dIIIhl"
 
 ##
 
-[[repo]]
-name = "diiihl-k3"
-[repo.config]
-server = "komodo-3"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
+[[alerter]]
+name = "test-alert"
+[alerter.config]
+
 
 ##
 
