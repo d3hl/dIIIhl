@@ -13,7 +13,7 @@ services:
       - NZBGET_PASS= ${NZBGET_PASS} #optional
     volumes:
       - ${NZBGET_CONFIG}:/config
-      - ${NZBGET_DOWNLOAD}:/downloads #optional
+      - ${NZBGET_DL}:/downloads #optional
     ports:
       - 6789:6789
     restart: unless-stopped
