@@ -359,15 +359,6 @@ repo = "d3adc3iii/dIIIhl"
 
 ##
 
-[[repo]]
-name = "diiihl-k3"
-[repo.config]
-server = "komodo-3"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-
-##
-
 [[alerter]]
 name = "test-alert"
 [alerter.config]
