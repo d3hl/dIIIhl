@@ -177,6 +177,25 @@ ALLOY_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/conf
 
 ##
 
+[[stack]]
+name = "nzbget"
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+run_directory = "server12/nzbget"
+environment = """
+NZBGET_USER= [[NZBGET_USER]]
+NZBGET_PASS= [[NZBGET_PASS]]
+NZBGET_CONFIG= /mnt/zApps/nzbget/config
+NZBGET_DL= /mnt/zApps/nzbget/downloads
+"""
+
+##
+
 [[deployment]]
 name = "alloy"
 [deployment.config]
