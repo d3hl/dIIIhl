@@ -359,7 +359,7 @@ environment = """
 ##
 
 [[deployment]]
-name = "StatementSensei"
+name = "statementsensei"
 tags = ["internal", "testing"]
 [deployment.config]
 server = "komodo-2"
