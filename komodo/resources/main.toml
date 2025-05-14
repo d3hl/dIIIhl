@@ -358,6 +358,24 @@ environment = """
 
 ##
 
+[[deployment]]
+name = "StatementSensei"
+tags = ["internal", "testing"]
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "benjaminawd/statementsensei:latest"
+poll_for_updates = true
+auto_update = true
+environment: """
+  PDF_PASSWORD= [[PDF_PASSWORD]]
+  
+"""
+ports = """
+8501:8501
+"""
+##
+
 [[repo]]
 name = "diiihl"
 [repo.config]
