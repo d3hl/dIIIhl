@@ -340,6 +340,24 @@ ports = """
 ##
 
 [[deployment]]
+name = "statementsensei"
+tags = ["internal", "testing"]
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "benjaminawd/statementsensei:latest"
+poll_for_updates = true
+auto_update = true
+ports = """
+8501:8501
+"""
+environment = """
+  PDF_PASSWORD= [[PDF_PASSWORD]]
+"""
+
+##
+
+[[deployment]]
 name = "twingate"
 tags = ["external", "production"]
 [deployment.config]
@@ -356,23 +374,6 @@ environment = """
   TWINGATE_LOG_ANALYTICS=v2
 """
 
-##
-
-[[deployment]]
-name = "statementsensei"
-tags = ["internal", "testing"]
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "benjaminawd/statementsensei:latest"
-poll_for_updates = true
-auto_update = true
-environment = """
-  PDF_PASSWORD= [[PDF_PASSWORD]]
-"""
-ports = """
-8501:8501
-"""
 ##
 
 [[repo]]
@@ -525,4 +526,11 @@ is_secret = true
 [[variable]]
 name = "NZBGET_USER"
 value = "d3"
+is_secret = true
+
+##
+
+[[variable]]
+name = "PDF_PASSWORD"
+value = "Abcd1234"
 is_secret = true
