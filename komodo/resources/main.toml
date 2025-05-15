@@ -382,7 +382,7 @@ name = "karakeep"
 [build.config]
 builder = "local"
 git_account = "d3adc3iii"
-repo = "d3adc3iii/hIIIHL"
+repo = "d3adc3iii/dIIIhl"
 build_path = "Dockerfile/karakeep"
 dockerfile_path = "docker/Dockerfile"
 image_registry.domain = "ghcr.io"
