@@ -232,15 +232,52 @@ DB_DATABASE_NAME=immich
 
 [[stack]]
 name = "karakeep"
-tags = ["external", "production"]
 [stack.config]
-server = "server-bkxal"
+server = "komodo-2"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "server11/karakeep-app"
+file_contents = """
+version: '3.8'
+services:
+  web:
+    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
+    restart: unless-stopped
+    volumes:
+      #- /etc/komodo/repos/diiihl/app-data/karakeep-data:/data
+      - ${DATA_DIR}:/data
+    ports:
+      - 3333:3000
+    env_file:
+      - .env
+    environment:
+      MEILI_ADDR: http://meilisearch:7700
+      BROWSER_WEB_URL: http://chrome:9222
+      DATA_DIR: /data
+  chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:123
+    restart: unless-stopped
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+  meilisearch:
+    image: getmeili/meilisearch:v1.13.3
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - meilisearch:/meili_data
+
+volumes:
+  meilisearch:
+  data:
+"""
 environment = """
 KARAKEEP_VERSION=release
 NEXTAUTH_SECRET=[[KARA_NEXTAUTH_SECRET]]
@@ -273,25 +310,49 @@ NZBGET_DL= /mnt/zApps/nzbget/download
 
 [[stack]]
 name = "portnote"
-tags = [
-  "internal",
-  "testing",
-  "monitoring"
-]
 [stack.config]
-server = "komodo-3"
+server = "komodo-2"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "server13/Portnote"
+file_contents = """
+services:
+  web:
+    image: haedlessdev/portnote:latest
+    ports:
+      - "3033:3000"
+    env_file:
+      - .env
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      USER_SECRET: ${USER_SECRET}
+      LOGIN_USERNAE: ${LOGIN_USERNAME}
+      LOGIN_PASSWORD: ${LOGIN_PASSWORD}
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres"
+  agent:
+    image: haedlessdev/portnote-agent:latest
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres"
+
+  db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ${POSTGRES_DATA}:/var/lib/postgresql/data
+    user: "1000:1000"
+
+volumes:
+  postgres_data:
+"""
 environment = """
 JWT_SECRET=[[PORTNOTE_JWT_SECRET]]
 USER_SECRET=[[PORTNOTE_USER_SECRET]]
 LOGIN_USERNAME=d3
 LOGIN_PASSWORD=[[PORTNOTE_LOGIN_PASSWORD]]
-DATABASE_URL="postgresql://postgres:postgres@db:5432/postgres"
 POSTGRES_DATA=/mnt/zApps/portnote/data
 """
 
