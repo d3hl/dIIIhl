@@ -1,6 +1,0 @@
-endpoints:
-  - name: komodo
-    url: https://komodo.d3adc3ii.cc
-    interval: 30s
-    conditions:
-      - "[STATUS] == 200"
