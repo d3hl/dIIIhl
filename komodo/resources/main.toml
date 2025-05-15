@@ -411,6 +411,11 @@ repo = "d3adc3iii/dIIIhl"
 ##
 
 [[procedure]]
+name = "check_update"
+
+##
+
+[[procedure]]
 name = "pull-deploy"
 description = "description = \"Pulls stack-repo, deploys stacks\""
 config.schedule_timezone = "Asia/Singapore"
