@@ -92,41 +92,46 @@ run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-t
 ##
 
 [[stack]]
-name = "corecontrol"
-tags = ["internal", "testing"]
-[stack.config]
-server = "komodo-3"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "server13/corecontrol"
-environment = """
-JWT_SECRET=[[CORECONTROL_JWT_SECRET]]
-POSTGRES_DATA=/mnt/zApps/corecontrol/data
-"""
-
-##
-
-[[stack]]
 name = "dumbterm"
-tags = ["external", "production"]
 [stack.config]
 server = "komodo-2"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/dumbterm/server12/dumbterm"
+file_contents = """
+services:
+  dumbterm:
+    image: dumbwareio/dumbterm:latest
+    container_name: dumbterm
+    restart: unless-stopped
+    ports:
+      - ${DUMBTERM_PORT}:3000
+    volumes:
+      - ${DUMBTERM_CONFIG}:/root/.config
+      - ${DUMBTERM_DATA_DIR}:/root/data
+    environment:
+      # Container timezone
+      TZ: ${DUMBTERM_TZ}
+      # The title shown in the web interface
+      SITE_TITLE: ${DUMBTERM_SITE_TITLE:-DumbTerm}
+      # Recommended PIN protection (leave empty to disable)
+      DUMBTERM_PIN: ${DUMBTERM_PIN}
+      # The base URL for the application
+      BASE_URL: ${DUMBTERM_BASE_URL}
+      ENABLE_STARSHIP: ${ENABLE_STARSHIP:-true}
+      LOCKOUT_TIME: ${DUMBTERM_LOCKOUT_TIME:-15} # Minutes
+      # Session duration in hours before requiring re-authentication
+      MAX_SESSION_AGE: ${DUMBTERM_MAX_SESSION_AGE:-24} # Hours
+      # (OPTIONAL) - List of allowed origins for CORS
+      # ALLOWED_ORIGINS: ${DUMBTERM_ALLOWED_ORIGINS:-http://localhost:3000}
+"""
 environment = """
-  DUMBTERM_CONFIG="/mnt/zApps/dumbterm/config"
-  DUMBTERM_DATA_DIR="/mnt/zApps/dumbterm/data"
-  DUMBTERM_TZ="Asia/Singapore"
-  DUMBTERM_PIN=1111
-  DUMBTERM_PORT=3002
-  DUMBTERM_BASE_URL=http://dumbterm.d3adc3ii.cc:3002
+DUMBTERM_CONFIG="/mnt/zApps/dumbterm/config"
+DUMBTERM_DATA_DIR="/mnt/zApps/dumbterm/data"
+DUMBTERM_TZ="Asia/Singapore"
+DUMBTERM_PIN=1111
+DUMBTERM_PORT=3002
+DUMBTERM_BASE_URL=http://dumbterm.d3adc3ii.cc:3002
 """
 
 ##
