@@ -411,7 +411,23 @@ repo = "d3adc3iii/dIIIhl"
 ##
 
 [[procedure]]
-name = "xxx"
+name = "pull-deploy"
+description = "description = \"Pulls stack-repo, deploys stacks\""
+config.schedule_timezone = "Asia/Singapore"
+
+[[procedure.config.stage]]
+name = "\"Pull Repo"
+enabled = true
+executions = [
+  { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Deploy if changed"
+enabled = true
+executions = [
+  { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = "t*,o*", enabled = true }
+]
 
 ##
 
