@@ -35,8 +35,6 @@ services:
     image: docker.io/actualbudget/actual-server:latest
     ports:
       - '5006:5006'
-    env-file:
-      - .env
     volumes:
       # Change './actual-data' below to the path to the folder you want Actual to store its data in on your server.
       # '/data' is the path Actual will look for its files in by default, so leave that as-is.
