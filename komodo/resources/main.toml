@@ -414,15 +414,11 @@ repo = "d3adc3iii/dIIIhl"
 name = "pull-deploy"
 description = "Pulls stack-repo, deploys stacks"
 
-##
-
 [[procedure.config.stage]]
 name = "Pull Repo"
 executions = [
   { execution.type = "PullRepo", execution.params.pattern = "stack-repo" },
 ]
-
-##
 
 [[procedure.config.stage]]
 name = "Deploy if changed"
