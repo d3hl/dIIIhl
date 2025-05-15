@@ -410,6 +410,11 @@ repo = "d3adc3iii/dIIIhl"
 
 ##
 
+[[procedure]]
+name = "xxx"
+
+##
+
 [[alerter]]
 name = "test-alert"
 [alerter.config]
