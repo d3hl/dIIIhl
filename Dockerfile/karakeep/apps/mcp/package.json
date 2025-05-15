@@ -21,7 +21,7 @@
     "@types/turndown": "^5.0.5",
     "shx": "^0.4.0",
     "tsx": "^4.7.1",
-    "vite": "^5.1.0"
+    "vite": "^5.4.19"
   },
   "scripts": {
     "build": "vite build && shx chmod +x dist/index.js",
