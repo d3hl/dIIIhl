@@ -227,6 +227,7 @@ DUMBTERM_BASE_URL=http://dumbterm.d3adc3ii.cc:3002
 
 [[stack]]
 name = "homepage"
+tags = ["external", "production"]
 [stack.config]
 server = "server-bkxal"
 poll_for_updates = true
@@ -464,29 +465,6 @@ run_directory = "server12/prom-gra-alloy"
 environment = """
 LOKI_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/loki-config.yaml
 ALLOY_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/config.alloy
-"""
-
-##
-
-[[deployment]]
-name = "alloy"
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "grafana/alloy:latest"
-poll_for_updates = true
-auto_update = true
-network = "bridge"
-restart = "unless-stopped"
-command = "run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data etc/alloy/config.alloy"
-ports = """
- 12345:12345
-"""
-volumes = """
-/etc/komodo/repos/diiihl-k2/server12/alloy/config/config.alloy:/etc/alloy/config.alloy
-"""
-environment = """
-
 """
 
 ##
