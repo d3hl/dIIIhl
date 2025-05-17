@@ -403,6 +403,40 @@ DATA_DIR=/mnt/zApps/karakeep/data
 ##
 
 [[stack]]
+name = "nzbget"
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  nzbget:
+    image: lscr.io/linuxserver/nzbget:latest
+    container_name: nzbget
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - NZBGET_USER=nzbget #optional
+      - NZBGET_PASS=tegbzn6789 #optional
+    volumes:
+      - ${NZBGET_CF_DIR}:/config
+      - ${NZBGET_DL_DIR}:/downloads #optional
+    ports:
+      - 6789:6789
+    restart: unless-stopped
+"""
+environment = """
+NZBGET_CF_DIR=/mnt/zApps/nzb/config
+NZBGET_DL_DIR=/mnt/zApps/nzb/downloads
+"""
+
+##
+
+[[stack]]
 name = "portnote"
 [stack.config]
 server = "komodo-2"
