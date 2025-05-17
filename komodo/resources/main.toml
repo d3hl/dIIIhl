@@ -227,15 +227,31 @@ DUMBTERM_BASE_URL=http://dumbterm.d3adc3ii.cc:3002
 
 [[stack]]
 name = "homepage"
-tags = ["external", "production"]
 [stack.config]
-server = "server-bkxal"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "server11/homepage"
+file_contents = """
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      #DATA_DIR: ${DATA_DIR}
+      PGID: 1000 # optional, your group id
+      PUID: 1000 # optional, your user id
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    volumes:
+      - ${DATA_DIR}/config:/app/config 
+      - ${DATA_DIR}/icons:/app/public/icons
+      - ${DATA_DIR}/images:/app/public/images 
+      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
+    restart: unless-stopped
+"""
 environment = """
 DATA_DIR= /etc/komodo/repos/diiihl/server11/homepage
 ALLOWED_HOSTS= homepage.d3adc3ii.cc,192.168.2.31:3000
