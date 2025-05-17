@@ -24,6 +24,7 @@ enabled = true
 
 [[stack]]
 name = "actual-budget"
+tags = ["internal", "testing"]
 [stack.config]
 server = "komodo-2"
 poll_for_updates = true
@@ -93,6 +94,7 @@ run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-t
 
 [[stack]]
 name = "dumbterm"
+tags = ["external", "production"]
 [stack.config]
 server = "komodo-2"
 poll_for_updates = true
@@ -156,6 +158,7 @@ ALLOWED_HOSTS= homepage.d3adc3ii.cc,192.168.2.31:3000
 
 [[stack]]
 name = "immich"
+tags = ["internal", "production"]
 [stack.config]
 server = "server-bkxal"
 file_contents = """
@@ -237,6 +240,7 @@ DB_DATABASE_NAME=immich
 
 [[stack]]
 name = "karakeep"
+tags = ["external", "production"]
 [stack.config]
 server = "komodo-2"
 poll_for_updates = true
