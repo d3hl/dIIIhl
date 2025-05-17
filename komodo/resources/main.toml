@@ -94,7 +94,7 @@ services:
     volumes:
       - redis:/data
   server:
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.4.0}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.4.1}
     restart: unless-stopped
     command: server
     environment:
@@ -690,7 +690,7 @@ executions = [
 name = "Deploy if changed"
 enabled = true
 executions = [
-  { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = "t*,o*", enabled = true }
+  { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = "t*,o*,a*", enabled = true }
 ]
 
 ##
