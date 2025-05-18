@@ -359,7 +359,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Singapore
-      - JELLYFIN_PublishedServerUrl=http://192.168.0.5 #optional
+      - JELLYFIN_PublishedServerUrl=https://jelly.int.d3adc3ii.cc #optional
     volumes:
       - ${JELLYFIN_CONFIG_DIR}:/config
       - ${JELLYFIN_DATA_DIR}/tvshows:/data/tvshows
@@ -373,7 +373,8 @@ services:
 """
 environment = """
 JELLYFIN_CONFIG_DIR=/mnt/zApps/jellyfin/config
-JELLYFIN_DATA_DIR=/mnt/zApps/jellyfin/data
+JELLYFIN_DATA_DIR=/mnt/zFiles/media
+
 """
 
 ##
