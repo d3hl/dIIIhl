@@ -343,6 +343,42 @@ DB_DATABASE_NAME=immich
 ##
 
 [[stack]]
+name = "jellyfin"
+tags = ["internal", "production"]
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Singapore
+      - JELLYFIN_PublishedServerUrl=http://192.168.0.5 #optional
+    volumes:
+      - ${JELLYFIN_CONFIG_DIR}:/config
+      - ${JELLYFIN_DATA_DIR}/tvshows:/data/tvshows
+      - ${JELLYFIN_DATA_DIR}/movies:/data/movies
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    restart: unless-stopped
+"""
+environment = """
+JELLYFIN_CONFIG_DIR=/mnt/zApps/jellyfin/config
+JELLYFIN_DATA_DIR=/mnt/zApps/jellyfin/data
+"""
+
+##
+
+[[stack]]
 name = "karakeep"
 tags = ["external", "production"]
 [stack.config]
@@ -399,6 +435,14 @@ NEXTAUTH_URL=http://192.168.2.31:3333
 OPENAI_API_KEY=[[OPENAI_API_KEY]]
 DATA_DIR=/mnt/zApps/karakeep/data
 """
+
+##
+
+[[stack]]
+name = "loggifly"
+tags = ["internal", "monitoring"]
+[stack.config]
+
 
 ##
 
