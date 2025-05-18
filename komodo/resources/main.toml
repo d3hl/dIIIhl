@@ -466,6 +466,8 @@ services:
     environment:
       - TZ=Asia/Singapore    # optional: set desired timezone
     user: 1000:1000 # optional: replace with your own user/group or uid/gid
+    env_file:
+      - .env
     volumes:
       - /var/cache/ntfy:/var/cache/ntfy
       - ${NTFY_DATA_DIR}:/etc/ntfy
@@ -480,7 +482,7 @@ services:
     restart: unless-stopped
 """
 environment = """
-NTFY_DATA_DIR=/mnt/zApps/ntfy/
+NTFY_DATA_DIR=/mnt/zApps/ntfy
 """
 
 ##
