@@ -177,15 +177,15 @@ services:
     container_name: backrest
     hostname: backrest
     volumes:
-      - ${BACKREST_DATA}/data:/data
-      - ${BACKREST_CONFIG}:/config
+      - ${BACKREST_DATA_DIR}/data:/data
+      - ${BACKREST_CONFIG_DIR}:/config
       - ./backrest/cache:/cache
       - ./backrest/tmp:/tmp
       - ${BKUP_DIR}:/userdata  # Mount local paths to backup
       - ${RESTIC_REPO}:/repos
     environment:
-      - BACKREST_DATA=/data
-      - BACKREST_CONFIG=/config/config.json
+      - BACKREST_DATA=${BACKREST_DATA_DIR}
+      - BACKREST_CONFIG=${BACKREST_CONFIG_DIR}/config.json
       - XDG_CACHE_HOME=/cache
       - TMPDIR=/tmp
       - TZ=Asia/Singapore
@@ -196,8 +196,8 @@ services:
     restart: unless-stopped
 """
 environment = """
-BACKREST_DATA=/mnt/zApps/backrest/data
-BACKREST_CONFIG=/mnt/zApps/backrest/config.json
+BACKREST_DATA_DIR=/mnt/zApps/backrest
+BACKREST_CONFIG_DIR=/mnt/zApps/backrest/config
 RESTIC_REPO=/etc/komodo/repos/d3adc3ii/dIIIhl/backrest/
 BKUP_DIR=/mnt/backup
 """
@@ -801,6 +801,16 @@ repo = "d3adc3iii/dIIIhl"
 name = "diiihl-k2"
 [repo.config]
 server = "komodo-2"
+builder = "local"
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+
+##
+
+[[repo]]
+name = "diiihl-k3"
+[repo.config]
+server = "komodo-3"
 builder = "local"
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
