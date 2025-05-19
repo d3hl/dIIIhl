@@ -163,6 +163,48 @@ PG_PASS= [[AUTHENTIK_PG_PASS]]
 ##
 
 [[stack]]
+name = "backrest"
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+version: "3.8"
+services:
+  backrest:
+    image: garethgeorge/backrest:latest
+    container_name: backrest
+    hostname: backrest
+    volumes:
+      - ${BACKREST_DATA}/data:/data
+      - ${BACKREST_CONFIG}:/config
+      - ./backrest/cache:/cache
+      - ./backrest/tmp:/tmp
+      - ${BKUP_DIR}:/userdata  # Mount local paths to backup
+      - ${RESTIC_REPO}:/repos
+    environment:
+      - BACKREST_DATA=/data
+      - BACKREST_CONFIG=/config/config.json
+      - XDG_CACHE_HOME=/cache
+      - TMPDIR=/tmp
+      - TZ=Asia/Singapore
+    env-file:
+      - .env
+    ports:
+      - "9898:9898"
+    restart: unless-stopped
+"""
+environment = """
+BACKREST_DATA=/mnt/zApps/backrest/data
+BACKREST_CONFIG=/mnt/zApps/backrest/config.json
+RESTIC_REPO=/etc/komodo/repos/d3adc3ii/dIIIhl/backrest/
+BKUP_DIR=/mnt/backup
+"""
+
+##
+
+[[stack]]
 name = "battle-of-the-bandwidth"
 tags = [
   "internal",
