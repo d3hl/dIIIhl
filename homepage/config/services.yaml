@@ -73,11 +73,10 @@
             icon: /icons/technitium.png
             href: https://ns1.int.d3adc3ii.cc
             sitemonitor: https://ns1.int.d3adc3ii.cc 
-    - Local Apps: # remote
-        - Homeassistant:
-            icon: /icons/home-assistant.png
-            href: https://ha.int.d3adc3ii.cc
-            ping: 192.168.99.15  
+    - Media:
+        - Jellyfin:
+            icon: /icons/jellyfin.png
+            href: https://jelly.int.d3adc3ii.cc
         - Immich:
             icon: /icons/immich.png
             href: https://imm.int.d3adc3ii.cc
@@ -88,17 +87,28 @@
                 key: 7zmatjhj9RVRPylp08hKaG1mkYDubUyeqfDlpaUHo 
                 version: 2 # optional, default is 1
                 fields: ["storage","photos","videos"] 
-        - Qbit: 
-            icon: /icons/qbittorrent.png
-            href: https://qbit.int.d3adc3ii.cc
-            ping: 192.168.2.22
-            widget:
-                type: qbittorrent
-                url: https://qbit.int.d3adc3ii.cc
-                username: d3adc3ii
-                password: WCxb2CcykoUmjiNAf3p8
-                enableLeechProgress: false
-        - Stash:
+    - Local Apps: # remote
+        - Actual:
+            icon: /icons/actualbudget.png
+            href: https://actual.int.d3adc3ii.cc
+        - SteamentSensei:
+            icon: /icons/actualbudget.png
+            href: https://statement.int.d3adc3ii.cc
+        - Homeassistant:
+            icon: /icons/home-assistant.png
+            href: https://ha.int.d3adc3ii.cc
+            ping: 192.168.99.15  
+ #       - Qbit: 
+  #          icon: /icons/qbittorrent.png
+   #         href: https://qbit.int.d3adc3ii.cc
+    #        ping: 192.168.2.22
+     #       widget:
+      #          type: qbittorrent
+       #         url: https://qbit.int.d3adc3ii.cc
+        #        username: d3adc3ii
+         #       password: WCxb2CcykoUmjiNAf3p8
+          #      enableLeechProgress: false
+        - Sh:
             icon: /icons/stash.png  
             href: https://stash.int.d3adc3ii.cc
             ping: 192.168.2.26  
