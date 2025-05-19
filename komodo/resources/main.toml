@@ -184,8 +184,6 @@ services:
       - ${BACKREST_DIR}/tmp:/tmp
       - ${BKUP_DIR}:/userdata  # Mount local paths to backup
     environment:
-      - PUID=1000
-      - PGID=1000
       - BACKREST_DATA=/data
       - BACKREST_CONFIG=/config/config.json
       - XDG_CACHE_HOME=/cache
