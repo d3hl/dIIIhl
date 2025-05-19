@@ -178,10 +178,10 @@ services:
     container_name: backrest
     hostname: backrest
     volumes:
-      - ./backrest/data:/data
-      - ./backrest/config:/config
-      - ./backrest/cache:/cache
-      - ./backrest/tmp:/tmp
+      - /home/d3/backrest/data:/data
+      - /home/d3/backrest/config:/config
+      - /home/d3/backrest/cache:/cache
+      - /home/d3/backrest/tmp:/tmp
       - /mnt/enc:/userdata  # Mount local paths to backup
     environment:
       - BACKREST_DATA=/data
