@@ -1,0 +1,308 @@
+---
+- Internal:
+    - Nas:
+        -  Truenas: 
+            icon: /icons/truenas-scale.png
+            href: https://truenas.int.d3adc3ii.cc
+            ping: 192.168.2.7
+            widget:
+                type: truenas
+                url: https://192.168.2.7
+                key: 1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe
+                enablePools: true
+                nasType: scale
+    - Pve: # proxmox
+        - pve11:
+            icon: /icons/proxmox.png
+            href: https://pve.int.d3adc3ii.cc
+            sitemonitor: https://pve.int.d3adc3ii.cc
+            widget:
+                type: beszel
+                url: https://beszel.int.d3adc3ii.cc
+                username: d3social@pm.me # email
+                password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
+                systemId: pve11 # optional
+                version: 2 # optional, default is 1
+        - pve12:
+            icon: /icons/proxmox.png
+            ping: 192.168.2.12
+            widget:
+                type: beszel
+                url: https://beszel.int.d3adc3ii.cc
+                username: d3social@pm.me # email
+                password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
+                systemId: pve12 # optional
+                version: 2 # optional, default is 1
+        - pve13:
+            icon: /icons/proxmox.png
+            ping: 192.168.2.13
+            widget:
+                type: beszel
+                url: https://beszel.int.d3adc3ii.cc
+                username: d3social@pm.me # email
+                password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
+                systemId: pve13 # optional
+                version: 2 # optional, default is 1
+        - PBS: 
+            icon: /icons/proxmox.png
+            href: https://pbs.int.d3adc3ii.cc
+            ping: 192.168.2.35 
+           # widget:
+            #    type: proxmoxbackupserver
+             #   url: https://pbs.int.d3adc3ii.cc
+              #  username: root@pam!homepage_token 
+               # password: 8b1821a0-a776-49b7-a4cc-a2a433cee3d7
+    - M0nit0ring : # remote
+        - Smokeping:
+            icon: /icons/smokeping.png
+            href: http://192.168.2.21/smokeping
+            ping: 192.168.2.21  
+        - Guacamole:
+            icon: /icons/guacamole.png
+            href: https://guaca.int.d3adc3ii.cc/guacamole
+            ping: 192.168.2.20  
+        - Battle of the badwidth:
+            icon: /icons/smokeping.png
+            href: https://botb.int.d3adc3ii.cc
+    - I1: 
+        - Opnsense:
+            icon: /icons/opnsense.png
+            href: https://opn.int.d3adc3ii.cc
+            ping: 192.168.2.1  
+        - DNS:
+            icon: /icons/technitium.png
+            href: https://ns1.int.d3adc3ii.cc
+            sitemonitor: https://ns1.int.d3adc3ii.cc 
+    - Local Apps: # remote
+        - Homeassistant:
+            icon: /icons/home-assistant.png
+            href: https://ha.int.d3adc3ii.cc
+            ping: 192.168.99.15  
+        - Immich:
+            icon: /icons/immich.png
+            href: https://imm.int.d3adc3ii.cc
+            ping: 192.168.2.31
+            widget:
+                type: immich
+                url: https://imm.int.d3adc3ii.cc
+                key: 7zmatjhj9RVRPylp08hKaG1mkYDubUyeqfDlpaUHo 
+                version: 2 # optional, default is 1
+                fields: ["storage","photos","videos"] 
+        - Qbit: 
+            icon: /icons/qbittorrent.png
+            href: https://qbit.int.d3adc3ii.cc
+            ping: 192.168.2.22
+            widget:
+                type: qbittorrent
+                url: https://qbit.int.d3adc3ii.cc
+                username: d3adc3ii
+                password: WCxb2CcykoUmjiNAf3p8
+                enableLeechProgress: false
+        - Stash:
+            icon: /icons/stash.png  
+            href: https://stash.int.d3adc3ii.cc
+            ping: 192.168.2.26  
+            widget:
+                type: stash
+                url: https://stash.d3adc3ii.cc
+                stashapikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg
+        - Semaphore:
+            icon: /icons/semaphore.png
+            href: https://semaphore.int.d3adc3ii.cc
+        - aria2:
+            icon: /icons/ariang.png
+            href: http://192.168.2.16:6880
+            ping: 192.168.2.16 
+- External:
+    - Admin: # Container and Identity Management
+        - Pangolin:
+            icon: /icons/pangolin.png
+            href: https://pangolin.d3adc3ii.cc
+            sitemonitor: https://pangolin.d3adc3ii.cc
+        - Authentik:
+            icon: /icons/authentik.png
+            href: https://auth.d3adc3ii.cc
+            sitemonitor: https://auth.d3adc3ii.cc 
+            widget:
+                type: authentik
+                url: https://auth.d3adc3ii.cc
+                key: Boy9GZM04gnN8zn1RdTDSxgkeDr70a8XqFKmrp1HwVx7A3u4GA2pnVN2aZEO
+        - Komodo:
+            icon: /icons/komodo.png
+            href: https://komodo.d3adc3ii.cc
+            sitemonitor: https://komodo.d3adc3ii.cc
+        - ControlD:
+            icon: /icons/controld.png
+            href: https://controld.com/dashboard/statistics 
+            sitemonitor: https://controld.com/dashboard/statistics 
+        - Twingate:
+            icon: /icons/twingate.png
+            href: https://d3net.twinget.com
+        - Dumbterm:
+            icon: /icons/dumbterm.svg
+            href: https://dumbterm.d3adc3ii.cc
+            ping: 192.168.2.20  
+    - Monitoring:
+        - Grafana:
+            icon: /icons/grafana.png
+            href: https://d3adc3ii.grafana.net/dashboards 
+        - Beszel:
+            icon: /icons/beszel.png
+            href: https://beszel.d3adc3ii.cc
+            ping: 192.168.2.9
+            widget:
+                type: beszel
+                #url: https://beszel.d3adc3ii.cc
+                url: http://192.168.2.9:8090
+                username: d3social@pm.me # email
+                password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
+                version: 2 # optional, default is 1
+        - zabbix:
+            icon: /icons/zabbix.png
+            href: http://zabbix.d3adc3ii.cc/zabbix
+            ping: 192.168.2.5  
+        - checkmk:
+            href: http://checkmk.int.d3adc3ii.cc
+            ping: 192.168.2.17  
+    - Apps: # Applications
+        - Karakeep:
+            icon: /icons/karakeep.png
+            href: https://kara.d3adc3ii.cc
+            ping: 192.168.2.31
+        - wallos:
+            icon: /icons/wallos.png
+            href: http://wallos.d3adc3ii.cc
+            ping: 192.168.2.19 
+        - Omni-tools:
+            icon: /icons/omni-tools.png
+            href: http://omnitools.d3adc3ii.cc
+            ping: 192.168.2.19 
+- GL1:
+  - Info:
+      href: https://pve11.d3adc3ii.cc
+      ping: pve11.int.d3adc3ii.cc
+      widget:
+        type: glances
+        url: http://192.168.3.13:61208
+        version: 4
+        metric: info
+  - CPU:  
+      href: https://pve11.d3adc3ii.cc
+      ping: pve11.int.d3adc3ii.cc
+        #  - CPU:
+      widget:     
+        type: glances
+        url: http://192.168.3.11:61208
+        version: 4
+        metric: cpu
+  - Memory:
+      widget:     
+        type: glances
+        url: http://192.168.3.11:61208
+        version: 4
+        metric: memory
+  - CPU Temp:
+      widget:     
+        type: glances
+        url: http://192.168.3.11:61208
+        version: 4
+        metric: sensor:Composite
+- GL2:
+  - Info:
+      href: https://pve12.d3adc3ii.cc
+      ping: pve12.int.d3adc3ii.cc
+      widget:
+        type: glances
+        url: http://192.168.3.13:61208
+        version: 4
+        metric: info
+  - CPU:  
+      href: https://pve12.d3adc3ii.cc
+      ping: pve12.int.d3adc3ii.cc
+      widget:     
+        type: glances
+        url: http://192.168.3.12:61208
+        version: 4
+        metric: cpu
+  - Memory:
+      widget:     
+        type: glances
+        url: http://192.168.3.12:61208
+        version: 4
+        metric: memory
+  - CPU Temp:
+      widget:     
+        type: glances
+        url: http://192.168.3.12:61208
+        version: 4
+        metric: sensor:Composite
+- GL3:
+  - Info:
+      href: https://pve13.d3adc3ii.cc
+      ping: pve13.int.d3adc3ii.cc
+      widget:
+        type: glances
+        url: http://192.168.3.13:61208
+        version: 4
+        metric: info
+  - CPU:
+      widget:     
+        type: glances
+        url: http://192.168.3.13:61208
+        version: 4
+        metric: cpu
+  - Memory:
+      widget:     
+        type: glances
+        url: http://192.168.3.13:61208
+        version: 4
+        metric: memory
+  - CPU Temp:
+      widget:     
+        type: glances
+        url: http://192.168.3.13:61208
+        version: 4
+        metric: sensor:Composite
+- M365:
+    - Intune:
+        icon: /icons/microsoft-365.png 
+        href: https://intune.microsoft.com
+    - Entra:
+        icon: /icons/microsoft-365.png
+        href: https://entra.microsoft.com
+    - Azure Portal:
+        icon: /icons/azure.png
+        href: https://portal.azure.com
+    - AzureDevOps:
+        icon: /icons/azure-devops.png 
+        href: https://dev.azure.com/ntnsg/intune
+- Other Cloud:
+    - Dokkio:
+        href: https://app.dokkio.com/a/2266012572845539026/new
+
+- Network:
+    - Fortigate:
+        icon: fortinet 
+        href: http://fw.ntn.com.sg:7443 
+    - FortiAnalyzer:
+        icon: fortinet 
+        href: http://faz.ntn.com.sg
+    - FortiEMS:
+        icon: fortinet
+        href: http://ems.ntn.com.sg
+    - Cisco:
+        icon: cisco 
+        href: http://10.203.1.254 
+    - Synology:
+        icon: synology 
+        href: http://10.203.1.111:5000 
+    - Crestron:
+        icon: https://static.wixstatic.com/media/007dac_d97541360d5849a492f61055994b510e~mv2.png/v1/fill/w_281,h_281,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/007dac_d97541360d5849a492f61055994b510e~mv2.png
+        href: http://10.203.2.125:5000 
+    - Ruckus:
+        icon: rundeck 
+        href: http://10.203.7.200
+- System:
+    - Wordpress:
+        icon: wordpress
+        href: https://ntn.com.sg/wp-login.php

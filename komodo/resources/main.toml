@@ -7,6 +7,14 @@ enabled = true
 ##
 
 [[server]]
+name = "komodo-3"
+[server.config]
+address = "https://192.168.2.33:8120"
+enabled = true
+
+##
+
+[[server]]
 name = "server-bkxal"
 [server.config]
 address = "https://periphery:8120"
@@ -15,25 +23,152 @@ enabled = true
 ##
 
 [[stack]]
+name = "actual-budget"
+tags = ["internal", "production"]
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  actual_server:
+    image: docker.io/actualbudget/actual-server:latest
+    ports:
+      - '5006:5006'
+    volumes:
+      # Change './actual-data' below to the path to the folder you want Actual to store its data in on your server.
+      # '/data' is the path Actual will look for its files in by default, so leave that as-is.
+      - ${ACTUAL_DATA_DIR}:/data
+    healthcheck:
+      # Enable health check for the instance
+      test: ['CMD-SHELL', 'node src/scripts/health-check.js']
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+"""
+environment = """
+ACTUAL_DATA_DIR=/mnt/zApps/actualbudget
+"""
+
+##
+
+[[stack]]
 name = "authentik"
+tags = ["external", "production"]
 [stack.config]
 server = "server-bkxal"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "server11/authentik"
+file_contents = """
+services:
+  postgresql:
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${PG_PASS}
+      POSTGRES_USER: ${PG_USER:-authentik}
+      POSTGRES_DB: ${PG_DB:-authentik}
+    env_file:
+      - .env
+  redis:
+    image: docker.io/library/redis:alpine
+    command: --save 60 1 --loglevel warning
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    volumes:
+      - redis:/data
+  server:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.4.1}
+    restart: unless-stopped
+    command: server
+    environment:
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+    volumes:
+      - ./media:/media
+      - ./custom-templates:/templates
+    env_file:
+      - .env
+    ports:
+      - "${COMPOSE_PORT_HTTP:-9000}:9000"
+      - "${COMPOSE_PORT_HTTPS:-9443}:9443"
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+  worker:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.4.0}
+    restart: unless-stopped
+    command: worker
+    environment:
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+    # `user: root` and the docker socket volume are optional.
+    # See more for the docker socket integration here:
+    # https://goauthentik.io/docs/outposts/integrations/docker
+    # Removing `user: root` also prevents the worker from fixing the permissions
+    # on the mounted folders, so when removing this make sure the folders have the correct UID/GID
+    # (1000:1000 by default)
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./media:/media
+      - ./certs:/certs
+      - ./custom-templates:/templates
+    env_file:
+      - .env
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  database:
+    driver: local
+  redis:
+    driver: local
+"""
 environment = """
 AUTHENTIK_SECRET_KEY= [[AUTHENTIK_SECRET_KEY]]
-PG_PASS= [[PG_PASS]]
-
+PG_PASS= [[AUTHENTIK_PG_PASS]]
 """
 
 ##
 
 [[stack]]
 name = "battle-of-the-bandwidth"
+tags = [
+  "internal",
+  "testing",
+  "monitoring"
+]
 [stack.config]
 server = "komodo-2"
 poll_for_updates = true
@@ -47,65 +182,253 @@ run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-t
 
 [[stack]]
 name = "dumbterm"
+tags = ["external", "production"]
 [stack.config]
 server = "komodo-2"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/dumbterm/server12/dumbterm"
+file_contents = """
+services:
+  dumbterm:
+    image: dumbwareio/dumbterm:latest
+    container_name: dumbterm
+    restart: unless-stopped
+    ports:
+      - ${DUMBTERM_PORT}:3000
+    volumes:
+      - ${DUMBTERM_CONFIG}:/root/.config
+      - ${DUMBTERM_DATA_DIR}:/root/data
+    environment:
+      # Container timezone
+      TZ: ${DUMBTERM_TZ}
+      # The title shown in the web interface
+      SITE_TITLE: ${DUMBTERM_SITE_TITLE:-DumbTerm}
+      # Recommended PIN protection (leave empty to disable)
+      DUMBTERM_PIN: ${DUMBTERM_PIN}
+      # The base URL for the application
+      BASE_URL: ${DUMBTERM_BASE_URL}
+      ENABLE_STARSHIP: ${ENABLE_STARSHIP:-true}
+      LOCKOUT_TIME: ${DUMBTERM_LOCKOUT_TIME:-15} # Minutes
+      # Session duration in hours before requiring re-authentication
+      MAX_SESSION_AGE: ${DUMBTERM_MAX_SESSION_AGE:-24} # Hours
+      # (OPTIONAL) - List of allowed origins for CORS
+      # ALLOWED_ORIGINS: ${DUMBTERM_ALLOWED_ORIGINS:-http://localhost:3000}
+"""
 environment = """
-  DUMBTERM_CONFIG="/mnt/zApps/dumbterm/config"
-  DUMBTERM_DATA_DIR="/mnt/zApps/dumbterm/data"
-  DUMBTERM_TZ="Asia/Singapore"
-  DUMBTERM_PIN=1111
-  DUMBTERM_PORT=3002
-  DUMBTERM_BASE_URL=http://dumbterm.d3adc3ii.cc:3002
+DUMBTERM_CONFIG="/mnt/zApps/dumbterm/config"
+DUMBTERM_DATA_DIR="/mnt/zApps/dumbterm/data"
+DUMBTERM_TZ="Asia/Singapore"
+DUMBTERM_PIN=1111
+DUMBTERM_PORT=3002
+DUMBTERM_BASE_URL=http://dumbterm.d3adc3ii.cc:3002
 """
 
 ##
 
 [[stack]]
 name = "homepage"
+tags = ["external", "production"]
 [stack.config]
 server = "server-bkxal"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "server11/homepage"
+file_contents = """
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      PGID: 1000 
+      PUID: 1000 
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    volumes:
+      - ${DATA_DIR}/config:/app/config 
+      - ${DATA_DIR}/icons:/app/public/icons
+      - ${DATA_DIR}/images:/app/public/images 
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+"""
 environment = """
-HOMEPAGE_FILE_SETTINGS=/etc/komodo/stacks/homepage/server11/homepage/config/settings.yaml
-HOMEPAGE_FILE_SERVICES=/etc/komodo/stacks/homepage/server11/homepage/config/servicess.yaml
-HOMEPAGE_FILE_WIDGETS=/etc/komodo/stacks/homepage/server11/homepage/config/widgets.yaml
-HOMEPAGE_FILE_BOOKMARKS=/etc/komodo/stacks/homepage/server11/homepage/config/bookmarks.yaml
-HOMEPAGE_ALLOWED_HOSTS= hide.randomdomain.random ,192.168.2.31:3000
+DATA_DIR= /etc/komodo/repos/diiihl/homepage
+ALLOWED_HOSTS= homepage.d3adc3ii.cc,192.168.2.31:3000
 """
 
 ##
 
 [[stack]]
 name = "immich"
+tags = ["internal", "production"]
 [stack.config]
 server = "server-bkxal"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/immich/server11/immich"
+file_contents = """
+services:
+  immich-server:
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    # extends:
+    #   file: hwaccel.transcoding.yml
+    #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
+    volumes:
+      # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
+      - ${UPLOAD_LOCATION}:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    ports:
+      - '2283:2283'
+    depends_on:
+      - redis
+      - database
+    restart: always
+    healthcheck:
+      disable: false
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    volumes:
+      - model-cache:/cache
+    env_file:
+      - .env
+    restart: always
+    healthcheck:
+      disable: false
+
+  redis:
+    container_name: immich_redis
+    image: docker.io/valkey/valkey:8-bookworm@sha256:42cba146593a5ea9a622002c1b7cba5da7be248650cbb64ecb9c6c33d29794b1
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+
+  database:
+    container_name: immich_postgres
+    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE_NAME}
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+    volumes:
+      # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
+      - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
+    user: "1000:1000"
+    healthcheck:
+      test: >-
+        pg_isready --dbname="$${POSTGRES_DB}" --username="$${POSTGRES_USER}" || exit 1; Chksum="$$(psql --dbname="$${POSTGRES_DB}" --username="$${POSTGRES_USER}" --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')"; echo "checksum failure count is $$Chksum"; [ "$$Chksum" = '0' ] || exit 1
+      interval: 5m
+      start_interval: 30s
+      start_period: 5m
+    command: >-
+      postgres -c shared_preload_libraries=vectors.so -c 'search_path="$$user", public, vectors' -c logging_collector=on -c max_wal_size=2GB -c shared_buffers=512MB -c wal_compression=on
+    restart: always
+
+volumes:
+  model-cache:
+"""
+environment = """
+UPLOAD_LOCATION=/mnt/zApps/immich-external
+DB_DATA_LOCATION=/mnt/zApps/immich-external/postgres
+IMMICH_VERSION=release
+DB_PASSWORD=[[IMMICH_DB_PASSWORD]]
+DB_USERNAME=postgres
+DB_DATABASE_NAME=immich
+"""
+
+##
+
+[[stack]]
+name = "jellyfin"
+tags = ["internal", "production"]
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Singapore
+      - JELLYFIN_PublishedServerUrl=https://jelly.int.d3adc3ii.cc #optional
+    volumes:
+      - ${JELLYFIN_CONFIG_DIR}:/config
+      - ${JELLYFIN_DATA_DIR}/tvshows:/data/tvshows
+      - ${JELLYFIN_DATA_DIR}/movies:/data/movies
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    restart: unless-stopped
+"""
+environment = """
+JELLYFIN_CONFIG_DIR=/mnt/zApps/jellyfin/config
+JELLYFIN_DATA_DIR=/mnt/zFiles/media
+
+"""
 
 ##
 
 [[stack]]
 name = "karakeep"
+tags = ["external", "production"]
 [stack.config]
-server = "server-bkxal"
+server = "komodo-2"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "server11/karakeep-app"
+file_contents = """
+version: '3.8'
+services:
+  web:
+    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
+    restart: unless-stopped
+    volumes:
+      #- /etc/komodo/repos/diiihl/app-data/karakeep-data:/data
+      - ${DATA_DIR}:/data
+    ports:
+      - 3333:3000
+    env_file:
+      - .env
+    environment:
+      MEILI_ADDR: http://meilisearch:7700
+      BROWSER_WEB_URL: http://chrome:9222
+      DATA_DIR: /data
+  chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:123
+    restart: unless-stopped
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+  meilisearch:
+    image: getmeili/meilisearch:v1.13.3
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - meilisearch:/meili_data
+
+volumes:
+  meilisearch:
+  data:
+"""
 environment = """
 KARAKEEP_VERSION=release
 NEXTAUTH_SECRET=[[KARA_NEXTAUTH_SECRET]]
@@ -118,15 +441,135 @@ DATA_DIR=/mnt/zApps/karakeep/data
 ##
 
 [[stack]]
-name = "newt1"
+name = "loggifly"
+tags = ["internal", "monitoring"]
 [stack.config]
-server = "server-bkxal"
+
+
+##
+
+[[stack]]
+name = "ntfy"
+tags = ["internal", "monitoring"]
+[stack.config]
+server = "komodo-2"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/newt1/server11/newt1"
+file_contents = """
+services:
+  ntfy:
+    image: binwiederhier/ntfy
+    container_name: ntfy
+    command:
+      - serve
+    environment:
+      - TZ=Asia/Singapore    # optional: set desired timezone
+    user: 1000:1000 # optional: replace with your own user/group or uid/gid
+    env_file:
+      - .env
+    volumes:
+      - /var/cache/ntfy:/var/cache/ntfy
+      - ${NTFY_DATA_DIR}:/etc/ntfy
+    ports:
+      - 8193:80
+    healthcheck: # optional: remember to adapt the host:port to your environment
+        test: ["CMD-SHELL", "wget -q --tries=1 http://localhost:80/v1/health -O - | grep -Eo '\"healthy\"\\s*:\\s*true' || exit 1"]
+        interval: 60s
+        timeout: 10s
+        retries: 3
+        start_period: 40s
+    restart: unless-stopped
+"""
+environment = """
+NTFY_DATA_DIR=/mnt/zApps/ntfy
+"""
+
+##
+
+[[stack]]
+name = "nzbget"
+tags = ["internal", "testing"]
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  nzbget:
+    image: lscr.io/linuxserver/nzbget:latest
+    container_name: nzbget
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - NZBGET_USER=nzbget #optional
+      - NZBGET_PASS=tegbzn6789 #optional
+    volumes:
+      - ${NZBGET_CF_DIR}:/config
+      - ${NZBGET_DL_DIR}:/downloads #optional
+    ports:
+      - 6789:6789
+    restart: unless-stopped
+"""
+environment = """
+NZBGET_CF_DIR=/mnt/zApps/nzb/config
+NZBGET_DL_DIR=/mnt/zApps/nzb/downloads
+"""
+
+##
+
+[[stack]]
+name = "portnote"
+tags = ["internal", "testing"]
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  web:
+    image: haedlessdev/portnote:latest
+    ports:
+      - "3033:3000"
+    env_file:
+      - .env
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      USER_SECRET: ${USER_SECRET}
+      LOGIN_USERNAE: ${LOGIN_USERNAME}
+      LOGIN_PASSWORD: ${LOGIN_PASSWORD}
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres"
+  agent:
+    image: haedlessdev/portnote-agent:latest
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres"
+
+  db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ${POSTGRES_DATA}:/var/lib/postgresql/data
+    user: "1000:1000"
+
+volumes:
+  postgres_data:
+"""
+environment = """
+JWT_SECRET=[[PORTNOTE_JWT_SECRET]]
+USER_SECRET=[[PORTNOTE_USER_SECRET]]
+LOGIN_USERNAME=d3
+LOGIN_PASSWORD=[[PORTNOTE_LOGIN_PASSWORD]]
+POSTGRES_DATA=/mnt/zApps/portnote/data
+"""
 
 ##
 
@@ -148,30 +591,8 @@ ALLOY_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/conf
 ##
 
 [[deployment]]
-name = "alloy"
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "grafana/alloy:latest"
-poll_for_updates = true
-auto_update = true
-network = "bridge"
-restart = "unless-stopped"
-command = "run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data etc/alloy/config.alloy"
-ports = """
- 12345:12345
-"""
-volumes = """
-/etc/komodo/repos/diiihl-k2/server12/alloy/config/config.alloy:/etc/alloy/config.alloy
-"""
-environment = """
-
-"""
-
-##
-
-[[deployment]]
 name = "beszel-k11"
+tags = ["internal", "monitoring"]
 [deployment.config]
 server = "server-bkxal"
 image.type = "Image"
@@ -192,6 +613,7 @@ KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU
 
 [[deployment]]
 name = "beszel-k12"
+tags = ["internal", "monitoring"]
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
@@ -210,7 +632,90 @@ KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU
 ##
 
 [[deployment]]
+name = "nessus"
+tags = ["internal", "testing"]
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "tenable/nessus:latest-ubuntu"
+
+##
+
+[[deployment]]
+name = "newt1"
+tags = ["external", "production"]
+[deployment.config]
+server = "server-bkxal"
+image.type = "Image"
+image.params.image = "fosrl/newt"
+poll_for_updates = true
+auto_update = true
+restart = "unless-stopped"
+environment = """
+  PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
+  NEWT_ID=[[NEWT_ID1]]
+  NEWT_SECRET=[[NEWT_SECRET1]]
+"""
+
+##
+
+[[deployment]]
+name = "newt2"
+tags = ["external", "production"]
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "fosrl/newt"
+poll_for_updates = true
+auto_update = true
+restart = "unless-stopped"
+environment = """
+  PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
+  NEWT_ID=[[NEWT_ID2]]
+  NEWT_SECRET=[[NEWT_SECRET2]]
+"""
+
+##
+
+[[deployment]]
+name = "omni-tools"
+tags = ["external", "production"]
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "iib0011/omni-tools:latest"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+restart = "unless-stopped"
+ports = """
+8281:80
+"""
+
+##
+
+[[deployment]]
+name = "statementsensei"
+tags = ["internal", "testing"]
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "benjaminawd/statementsensei:latest"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+ports = """
+8501:8501
+"""
+environment = """
+  PDF_PASSWORD= [[PDF_PASSWORD]]
+"""
+
+##
+
+[[deployment]]
 name = "twingate"
+tags = ["external", "production"]
 [deployment.config]
 server = "komodo-2"
 image.type = "Image"
@@ -224,6 +729,19 @@ environment = """
   TWINGATE_REFRESH_TOKEN=mrNJNc7hirY3gO3-q9l6dnN_YjYl-8q79XRXg1ffZstYm8EYyH6xNXMIVviMaQ-2-GAa4wuSMv1J5ebEf9KvzIK94jmq7j9QGPH2Tr7ZnjlYADuKrEpKUkrmnbrROkgQy6nzWg
   TWINGATE_LOG_ANALYTICS=v2
 """
+
+##
+
+[[build]]
+name = "karakeep"
+[build.config]
+builder = "local"
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+build_path = "Dockerfile/karakeep"
+dockerfile_path = "docker/Dockerfile"
+image_registry.domain = "ghcr.io"
+image_registry.account = "d3adc3iii"
 
 ##
 
@@ -247,22 +765,44 @@ repo = "d3adc3iii/dIIIhl"
 
 ##
 
+[[procedure]]
+name = "check_update"
+
+##
+
+[[procedure]]
+name = "pull-deploy"
+description = "description = \"Pulls stack-repo, deploys stacks\""
+config.schedule_timezone = "Asia/Singapore"
+
+[[procedure.config.stage]]
+name = "\"Pull Repo"
+enabled = true
+executions = [
+  { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Deploy if changed"
+enabled = true
+executions = [
+  { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = "t*,o*,a*", enabled = true }
+]
+
+##
+
+[[alerter]]
+name = "test-alert"
+[alerter.config]
+
+
+##
+
 [[builder]]
 name = "local"
 [builder.config]
 type = "Server"
 params.server_id = "server-bkxal"
-
-##
-
-[[resource_sync]]
-name = "gh_>_ui"
-[resource_sync.config]
-repo = "d3adc3iii/dIIIhl"
-git_account = "d3adc3iii"
-resource_path = ["komodo/resources/main.toml"]
-include_variables = true
-include_user_groups = true
 
 ##
 
@@ -274,40 +814,4 @@ git_account = "d3adc3iii"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
 delete = true
-include_variables = true
 include_user_groups = true
-
-##
-
-[[variable]]
-name = "KARA_NEXTAUTH_SECRET"
-value = "4obmXxlcc8M7RIi95R4gGcqvH2mD29LLLx4C+sXAd7rLvNpM"
-is_secret = true
-
-##
-
-[[variable]]
-name = "KARA_MEILI_MASTER_KEY"
-value = "MwldJwDmieQWtyMZTTVi2yb2T0r2ZHeCNrAdgKeG1vTwpLWy"
-is_secret = true
-
-##
-
-[[variable]]
-name = "OPENAI_API_KEY"
-value = "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"
-is_secret = true
-
-##
-
-[[variable]]
-name = "AUTHENTIK_SECRET_KEY"
-value = "_7WB2IB9GR612BYM9A9VTRS4OHFNOA0DV"
-is_secret = true
-
-##
-
-[[variable]]
-name = "PG_PASS"
-value = "RAMKPLQF6F5FGKBZ6IH4UP4UPFPO6W2M"
-is_secret = true

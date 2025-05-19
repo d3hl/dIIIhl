@@ -1,0 +1,19 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      #DATA_DIR: ${DATA_DIR}
+      PGID: 1000 # optional, your group id
+      PUID: 1000 # optional, your user id
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    volumes:
+      - ${DATA_DIR}/config:/app/config 
+      - ${DATA_DIR}/icons:/app/public/icons
+      - ${DATA_DIR}/images:/app/public/images 
+      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
+    restart: unless-stopped
