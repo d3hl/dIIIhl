@@ -752,6 +752,27 @@ environment = """
 ##
 
 [[deployment]]
+name = "true-command"
+tags = ["internal", "testing"]
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "ixsystems/truecommand"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+restart = "unless-stopped"
+ports = """
+8880:80
+4443:443
+"""
+volumes = """
+/mnt/zApps/truecommand:/data
+"""
+
+##
+
+[[deployment]]
 name = "twingate"
 tags = ["external", "production"]
 [deployment.config]
