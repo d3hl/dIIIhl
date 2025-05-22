@@ -106,8 +106,8 @@ services:
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
     volumes:
-      - ./media:/media
-      - ./custom-templates:/templates
+      - ${AUTHENTIK_DATA_DIR}/media:/media
+      - ${AUTHENTIK_DATA_DIR}/custom-templates:/templates
     env_file:
       - .env
     ports:
@@ -138,9 +138,9 @@ services:
     user: root
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./media:/media
-      - ./certs:/certs
-      - ./custom-templates:/templates
+      - ${AUTHENTIK_DATA_DIR}/media:/media
+      - ${AUTHENTIK_DATA_DIR}/certs:/certs
+      - ${AUTHENTIK_DATA_DIR}/custom-templates:/templates
     env_file:
       - .env
     depends_on:
@@ -158,6 +158,7 @@ volumes:
 environment = """
 AUTHENTIK_SECRET_KEY= [[AUTHENTIK_SECRET_KEY]]
 PG_PASS= [[AUTHENTIK_PG_PASS]]
+AUTHENTIK_DATA_DIR=/mnt/zApps/authentik
 """
 
 ##
@@ -624,6 +625,36 @@ run_directory = "server12/prom-gra-alloy"
 environment = """
 LOKI_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/loki-config.yaml
 ALLOY_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/config.alloy
+"""
+
+##
+
+[[stack]]
+name = "wallos"
+tags = ["external", "production"]
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  wallos:
+    container_name: wallos
+    image: bellamy/wallos:latest
+    ports:
+      - "8222:80/tcp"
+    environment:
+      TZ: 'Asia/Singapore'
+    env_file:
+      - .env
+    volumes:
+      - ${WALLOS_DATA_DIR}/db:/var/www/html/db
+      - ${WALLOS_DATA_DIR}/logos:/var/www/html/images/uploads/logos
+    restart: unless-stopped
+"""
+environment = """
+WALLOS_DATA_DIR=/mnt/zApps/wallos
 """
 
 ##
