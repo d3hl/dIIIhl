@@ -181,7 +181,7 @@
             ping: 192.168.2.31
         - wallos:
             icon: /icons/wallos.png
-            href: http://wallos.d3adc3ii.cc
+            href: http://wallos.int.d3adc3ii.cc
             ping: 192.168.2.19 
         - Omni-tools:
             icon: /icons/omni-tools.png
