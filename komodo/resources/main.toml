@@ -139,7 +139,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${AUTHENTIK_DATA_DIR}/media:/media
-      - ${AUTHENTIK_DATA_DIR}/certs:/certs
+      - ./certs:/certs
       - ${AUTHENTIK_DATA_DIR}/custom-templates:/templates
     env_file:
       - .env
