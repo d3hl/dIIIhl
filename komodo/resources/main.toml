@@ -220,6 +220,40 @@ run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-t
 ##
 
 [[stack]]
+name = "caddy"
+[stack.config]
+server = "server-bkxal"
+file_contents = """
+version: "3.7"
+services:
+  caddy:
+    image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - CADDY_INGRESS_NETWORKS=caddy
+    networks:
+      - caddy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${CADDY_DATA_DI}:data
+    restart: unless-stopped
+
+networks:
+  caddy:
+    external: true
+
+volumes:
+  caddy_data: {}
+"""
+environment = """
+CADDY_DATA_DIR=/mnt/zApps/caddy/data
+"""
+
+##
+
+[[stack]]
 name = "dumbterm"
 tags = ["external", "production"]
 [stack.config]
@@ -642,6 +676,11 @@ services:
   wallos:
     container_name: wallos
     image: bellamy/wallos:latest
+    networks:
+      - caddy
+    labels:
+      caddy: wallos.int.d3adc3ii.cc
+      caddy.reverse_proxy: "{{upstreams 8222}}"
     ports:
       - "8222:80/tcp"
     environment:
