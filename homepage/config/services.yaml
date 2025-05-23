@@ -11,7 +11,7 @@
                 key: 1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe
                 enablePools: true
                 nasType: scale
-    - Pve: # proxmox
+    - Pve: # proxmoxx
         - pve11:
             icon: /icons/proxmox.png
             href: https://pve.int.d3adc3ii.cc
