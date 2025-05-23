@@ -243,7 +243,7 @@ services:
     restart: unless-stopped
 
 networks:
-  caddy:
+  caddy
 
 volumes:
   caddy_data: {}
