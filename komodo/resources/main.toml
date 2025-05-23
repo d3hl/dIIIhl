@@ -223,8 +223,10 @@ run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-t
 name = "caddy"
 [stack.config]
 server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 file_contents = """
-version: "3.7"
 services:
   caddy:
     image: lucaslorentz/caddy-docker-proxy:ci-alpine
@@ -237,12 +239,11 @@ services:
       - caddy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${CADDY_DATA_DI}:data
+      - ${CADDY_DATA_DIR}:data
     restart: unless-stopped
 
 networks:
   caddy:
-    external: true
 
 volumes:
   caddy_data: {}
@@ -735,6 +736,30 @@ volumes = """
 environment = """
 LISTEN=45876
 KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU6cTY/"
+"""
+
+##
+
+[[deployment]]
+name = "caddy"
+[deployment.config]
+server = "server-bkxal"
+image.type = "Image"
+image.params.image = "lucaslorentz/caddy-docker-proxy:ci-alpine"
+poll_for_updates = true
+auto_update = true
+network = "caddy"
+restart = "unless-stopped"
+ports = """
+80:80
+443:443
+"""
+volumes = """
+/var/run/docker.sock:/var/run/docker.sock
+/mnt/zApps/caddy/data:/data
+"""
+environment = """
+CADDY_INGRESS_NETWORKS=caddy
 """
 
 ##
