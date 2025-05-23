@@ -1,5 +1,5 @@
 ---
-- Internal:
+- Local:
     - Nas:
         -  Truenas: 
             icon: /icons/truenas-scale.png
@@ -124,7 +124,7 @@
             href: http://192.168.2.16:6880
             ping: 192.168.2.16 
 - External:
-    - Admin: # Container and Identity Management
+    - Core: # Container and Identity Management
         - Pangolin:
             icon: /icons/pangolin.png
             href: https://pangolin.d3adc3ii.cc

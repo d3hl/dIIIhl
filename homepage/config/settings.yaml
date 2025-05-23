@@ -22,7 +22,7 @@ layout:
     columns: 1
     header: false
     useEqualHeights: true
-    Admin:
+    Core:
       style: row
       columns: 3
       header: true
@@ -35,7 +35,7 @@ layout:
       style: row
       columns: 2
       header: true
-  Internal:
+  Local:
     tab: Homelab
     style: column
     columns: 1 
