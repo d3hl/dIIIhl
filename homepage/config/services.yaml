@@ -89,10 +89,10 @@
                 fields: ["storage","photos","videos"] 
     - Local Apps: # remote
         - Actual:
-            icon: /icons/actualbudget.png
+            icon: /icons/actual-budget.png
             href: https://actual.int.d3adc3ii.cc
         - SteamentSensei:
-            icon: /icons/actualbudget.png
+            icon: /icons/Davis.png
             href: https://statement.int.d3adc3ii.cc
         - Homeassistant:
             icon: /icons/home-assistant.png
