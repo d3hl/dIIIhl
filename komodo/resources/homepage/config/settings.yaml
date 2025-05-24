@@ -26,14 +26,15 @@ layout:
       style: row
       columns: 3
       header: true
-      #useEqualHeights: true
+      useEqualHeights: true
     Monitoring:
       style: row
       columns: 4
       header: true
+      useEqualHeights: true
     Apps:
       style: row
-      columns: 2
+      columns: 4
       header: true
   Local:
     tab: Homelab
@@ -57,10 +58,15 @@ layout:
       style: row
       columns: 2
       header: false
+    Media:
+      style: row
+      columns: 2
+      header: false
     Local Apps:
       style: row
       columns: 4
       header: true
+      useEqualHeights: true
   M365:
     tab: Cloud
     style: row
