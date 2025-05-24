@@ -220,6 +220,41 @@ run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-t
 ##
 
 [[stack]]
+name = "caddy"
+[stack.config]
+server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  caddy:
+    image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - CADDY_INGRESS_NETWORKS=caddy
+    networks:
+      - caddy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${CADDY_DATA_DIR}:data
+    restart: unless-stopped
+
+networks:
+  caddy
+
+volumes:
+  caddy_data: {}
+"""
+environment = """
+CADDY_DATA_DIR=/mnt/zApps/caddy/data
+"""
+
+##
+
+[[stack]]
 name = "dumbterm"
 tags = ["external", "production"]
 [stack.config]
@@ -642,6 +677,11 @@ services:
   wallos:
     container_name: wallos
     image: bellamy/wallos:latest
+    networks:
+      - caddy
+    labels:
+      caddy: wallos.int.d3adc3ii.cc
+      caddy.reverse_proxy: "{{upstreams 8222}}"
     ports:
       - "8222:80/tcp"
     environment:
@@ -701,6 +741,30 @@ KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU
 ##
 
 [[deployment]]
+name = "caddy"
+[deployment.config]
+server = "server-bkxal"
+image.type = "Image"
+image.params.image = "lucaslorentz/caddy-docker-proxy:ci-alpine"
+poll_for_updates = true
+auto_update = true
+network = "caddy"
+restart = "unless-stopped"
+ports = """
+80:80
+443:443
+"""
+volumes = """
+/var/run/docker.sock:/var/run/docker.sock
+/mnt/zApps/caddy/data:/data
+"""
+environment = """
+CADDY_INGRESS_NETWORKS=caddy
+"""
+
+##
+
+[[deployment]]
 name = "nessus"
 tags = ["internal", "testing"]
 [deployment.config]
@@ -724,24 +788,6 @@ environment = """
   PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
   NEWT_ID=[[NEWT_ID1]]
   NEWT_SECRET=[[NEWT_SECRET1]]
-"""
-
-##
-
-[[deployment]]
-name = "newt2"
-tags = ["external", "production"]
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "fosrl/newt"
-poll_for_updates = true
-auto_update = true
-restart = "unless-stopped"
-environment = """
-  PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
-  NEWT_ID=[[NEWT_ID2]]
-  NEWT_SECRET=[[NEWT_SECRET2]]
 """
 
 ##

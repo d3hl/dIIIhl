@@ -1,9 +1,9 @@
 ---
-- Internal:
+- Local:
     - Nas:
         -  Truenas: 
             icon: /icons/truenas-scale.png
-            href: https://truenas.int.d3adc3ii.cc
+            href: https://192.168.2.7
             ping: 192.168.2.7
             widget:
                 type: truenas
@@ -11,7 +11,7 @@
                 key: 1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe
                 enablePools: true
                 nasType: scale
-    - Pve: # proxmox
+    - Pve: # proxmoxx
         - pve11:
             icon: /icons/proxmox.png
             href: https://pve.int.d3adc3ii.cc
@@ -89,10 +89,10 @@
                 fields: ["storage","photos","videos"] 
     - Local Apps: # remote
         - Actual:
-            icon: /icons/actualbudget.png
+            icon: /icons/actual-budget.png
             href: https://actual.int.d3adc3ii.cc
         - SteamentSensei:
-            icon: /icons/actualbudget.png
+            icon: /icons/Davis.png
             href: https://statement.int.d3adc3ii.cc
         - Homeassistant:
             icon: /icons/home-assistant.png
@@ -124,7 +124,7 @@
             href: http://192.168.2.16:6880
             ping: 192.168.2.16 
 - External:
-    - Admin: # Container and Identity Management
+    - Core: # Container and Identity Management
         - Pangolin:
             icon: /icons/pangolin.png
             href: https://pangolin.d3adc3ii.cc
