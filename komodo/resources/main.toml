@@ -793,24 +793,6 @@ environment = """
 ##
 
 [[deployment]]
-name = "newt2"
-tags = ["external", "production"]
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "fosrl/newt"
-poll_for_updates = true
-auto_update = true
-restart = "unless-stopped"
-environment = """
-  PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
-  NEWT_ID=[[NEWT_ID2]]
-  NEWT_SECRET=[[NEWT_SECRET2]]
-"""
-
-##
-
-[[deployment]]
 name = "omni-tools"
 tags = ["external", "production"]
 [deployment.config]
