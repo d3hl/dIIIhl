@@ -314,7 +314,7 @@ DUMBTERM_BASE_URL=http://dumbterm.d3adc3ii.cc:3002
 name = "homepage"
 tags = ["external", "production"]
 [stack.config]
-server = "server-bkxal"
+server = "komodo-3"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -339,7 +339,7 @@ services:
     restart: unless-stopped
 """
 environment = """
-DATA_DIR= /etc/komodo/repos/diiihl/komodo/stacks/homepage
+DATA_DIR= /etc/komodo/repos/diiihl-k3/komodo/stacks/homepage
 ALLOWED_HOSTS= homepage.d3adc3ii.cc,192.168.2.31:3000
 """
 
