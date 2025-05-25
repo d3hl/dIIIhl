@@ -328,7 +328,7 @@ services:
       - ${FSHARE_DATA_DIR}/data:/data
       - ${FSHARE_DATA_DIR}/processed:/processed
       - ${FSHARE_DATA_DIR}/videos:/videos
-    env-file:
+    env_file:
       - .env
     environment:
       - ADMIN_USERNAME=${ADMIN_USERNAME}
