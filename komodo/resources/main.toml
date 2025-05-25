@@ -332,7 +332,7 @@ services:
       - .env
     environment:
       - ADMIN_USERNAME=${ADMIN_USERNAME}
-      - ADMIN_PASSWORD=${FSHARE_ADMIN_PASSWORD}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - SECRET_KEY=${SECRET_KEY}
       - MINUTES_BETWEEN_VIDEO_SCANS=5
       # The location in the video thumbnails are generated. A value between 0-100 where 50 would be the frame in the middle of the video file and 0 would be the first frame of the video.
