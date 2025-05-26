@@ -616,7 +616,7 @@ DATA_DIR=/mnt/zApps/mtp
 name = "netalertx"
 tags = ["internal", "monitoring"]
 [stack.config]
-server = "komodo-2"
+server = "server-bkxal"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
