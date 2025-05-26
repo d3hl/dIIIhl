@@ -574,6 +574,45 @@ tags = ["internal", "monitoring"]
 ##
 
 [[stack]]
+name = "mtp-proxy"
+[stack.config]
+server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  mtproto-proxy:
+    #image: telegrammessenger/proxy:latest
+    build:
+      context: .
+      args:
+        MTPROTO_REPO_URL: ${MTPROTO_REPO_URL}
+    container_name: mtproto-proxy
+    volumes:
+      - ${DATA_DIR}/config:/data
+    restart: unless-stopped
+    ports:
+      - 7443:8889/udp
+      - 7443:8889/tcp
+    environment:
+      - SECRET
+      - WORKERS
+      - MTPROTO_REPO_URL
+    env_file:
+      - .env
+"""
+environment = """
+SECRET=[[MTP_SECRET]]
+WORKERS=2
+MTPROTO_REPO_URL="https://github.com/GetPageSpeed/MTProxy"
+TZ=Asia/Singapore
+DATA_DIR=/mnt/zApps/mtp
+"""
+
+##
+
+[[stack]]
 name = "ntfy"
 tags = ["internal", "monitoring"]
 [stack.config]
