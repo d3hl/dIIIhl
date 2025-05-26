@@ -637,6 +637,8 @@ services:
       # (API: OPTION 2) use when debugging issues 
       # -  local_path/api:/app/api
     environment:
+      - PUID=1000
+      - PGID=1000
       - TZ=Asia/Singapore
       - PORT=20184
     env_file:
