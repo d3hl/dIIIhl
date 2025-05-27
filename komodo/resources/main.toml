@@ -478,8 +478,8 @@ HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
 HOMEPAGE_VAR_TWINGATE_ICON= "/icons/twingate.png"
 HOMEPAGE_VAR_TWINGATE_URL= "https://d3net.twinget.com"
 # Dumbterm
-HOMEPAGE_VAR_DUMBTERM_ICON= "/icons/dumbterm.svg"
-HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.int.d3adc3ii.cc"
+HOMEPAGE_VAR_DUMBTERM_ICON= "/icons/dumbterm.png"
+HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.d3adc3ii.cc"
 
 ### Monitoring ###
 
