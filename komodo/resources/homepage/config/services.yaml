@@ -88,3 +88,28 @@
             icon: {{HOMEPAGE_VAR_ARIA_ICON}}
             href: {{HOMEPAGE_VAR_ARIA_URL}}
             sitemonitor: {{HOMEPAGE_VAR_ARIA_URL}}
+- External:
+    - Core: 
+        - Pangolin:
+            icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
+            href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
+        - Authentik:
+            icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
+            href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+            widget:
+                type: authentik
+                url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+                key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}} 
+        - Komodo:
+            icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
+            href: {{HOMEPAGE_VAR_KOMODO_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
+        - Twingate:
+            icon: {{HOMEPAGE_VAR_TWINGATE_ICON}}
+            href: {{HOMEPAGE_VAR_TWINGATE_URL}}
+        - Dumbterm:
+            icon: {{HOMEPAGE_VAR_DUMBTERM_ICON}}
+            href: {{HOMEPAGE_VAR_DUMBTERM_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_DUMBTERM_URL}}
