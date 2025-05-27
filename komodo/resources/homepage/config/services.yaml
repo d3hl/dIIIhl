@@ -137,10 +137,6 @@
             href: {{HOMEPAGE_VAR_CHECKMK_URL}}
             sitemonitor: {{HOMEPAGE_VAR_CHECKMK_URL}}
     - Apps: # Applications
-        - Karakeep:
-            icon: /icons/karakeep.png
-            href: https://kara.d3adc3ii.cc
-            ping: 192.168.2.31
         - wallos:
             icon: {{HOMEPAGE_VAR_WALLOS_ICON}} 
             href: {{HOMEPAGE_VAR_WALLOS_URL}}
