@@ -113,3 +113,26 @@
             icon: {{HOMEPAGE_VAR_DUMBTERM_ICON}}
             href: {{HOMEPAGE_VAR_DUMBTERM_URL}}
             sitemonitor: {{HOMEPAGE_VAR_DUMBTERM_URL}}
+    - Monitoring:
+        - Grafana:
+            icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+            href: {{HOMEPAGE_VAR_GRAFANA_URL}}
+        - Beszel:
+            icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
+            href: {{HOMEPAGE_VAR_BESZEL_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_BESZEL_URL}}
+            widget:
+                type: beszel
+                #url: https://beszel.d3adc3ii.cc
+                url: http://192.168.2.9:8090
+                username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+                password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+                version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
+        - zabbix:
+            icon: {{HOMEPAGE_VAR_ZABBIX_ICON}} 
+            href: {{HOMEPAGE_VAR_ZABBIX_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_ZABBIX_URL}}
+        - checkmk:
+            icon: {{HOMEPAGE_VAR_CHECKMK_ICON}}
+            href: {{HOMEPAGE_VAR_CHECKMK_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_CHECKMK_URL}}
