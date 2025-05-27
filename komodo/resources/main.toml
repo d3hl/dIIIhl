@@ -388,6 +388,12 @@ HOMEPAGE_VAR_TITLE= "d3 Homepage"
 HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
 HOMEPAGE_VAR_IMG_URL= "https://images.unsplash.com/photo-1676409429142-179800faa044?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 
+# Truenas
+HOMEPAGE_VAR_TRUENAS_ICON= ""/icons/truenas.png""
+HOMEPAGE_VAR_TRUENAS_URL= "https://192.168.2.7"
+HOMEPAGE_VAR_TRUENAS_KEY="1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe"
+HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
+
 # Proxmox
 HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox.png"
 HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.int.d3adc3ii.cc"
@@ -395,7 +401,9 @@ HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.int.d3adc3ii.cc"
 #HOMEPAGE_VAR_PROXMOX_API_KEY=
 HOMEPAGE_VAR_PBS_URL= "https://pbs.int.d3adc3ii.cc"
 
-# NetAlertX
+### Monitoring ###
+
+# NetAlertX 
 HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx.png"
 HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.int.d3adc3ii.cc"
 # Smokeping
@@ -455,6 +463,7 @@ HOMEPAGE_VAR_ARIA_ICON= "/icons/ariang.png"
 HOMEPAGE_VAR_ARIA_URL= "https://dl.int.d3adc3ii.cc"
 
 ### EXTERNAL ###
+
 # Pangolin
 HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin.png"
 HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.int.d3adc3ii.cc"
@@ -469,7 +478,7 @@ HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
 HOMEPAGE_VAR_TWINGATE_ICON= "/icons/twingate.png"
 HOMEPAGE_VAR_TWINGATE_URL= "https://d3net.twinget.com"
 # Dumbterm
-HOMEPAGE_VAR_DUMBTERM_ICON= "/icons/dumbterm.png"
+HOMEPAGE_VAR_DUMBTERM_ICON= "/icons/dumbterm.svg"
 HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.int.d3adc3ii.cc"
 
 ### Monitoring ###
@@ -495,8 +504,8 @@ HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.int.d3adc3ii.cc/d3/check_mk"
 HOMEPAGE_VAR_KARAKEEP_ICON= "/icons/karakeep.png"
 HOMEPAGE_VAR_KARAKEEP_URL= "https://karakeep.d3adc3ii.cc"
 # Wallos
-HOMEPAGE_VAR_KOMODO_ICON= "/icons/wallos.png"
-HOMEPAGE_VAR_KOMODO_URL= "https://wallos.d3adc3ii.cc"
+HOMEPAGE_VAR_WALLOS_ICON= "/icons/wallos.png"
+HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
 # Ommni Tools
 HOMEPAGE_VAR_OMNITOOLS_ICON= "/icons/omni-tools.png"
 HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
