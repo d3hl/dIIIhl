@@ -389,7 +389,7 @@ HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
 HOMEPAGE_VAR_IMG_URL= "https://images.unsplash.com/photo-1676409429142-179800faa044?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 
 # Truenas
-HOMEPAGE_VAR_TRUENAS_ICON= ""/icons/truenas.png""
+HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas.png"
 HOMEPAGE_VAR_TRUENAS_URL= "https://192.168.2.7"
 HOMEPAGE_VAR_TRUENAS_KEY="1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe"
 HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
