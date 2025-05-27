@@ -386,7 +386,7 @@ ALLOWED_HOSTS= "homepage.d3adc3ii.cc,192.168.2.31:3000"
 #
 HOMEPAGE_VAR_TITLE= "d3 Homepage"
 HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
-HOMEPAGE_VAR_IMG_URL= "https://images.unsplash.com/photo-1676409429142-179800faa044?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+HOMEPAGE_VAR_IMG_URL= "/images/111rs.jpeg"
 
 # Truenas
 HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas.png"
