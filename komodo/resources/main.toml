@@ -497,7 +497,7 @@ HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix.png"
 HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.int.d3adc3ii.cc/zabbix"
 # Checkmk
 HOMEPAGE_VAR_CHECKMK_ICON= "/icons/checkmk.png"
-HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.int.d3adc3ii.cc/d3/check_mk"
+HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"
 
 ### APPS ###
 # Karakeep
