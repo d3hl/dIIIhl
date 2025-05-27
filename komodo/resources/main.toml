@@ -466,7 +466,7 @@ HOMEPAGE_VAR_ARIA_URL= "https://dl.int.d3adc3ii.cc"
 
 # Pangolin
 HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin.png"
-HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.int.d3adc3ii.cc"
+HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.d3adc3ii.cc"
 # Authentik
 HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik.png"
 HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3adc3ii.cc"
