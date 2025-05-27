@@ -11,7 +11,27 @@ fullWidth: true
 showStats: true
 hideErrors: true
 layout:
-
+  
+  External:
+    tab: Homelab
+    style: column
+    columns: 1
+    header: false
+    useEqualHeights: true
+    Core:
+      style: row
+      columns: 3
+      header: true
+      useEqualHeights: true
+    Monitoring:
+      style: row
+      columns: 4
+      header: true
+      useEqualHeights: true
+    Apps:
+      style: row
+      columns: 4
+      header: true
   Internal:
     tab: Homelab
     style: column
@@ -30,3 +50,50 @@ layout:
       columns: 3 
       header: true
       useEqualHeights: true
+    I1:
+      style: row
+      columns: 2
+      header: false
+    Media:
+      style: row
+      columns: 2
+      header: false
+    Local Apps:
+      style: row
+      columns: 4
+      header: true
+      useEqualHeights: true
+  M365:
+    tab: Cloud
+    style: row
+    columns: 4
+  Other Cloud:
+    tab: Cloud
+    style: row
+    columns: 4
+  
+  Network:
+    header: true
+    tab: Corp
+    style: row
+    columns: 4  
+  System:
+    header: true
+    tab: Corp
+    style: row
+    columns: 4 
+  GL1:
+    tab: Monitoring
+    style: row
+    colums: 4
+  GL2:
+    tab: Monitoring
+    style: row
+    colums: 4
+  GL3:
+    tab: Monitoring
+    style: row
+    colums: 4
+  
+
+
