@@ -13,18 +13,18 @@
                 nasType: scale
     - Pve: # proxmoxx
         - pve11:
-            icon: ${HOMEPAGE_VAR_PROXMOX_ICON}
-            href: ${HOMEPAGE_VAR_PROXMOX_URL_PVE_1}
-            sitemonitor: ${HOMEPAGE_VAR_PROXMOX_URL_PVE_1}
+            icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+            href: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
+            sitemonitor: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
         - PBS: 
-            icon: ${HOMEPAGE_VAR_PROXMOX_ICON}
-            href: ${HOMEPAGE_VAR_PBS_URL }
-            sitemonitor: ${HOMEPAGE_VAR_PBS_URL } 
+            icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+            href: {{HOMEPAGE_VAR_PBS_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_PBS_URL}} 
     - M0nit0ring:
         - NetAlertX:
-            icon: ${HOMEPAGE_VAR_NETALERTX_ICON}
-            href: ${HOMEPAGE_VAR_NETALERTX_URL}
-            sitemonitor: ${HOMEPAGE_VAR_NETALERTX_URL}
+            icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
+            href: {{HOMEPAGE_VAR_NETALERTX_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_NETALERTX_URL}}
         - Smokeping:
             icon: /icons/smokeping.png
             href: http://192.168.2.21/smokeping
