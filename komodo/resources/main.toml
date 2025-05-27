@@ -381,7 +381,7 @@ services:
 """
 environment = """
 DATA_DIR= /etc/komodo/repos/diiihl-k3/komodo/resources/homepage
-ALLOWED_HOSTS= homepage.d3adc3ii.cc,192.168.2.31:3000
+ALLOWED_HOSTS= "homepage.d3adc3ii.cc,192.168.2.31:3000"
 
 #
 HOMEPAGE_VAR_TITLE= "d3 Homepage"
