@@ -930,6 +930,7 @@ ALLOY_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/conf
 
 [[stack]]
 name = "speedtest-tracker"
+tags = ["internal", "testing"]
 [stack.config]
 server = "server-bkxal"
 file_contents = """
@@ -960,12 +961,14 @@ services:
     db:
         image: mariadb:11
         restart: always
+        env_file:
+            - .env
         environment:
             - PUID=1000
             - PGID=1000
             - MYSQL_DATABASE=${DB_DATABASE}
             - MYSQL_USER=${DB_DATABASE}
-            - MYSQL_PASSWORD=${DB_PASSWORD }
+            - MYSQL_PASSWORD=${DB_PASSWORD}
             - MYSQL_RANDOM_ROOT_PASSWORD=true
         volumes:
             - ${DATA_DIR}/speedtest-db:/var/lib/mysql
@@ -978,10 +981,10 @@ volumes:
   speedtest-db:
 """
 environment = """
-DATA_DIR=/mnt/zApps/speedtest-tracker
+DATA_DIR="/mnt/zApps/speedtest-tracker"
 APP_KEY="iKZdnJSq1XlKVgSz40sMqQeU4W9Y2a3a"
 DB_CONNECTION=mariadb
-DB_HOST= 192.168.2.14
+DB_HOST= db
 DB_PORT=3306
 DB_DATABASE=speedtest_tracker
 DB_USERNAME=speedtest_tracker
