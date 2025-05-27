@@ -26,223 +26,218 @@
             href: {{HOMEPAGE_VAR_NETALERTX_URL}}
             sitemonitor: {{HOMEPAGE_VAR_NETALERTX_URL}}
         - Smokeping:
-            icon: /icons/smokeping.png
-            href: http://192.168.2.21/smokeping
-            ping: 192.168.2.21  
+            icon: {{HOMEPAGE_VAR_SMOKEPING_ICON}}
+            href: {{HOMEPAGE_VAR_SMOKEPING_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_SMOKEPING_URL}}
         - Guacamole:
-            icon: /icons/guacamole.png
-            href: https://guaca.int.d3adc3ii.cc/guacamole
-            ping: 192.168.2.20  
+            icon: {{HOMEPAGE_VAR_GUACAMOLE_ICON}} 
+            href: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
         - Battle of the badwidth:
-            icon: /icons/smokeping.png
-            href: https://botb.int.d3adc3ii.cc
+            icon: {{HOMEPAGE_VAR_BOTB_ICON}}
+            href: {{HOMEPAGE_VAR_BOTB_URL}}
     - I1: 
         - Opnsense:
-            icon: /icons/opnsense.png
-            href: https://opn.int.d3adc3ii.cc
-            ping: 192.168.2.1  
+            icon: {{HOMEPAGE_VAR_OPNSENSE_ICON}} 
+            href: {{HOMEPAGE_VAR_OPNSENSE_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_OPNSENSE_URL}}
         - DNS:
-            icon: /icons/technitium.png
-            href: https://ns1.int.d3adc3ii.cc
-            sitemonitor: https://ns1.int.d3adc3ii.cc 
+            icon: {{HOMEPAGE_VAR_DNS_ICON}}
+            href: {{HOMEPAGE_VAR_DNS_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_DNS_URL}}
     - Media:
         - Jellyfin:
-            icon: /icons/jellyfin.png
-            href: https://jelly.int.d3adc3ii.cc
+            icon: {{HOMEPAGE_VAR_JELLY_ICON}}
+            href: {{HOMEPAGE_VAR_JELLY_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_JELLY_URL}}:
         - Immich:
-            icon: /icons/immich.png
-            href: https://imm.int.d3adc3ii.cc
-            ping: 192.168.2.31
+            icon: {{HOMEPAGE_VAR_IMMICH_ICON}} 
+            href: {{HOMEPAGE_VAR_IMMICH_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_IMMICH_URL}}:
             widget:
                 type: immich
-                url: https://imm.int.d3adc3ii.cc
-                key: 7zmatjhj9RVRPylp08hKaG1mkYDubUyeqfDlpaUHo 
-                version: 2 # optional, default is 1
-                fields: ["storage","photos","videos"] 
+                url: {{HOMEPAGE_VAR_IMMICH_URL}} 
+                key: {{HOMEPAGE_VAR_IMMICH_KEY}}
+                version: {{HOMEPAGE_VAR_IMMICH_VERSION}}
+                fields:  {{HOMEPAGE_VAR_IMMICH_FIELDS}}  
     - Local Apps: # remote
         - Actual:
-            icon: /icons/actual-budget.png
-            href: https://actual.int.d3adc3ii.cc
+            icon: 
+            href: 
         - SteamentSensei:
-            icon: /icons/Davis.png
-            href: https://statement.int.d3adc3ii.cc
+            icon: {{HOMEPAGE_VAR_SENSEI_ICON}}
+            href: {{HOMEPAGE_VAR_SENSEI_URL}} 
+            sitemonitor: {{HOMEPAGE_VAR_SENSEI_URL}}
         - Homeassistant:
-            icon: /icons/home-assistant.png
-            href: https://ha.int.d3adc3ii.cc
-            ping: 192.168.99.15  
+            icon: {{HOMEPAGE_VAR_HA_ICON}}
+            href: {{HOMEPAGE_VAR_HA_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_HA_URL}}
  #       - Qbit: 
-  #          icon: /icons/qbittorrent.png
-   #         href: https://qbit.int.d3adc3ii.cc
-    #        ping: 192.168.2.22
+  #          icon: {{HOMEPAGE_VAR_QBIT_ICON}}
+   #         href: {{HOMEPAGE_VAR_QBIT_URL}}
+   #         sitemonitor: {{HOMEPAGE_VAR_QBIT_URL}}
      #       widget:
       #          type: qbittorrent
-       #         url: https://qbit.int.d3adc3ii.cc
-        #        username: d3adc3ii
-         #       password: WCxb2CcykoUmjiNAf3p8
+       #         url: {{HOMEPAGE_VAR_QBIT_URL}}
+        #        username: {{HOMEPAGE_VAR_QBIT_USER}}
+         #       password:  {{HOMEPAGE_VAR_QBIT_PASSWORD}}
           #      enableLeechProgress: false
         - Sh:
-            icon: /icons/stash.png  
-            href: https://stash.int.d3adc3ii.cc
-            ping: 192.168.2.26  
+            icon: {{HOMEPAGE_VAR_STASH_ICON}}
+            href: {{HOMEPAGE_VAR_STASH_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_STASH_URL}}
             widget:
                 type: stash
-                url: https://stash.d3adc3ii.cc
-                stashapikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg
+                url: {{HOMEPAGE_VAR_STASH_URL}}
+                stashapikey: {{HOMEPAGE_VAR_STASH_API}}
         - Semaphore:
-            icon: /icons/semaphore.png
-            href: https://semaphore.int.d3adc3ii.cc
+            icon: {{HOMEPAGE_VAR_SEMAPHORE_ICON}}
+            href: {{HOMEPAGE_VAR_SEMAPHORE_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_SEMAPHORE_URL}}
         - aria2:
-            icon: /icons/ariang.png
-            href: http://192.168.2.16:6880
-            ping: 192.168.2.16 
+            icon: {{HOMEPAGE_VAR_ARIA_ICON}}
+            href: {{HOMEPAGE_VAR_ARIA_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_ARIA_URL}}
 - External:
     - Core: # Container and Identity Management
         - Pangolin:
-            icon: /icons/pangolin.png
-            href: https://pangolin.d3adc3ii.cc
-            sitemonitor: https://pangolin.d3adc3ii.cc
+            icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
+            href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
         - Authentik:
-            icon: /icons/authentik.png
-            href: https://auth.d3adc3ii.cc
-            sitemonitor: https://auth.d3adc3ii.cc 
+            icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
+            href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
             widget:
                 type: authentik
-                url: https://auth.d3adc3ii.cc
-                key: Boy9GZM04gnN8zn1RdTDSxgkeDr70a8XqFKmrp1HwVx7A3u4GA2pnVN2aZEO
+                url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+                key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}} 
         - Komodo:
-            icon: /icons/komodo.png
-            href: https://komodo.d3adc3ii.cc
-            sitemonitor: https://komodo.d3adc3ii.cc
-        - ControlD:
-            icon: /icons/controld.png
-            href: https://controld.com/dashboard/statistics 
-            sitemonitor: https://controld.com/dashboard/statistics 
+            icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
+            href: {{HOMEPAGE_VAR_KOMODO_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
         - Twingate:
-            icon: /icons/twingate.png
-            href: https://d3net.twinget.com
+            icon: {{HOMEPAGE_VAR_TWINGATE_ICON}}
+            href: {{HOMEPAGE_VAR_TWINGATE_URL}}
         - Dumbterm:
-            icon: /icons/dumbterm.svg
-            href: https://dumbterm.d3adc3ii.cc
-            ping: 192.168.2.20  
+            icon: {{HOMEPAGE_VAR_DUMBTERM_ICON}}
+            href: {{HOMEPAGE_VAR_DUMBTERM_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_DUMBTERM_URL}}
     - Monitoring:
         - Grafana:
-            icon: /icons/grafana.png
-            href: https://d3adc3ii.grafana.net/dashboards 
+            icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+            href: {{HOMEPAGE_VAR_GRAFANA_URL}}
         - Beszel:
-            icon: /icons/beszel.png
-            href: https://beszel.d3adc3ii.cc
-            ping: 192.168.2.9
+            icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
+            href: {{HOMEPAGE_VAR_BESZEL_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_BESZEL_URL}}
             widget:
                 type: beszel
                 #url: https://beszel.d3adc3ii.cc
                 url: http://192.168.2.9:8090
-                username: d3social@pm.me # email
-                password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
-                version: 2 # optional, default is 1
+                username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+                password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+                version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
         - zabbix:
-            icon: /icons/zabbix.png
-            href: http://zabbix.d3adc3ii.cc/zabbix
-            ping: 192.168.2.5  
+            icon: {{HOMEPAGE_VAR_ZABBIX_ICON}} 
+            href: {{HOMEPAGE_VAR_ZABBIX_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_ZABBIX_URL}}
         - checkmk:
-            href: http://checkmk.int.d3adc3ii.cc
-            ping: 192.168.2.17  
+            icon: {{HOMEPAGE_VAR_CHECKMK_ICON}}
+            href: {{HOMEPAGE_VAR_CHECKMK_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_CHECKMK_URL}}
     - Apps: # Applications
         - Karakeep:
             icon: /icons/karakeep.png
             href: https://kara.d3adc3ii.cc
             ping: 192.168.2.31
         - wallos:
-            icon: /icons/wallos.png
-            href: http://wallos.int.d3adc3ii.cc
-            ping: 192.168.2.19 
+            icon: {{HOMEPAGE_VAR_WALLOS_ICON}} 
+            href: {{HOMEPAGE_VAR_WALLOS_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_WALLOS_URL}}
         - Omni-tools:
-            icon: /icons/omni-tools.png
-            href: http://omnitools.d3adc3ii.cc
-            ping: 192.168.2.19 
+            icon: {{HOMEPAGE_VAR_OMNITOOLS_ICON}} 
+            href: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
 - GL1:
   - Info:
-      href: https://pve11.d3adc3ii.cc
-      ping: pve11.int.d3adc3ii.cc
+      href: {{HOMEPAGE_VAR_PVE11_URL}}  
       widget:
         type: glances
-        url: http://192.168.3.13:61208
+        url: {{HOMEPAGE_VAR_GLANCES_PVE11}} 
         version: 4
         metric: info
   - CPU:  
-      href: https://pve11.d3adc3ii.cc
-      ping: pve11.int.d3adc3ii.cc
+      href: 
         #  - CPU:
       widget:     
         type: glances
-        url: http://192.168.3.11:61208
+        url: {{HOMEPAGE_VAR_GLANCES_PVE11}}
         version: 4
         metric: cpu
   - Memory:
       widget:     
         type: glances
-        url: http://192.168.3.11:61208
+        url: {{HOMEPAGE_VAR_GLANCES_PVE11}}
         version: 4
         metric: memory
   - CPU Temp:
       widget:     
         type: glances
-        url: http://192.168.3.11:61208
+        url: {{HOMEPAGE_VAR_GLANCES_PVE11}}
         version: 4
         metric: sensor:Composite
 - GL2:
   - Info:
-      href: https://pve12.d3adc3ii.cc
-      ping: pve12.int.d3adc3ii.cc
+      href: {{HOMEPAGE_VAR_PVE12_URL}}
       widget:
         type: glances
-        url: http://192.168.3.13:61208
+        url: {{HOMEPAGE_VAR_GLANCES_PVE12}} 
         version: 4
         metric: info
   - CPU:  
-      href: https://pve12.d3adc3ii.cc
-      ping: pve12.int.d3adc3ii.cc
+      href: {{HOMEPAGE_VAR_PVE12_URL}}
       widget:     
         type: glances
-        url: http://192.168.3.12:61208
+        url: {{HOMEPAGE_VAR_GLANCES_PVE12}}
         version: 4
         metric: cpu
   - Memory:
       widget:     
         type: glances
-        url: http://192.168.3.12:61208
+        url: {{HOMEPAGE_VAR_GLANCES_PVE12}}    
         version: 4
         metric: memory
   - CPU Temp:
       widget:     
         type: glances
-        url: http://192.168.3.12:61208
+        url: {{HOMEPAGE_VAR_GLANCES_PVE12}}
         version: 4
         metric: sensor:Composite
 - GL3:
   - Info:
-      href: https://pve13.d3adc3ii.cc
-      ping: pve13.int.d3adc3ii.cc
+      href: {{HOMEPAGE_VAR_PVE13_URL}}
       widget:
         type: glances
-        url: http://192.168.3.13:61208
+        url: {{HOMEPAGE_VAR_GLANCES_PVE13}} 
         version: 4
         metric: info
   - CPU:
       widget:     
         type: glances
-        url: http://192.168.3.13:61208
+        url: {{HOMEPAGE_VAR_GLANCES_PVE13}}
         version: 4
         metric: cpu
   - Memory:
       widget:     
         type: glances
-        url: http://192.168.3.13:61208
+        url: {{HOMEPAGE_VAR_GLANCES_PVE13}}
         version: 4
         metric: memory
   - CPU Temp:
       widget:     
         type: glances
-        url: http://192.168.3.13:61208
+        url: {{HOMEPAGE_VAR_GLANCES_PVE13}}
         version: 4
         metric: sensor:Composite
 - M365:
