@@ -1,15 +1,21 @@
 ---
-title: d3 Homelab
-
-backgorund:
-#  image: /images/111rs.jpeg
-  image: {{HOMEPAGE_VAR_IMG_URL}}
-
-target: _self
+title: "{{HOMEPAGE_VAR_TITLE}}"
+favicon: "{{HOMEPAGE_VAR_FAVICON}}"
 headerStyle: boxedWidgets
+background:
+  image: "{{HOMEPAGE_VAR_IMG_URL}}"
+  blur: md
+  saturate: 50
+  brightness: 50
+  opacity: 70
+theme: dark
+color: slate
+useEqualHeights: true
+statusStyle: per-service
 fullWidth: true
 showStats: true
 hideErrors: true
+
 layout:
   
   External:
