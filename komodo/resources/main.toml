@@ -383,7 +383,7 @@ environment = """
 DATA_DIR= /etc/komodo/repos/diiihl-k3/komodo/resources/homepage
 ALLOWED_HOSTS= homepage.d3adc3ii.cc,192.168.2.31:3000
 
-# Allgemein
+#
 HOMEPAGE_VAR_TITLE= "d3 Homepage"
 HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
 HOMEPAGE_VAR_IMG_URL= "https://images.unsplash.com/photo-1676409429142-179800faa044?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -398,6 +398,117 @@ HOMEPAGE_VAR_PBS_URL =  "https://pbs.int.d3adc3ii.cc"
 # NetAlertX
 HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx.png"
 HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.int.d3adc3ii.cc"
+# Smokeping
+HOMEPAGE_VAR_SMOKEPING_ICON= "/icons/smokeping.png"
+HOMEPAGE_VAR_SMOKEPING_URL= "http://192.168.2.21/smokeping"
+# Guacamole
+HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/guacamole.png"
+HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.int.d3adc3ii.cc/guacamole"
+# Battle of the bandwidth
+HOMEPAGE_VAR_BOTB_ICON= "/icons/smokeping.png"
+HOMEPAGE_VAR_BOTB_URL= "https://botb.int.d3adc3ii.cc"
+
+
+# Opnsense
+HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense.png"
+HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.int.d3adc3ii.cc"
+# DNS
+HOMEPAGE_VAR_DNS_ICON= "/icons/technitium.png"
+HOMEPAGE_VAR_DNS_URL= "https://ns0.int.d3adc3ii.cc"
+
+
+# Jellyfin
+HOMEPAGE_VAR_JELLY_ICON= "/icons/jellyfin.png"
+HOMEPAGE_VAR_JELLY_URL= "https://jelly.int.d3adc3ii.cc"
+# Immich
+HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich.png"
+HOMEPAGE_VAR_IMMICH_URL= "https://imm.int.d3adc3ii.cc"
+HOMEPAGE_VAR_IMMICH_KEY= "7zmatjhj9RVRPylp08hKaG1mkYDubUyeqfDlpaUHo"
+HOMEPAGE_VAR_IMMICH_VERSION= 2
+HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"] 
+
+### LOCAL APPS ###
+# Actual Budget
+HOMEPAGE_VAR_ACTUAL_ICON= "/icons/actual-budget.png"
+HOMEPAGE_VAR_ACTUAL_URL= "https://actual.int.d3adc3ii.cc"
+# Sensei
+HOMEPAGE_VAR_SENSEI_ICON= "/icons/Davis.png"
+HOMEPAGE_VAR_SENSEI_URL= "https://statement.int.d3adc3ii.cc"
+# Homeassistant
+HOMEPAGE_VAR_HA_ICON= "/icons/home-assistant.png"
+HOMEPAGE_VAR_HA_URL= "https://ha.int.d3adc3ii.cc"
+# Qbit
+HOMEPAGE_VAR_QBIT_ICON= "/icons/qbittorrent.png"
+HOMEPAGE_VAR_QBIT_URL= "https://qbit.int.d3adc3ii.cc"
+HOMEPAGE_VAR_QBIT_USER= "d3adc3ii"
+HOMEPAGE_VAR_QBIT_PASSWORD= "WCxb2CcykoUmjiNAf3p8"
+# Stash
+HOMEPAGE_VAR_STASH_ICON= "/icons/stash.png"
+HOMEPAGE_VAR_STASH_URL= "https://stash.int.d3adc3ii.cc"
+HOMEPAGE_VAR_STASH_USER= "d3adc3ii"
+HOMEPAGE_VAR_QBIT_API= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg"
+# Semaphore
+HOMEPAGE_VAR_SEMAPHORE_ICON= "/icons/semaphore.png"
+HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.int.d3adc3ii.cc"
+# Aria2
+HOMEPAGE_VAR_ARIA_ICON= "/icons/ariang.png"
+HOMEPAGE_VAR_ARIA_URL= "https://dl.int.d3adc3ii.cc"
+
+### EXTERNAL ###
+# Pangolin
+HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin.png"
+HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.int.d3adc3ii.cc"
+# Authentik
+HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik.png"
+HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3adc3ii.cc"
+HOMEPAGE_VAR_AUTHENTIK_KEY="Boy9GZM04gnN8zn1RdTDSxgkeDr70a8XqFKmrp1HwVx7A3u4GA2pnVN2aZEO"
+# Komodo
+HOMEPAGE_VAR_KOMODO_ICON= "/icons/komodo.png"
+HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
+# Twingate
+HOMEPAGE_VAR_TWINGATE_ICON= "/icons/twingate.png"
+HOMEPAGE_VAR_TWINGATE_URL= "https://d3net.twinget.com"
+# Dumbterm
+HOMEPAGE_VAR_DUMBTERM_ICON= "/icons/dumbterm.png"
+HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.int.d3adc3ii.cc"
+
+### Monitoring ###
+
+# Grafana
+HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana.png"
+HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
+# Beszel
+HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel.png"
+HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
+HOMEPAGE_VAR_BESZEL_USERNAME= "d3social@pm.me"
+HOMEPAGE_VAR_BESZEL_PASSWORD= "LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re"
+HOMEPAGE_VAR_BESZEL_VERSION= 2
+# ZABBIX
+HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix.png"
+HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.int.d3adc3ii.cc/zabbix"
+# Checkmk
+HOMEPAGE_VAR_CHECKMK_ICON= "/icons/checkmk.png"
+HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.int.d3adc3ii.cc/d3/check_mk"
+
+### APPS ###
+# Karakeep
+HOMEPAGE_VAR_KARAKEEP_ICON= "/icons/karakeep.png"
+HOMEPAGE_VAR_KARAKEEP_URL= "https://karakeep.d3adc3ii.cc"
+# Wallos
+HOMEPAGE_VAR_KOMODO_ICON= "/icons/wallos.png"
+HOMEPAGE_VAR_KOMODO_URL= "https://wallos.d3adc3ii.cc"
+# Ommni Tools
+HOMEPAGE_VAR_OMNITOOLS_ICON= "/icons/omni-tools.png"
+HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
+
+### GL1 ###
+# PVE11
+HOMEPAGE_VAR_PVE11_URL= "https://pve11.d3adc3ii.cc"
+HOMEPAGE_VAR_PVE12_URL= "https://pve12.d3adc3ii.cc"
+HOMEPAGE_VAR_PVE13_URL= "https://pve13.d3adc3ii.cc"
+HOMEPAGE_VAR_GLANCES_PVE11= "http://192.168.3.11:61208"
+HOMEPAGE_VAR_GLANCES_PVE12= "http://192.168.3.12:61208"
+HOMEPAGE_VAR_GLANCES_PVE13= "http://192.168.3.13:61208"
 """
 
 ##
