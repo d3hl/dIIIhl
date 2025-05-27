@@ -192,12 +192,12 @@
             url: {{HOMEPAGE_VAR_GLANCES_PVE12}}
             version: 4
             metric: cpu
-- Memory:
-    widget:     
-        type: glances
-        url: {{HOMEPAGE_VAR_GLANCES_PVE12}}    
-        version: 4
-        metric: memory
+    - Memory:
+        widget:     
+            type: glances
+            url: {{HOMEPAGE_VAR_GLANCES_PVE12}}    
+            version: 4
+            metric: memory
     - CPU Temp:
         widget:     
             type: glances
