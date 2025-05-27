@@ -616,7 +616,7 @@ DATA_DIR=/mnt/zApps/mtp
 name = "netalertx"
 tags = ["internal", "monitoring"]
 [stack.config]
-server = "komodo-2"
+server = "server-bkxal"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -637,6 +637,8 @@ services:
       # (API: OPTION 2) use when debugging issues 
       # -  local_path/api:/app/api
     environment:
+      - PUID=1000
+      - PGID=1000
       - TZ=Asia/Singapore
       - PORT=20184
     env_file:
