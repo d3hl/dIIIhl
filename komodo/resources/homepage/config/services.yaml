@@ -141,7 +141,3 @@
             icon: {{HOMEPAGE_VAR_WALLOS_ICON}} 
             href: {{HOMEPAGE_VAR_WALLOS_URL}}
             sitemonitor: {{HOMEPAGE_VAR_WALLOS_URL}}
-        - Omni-tools:
-            icon: {{HOMEPAGE_VAR_OMNITOOLS_ICON}} 
-            href: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
-            sitemonitor: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
