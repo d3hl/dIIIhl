@@ -393,7 +393,7 @@ HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox.png"
 HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.int.d3adc3ii.cc"
 #HOMEPAGE_VAR_PROXMOX_USER= 
 #HOMEPAGE_VAR_PROXMOX_API_KEY=
-HOMEPAGE_VAR_PBS_URL=  "https://pbs.int.d3adc3ii.cc"
+HOMEPAGE_VAR_PBS_URL= "https://pbs.int.d3adc3ii.cc"
 
 # NetAlertX
 HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx.png"
@@ -482,7 +482,7 @@ HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel.png"
 HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
 HOMEPAGE_VAR_BESZEL_USERNAME= "d3social@pm.me"
 HOMEPAGE_VAR_BESZEL_PASSWORD= "LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re"
-HOMEPAGE_VAR_BESZEL_VERSION= 2
+HOMEPAGE_VAR_BESZEL_VERSION= "2"
 # ZABBIX
 HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix.png"
 HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.int.d3adc3ii.cc/zabbix"
