@@ -61,7 +61,7 @@
                 version: {{HOMEPAGE_VAR_IMMICH_VERSION}}
                 fields:  {{HOMEPAGE_VAR_IMMICH_FIELDS}}  
     - Local Apps: # remote
-        - Actual: {{HOMEPAGE_VAR_ACTUAL_ICON}}
+        - Actual:
             icon: {{HOMEPAGE_VAR_ACTUAL_ICON}}
             href: {{HOMEPAGE_VAR_ACTUAL_URL}}
         - SteamentSensei:
