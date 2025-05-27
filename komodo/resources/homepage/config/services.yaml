@@ -2,14 +2,14 @@
 - Internal:
     - Nas:
         -  Truenas: 
-            icon: /icons/truenas-scale.png
-            href: https://192.168.2.7
-            ping: 192.168.2.7
+            icon: {{HOMEPAGE_VAR_TRUENAS_ICON}}
+            href: {{HOMEPAGE_VAR_TRUENAS_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_TRUENAS_URL}}
             widget:
                 type: truenas
-                url: https://192.168.2.7
-                key: 1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe
-                enablePools: true
+                url: {{HOMEPAGE_VAR_TRUENAS_URL}}
+                key: {{HOMEPAGE_VAR_TRUENAS_KEY}}
+                enablePools: {{HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL}}
                 nasType: scale
     - Pve: # proxmoxx
         - pve11:
@@ -95,7 +95,7 @@
             href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
             sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
         - Authentik:
-            icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
+            icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
             href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
             sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
             widget:
