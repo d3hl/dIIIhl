@@ -12,26 +12,6 @@ showStats: true
 hideErrors: true
 layout:
   
-  External:
-    tab: Homelab
-    style: column
-    columns: 1
-    header: false
-    useEqualHeights: true
-    Core:
-      style: row
-      columns: 3
-      header: true
-      useEqualHeights: true
-    Monitoring:
-      style: row
-      columns: 4
-      header: true
-      useEqualHeights: true
-    Apps:
-      style: row
-      columns: 4
-      header: true
   Internal:
     tab: Homelab
     style: column
