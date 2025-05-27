@@ -3,7 +3,7 @@ title: d3 Homelab
 
 backgorund:
 #  image: /images/111rs.jpeg
-  image: ${HOMEPAGE_VAR_IMG_URL}
+  image: {{HOMEPAGE_VAR_IMG_URL}}
 
 target: _self
 headerStyle: boxedWidgets
