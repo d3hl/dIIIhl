@@ -495,8 +495,8 @@ HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.int.d3adc3ii.cc/d3/check_mk"
 HOMEPAGE_VAR_KARAKEEP_ICON= "/icons/karakeep.png"
 HOMEPAGE_VAR_KARAKEEP_URL= "https://karakeep.d3adc3ii.cc"
 # Wallos
-HOMEPAGE_VAR_KOMODO_ICON= "/icons/wallos.png"
-HOMEPAGE_VAR_KOMODO_URL= "https://wallos.d3adc3ii.cc"
+HOMEPAGE_VAR_WALLOS_ICON= "/icons/wallos.png"
+HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
 # Ommni Tools
 HOMEPAGE_VAR_OMNITOOLS_ICON= "/icons/omni-tools.png"
 HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
