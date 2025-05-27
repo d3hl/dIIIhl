@@ -72,16 +72,6 @@
             icon: {{HOMEPAGE_VAR_HA_ICON}}
             href: {{HOMEPAGE_VAR_HA_URL}}
             sitemonitor: {{HOMEPAGE_VAR_HA_URL}}
- #       - Qbit: 
-  #          icon: {{HOMEPAGE_VAR_QBIT_ICON}}
-   #         href: {{HOMEPAGE_VAR_QBIT_URL}}
-   #         sitemonitor: {{HOMEPAGE_VAR_QBIT_URL}}
-     #       widget:
-      #          type: qbittorrent
-       #         url: {{HOMEPAGE_VAR_QBIT_URL}}
-        #        username: {{HOMEPAGE_VAR_QBIT_USER}}
-         #       password:  {{HOMEPAGE_VAR_QBIT_PASSWORD}}
-          #      enableLeechProgress: false
         - Sh:
             icon: {{HOMEPAGE_VAR_STASH_ICON}}
             href: {{HOMEPAGE_VAR_STASH_URL}}
@@ -99,7 +89,7 @@
             href: {{HOMEPAGE_VAR_ARIA_URL}}
             sitemonitor: {{HOMEPAGE_VAR_ARIA_URL}}
 - External:
-    - Core: # Container and Identity Management
+    - Core: 
         - Pangolin:
             icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
             href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
@@ -160,82 +150,82 @@
             href: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
             sitemonitor: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
 - GL1:
-  - Info:
-      href: {{HOMEPAGE_VAR_PVE11_URL}}  
-      widget:
-        type: glances
-        url: {{HOMEPAGE_VAR_GLANCES_PVE11}} 
-        version: 4
-        metric: info
-  - CPU:  
-      href: 
+    - Info:
+        href: {{HOMEPAGE_VAR_PVE11_URL}}  
+        widget:
+            type: glances
+            url: {{HOMEPAGE_VAR_GLANCES_PVE11}} 
+            version: 4
+            metric: info
+    - CPU:  
+        href: 
         #  - CPU:
-      widget:     
-        type: glances
-        url: {{HOMEPAGE_VAR_GLANCES_PVE11}}
-        version: 4
-        metric: cpu
-  - Memory:
-      widget:     
-        type: glances
-        url: {{HOMEPAGE_VAR_GLANCES_PVE11}}
-        version: 4
-        metric: memory
-  - CPU Temp:
-      widget:     
-        type: glances
-        url: {{HOMEPAGE_VAR_GLANCES_PVE11}}
-        version: 4
-        metric: sensor:Composite
+        widget:     
+            type: glances
+            url: {{HOMEPAGE_VAR_GLANCES_PVE11}}
+            version: 4
+            metric: cpu
+    - Memory:
+        widget:     
+            type: glances
+            url: {{HOMEPAGE_VAR_GLANCES_PVE11}}
+            version: 4
+            metric: memory
+    - CPU Temp:
+        widget:     
+            type: glances
+            url: {{HOMEPAGE_VAR_GLANCES_PVE11}}
+            version: 4
+            metric: sensor:Composite
 - GL2:
-  - Info:
-      href: {{HOMEPAGE_VAR_PVE12_URL}}
-      widget:
-        type: glances
-        url: {{HOMEPAGE_VAR_GLANCES_PVE12}} 
-        version: 4
-        metric: info
-  - CPU:  
-      href: {{HOMEPAGE_VAR_PVE12_URL}}
-      widget:     
-        type: glances
-        url: {{HOMEPAGE_VAR_GLANCES_PVE12}}
-        version: 4
-        metric: cpu
-  - Memory:
-      widget:     
+    - Info:
+        href: {{HOMEPAGE_VAR_PVE12_URL}}
+        widget:
+            type: glances
+            url: {{HOMEPAGE_VAR_GLANCES_PVE12}} 
+            version: 4
+            metric: info
+- CPU:  
+    href: {{HOMEPAGE_VAR_PVE12_URL}}
+        widget:     
+            type: glances
+            url: {{HOMEPAGE_VAR_GLANCES_PVE12}}
+            version: 4
+            metric: cpu
+- Memory:
+    widget:     
         type: glances
         url: {{HOMEPAGE_VAR_GLANCES_PVE12}}    
         version: 4
         metric: memory
-  - CPU Temp:
-      widget:     
+- CPU Temp:
+    widget:     
         type: glances
         url: {{HOMEPAGE_VAR_GLANCES_PVE12}}
         version: 4
         metric: sensor:Composite
 - GL3:
-  - Info:
-      href: {{HOMEPAGE_VAR_PVE13_URL}}
-      widget:
-        type: glances
-        url: {{HOMEPAGE_VAR_GLANCES_PVE13}} 
-        version: 4
-        metric: info
-  - CPU:
-      widget:     
+    - Info:
+        href: {{HOMEPAGE_VAR_PVE13_URL}}
+        widget:
+            type: glances
+            url: {{HOMEPAGE_VAR_GLANCES_PVE13}} 
+            version: 4
+            metric: info
+- CPU:
+    widget:     
         type: glances
         url: {{HOMEPAGE_VAR_GLANCES_PVE13}}
         version: 4
         metric: cpu
-  - Memory:
-      widget:     
+- Memory:
+    widget:     
         type: glances
         url: {{HOMEPAGE_VAR_GLANCES_PVE13}}
         version: 4
         metric: memory
-  - CPU Temp:
-      widget:     
+- CPU Temp:
+    widget:     
         type: glances
         url: {{HOMEPAGE_VAR_GLANCES_PVE13}}
         version: 4
