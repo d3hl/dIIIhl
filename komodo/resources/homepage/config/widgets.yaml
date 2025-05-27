@@ -1,7 +1,7 @@
 ---
 
 - logo:
-    icon: /icons/d3logo.png 
+    icon: ${HOMEPAGE_VAR_FAVICO}
 - openmeteo:
     label: Singapore
     latitude: 1.27

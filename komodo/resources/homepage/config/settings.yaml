@@ -3,11 +3,7 @@ title: d3 Homelab
 
 backgorund:
 #  image: /images/111rs.jpeg
-  image: https://images.unsplash.com/photo-1676409429142-179800faa044?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
-  blur: sm # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur
-  saturate: 50 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
-  brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
-  opacity: 50 # 0-100
+  image: ${HOMEPAGE_VAR_IMG_URL}
 
 target: _self
 headerStyle: boxedWidgets

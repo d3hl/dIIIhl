@@ -13,50 +13,18 @@
                 nasType: scale
     - Pve: # proxmoxx
         - pve11:
-            icon: /icons/proxmox.png
-            href: https://pve.int.d3adc3ii.cc
-            sitemonitor: https://pve.int.d3adc3ii.cc
-            widget:
-                type: beszel
-                url: https://beszel.int.d3adc3ii.cc
-                username: d3social@pm.me # email
-                password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
-                systemId: pve11 # optional
-                version: 2 # optional, default is 1
-        - pve12:
-            icon: /icons/proxmox.png
-            ping: 192.168.2.12
-            widget:
-                type: beszel
-                url: https://beszel.int.d3adc3ii.cc
-                username: d3social@pm.me # email
-                password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
-                systemId: pve12 # optional
-                version: 2 # optional, default is 1
-        - pve13:
-            icon: /icons/proxmox.png
-            ping: 192.168.2.13
-            widget:
-                type: beszel
-                url: https://beszel.int.d3adc3ii.cc
-                username: d3social@pm.me # email
-                password: LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re
-                systemId: pve13 # optional
-                version: 2 # optional, default is 1
+            icon: ${HOMEPAGE_VAR_PROXMOX_ICON}
+            href: ${HOMEPAGE_VAR_PROXMOX_URL_PVE_1}
+            sitemonitor: ${HOMEPAGE_VAR_PROXMOX_URL_PVE_1}
         - PBS: 
-            icon: /icons/proxmox.png
-            href: https://pbs.int.d3adc3ii.cc
-            ping: 192.168.2.35 
-           # widget:
-            #    type: proxmoxbackupserver
-             #   url: https://pbs.int.d3adc3ii.cc
-              #  username: root@pam!homepage_token 
-               # password: 8b1821a0-a776-49b7-a4cc-a2a433cee3d7
-    - M0nit0ring : # remote
+            icon: ${HOMEPAGE_VAR_PROXMOX_ICON}
+            href: ${HOMEPAGE_VAR_PBS_URL }
+            sitemonitor: ${HOMEPAGE_VAR_PBS_URL } 
+    - M0nit0ring:
         - NetAlertX:
-            icon: /icons/netalertx.png
-            href: http://netalertx.int.d3adc3ii.cc
-            sitemonitor:: http://netalertx.int.d3adc3ii.cc
+            icon: ${HOMEPAGE_VAR_NETALERTX_ICON}
+            href: ${HOMEPAGE_VAR_NETALERTX_URL}
+            sitemonitor: ${HOMEPAGE_VAR_NETALERTX_URL}
         - Smokeping:
             icon: /icons/smokeping.png
             href: http://192.168.2.21/smokeping
