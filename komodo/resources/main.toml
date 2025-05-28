@@ -375,7 +375,7 @@ HOMEPAGE_VAR_DNS_URL= "https://ns0.int.d3adc3ii.cc"
 HOMEPAGE_VAR_MIKROTIK_ICON= "/icons/mikrotik.png"
 HOMEPAGE_VAR_MIKROTIK_URL= "http://192.168.2.253"
 # TPLINK
-HOMEPAGE_VAR_TPLINK_ICON= "/icons/tplink.png"
+HOMEPAGE_VAR_TPLINK_ICON= "/icons/tp-link.png"
 HOMEPAGE_VAR_TPLINK_URL= "http://192.168.2.252"
 
 ### Monitoring ###
@@ -384,7 +384,7 @@ HOMEPAGE_VAR_TPLINK_URL= "http://192.168.2.252"
 HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx.png"
 HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.int.d3adc3ii.cc"
 # APPRISE-API
-HOMEPAGE_VAR_APPRISE_ICON= "/icons/apprie.png"
+HOMEPAGE_VAR_APPRISE_ICON= "/icons/apprise.png"
 HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
 # Smokeping
 HOMEPAGE_VAR_SMOKEPING_ICON= "/icons/smokeping.png"
@@ -417,7 +417,7 @@ HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"]
 HOMEPAGE_VAR_ACTUAL_ICON= "/icons/actual-budget.png"
 HOMEPAGE_VAR_ACTUAL_URL= "https://actual.int.d3adc3ii.cc"
 # Sensei
-HOMEPAGE_VAR_SENSEI_ICON= "/icons/Davis.png"
+HOMEPAGE_VAR_SENSEI_ICON= "/icons/davis.png"
 HOMEPAGE_VAR_SENSEI_URL= "https://statement.int.d3adc3ii.cc"
 # Homeassistant
 HOMEPAGE_VAR_HA_ICON= "/icons/home-assistant.png"
