@@ -51,6 +51,10 @@ layout:
       style: row
       columns: 4 
       header: false
+    Infra:
+      style: row
+      columns: 4 
+      header: false
     M0nit0ring:
       style: row
       columns: 3 

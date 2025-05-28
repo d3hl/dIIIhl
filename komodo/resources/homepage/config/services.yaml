@@ -1,5 +1,5 @@
 ---
-- Infra:
+- Internal:
     - Nas:
         -  Truenas: 
             icon: {{HOMEPAGE_VAR_TRUENAS_ICON}}
@@ -20,10 +20,19 @@
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             href: {{HOMEPAGE_VAR_PBS_URL}}
             sitemonitor: {{HOMEPAGE_VAR_PBS_URL}} 
+    - Infra:        
         - Opnsense:
             icon: {{HOMEPAGE_VAR_OPNSENSE_ICON}} 
             href: {{HOMEPAGE_VAR_OPNSENSE_URL}}
             sitemonitor: {{HOMEPAGE_VAR_OPNSENSE_URL}}
+        - Mikrotik:
+            icon: {{HOMEPAGE_VAR_MIKROTIK_ICON}} 
+            href: {{HOMEPAGE_VAR_MIKROTIK_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_MIKROTIK_URL}}
+        - Tplink:
+            icon: {{HOMEPAGE_VAR_TPLINK_ICON}} 
+            href: {{HOMEPAGE_VAR_TPLINK_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_TPLINK_URL}}
         - DNS:
             icon: {{HOMEPAGE_VAR_DNS_ICON}}
             href: {{HOMEPAGE_VAR_DNS_URL}}
@@ -33,6 +42,10 @@
             icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
             href: {{HOMEPAGE_VAR_NETALERTX_URL}}
             sitemonitor: {{HOMEPAGE_VAR_NETALERTX_URL}}
+        - Apprise-API:
+            icon: {{HOMEPAGE_VAR_APPRISE_ICON}}
+            href: {{HOMEPAGE_VAR_APPRISE_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_APPRISE_URL}}
         - Smokeping:
             icon: {{HOMEPAGE_VAR_SMOKEPING_ICON}}
             href: {{HOMEPAGE_VAR_SMOKEPING_URL}}
