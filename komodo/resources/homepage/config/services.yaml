@@ -42,6 +42,10 @@
             icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
             href: {{HOMEPAGE_VAR_NETALERTX_URL}}
             sitemonitor: {{HOMEPAGE_VAR_NETALERTX_URL}}
+            widget:
+                type: netalertx
+                url: {{HOMEPAGE_VAR_NETALERTX_URL}}
+                fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
         - Apprise-API:
             icon: {{HOMEPAGE_VAR_APPRISE_ICON}}
             href: {{HOMEPAGE_VAR_APPRISE_URL}}
@@ -67,6 +71,12 @@
             icon: {{HOMEPAGE_VAR_JELLY_ICON}}
             href: {{HOMEPAGE_VAR_JELLY_URL}}
             sitemonitor: {{HOMEPAGE_VAR_JELLY_URL}}
+            widget:
+                type: jellyfin
+                url: {{HOMEPAGE_VAR_JELLY_URL}} 
+                key: {{HOMEPAGE_VAR_JELLY_KEY}}
+                enableBlock: {{HOMEPAGE_VAR_JELLY_ENABLEBLOCK}}
+                enableNowPlaying: {{HOMEPAGE_VAR_JELLY_NOWPLAY}}
         - Immich:
             icon: {{HOMEPAGE_VAR_IMMICH_ICON}} 
             href: {{HOMEPAGE_VAR_IMMICH_URL}}
