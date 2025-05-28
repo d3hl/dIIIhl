@@ -1,5 +1,5 @@
 ---
-- Internal:
+- Infra:
     - Nas:
         -  Truenas: 
             icon: {{HOMEPAGE_VAR_TRUENAS_ICON}}
@@ -20,6 +20,14 @@
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             href: {{HOMEPAGE_VAR_PBS_URL}}
             sitemonitor: {{HOMEPAGE_VAR_PBS_URL}} 
+        - Opnsense:
+            icon: {{HOMEPAGE_VAR_OPNSENSE_ICON}} 
+            href: {{HOMEPAGE_VAR_OPNSENSE_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_OPNSENSE_URL}}
+        - DNS:
+            icon: {{HOMEPAGE_VAR_DNS_ICON}}
+            href: {{HOMEPAGE_VAR_DNS_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_DNS_URL}}
     - M0nit0ring:
         - NetAlertX:
             icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
@@ -36,15 +44,11 @@
         - Battle of the badwidth:
             icon: {{HOMEPAGE_VAR_BOTB_ICON}}
             href: {{HOMEPAGE_VAR_BOTB_URL}}
-    - I1: 
-        - Opnsense:
-            icon: {{HOMEPAGE_VAR_OPNSENSE_ICON}} 
-            href: {{HOMEPAGE_VAR_OPNSENSE_URL}}
-            sitemonitor: {{HOMEPAGE_VAR_OPNSENSE_URL}}
-        - DNS:
-            icon: {{HOMEPAGE_VAR_DNS_ICON}}
-            href: {{HOMEPAGE_VAR_DNS_URL}}
-            sitemonitor: {{HOMEPAGE_VAR_DNS_URL}}
+    - Backup: 
+        - Backrest:
+            icon: {{HOMEPAGE_VAR_BACKREST_ICON}}
+            href: {{HOMEPAGE_VAR_BACKREST_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_BACKREST_URL}}
     - Media:
         - Jellyfin:
             icon: {{HOMEPAGE_VAR_JELLY_ICON}}
