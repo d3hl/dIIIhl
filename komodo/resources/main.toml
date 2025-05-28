@@ -910,7 +910,7 @@ services:
             - MYSQL_PASSWORD= ${DB_PASSWORD}
             - MYSQL_RANDOM_ROOT_PASSWORD=true
         volumes:
-            - speedtest-db:/var/lib/mysql
+            - ${DATA_DIR}/db:/var/lib/mysql
         healthcheck:
             test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
             interval: 5s
@@ -1028,6 +1028,30 @@ volumes = """
 """
 environment = """
 CADDY_INGRESS_NETWORKS=caddy
+"""
+
+##
+
+[[deployment]]
+name = "mailrise"
+[deployment.config]
+server = "komodo-3"
+image.type = "Image"
+image.params.image = "yoryan/mailrise:latest"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+restart = "unless-stopped"
+ports = """
+8025:8025
+"""
+volumes = """
+  # volume:/container/path
+  volume:
+    - ${DATA_DIR}/mailrise.conf:/etc/mailrise.conf
+"""
+environment = """
+DATA_DIR=/mnt/zApps/mailrise
 """
 
 ##
