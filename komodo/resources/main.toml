@@ -383,23 +383,30 @@ environment = """
 DATA_DIR= /etc/komodo/repos/diiihl-k3/komodo/resources/homepage
 ALLOWED_HOSTS= "homepage.d3adc3ii.cc,192.168.2.31:3000"
 
-#
+# Site Config
 HOMEPAGE_VAR_TITLE= "d3 Homepage"
 HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
 HOMEPAGE_VAR_IMG_URL= "/images/culon.jpg"
+
+### INFRA ###
 
 # Truenas
 HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas.png"
 HOMEPAGE_VAR_TRUENAS_URL= "https://192.168.2.7"
 HOMEPAGE_VAR_TRUENAS_KEY="1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe"
 HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
-
 # Proxmox
 HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox.png"
 HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.int.d3adc3ii.cc"
 #HOMEPAGE_VAR_PROXMOX_USER= 
 #HOMEPAGE_VAR_PROXMOX_API_KEY=
 HOMEPAGE_VAR_PBS_URL= "https://pbs.int.d3adc3ii.cc"
+# Opnsense
+HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense.png"
+HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.int.d3adc3ii.cc"
+# DNS
+HOMEPAGE_VAR_DNS_ICON= "/icons/technitium.png"
+HOMEPAGE_VAR_DNS_URL= "https://ns0.int.d3adc3ii.cc"
 
 ### Monitoring ###
 
@@ -416,13 +423,10 @@ HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.int.d3adc3ii.cc/guacamole"
 HOMEPAGE_VAR_BOTB_ICON= "/icons/smokeping.png"
 HOMEPAGE_VAR_BOTB_URL= "https://botb.int.d3adc3ii.cc"
 
-
-# Opnsense
-HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense.png"
-HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.int.d3adc3ii.cc"
-# DNS
-HOMEPAGE_VAR_DNS_ICON= "/icons/technitium.png"
-HOMEPAGE_VAR_DNS_URL= "https://ns0.int.d3adc3ii.cc"
+### BACKUP ###
+# Battle of the bandwidth
+HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest.png"
+HOMEPAGE_VAR_BACKREST_URL= "https://backrest.int.d3adc3ii.cc"
 
 
 # Jellyfin
@@ -1004,54 +1008,6 @@ volumes = """
 environment = """
 LISTEN=45876
 KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU6cTY/"
-"""
-
-##
-
-[[deployment]]
-name = "caddy"
-[deployment.config]
-server = "server-bkxal"
-image.type = "Image"
-image.params.image = "lucaslorentz/caddy-docker-proxy:ci-alpine"
-poll_for_updates = true
-auto_update = true
-network = "caddy"
-restart = "unless-stopped"
-ports = """
-80:80
-443:443
-"""
-volumes = """
-/var/run/docker.sock:/var/run/docker.sock
-/mnt/zApps/caddy/data:/data
-"""
-environment = """
-CADDY_INGRESS_NETWORKS=caddy
-"""
-
-##
-
-[[deployment]]
-name = "mailrise"
-[deployment.config]
-server = "komodo-3"
-image.type = "Image"
-image.params.image = "yoryan/mailrise:latest"
-poll_for_updates = true
-auto_update = true
-network = "bridge"
-restart = "unless-stopped"
-ports = """
-8025:8025
-"""
-volumes = """
-  # volume:/container/path
-  volume:
-    - ${DATA_DIR}/mailrise.conf:/etc/mailrise.conf
-"""
-environment = """
-DATA_DIR=/mnt/zApps/mailrise
 """
 
 ##
