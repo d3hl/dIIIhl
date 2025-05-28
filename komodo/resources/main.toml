@@ -684,18 +684,14 @@ services:
   mailrise:
     image: yoryan/mailrise:latest
     container_name: mailrise
-    env_file:
-      - .env
     ports:
       - '8025:8025'
     restart: unless-stopped
     volumes:
-      - source: ${DATA_DIR}/mailrise
-        target: /etc/mailrise.conf
-        type: bind
+      -  /mnt/zApps/mailrise/mailrise.conf:/etc/mailrise.conf:ro
 """
 environment = """
-DATA_DIR=/mnt/zApps/mailrise
+
 """
 
 ##
