@@ -11,6 +11,14 @@
                 key: {{HOMEPAGE_VAR_TRUENAS_KEY}}
                 enablePools: {{HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL}}
                 nasType: scale
+        - NetAlertX:
+            icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
+            href: {{HOMEPAGE_VAR_NETALERTX_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_NETALERTX_URL}}
+            widget:
+                type: netalertx
+                url: {{HOMEPAGE_VAR_NETALERTX_WIDGETURL}}
+             #   fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
     - Pve: # proxmoxx
         - pve11:
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
@@ -38,14 +46,6 @@
             href: {{HOMEPAGE_VAR_DNS_URL}}
             sitemonitor: {{HOMEPAGE_VAR_DNS_URL}}
     - M0nit0ring:
-        - NetAlertX:
-            icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
-            href: {{HOMEPAGE_VAR_NETALERTX_URL}}
-            sitemonitor: {{HOMEPAGE_VAR_NETALERTX_URL}}
-            widget:
-                type: netalertx
-                url: {{HOMEPAGE_VAR_NETALERTX_WIDGETURL}}
-             #   fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
         - Apprise-API:
             icon: {{HOMEPAGE_VAR_APPRISE_ICON}}
             href: {{HOMEPAGE_VAR_APPRISE_URL}}
