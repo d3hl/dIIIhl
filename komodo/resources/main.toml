@@ -883,23 +883,6 @@ POSTGRES_DATA=/mnt/zApps/portnote/data
 ##
 
 [[stack]]
-name = "prom-ga-alloy"
-[stack.config]
-server = "komodo-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "server12/prom-gra-alloy"
-environment = """
-LOKI_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/loki-config.yaml
-ALLOY_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/config.alloy
-"""
-
-##
-
-[[stack]]
 name = "speedtest-tracker"
 tags = ["internal", "testing"]
 [stack.config]
