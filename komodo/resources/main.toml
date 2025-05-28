@@ -1065,33 +1065,6 @@ CADDY_INGRESS_NETWORKS=caddy
 ##
 
 [[deployment]]
-name = "mtp"
-[deployment.config]
-server = "server-bkxal"
-image.type = "Build"
-image_registry_account = "d3adc3iii"
-network = "bridge"
-restart = "unless-stopped"
-extra_args = [
-  "MTPROTO_REPO_URL: ${MTPROTO_REPO_URL}"
-]
-ports = """
-7443:8889
-"""
-volumes = """
-${DATA_DIR}/config:/data
-"""
-environment = """
-SECRET=[[MTP_SECRET]]
-WORKERS=2
-MTPROTO_REPO_URL="https://github.com/GetPageSpeed/MTProxy"
-TZ=Asia/Singapore
-DATA_DIR=/mnt/zApps/mtp
-"""
-
-##
-
-[[deployment]]
 name = "nessus"
 tags = ["internal", "testing"]
 [deployment.config]
