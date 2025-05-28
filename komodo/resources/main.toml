@@ -937,6 +937,32 @@ WALLOS_DATA_DIR=/mnt/zApps/wallos
 ##
 
 [[deployment]]
+name = "apprise"
+[deployment.config]
+server = "komodo-3"
+image.type = "Image"
+image.params.image = "caronc/apprise:latest"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+ports = """
+8000:8000
+"""
+volumes = """
+/mnt/zApps/apprise_api/config:/opt/apprise/config
+/mnt/zApps/apprise_api/plugin:/opt/apprise/plugin
+/mnt/zApps/apprise_api/attach:/opt/apprise/attach
+"""
+environment = """
+PUID=1000
+PGID=1000
+APPRISE_STATEFUL_MODE=simple
+APPRISE_WORKER_COUNT=1
+"""
+
+##
+
+[[deployment]]
 name = "beszel-k11"
 tags = ["internal", "monitoring"]
 [deployment.config]
