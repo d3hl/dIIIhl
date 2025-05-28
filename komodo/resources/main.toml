@@ -174,44 +174,6 @@ AUTHENTIK_EMAIL__FROM=authentik@localhost
 ##
 
 [[stack]]
-name = "backrest"
-tags = ["core", "production"]
-[stack.config]
-server = "komodo-3"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-version: "3.8"
-services:
-  backrest:
-    image: garethgeorge/backrest:latest
-    container_name: backrest
-    hostname: backrest
-    volumes:
-      - /home/d3/backrest/data:/data
-      - /home/d3/backrest/config:/config
-      - /home/d3/backrest/cache:/cache
-      - /home/d3/backrest/tmp:/tmp
-      - /mnt/enc:/userdata  # Mount local paths to backup
-    environment:
-      - BACKREST_DATA=/data
-      - BACKREST_CONFIG=/config/config.json
-      - XDG_CACHE_HOME=/cache
-      - TMPDIR=/tmp
-      - TZ=America/Los_Angeles
-    ports:
-      - "9898:9898"
-    restart: unless-stopped
-"""
-environment = """
-BACKREST_DIR=/mnt/zApps/backrest
-BKUP_DIR=/mnt/backup
-"""
-
-##
-
-[[stack]]
 name = "battle-of-the-bandwidth"
 tags = [
   "internal",
@@ -714,6 +676,27 @@ tags = ["internal", "monitoring"]
 ##
 
 [[stack]]
+name = "mailrise"
+[stack.config]
+server = "komodo-3"
+file_contents = """
+services:
+  mailrise:
+    image: yoryan/mailrise:latest
+    container_name: mailrise
+    ports:
+      - '8025:8025'
+    restart: unless-stopped
+    volumes:
+      -  /mnt/zApps/mailrise/mailrise.conf:/etc/mailrise.conf:ro
+"""
+environment = """
+
+"""
+
+##
+
+[[stack]]
 name = "netalertx"
 tags = ["internal", "monitoring"]
 [stack.config]
@@ -888,45 +871,27 @@ services:
         restart: unless-stopped
         container_name: speedtest-tracker
         ports:
-            - 8181:80
-            - 8483:443
+            - 8008:80
+            - 8043:443
         environment:
+            -APP_DEBUG=true
             - PUID=1000
             - PGID=1000
             - APP_KEY= ${APP_KEY}
-            - DB_CONNECTION=mariadb
-            - DB_HOST=db
-            - DB_PORT=3306
-            - DB_DATABASE= ${DB_DATABASE}
-            - DB_USERNAME= ${DB_USERNAME}
-            - DB_PASSWORD= ${DB_PASSWORD}
+            - DB_CONNECTION=${DB_CONNECTION}
+          #  - DB_HOST=${DB_HOST}
+          #  - DB_PORT=${DB_PORT}
+           # - DB_DATABASE= ${DB_DATABASE}
+           # - DB_USERNAME= ${DB_USERNAME}
+           # - DB_PASSWORD= ${DB_PASSWORD}
         volumes:
             - ${DATA_DIR}/data:/config
             #- /path/to-custom-ssl-keys:/config/keys
-        depends_on:
-            - db
-    db:
-        image: mariadb:11
-        restart: always
-        environment:
-            - MYSQL_DATABASE= ${DB_DATABASE}
-            - MYSQL_USER= ${DB_USERNAME}
-            - MYSQL_PASSWORD= ${DB_PASSWORD}
-            - MYSQL_RANDOM_ROOT_PASSWORD=true
-        volumes:
-            - ${DATA_DIR}/db:/var/lib/mysql
-        healthcheck:
-            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-            interval: 5s
-            retries: 3
-            timeout: 5s
-volumes:
-  speedtest-db:
 """
 environment = """
 DATA_DIR="/mnt/zApps/speedtest-tracker"
 APP_KEY="Kj1qpSM25ly7LbReMibYBly5Icl9D2TQXTHi8Xo+bIA="
-DB_CONNECTION=mariadb
+DB_CONNECTION=sqllite
 DB_HOST= db
 DB_PORT=3306
 DB_DATABASE=speedtest_tracker
@@ -967,6 +932,32 @@ services:
 """
 environment = """
 WALLOS_DATA_DIR=/mnt/zApps/wallos
+"""
+
+##
+
+[[deployment]]
+name = "apprise"
+[deployment.config]
+server = "komodo-3"
+image.type = "Image"
+image.params.image = "caronc/apprise:latest"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+ports = """
+8000:8000
+"""
+volumes = """
+/mnt/zApps/apprise_api/config:/opt/apprise/config
+/mnt/zApps/apprise_api/plugin:/opt/apprise/plugin
+/mnt/zApps/apprise_api/attach:/opt/apprise/attach
+"""
+environment = """
+PUID=1000
+PGID=1000
+APPRISE_STATEFUL_MODE=simple
+APPRISE_WORKER_COUNT=1
 """
 
 ##
