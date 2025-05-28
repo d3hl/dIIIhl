@@ -690,7 +690,9 @@ services:
       - '8025:8025'
     restart: unless-stopped
     volumes:
-      - ${DATA_DIR)/mailrise.conf:/etc/mailrise.conf
+      - source: ${DATA_DIR}/mailrise
+        target: /etc/mailrise.conf
+        type: bind
 """
 environment = """
 DATA_DIR=/mnt/zApps/mailrise
