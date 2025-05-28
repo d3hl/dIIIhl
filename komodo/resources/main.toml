@@ -383,23 +383,30 @@ environment = """
 DATA_DIR= /etc/komodo/repos/diiihl-k3/komodo/resources/homepage
 ALLOWED_HOSTS= "homepage.d3adc3ii.cc,192.168.2.31:3000"
 
-#
+# Site Config
 HOMEPAGE_VAR_TITLE= "d3 Homepage"
 HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
 HOMEPAGE_VAR_IMG_URL= "/images/culon.jpg"
+
+### INFRA ###
 
 # Truenas
 HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas.png"
 HOMEPAGE_VAR_TRUENAS_URL= "https://192.168.2.7"
 HOMEPAGE_VAR_TRUENAS_KEY="1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe"
 HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
-
 # Proxmox
 HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox.png"
 HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.int.d3adc3ii.cc"
 #HOMEPAGE_VAR_PROXMOX_USER= 
 #HOMEPAGE_VAR_PROXMOX_API_KEY=
 HOMEPAGE_VAR_PBS_URL= "https://pbs.int.d3adc3ii.cc"
+# Opnsense
+HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense.png"
+HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.int.d3adc3ii.cc"
+# DNS
+HOMEPAGE_VAR_DNS_ICON= "/icons/technitium.png"
+HOMEPAGE_VAR_DNS_URL= "https://ns0.int.d3adc3ii.cc"
 
 ### Monitoring ###
 
@@ -416,13 +423,10 @@ HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.int.d3adc3ii.cc/guacamole"
 HOMEPAGE_VAR_BOTB_ICON= "/icons/smokeping.png"
 HOMEPAGE_VAR_BOTB_URL= "https://botb.int.d3adc3ii.cc"
 
-
-# Opnsense
-HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense.png"
-HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.int.d3adc3ii.cc"
-# DNS
-HOMEPAGE_VAR_DNS_ICON= "/icons/technitium.png"
-HOMEPAGE_VAR_DNS_URL= "https://ns0.int.d3adc3ii.cc"
+### BACKUP ###
+# Battle of the bandwidth
+HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest.png"
+HOMEPAGE_VAR_BACKREST_URL= "https://backrest.int.d3adc3ii.cc"
 
 
 # Jellyfin
@@ -710,16 +714,6 @@ tags = ["internal", "monitoring"]
 ##
 
 [[stack]]
-name = "mtprotoproxy"
-[stack.config]
-server = "komodo-3"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/mtprotoproxy/komodo/resources/mtprotoproxy"
-
-##
-
-[[stack]]
 name = "netalertx"
 tags = ["internal", "monitoring"]
 [stack.config]
@@ -883,23 +877,6 @@ POSTGRES_DATA=/mnt/zApps/portnote/data
 ##
 
 [[stack]]
-name = "prom-ga-alloy"
-[stack.config]
-server = "komodo-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "server12/prom-gra-alloy"
-environment = """
-LOKI_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/loki-config.yaml
-ALLOY_CONFIG_FILE=/etc/komodo/stacks/prom-gra-alloy/server12/prom-gra-alloy/config/config.alloy
-"""
-
-##
-
-[[stack]]
 name = "speedtest-tracker"
 tags = ["internal", "testing"]
 [stack.config]
@@ -911,38 +888,33 @@ services:
         restart: unless-stopped
         container_name: speedtest-tracker
         ports:
-            - 8787:80
-            - 7443:443
-        env_file:
-            - .env
+            - 8181:80
+            - 8483:443
         environment:
-            - APP_DEBUG=true
             - PUID=1000
             - PGID=1000
             - APP_KEY= ${APP_KEY}
-            - DB_CONNECTION=${DB_CONNECTION}
-            - DB_HOST= ${DB_HOST}
-            - DB_PORT=${DB_PORT}
-            - DB_DATABASE=${DB_DATABASE}
-            - DB_USERNAME=${DB_USERNAME}
+            - DB_CONNECTION=mariadb
+            - DB_HOST=db
+            - DB_PORT=3306
+            - DB_DATABASE= ${DB_DATABASE}
+            - DB_USERNAME= ${DB_USERNAME}
             - DB_PASSWORD= ${DB_PASSWORD}
         volumes:
             - ${DATA_DIR}/data:/config
+            #- /path/to-custom-ssl-keys:/config/keys
         depends_on:
             - db
     db:
         image: mariadb:11
         restart: always
-        env_file:
-            - .env
         environment:
-            - MYSQL_DATABASE=${DB_DATABASE}
-            - MYSQL_USER=${DB_USERNAME}
-            - MYSQL_PASSWORD=${DB_PASSWORD}
+            - MYSQL_DATABASE= ${DB_DATABASE}
+            - MYSQL_USER= ${DB_USERNAME}
+            - MYSQL_PASSWORD= ${DB_PASSWORD}
             - MYSQL_RANDOM_ROOT_PASSWORD=true
         volumes:
-            - ${DATA_DIR}/speedtest-db:/var/lib/mysql
-        user: "1000:1000"
+            - ${DATA_DIR}/db:/var/lib/mysql
         healthcheck:
             test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
             interval: 5s
@@ -1036,30 +1008,6 @@ volumes = """
 environment = """
 LISTEN=45876
 KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU6cTY/"
-"""
-
-##
-
-[[deployment]]
-name = "caddy"
-[deployment.config]
-server = "server-bkxal"
-image.type = "Image"
-image.params.image = "lucaslorentz/caddy-docker-proxy:ci-alpine"
-poll_for_updates = true
-auto_update = true
-network = "caddy"
-restart = "unless-stopped"
-ports = """
-80:80
-443:443
-"""
-volumes = """
-/var/run/docker.sock:/var/run/docker.sock
-/mnt/zApps/caddy/data:/data
-"""
-environment = """
-CADDY_INGRESS_NETWORKS=caddy
 """
 
 ##
