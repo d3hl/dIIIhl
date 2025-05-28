@@ -17,8 +17,9 @@
             sitemonitor: {{HOMEPAGE_VAR_NETALERTX_URL}}
             widget:
                 type: netalertx
-                url: {{HOMEPAGE_VAR_NETALERTX_WIDGETURL}}
-             #   fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
+                key: {{HOMEPAGE_VAR_NETALERTX_KEY}}
+                url: {{HOMEPAGE_VAR_NETALERTX_URL}}
+                fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
     - Pve: # proxmoxx
         - pve11:
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
