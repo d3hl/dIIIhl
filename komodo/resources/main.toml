@@ -710,16 +710,6 @@ tags = ["internal", "monitoring"]
 ##
 
 [[stack]]
-name = "mtprotoproxy"
-[stack.config]
-server = "komodo-3"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/mtprotoproxy/komodo/resources/mtprotoproxy"
-
-##
-
-[[stack]]
 name = "netalertx"
 tags = ["internal", "monitoring"]
 [stack.config]
