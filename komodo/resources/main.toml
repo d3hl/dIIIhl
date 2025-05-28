@@ -363,18 +363,29 @@ HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.int.d3adc3ii.cc"
 #HOMEPAGE_VAR_PROXMOX_USER= 
 #HOMEPAGE_VAR_PROXMOX_API_KEY=
 HOMEPAGE_VAR_PBS_URL= "https://pbs.int.d3adc3ii.cc"
+
+### INFRA ###
 # Opnsense
 HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense.png"
 HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.int.d3adc3ii.cc"
 # DNS
 HOMEPAGE_VAR_DNS_ICON= "/icons/technitium.png"
 HOMEPAGE_VAR_DNS_URL= "https://ns0.int.d3adc3ii.cc"
+# MIKROTIK
+HOMEPAGE_VAR_DNS_ICON= "/icons/mikrotik.png"
+HOMEPAGE_VAR_DNS_URL= "http://192.168.2.253"
+# TPLINK
+HOMEPAGE_VAR_DNS_ICON= "/icons/tplink.png"
+HOMEPAGE_VAR_DNS_URL= "http://192.168.2.252"
 
 ### Monitoring ###
 
 # NetAlertX 
 HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx.png"
 HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.int.d3adc3ii.cc"
+# APPRISE-API
+HOMEPAGE_VAR_NETALERTX_ICON= "/icons/apprie.png"
+HOMEPAGE_VAR_NETALERTX_URL= "http://192.168.2.33:8000"
 # Smokeping
 HOMEPAGE_VAR_SMOKEPING_ICON= "/icons/smokeping.png"
 HOMEPAGE_VAR_SMOKEPING_URL= "http://192.168.2.21/smokeping"
