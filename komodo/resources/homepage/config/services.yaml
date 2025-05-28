@@ -45,7 +45,7 @@
             widget:
                 type: netalertx
                 url: {{HOMEPAGE_VAR_NETALERTX_WIDGETURL}}
-                fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
+             #   fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
         - Apprise-API:
             icon: {{HOMEPAGE_VAR_APPRISE_ICON}}
             href: {{HOMEPAGE_VAR_APPRISE_URL}}
