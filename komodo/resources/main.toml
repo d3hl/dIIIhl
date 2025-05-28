@@ -174,44 +174,6 @@ AUTHENTIK_EMAIL__FROM=authentik@localhost
 ##
 
 [[stack]]
-name = "backrest"
-tags = ["core", "production"]
-[stack.config]
-server = "komodo-3"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-version: "3.8"
-services:
-  backrest:
-    image: garethgeorge/backrest:latest
-    container_name: backrest
-    hostname: backrest
-    volumes:
-      - /home/d3/backrest/data:/data
-      - /home/d3/backrest/config:/config
-      - /home/d3/backrest/cache:/cache
-      - /home/d3/backrest/tmp:/tmp
-      - /mnt/enc:/userdata  # Mount local paths to backup
-    environment:
-      - BACKREST_DATA=/data
-      - BACKREST_CONFIG=/config/config.json
-      - XDG_CACHE_HOME=/cache
-      - TMPDIR=/tmp
-      - TZ=America/Los_Angeles
-    ports:
-      - "9898:9898"
-    restart: unless-stopped
-"""
-environment = """
-BACKREST_DIR=/mnt/zApps/backrest
-BKUP_DIR=/mnt/backup
-"""
-
-##
-
-[[stack]]
 name = "battle-of-the-bandwidth"
 tags = [
   "internal",
@@ -710,6 +672,29 @@ name = "loggifly"
 tags = ["internal", "monitoring"]
 [stack.config]
 
+
+##
+
+[[stack]]
+name = "mailrise"
+[stack.config]
+server = "komodo-3"
+file_contents = """
+services:
+  mailrise:
+    image: yoryan/mailrise:latest
+    container_name: mailrise
+    env_file:
+      - .env
+    ports:
+      - '8025:8025'
+    restart: unless-stopped
+    volumes:
+      - ${DATA_DIR)/mailrise.conf:/etc/mailrise.conf
+"""
+environment = """
+DATA_DIR=/mnt/zApps/mailrise
+"""
 
 ##
 
