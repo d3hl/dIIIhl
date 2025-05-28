@@ -884,38 +884,33 @@ services:
         restart: unless-stopped
         container_name: speedtest-tracker
         ports:
-            - 8787:80
-            - 7443:443
-        env_file:
-            - .env
+            - 8181:80
+            - 8483:443
         environment:
-            - APP_DEBUG=true
             - PUID=1000
             - PGID=1000
             - APP_KEY= ${APP_KEY}
-            - DB_CONNECTION=${DB_CONNECTION}
-            - DB_HOST= ${DB_HOST}
-            - DB_PORT=${DB_PORT}
-            - DB_DATABASE=${DB_DATABASE}
-            - DB_USERNAME=${DB_USERNAME}
+            - DB_CONNECTION=mariadb
+            - DB_HOST=db
+            - DB_PORT=3306
+            - DB_DATABASE= ${DB_DATABASE}
+            - DB_USERNAME= ${DB_USERNAME}
             - DB_PASSWORD= ${DB_PASSWORD}
         volumes:
             - ${DATA_DIR}/data:/config
+            #- /path/to-custom-ssl-keys:/config/keys
         depends_on:
             - db
     db:
         image: mariadb:11
         restart: always
-        env_file:
-            - .env
         environment:
-            - MYSQL_DATABASE=${DB_DATABASE}
-            - MYSQL_USER=${DB_USERNAME}
-            - MYSQL_PASSWORD=${DB_PASSWORD}
+            - MYSQL_DATABASE= ${DB_DATABASE}
+            - MYSQL_USER= ${DB_USERNAME}
+            - MYSQL_PASSWORD= ${DB_PASSWORD}
             - MYSQL_RANDOM_ROOT_PASSWORD=true
         volumes:
-            - ${DATA_DIR}/speedtest-db:/var/lib/mysql
-        user: "1000:1000"
+            - speedtest-db:/var/lib/mysql
         healthcheck:
             test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
             interval: 5s
