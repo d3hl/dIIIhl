@@ -199,15 +199,23 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
-version: "3.7"
 services:
   caddy:
-    image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    image: homeall/caddy-reverse-proxy-cloudflare:latest
     ports:
       - 80:80
       - 443:443
+      - "443:443/udp"
     environment:
       - CADDY_INGRESS_NETWORKS=caddy
+      - TZ= 'Asia/Singapore'
+    env_file:
+      - .env
+    labels:
+      caddy.email: ${CADDY_EMAIL}                     # needs for acme CERT registration account
+      caddy.acme_dns: "cloudflare ${API_TOKEN}"
+      caddy.admin: "0.0.0.0:2019"  
+      caddy.admin.origins: "caddy.int.d3adc3ii.cc"
     networks:
       - caddy
     volumes:
@@ -224,6 +232,8 @@ volumes:
 """
 environment = """
 CADDY_DATA_DIR=/mnt/zApps/caddy/data
+API_TOKEN= [[CF_API_TOKEN]]
+CADDY_EMAIL= d3tech@pm.me
 """
 
 ##
@@ -311,6 +321,60 @@ FSHARE_DATA_DIR=/mnt/zApps/fileshare
 ADMIN_USERNAME=d3
 ADMIN_PASSWORD=[[FSHARE_ADMIN_PASSWORD]]
 SECRET_KEY=[[FSHARE_SECRET_KEY]]
+"""
+
+##
+
+[[stack]]
+name = "healthcheck"
+[stack.config]
+server = "server-bkxal"
+file_contents = """
+---
+services:
+  healthchecks:
+    image: lscr.io/linuxserver/healthchecks:latest
+    container_name: healthchecks
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ= ${TZ}
+      - SITE_ROOT= ${SITE_ROOT}
+      - SITE_NAME= Healthcheck
+      - SUPERUSER_EMAIL= ${SUPERUSER_EMAIL}
+      - SUPERUSER_PASSWORD= ${SUPERUSER_PASSWORD}
+      #- ALLOWED_HOSTS= #optional
+      - APPRISE_ENABLED=True #optional
+      #- CSRF_TRUSTED_ORIGINS= #optional
+      #- DEBUG=True #optional
+      #- DEFAULT_FROM_EMAIL= #optional
+      #- EMAIL_HOST= #optional
+      #- EMAIL_PORT= #optional
+      #- EMAIL_HOST_USER= #optional
+      #- EMAIL_HOST_PASSWORD= #optional
+      #- EMAIL_USE_TLS= #optional
+      #- INTEGRATIONS_ALLOW_PRIVATE_IPS= #optional
+      #- PING_EMAIL_DOMAIN= #optional
+      #- RP_ID= #optional
+      - SECRET_KEY= ${SECRET_KEY}
+      #- SITE_LOGO_URL= #optional
+    volumes:
+      - ${DATA_DIR}/config:/config
+    ports:
+      - 8000:8000
+      - 2525:2525 #optional
+    restart: unless-stopped
+"""
+environment = """
+DATA_DIR=/mnt/zApps/healthcheck
+SITE_ROOT= https://192.168.2.31:8000
+SUPERUSER_EMAIL= d3tech@pm.me
+SUPERUSER_PASSWORD= [[HEALTHCHECK_SUPERADMIN_PASSWORD]]
+TZ=Asia/Singapore
+SECRET_KEY= [[HEALTHCHECK_SECRET]]
+
 """
 
 ##
@@ -958,46 +1022,6 @@ DB_PORT=3306
 DB_DATABASE=speedtest_tracker
 DB_USERNAME=d3
 DB_PASSWORD="ng--*UC*6W2Fz89GhAR_Bm9ZC3cx2okJ4yCTEhieCYX!MYL6C_VDaYcvmnxffVj*9_H.t2x@.@UC4hKx8nUrxJjrTb_NZqB4bYea"
-"""
-
-##
-
-[[stack]]
-name = "wallos"
-tags = ["external", "production"]
-[stack.config]
-server = "server-bkxal"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  wallos:
-    container_name: wallos
-    image: bellamy/wallos:latest
-    networks:
-      - caddy
-    labels:
-      caddy: wallos.int.d3adc3ii.cc
-      caddy.reverse_proxy: "{{upstreams 8222}}"
-    ports:
-      - "8222:80/tcp"
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Singapore
-    env_file:
-      - .env
-    volumes:
-      - ${WALLOS_DATA_DIR}/db:/var/www/html/db
-      - ${WALLOS_DATA_DIR}/logos:/var/www/html/images/uploads/logos
-    restart: unless-stopped
-networks:
-  caddy:
-    external: true
-"""
-environment = """
-WALLOS_DATA_DIR=/mnt/zApps/wallos
 """
 
 ##
