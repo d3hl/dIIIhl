@@ -215,7 +215,7 @@ services:
       caddy.email: ${CADDY_EMAIL}                     # needs for acme CERT registration account
       caddy.acme_dns: "cloudflare ${API_TOKEN}"
       caddy.admin: "0.0.0.0:2019"  
-      caddy.admin.origins: "caddy.int.d3adc3ii.cc"
+      caddy.admin.origins: "caddy.d3adc3ii.site"
     networks:
       - caddy
     volumes:
