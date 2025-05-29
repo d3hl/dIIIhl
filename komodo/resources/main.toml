@@ -246,7 +246,7 @@ services:
       #### Snippets ####
       # Get wildcard certificate
       caddy_1: (wildcard)
-      caddy_1.acme_dns: "cloudflare ${CF_API_TOKEN}"
+      #caddy_1.acme_dns: "cloudflare ${CF_API_TOKEN}"
       caddy_1.tls.dns: "cloudflare ${CF_API_TOKEN}"
       caddy_1.tls.resolvers: 1.1.1.1 1.0.0.1
       caddy_1.handle.abort: ""
