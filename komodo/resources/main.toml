@@ -350,7 +350,7 @@ services:
       - SITE_NAME= Healthcheck
       - SUPERUSER_EMAIL= ${SUPERUSER_EMAIL}
       - SUPERUSER_PASSWORD= ${SUPERUSER_PASSWORD}
-      #- ALLOWED_HOSTS= #optional
+      - ALLOWED_HOSTS= ${ALLOWED_HOSTS}
       - APPRISE_ENABLED=True #optional
       #- CSRF_TRUSTED_ORIGINS= #optional
       - DEBUG=True #optional
@@ -385,7 +385,7 @@ SUPERUSER_EMAIL= d3tech@pm.me
 SUPERUSER_PASSWORD= [[HEALTHCHECK_SUPERADMIN_PASSWORD]]
 TZ=Asia/Singapore
 SECRET_KEY= [[HEALTHCHECK_SECRET]]
-ALLOWED_HOST="health.d3adc3ii.site"
+ALLOWED_HOSTS="health.d3adc3ii.site"
 
 """
 
