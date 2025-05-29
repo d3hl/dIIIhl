@@ -380,7 +380,7 @@ networks:
 """
 environment = """
 DATA_DIR=/mnt/zApps/healthcheck
-SITE_ROOT= https://192.168.2.31:8000
+SITE_ROOT= "health.d3adc3ii.site"
 SUPERUSER_EMAIL= d3tech@pm.me
 SUPERUSER_PASSWORD= [[HEALTHCHECK_SUPERADMIN_PASSWORD]]
 TZ=Asia/Singapore
