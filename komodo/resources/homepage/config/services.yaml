@@ -37,7 +37,13 @@
             icon: {{HOMEPAGE_VAR_DNS_ICON}}
             href: {{HOMEPAGE_VAR_DNS_URL}}
             sitemonitor: {{HOMEPAGE_VAR_DNS_URL}}
-    - M0nit0ring:
+    - Backend:
+        - CaddyProxy:
+            icon: {{HOMEPAGE_VAR_CADDYPROXY_ICON}} 
+            sitemonitor: {{HOMEPAGE_VAR_CADDYPROXY_URL}}
+            widget:
+                type: caddy
+                url: {{HOMEPAGE_VAR_CADDYPROXY_URL}}
         - NetAlertX:
             icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
             href: {{HOMEPAGE_VAR_NETALERTX_URL}}
