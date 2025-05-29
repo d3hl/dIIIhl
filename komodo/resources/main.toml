@@ -199,6 +199,7 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+version: "3.7"
 services:
   caddy:
     image: lucaslorentz/caddy-docker-proxy:ci-alpine
@@ -211,11 +212,12 @@ services:
       - caddy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${CADDY_DATA_DIR}:data
+      - ${CADDY_DATA_DIR}:/data
     restart: unless-stopped
 
 networks:
-  caddy
+  caddy:
+    external: true
 
 volumes:
   caddy_data: {}
@@ -1178,13 +1180,6 @@ enabled = true
 executions = [
   { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = "t*,o*,a*", enabled = true }
 ]
-
-##
-
-[[alerter]]
-name = "test-alert"
-[alerter.config]
-
 
 ##
 
