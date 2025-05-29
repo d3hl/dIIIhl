@@ -460,19 +460,19 @@ APPRISE_ENABLED=True
 name = "homepage"
 tags = ["external", "production"]
 [stack.config]
-server = "komodo-3"
+server = "server-bkxal"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  caddy:
+    external: true
+
 services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
-    environment:
-      HOMEPAGE_ALLOWED_HOSTS: ${ALLOWED_HOSTS}
-      PGID: 1000 
-      PUID: 1000 
     env_file:
       - .env
     ports:
@@ -483,11 +483,15 @@ services:
       - ${DATA_DIR}/images:/app/public/images 
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
+    labels:
+      caddy: homepage.d3adc3ii.site                    #👈 Subdomain
+      caddy.reverse_proxy: "{{upstreams 3000}}"    #👈 Container port
 """
 environment = """
 DATA_DIR= /etc/komodo/repos/diiihl-k3/komodo/resources/homepage
-ALLOWED_HOSTS= "homepage.d3adc3ii.cc,192.168.2.31:3000"
-
+HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,192.168.2.31:3000"
+PGID= 1000 
+PUID= 1000 
 # Site Config
 HOMEPAGE_VAR_TITLE= "d3 Homepage"
 HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
