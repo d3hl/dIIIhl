@@ -199,29 +199,112 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  caddy:
+    external: true
+# Main Caddy
 services:
   caddy:
-    image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    image: homeall/caddy-reverse-proxy-cloudflare:latest
     ports:
       - 80:80
       - 443:443
-    environment:
-      - CADDY_INGRESS_NETWORKS=caddy
+      - "443:443/udp"
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    env_file:
+      - .env
     networks:
       - caddy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${CADDY_DATA_DIR}:data
+      - ${CADDY_DATA_DIR}/data:/data  # store SSL certs
+      - ${CADDY_DATA_DIR}/config/:/config/caddy  #👈 where to save configs
+    #  - "./caddy-generated:/caddy-generated"
     restart: unless-stopped
 
-networks:
-  caddy
+# Caddy-config container
+  caddy-config:
+    container_name: caddy-config
+    image: traefik/whoami:latest
+    networks:
+      - caddy
+    restart: always
+    env_file:
+      - .env
+    labels:
+    #############################################
+    # Settings and snippets to get things working
+    # You shouldn't need to modify this normally
+    # Custom settings and definitions are below
+    #############################################
 
-volumes:
-  caddy_data: {}
+      #### Global Settings ####
+      caddy_0.email: ${CADDY_EMAIL}
+      caddy_0.auto_https: prefer_wildcard
+
+      #### Snippets ####
+      # Get wildcard certificate
+      caddy_1: (wildcard)
+      #caddy_1.tls.dns: "cloudflare ${CF_API_TOKEN}"
+      caddy.acme_dns: "cloudflare ${CF_API_TOKEN}"
+      #caddy_1.tls.resolvers: 1.1.1.1 1.0.0.1
+      caddy_1.handle.abort: ""
+
+      # Skip TLS verify for backend with self-signed HTTPS
+      caddy_3: (https)
+      caddy_3.transport: http
+      caddy_3.transport.tls: ""
+      caddy_3.transport.tls_insecure_skip_verify: ""
+
+    ###########################################
+    # Custom settings. Modify things below 👇:
+    # Make sure they have unique label numbers
+    ###########################################
+
+      # Custom global settings, add/edit as needed
+      # caddy_0.log: default
+      # caddy_0.log.format: console
+
+      # Uncomment this during testing to avoid hitting rate limit.
+      # It will try to obtain SSL from Let's Encrypt's staging endpoint.
+      # acme_ca: "https://acme-staging-v02.api.letsencrypt.org/directory" # 👈 Staging
+
+      ## Setup wildcard sites
+      caddy_10: "*.d3adc3ii.site"   #👈 Change to your domain
+      caddy_10.import: wildcard
+
+      # Caddy Admin Endpoint and Metrics
+      caddy_20: :2020
+      caddy_20.handle: /reverse_proxy/upstreams
+      caddy_20.handle.reverse_proxy: localhost:2019
+      caddy_20.handle.reverse_proxy.header_up: Host localhost:2019
+      caddy_20.admin.origins: "caddy.d3adc3ii.site"      
+
+      # Add our first site, which this container itself
+      caddy_99: whoami.d3adc3ii.site                       #👈 Subdomain using wildcard cert
+      caddy_99.reverse_proxy: "{{upstreams 80}}"         #👈 Container port
+
+      # For non-docker sites
+      # e.g.: Pi-Hole on another machine in the same LAN
+      #caddy_100: pihole.example.com                      #👈 Subdomain using wildcard cert
+      #caddy_100.reverse_proxy: 192.168.1.4:88            #👈 LAN IP and port
+      #caddy_100.import: auth                             #👈 Enable protection by Authelia
+
+      # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
+      #caddy_101: omv.example.com                         #👈 Subdomain using wildcard cert
+      #caddy_101.reverse_proxy: host.docker.internal:4430 #👈 Port on host machine
+      #caddy_101.reverse_proxy.import: https              #👈 Allow self-signed cert between OMV and Caddy
+      #caddy_101.import: auth                             #👈 Enable protection by Authelia
 """
 environment = """
-CADDY_DATA_DIR=/mnt/zApps/caddy/data
+PUID=1000
+PGID=1000
+CADDY_DATA_DIR=/mnt/zApps/caddy
+CADDY_INGRESS_NETWORKS=caddy
+TZ= 'Asia/Singapore'
+CF_API_TOKEN= [[CF_API_TOKEN]]
+CADDY_EMAIL= d3tech@pm.me
 """
 
 ##
@@ -309,6 +392,68 @@ FSHARE_DATA_DIR=/mnt/zApps/fileshare
 ADMIN_USERNAME=d3
 ADMIN_PASSWORD=[[FSHARE_ADMIN_PASSWORD]]
 SECRET_KEY=[[FSHARE_SECRET_KEY]]
+"""
+
+##
+
+[[stack]]
+name = "healthcheck"
+[stack.config]
+server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+---
+services:
+  healthchecks:
+    image: lscr.io/linuxserver/healthchecks:latest
+    container_name: healthchecks
+    networks:
+      - caddy
+    env_file:
+      - .env
+    environment:
+      #- CSRF_TRUSTED_ORIGINS= #optional
+      #- DEBUG=True #optional
+      #- DEFAULT_FROM_EMAIL= #optional
+      #- EMAIL_HOST= #optional
+      #- EMAIL_PORT= #optional
+      #- EMAIL_HOST_USER= #optional
+      #- EMAIL_HOST_PASSWORD= #optional
+      #- EMAIL_USE_TLS= #optional
+      #- INTEGRATIONS_ALLOW_PRIVATE_IPS= #optional
+      #- PING_EMAIL_DOMAIN= #optional
+      #- RP_ID= #optional
+      #- SITE_LOGO_URL= #optional
+    volumes:
+      - ${DATA_DIR}/config:/config
+    labels:
+      caddy: health.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 8000}}"
+    ports:
+      - 8000:8000
+      - 2525:2525 #optional
+    restart: unless-stopped
+networks:
+  caddy:
+    external: true
+"""
+environment = """
+PUID=1000
+PGID=1000
+DATA_DIR=/mnt/zApps/healthcheck
+SITE_ROOT= "https://health.d3adc3ii.site"
+ALLOWED_HOSTS=health.d3adc3ii.site
+SITE_NAME= Healthcheck
+SUPERUSER_EMAIL= d3tech@pm.me
+SUPERUSER_PASSWORD= [[HEALTHCHECK_SUPERADMIN_PASSWORD]]
+SECRET_KEY= [[HEALTHCHECK_SECRET]]
+TZ=Asia/Singapore
+APPRISE_ENABLED=True
+
+
+
 """
 
 ##
@@ -753,6 +898,47 @@ DATA_DIR=/mnt/zApps/netalertx
 ##
 
 [[stack]]
+name = "nexterm"
+[stack.config]
+server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  nexterm:
+    environment:
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+    env_file:
+      - .env
+    networks:
+      - caddy
+    labels:
+      caddy: nexterm.int.d3adc3ii.cc
+      caddy.reverse_proxy: "{{upstreams 6989}}"
+    ports:
+      - "6989:6989"
+    restart: always
+    volumes:
+      - ${DATA_DIR}:/app/data
+    image: germannewsmaker/nexterm:1.0.3-OPEN-PREVIEW
+volumes:
+  nexterm:
+    
+networks:
+  caddy:
+    external: true
+"""
+environment = """
+DATA_DIR=/mnt/zApps/nexterm
+ENCRYPTION_KEY= [[NEXTERM_KEY]]
+SERVER_PORT=6989
+NODE_ENV=development
+"""
+
+##
+
+[[stack]]
 name = "ntfy"
 tags = ["internal", "monitoring"]
 [stack.config]
@@ -915,41 +1101,6 @@ DB_PORT=3306
 DB_DATABASE=speedtest_tracker
 DB_USERNAME=d3
 DB_PASSWORD="ng--*UC*6W2Fz89GhAR_Bm9ZC3cx2okJ4yCTEhieCYX!MYL6C_VDaYcvmnxffVj*9_H.t2x@.@UC4hKx8nUrxJjrTb_NZqB4bYea"
-"""
-
-##
-
-[[stack]]
-name = "wallos"
-tags = ["external", "production"]
-[stack.config]
-server = "komodo-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  wallos:
-    container_name: wallos
-    image: bellamy/wallos:latest
-    networks:
-      - caddy
-    labels:
-      caddy: wallos.int.d3adc3ii.cc
-      caddy.reverse_proxy: "{{upstreams 8222}}"
-    ports:
-      - "8222:80/tcp"
-    environment:
-      TZ: 'Asia/Singapore'
-    env_file:
-      - .env
-    volumes:
-      - ${WALLOS_DATA_DIR}/db:/var/www/html/db
-      - ${WALLOS_DATA_DIR}/logos:/var/www/html/images/uploads/logos
-    restart: unless-stopped
-"""
-environment = """
-WALLOS_DATA_DIR=/mnt/zApps/wallos
 """
 
 ##
@@ -1178,13 +1329,6 @@ enabled = true
 executions = [
   { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = "t*,o*,a*", enabled = true }
 ]
-
-##
-
-[[alerter]]
-name = "test-alert"
-[alerter.config]
-
 
 ##
 
