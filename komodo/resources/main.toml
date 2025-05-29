@@ -771,7 +771,7 @@ services:
     networks:
       - caddy
     labels:
-      caddy: nexterm.int.d3adc3ii.cc
+      caddy: whoami.int.d3adc3ii.cc
       caddy.reverse_proxy: "{{upstreams 6989}}"
     ports:
       - "6989:6989"
@@ -781,7 +781,8 @@ services:
     image: germannewsmaker/nexterm:1.0.3-OPEN-PREVIEW
 volumes:
   nexterm:
-nextworks:
+    
+networks:
   caddy:
     external: true
 """
@@ -992,6 +993,28 @@ services:
 """
 environment = """
 WALLOS_DATA_DIR=/mnt/zApps/wallos
+"""
+
+##
+
+[[stack]]
+name = "whoami"
+[stack.config]
+server = "server-bkxal"
+file_contents = """
+version: '3.7'
+services:
+  whoami:
+    image: traefik/whoami
+    networks:
+      - caddy
+    labels:
+      caddy: whoami.int.d3adc3ii.cc
+      caddy.reverse_proxy: "{{upstreams 80}}"
+
+networks:
+  caddy:
+    external: true
 """
 
 ##
