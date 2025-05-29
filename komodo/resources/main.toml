@@ -329,12 +329,17 @@ SECRET_KEY=[[FSHARE_SECRET_KEY]]
 name = "healthcheck"
 [stack.config]
 server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 file_contents = """
 ---
 services:
   healthchecks:
     image: lscr.io/linuxserver/healthchecks:latest
     container_name: healthchecks
+    networks:
+      - caddy
     env_file:
       - .env
     environment:
@@ -362,10 +367,16 @@ services:
       #- SITE_LOGO_URL= #optional
     volumes:
       - ${DATA_DIR}/config:/config
+    labels:
+      caddy: health.int.d3adc3ii.cc
+      caddy.reverse_proxy: "{{upstreams 8000}}"
     ports:
       - 8000:8000
       - 2525:2525 #optional
     restart: unless-stopped
+networks:
+  caddy:
+    external: true
 """
 environment = """
 DATA_DIR=/mnt/zApps/healthcheck
