@@ -473,6 +473,8 @@ services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
+    networks:
+      - caddy
     env_file:
       - .env
     ports:
