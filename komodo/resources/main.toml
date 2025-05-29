@@ -4,7 +4,7 @@ name = "komodo-2"
 address = "https://192.168.2.32:8120"
 enabled = true
 
-## Sample ##
+##
 
 [[server]]
 name = "komodo-3"
@@ -1330,11 +1330,6 @@ executions = [
 
 [[procedure]]
 name = "check_update"
-
-##
-
-[[procedure]]
-name = "check_update222"
 
 ##
 
