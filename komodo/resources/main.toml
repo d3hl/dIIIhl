@@ -490,7 +490,7 @@ services:
       caddy.reverse_proxy: "{{upstreams 3000}}"    #👈 Container port
 """
 environment = """
-DATA_DIR= /etc/komodo/repos/diiihl-k3/komodo/resources/homepage
+DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/homepage
 HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,192.168.2.31:3000"
 PGID= 1000 
 PUID= 1000 
