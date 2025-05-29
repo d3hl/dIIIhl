@@ -755,6 +755,46 @@ DATA_DIR=/mnt/zApps/netalertx
 ##
 
 [[stack]]
+name = "nexterm"
+[stack.config]
+server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  nexterm:
+    environment:
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+    env_file:
+      - .env
+    networks:
+      - caddy
+    labels:
+      caddy: nexterm.int.d3adc3ii.cc
+      caddy.reverse_proxy: "{{upstreams 6989}}"
+    ports:
+      - "6989:6989"
+    restart: always
+    volumes:
+      - ${DATA_DIR}:/app/data
+    image: germannewsmaker/nexterm:1.0.3-OPEN-PREVIEW
+volumes:
+  nexterm:
+nextworks:
+  caddy:
+    external: true
+"""
+environment = """
+DATA_DIR=/mnt/zApps/nexterm
+ENCRYPTION_KEY= [[NEXTERM_KEY]]
+SERVER_PORT=6989
+NODE_ENV=development
+"""
+
+##
+
+[[stack]]
 name = "ntfy"
 tags = ["internal", "monitoring"]
 [stack.config]
