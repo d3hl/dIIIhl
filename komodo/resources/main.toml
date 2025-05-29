@@ -529,7 +529,7 @@ HOMEPAGE_VAR_TPLINK_URL= "http://192.168.2.252"
 ### Monitoring ###
 # Caddy Proxy
 HOMEPAGE_VAR_CADDYPROXY_ICON= "/icons/caddy.png"
-HOMEPAGE_VAR_CADDYPROXY_URL= "https://192.168.2.31:2020"
+HOMEPAGE_VAR_CADDYPROXY_URL= "http://caddy:2020"
 # NetAlertX 
 HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx.png"
 HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.int.d3adc3ii.cc"
@@ -1311,6 +1311,20 @@ server = "komodo-3"
 builder = "local"
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
+
+##
+
+[[procedure]]
+name = "autosync"
+config.schedule = "Run every 30 minutes"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "RunSync", execution.params.sync = "sync", enabled = true },
+  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
+]
 
 ##
 
