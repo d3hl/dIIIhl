@@ -206,22 +206,21 @@ networks:
 services:
   caddy:
     image: homeall/caddy-reverse-proxy-cloudflare:latest
+    networks:
+      - caddy
     ports:
       - 80:80
       - 443:443
       - "443:443/udp"
-    extra_hosts:
-      - host.docker.internal:host-gateway
     env_file:
       - .env
-    networks:
-      - caddy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${CADDY_DATA_DIR}/data:/data  # store SSL certs
       - ${CADDY_DATA_DIR}/config/:/config/caddy  #👈 where to save configs
-    #  - "./caddy-generated:/caddy-generated"
     restart: unless-stopped
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
 # Caddy-config container
   caddy-config:
@@ -246,10 +245,9 @@ services:
       #### Snippets ####
       # Get wildcard certificate
       caddy_1: (wildcard)
-      #caddy_1.tls.dns: "cloudflare ${CF_API_TOKEN}"
       caddy_1.acme_dns: "cloudflare ${CF_API_TOKEN}"
-      caddy_1.acme_dns.resolvers: 1.1.1.1 1.0.0.1
-      #caddy_1.tls.resolvers: 1.1.1.1 1.0.0.1
+      caddy_1.tls.dns: "cloudflare ${CF_API_TOKEN}"
+      caddy_1.tls.resolvers: 1.1.1.1 1.0.0.1
       caddy_1.handle.abort: ""
 
       # Skip TLS verify for backend with self-signed HTTPS
