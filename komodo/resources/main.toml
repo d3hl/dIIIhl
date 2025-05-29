@@ -230,12 +230,14 @@ volumes:
   caddy_data: {}
 """
 environment = """
+PUID=1000
+PGID=1000
 CADDY_DATA_DIR=/mnt/zApps/caddy
 CADDY_INGRESS_NETWORKS=caddy
 TZ= 'Asia/Singapore'
 API_TOKEN= [[CF_API_TOKEN]]
 CADDY_EMAIL= d3tech@pm.me
-CADDY_DOCKER_CADDYFILE_PATH= '/mnt/zApps/caddy/caddy-generated/CaddyfileFromLabels'
+CADDY_DOCKER_CADDYFILE_PATH= '/caddy-generated/CaddyfileFromLabels'
 """
 
 ##
