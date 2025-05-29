@@ -247,7 +247,8 @@ services:
       # Get wildcard certificate
       caddy_1: (wildcard)
       #caddy_1.tls.dns: "cloudflare ${CF_API_TOKEN}"
-      caddy.acme_dns: "cloudflare ${CF_API_TOKEN}"
+      caddy_1.acme_dns: "cloudflare ${CF_API_TOKEN}"
+      caddy_1.acme_dns.resolvers: 1.1.1.1 1.0.0.1
       #caddy_1.tls.resolvers: 1.1.1.1 1.0.0.1
       caddy_1.handle.abort: ""
 
@@ -279,7 +280,7 @@ services:
       caddy_20.handle: /reverse_proxy/upstreams
       caddy_20.handle.reverse_proxy: localhost:2019
       caddy_20.handle.reverse_proxy.header_up: Host localhost:2019
-      caddy_20.admin.origins: "caddy.d3adc3ii.site"      
+    
 
       # Add our first site, which this container itself
       caddy_99: whoami.d3adc3ii.site                       #👈 Subdomain using wildcard cert
