@@ -193,6 +193,7 @@ run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-t
 
 [[stack]]
 name = "caddy"
+tags = ["internal", "production", "core"]
 [stack.config]
 server = "server-bkxal"
 poll_for_updates = true
