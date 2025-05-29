@@ -983,7 +983,9 @@ services:
     ports:
       - "8222:80/tcp"
     environment:
-      TZ: 'Asia/Singapore'
+      - PUID=1000
+      - GUID=1000
+      - TZ= 'Asia/Singapore'
     env_file:
       - .env
     volumes:
