@@ -353,7 +353,7 @@ services:
       #- ALLOWED_HOSTS= #optional
       - APPRISE_ENABLED=True #optional
       #- CSRF_TRUSTED_ORIGINS= #optional
-      #- DEBUG=True #optional
+      - DEBUG=True #optional
       #- DEFAULT_FROM_EMAIL= #optional
       #- EMAIL_HOST= #optional
       #- EMAIL_PORT= #optional
@@ -368,7 +368,7 @@ services:
     volumes:
       - ${DATA_DIR}/config:/config
     labels:
-      caddy: health.int.d3adc3ii.cc
+      caddy: health.d3adc3ii.site
       caddy.reverse_proxy: "{{upstreams 8000}}"
     ports:
       - 8000:8000
@@ -385,6 +385,7 @@ SUPERUSER_EMAIL= d3tech@pm.me
 SUPERUSER_PASSWORD= [[HEALTHCHECK_SUPERADMIN_PASSWORD]]
 TZ=Asia/Singapore
 SECRET_KEY= [[HEALTHCHECK_SECRET]]
+ALLOWED_HOST="health.d3adc3ii.site"
 
 """
 
