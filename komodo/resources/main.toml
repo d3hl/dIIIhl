@@ -682,6 +682,9 @@ tags = ["internal", "production"]
 [stack.config]
 server = "server-bkxal"
 file_contents = """
+networks:
+  caddy:
+    external: true
 services:
   immich-server:
     container_name: immich_server
@@ -703,6 +706,9 @@ services:
     restart: always
     healthcheck:
       disable: false
+    labels:
+      caddy: immich.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 2283}}"
 
   immich-machine-learning:
     container_name: immich_machine_learning
