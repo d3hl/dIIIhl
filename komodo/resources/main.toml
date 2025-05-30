@@ -256,7 +256,7 @@ services:
       #### Snippets ####
       # Get wildcard certificate
       caddy_1: (wildcard)
-      #caddy_1.acme_dns: "cloudflare ${CF_API_TOKEN}"
+      #caddy_1.acme_dns: "cloudflare ${CF_API_TOKEN}" 
       caddy_1.tls.dns: "cloudflare ${CF_API_TOKEN}"
       caddy_1.tls.resolvers: 1.1.1.1 1.0.0.1
       caddy_1.handle.abort: ""
@@ -299,8 +299,13 @@ services:
       # e.g.: Pi-Hole on another machine in the same LAN
       caddy_100: netalertx.d3adc3ii.site                      
       caddy_100.reverse_proxy: 192.168.2.31:20184
+
       caddy_101: pve.d3adc3ii.site                      
       caddy_101.reverse_proxy: 192.168.2.11:8006
+      caddy_101.reverse_proxy.transport: http
+      caddy_101.reverse_proxy.transport.tls_insecure_skip_verify: ""
+
+
       caddy_102: opn.d3adc3ii.site                      
       caddy_102.reverse_proxy: 192.168.2.1:2184
       caddy_103: truenas.d3adc3ii.site                      
@@ -536,18 +541,18 @@ HOMEPAGE_VAR_TRUENAS_KEY="1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBe
 HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
 # Proxmox
 HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox.png"
-HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.int.d3adc3ii.cc"
+HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.d3adc3ii.site"
 #HOMEPAGE_VAR_PROXMOX_USER= 
 #HOMEPAGE_VAR_PROXMOX_API_KEY=
-HOMEPAGE_VAR_PBS_URL= "https://pbs.int.d3adc3ii.cc"
+HOMEPAGE_VAR_PBS_URL= "https://pbs.d3adc3ii.site"
 
 ### INFRA ###
 # Opnsense
 HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense.png"
-HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.int.d3adc3ii.cc"
+HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.d3adc3ii.site"
 # DNS
 HOMEPAGE_VAR_DNS_ICON= "/icons/technitium.png"
-HOMEPAGE_VAR_DNS_URL= "https://ns0.int.d3adc3ii.cc"
+HOMEPAGE_VAR_DNS_URL= "https://ns0.d3adc3ii.site"
 # MIKROTIK
 HOMEPAGE_VAR_MIKROTIK_ICON= "/icons/mikrotik.png"
 HOMEPAGE_VAR_MIKROTIK_URL= "http://192.168.2.253"
@@ -583,12 +588,12 @@ HOMEPAGE_VAR_BOTB_URL= "https://botb.int.d3adc3ii.cc"
 ### BACKUP ###
 # Battle of the bandwidth
 HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest.png"
-HOMEPAGE_VAR_BACKREST_URL= "https://backrest.int.d3adc3ii.cc"
+HOMEPAGE_VAR_BACKREST_URL= "https://backrest.d3adc3ii.site"
 
 
 # Jellyfin
 HOMEPAGE_VAR_JELLY_ICON= "/icons/jellyfin.png"
-HOMEPAGE_VAR_JELLY_URL= "https://jelly.int.d3adc3ii.cc"
+HOMEPAGE_VAR_JELLY_URL= "https://jelly.d3adc3ii.site"
 HOMEAGE_VAR_JELLY_WIDGETURL= "http://192.168.2.33:8096"
 HOMEPAGE_VAR_JELLY_KEY= "a6a45c61dd1d4f059b02fa22ad8c0ef3"
 HOMEPAGE_VAR_JELLY_ENABLEBLOCK=true
@@ -604,29 +609,29 @@ HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"]
 ### LOCAL APPS ###
 # Actual Budget
 HOMEPAGE_VAR_ACTUAL_ICON= "/icons/actual-budget.png"
-HOMEPAGE_VAR_ACTUAL_URL= "https://actual.int.d3adc3ii.cc"
+HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3adc3ii.site"
 # Sensei
 HOMEPAGE_VAR_SENSEI_ICON= "/icons/davis.png"
-HOMEPAGE_VAR_SENSEI_URL= "https://statement.int.d3adc3ii.cc"
+HOMEPAGE_VAR_SENSEI_URL= "https://statement.d3adc3ii.site"
 # Homeassistant
 HOMEPAGE_VAR_HA_ICON= "/icons/home-assistant.png"
-HOMEPAGE_VAR_HA_URL= "https://ha.int.d3adc3ii.cc"
+HOMEPAGE_VAR_HA_URL= "https://ha.d3adc3ii.site"
 # Qbit
 HOMEPAGE_VAR_QBIT_ICON= "/icons/qbittorrent.png"
-HOMEPAGE_VAR_QBIT_URL= "https://qbit.int.d3adc3ii.cc"
+HOMEPAGE_VAR_QBIT_URL= "https://qbit.d3adc3ii.site"
 HOMEPAGE_VAR_QBIT_USER= "d3adc3ii"
 HOMEPAGE_VAR_QBIT_PASSWORD= "WCxb2CcykoUmjiNAf3p8"
 # Stash
 HOMEPAGE_VAR_STASH_ICON= "/icons/stash.png"
-HOMEPAGE_VAR_STASH_URL= "https://stash.int.d3adc3ii.cc"
+HOMEPAGE_VAR_STASH_URL= "https://stash.d3adc3ii.site"
 HOMEPAGE_VAR_STASH_USER= "d3adc3ii"
 HOMEPAGE_VAR_QBIT_API= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg"
 # Semaphore
 HOMEPAGE_VAR_SEMAPHORE_ICON= "/icons/semaphore.png"
-HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.int.d3adc3ii.cc"
+HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3adc3ii.site"
 # Aria2
 HOMEPAGE_VAR_ARIA_ICON= "/icons/ariang.png"
-HOMEPAGE_VAR_ARIA_URL= "https://dl.int.d3adc3ii.cc"
+HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
 
 ### EXTERNAL ###
 
