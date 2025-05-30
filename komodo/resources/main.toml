@@ -290,10 +290,11 @@ services:
       caddy_99: whoami.d3adc3ii.site                       #👈 Subdomain using wildcard cert
       caddy_99.reverse_proxy: "{{upstreams 80}}"         #👈 Container port
 
-      # For non-docker sites
+      # For non-docker sites see https://gist.github.com/omltcat/241ef622070ca0580f2876a7cfa7de67
       # e.g.: Pi-Hole on another machine in the same LAN
       caddy_100: netalertx.d3adc3ii.site                      #👈 Subdomain using wildcard cert
       caddy_100.reverse_proxy: 192.168.2.31:20184            #👈 LAN IP and port
+
 
       # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
       #caddy_101: omv.example.com                         #👈 Subdomain using wildcard cert
