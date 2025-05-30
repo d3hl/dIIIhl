@@ -31,14 +31,16 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  caddy:
+    external: true
+
 services:
   actual_server:
     image: docker.io/actualbudget/actual-server:latest
     ports:
       - '5006:5006'
     volumes:
-      # Change './actual-data' below to the path to the folder you want Actual to store its data in on your server.
-      # '/data' is the path Actual will look for its files in by default, so leave that as-is.
       - ${ACTUAL_DATA_DIR}:/data
     healthcheck:
       # Enable health check for the instance
@@ -48,6 +50,9 @@ services:
       retries: 3
       start_period: 20s
     restart: unless-stopped
+    labels:
+      caddy: actual.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 5006}}"
 """
 environment = """
 ACTUAL_DATA_DIR=/mnt/zApps/actualbudget
@@ -403,7 +408,10 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
----
+networks:
+  caddy:
+    external: true
+
 services:
   healthchecks:
     image: lscr.io/linuxserver/healthchecks:latest
@@ -427,16 +435,13 @@ services:
       #- SITE_LOGO_URL= #optional
     volumes:
       - ${DATA_DIR}/config:/config
-    labels:
-      caddy: health.d3adc3ii.site
-      caddy.reverse_proxy: "{{upstreams 8000}}"
     ports:
       - 8000:8000
       - 2525:2525 #optional
     restart: unless-stopped
-networks:
-  caddy:
-    external: true
+    labels:
+      caddy: health.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 8000}}"
 """
 environment = """
 PUID=1000
@@ -749,6 +754,9 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  caddy:
+    external: true
 services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
@@ -768,6 +776,9 @@ services:
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     restart: unless-stopped
+    labels:
+      caddy: jelly.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 8096}}"
 """
 environment = """
 JELLYFIN_CONFIG_DIR=/mnt/zApps/jellyfin/config
@@ -1019,57 +1030,6 @@ NZBGET_DL_DIR=/mnt/zApps/nzb/downloads
 ##
 
 [[stack]]
-name = "portnote"
-tags = ["internal", "testing"]
-[stack.config]
-server = "komodo-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  web:
-    image: haedlessdev/portnote:latest
-    ports:
-      - "3033:3000"
-    env_file:
-      - .env
-    environment:
-      JWT_SECRET: ${JWT_SECRET}
-      USER_SECRET: ${USER_SECRET}
-      LOGIN_USERNAE: ${LOGIN_USERNAME}
-      LOGIN_PASSWORD: ${LOGIN_PASSWORD}
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres"
-  agent:
-    image: haedlessdev/portnote-agent:latest
-    environment:
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres"
-
-  db:
-    image: postgres:17
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-    volumes:
-      - ${POSTGRES_DATA}:/var/lib/postgresql/data
-    user: "1000:1000"
-
-volumes:
-  postgres_data:
-"""
-environment = """
-JWT_SECRET=[[PORTNOTE_JWT_SECRET]]
-USER_SECRET=[[PORTNOTE_USER_SECRET]]
-LOGIN_USERNAME=d3
-LOGIN_PASSWORD=[[PORTNOTE_LOGIN_PASSWORD]]
-POSTGRES_DATA=/mnt/zApps/portnote/data
-"""
-
-##
-
-[[stack]]
 name = "speedtest-tracker"
 tags = ["internal", "testing"]
 [stack.config]
@@ -1232,12 +1192,16 @@ image.type = "Image"
 image.params.image = "benjaminawd/statementsensei:latest"
 poll_for_updates = true
 auto_update = true
-network = "bridge"
+network = "--network caddy external: true"
 ports = """
 8501:8501
 """
 environment = """
   PDF_PASSWORD= [[PDF_PASSWORD]]
+"""
+labels = """
+caddy: statement.d3adc3ii.site
+caddy.reverse_proxy: "{{upstreams 8501}}"
 """
 
 ##
