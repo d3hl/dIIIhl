@@ -287,9 +287,8 @@ services:
 
       # For non-docker sites
       # e.g.: Pi-Hole on another machine in the same LAN
-      #caddy_100: pihole.example.com                      #👈 Subdomain using wildcard cert
-      #caddy_100.reverse_proxy: 192.168.1.4:88            #👈 LAN IP and port
-      #caddy_100.import: auth                             #👈 Enable protection by Authelia
+      caddy_100: netalertx.d3adc3ii.site                      #👈 Subdomain using wildcard cert
+      caddy_100.reverse_proxy: 192.168.2.31:20184            #👈 LAN IP and port
 
       # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
       #caddy_101: omv.example.com                         #👈 Subdomain using wildcard cert
@@ -886,21 +885,20 @@ services:
       - ${DATA_DIR}/config:/app/config
       - ${DATA_DIR}/db:/app/db      
       - ${DATA_DIR}/logs:/app/log
-      # (API: OPTION 1) use for performance
       - type: tmpfs
         target: /app/api
-      # (API: OPTION 2) use when debugging issues 
-      # -  local_path/api:/app/api
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Singapore
-      - PORT=20184
     env_file:
       - .env
+    labels:
+      caddy: netalertx.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 20184}}"
 """
 environment = """
 DATA_DIR=/mnt/zApps/netalertx
+PUID=1000
+PGID=1000
+TZ=Asia/Singapore
+PORT=20184
 """
 
 ##
