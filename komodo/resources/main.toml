@@ -40,6 +40,8 @@ services:
     image: docker.io/actualbudget/actual-server:latest
     ports:
       - '5006:5006'
+    networks:
+      - caddy
     volumes:
       - ${ACTUAL_DATA_DIR}:/data
     healthcheck:
@@ -500,8 +502,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
     labels:
-      caddy: homepage.d3adc3ii.site                    #👈 Subdomain
-      caddy.reverse_proxy: "{{upstreams 3000}}"    #👈 Container port
+      caddy: homepage.d3adc3ii.site                    
+      caddy.reverse_proxy: "{{upstreams 3000}}"
 """
 environment = """
 DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/homepage
@@ -547,7 +549,7 @@ HOMEPAGE_VAR_CADDYPROXY_ICON= "/icons/caddy.png"
 HOMEPAGE_VAR_CADDYPROXY_URL= "http://caddy:2020"
 # NetAlertX 
 HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx.png"
-HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.int.d3adc3ii.cc"
+HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3adc3ii.site"
 HOMEPAGE_VAR_NETALERTX_KEY="t_pJ26L2qEeUcR6bz5RCGI"
 HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"] 
 # APPRISE-API
@@ -918,47 +920,6 @@ PUID=1000
 PGID=1000
 TZ=Asia/Singapore
 PORT=20184
-"""
-
-##
-
-[[stack]]
-name = "nexterm"
-[stack.config]
-server = "server-bkxal"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  nexterm:
-    environment:
-      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
-    env_file:
-      - .env
-    networks:
-      - caddy
-    labels:
-      caddy: nexterm.int.d3adc3ii.cc
-      caddy.reverse_proxy: "{{upstreams 6989}}"
-    ports:
-      - "6989:6989"
-    restart: always
-    volumes:
-      - ${DATA_DIR}:/app/data
-    image: germannewsmaker/nexterm:1.0.3-OPEN-PREVIEW
-volumes:
-  nexterm:
-    
-networks:
-  caddy:
-    external: true
-"""
-environment = """
-DATA_DIR=/mnt/zApps/nexterm
-ENCRYPTION_KEY= [[NEXTERM_KEY]]
-SERVER_PORT=6989
-NODE_ENV=development
 """
 
 ##
