@@ -308,16 +308,33 @@ services:
 
       caddy_102: opn.d3adc3ii.site                      
       caddy_102.reverse_proxy: 192.168.2.1:2184
+      caddy_102.reverse_proxy.transport: http
+      caddy_102.reverse_proxy.transport.tls: ""
+      caddy_102.reverse_proxy.transport.versions: 1.1 1.2
+      caddy_102.reverse_proxy.transport.tls_insecure_skip_verify: ""
+
       caddy_103: truenas.d3adc3ii.site                      
       caddy_103.reverse_proxy: 192.168.2.7
-      caddy_104: ns0.d3adc3ii.site                      
-      caddy_104.reverse_proxy: 192.168.2.5:5380
-      caddy_105: pbs.d3adc3ii.site                      
-      caddy_105.reverse_proxy: 192.168.2.35:8007
+      caddy_103.reverse_proxy.transport: http
+      caddy_103.reverse_proxy.transport.tls_insecure_skip_verify: ""
+
+      caddy_104: pbs.d3adc3ii.site   
+      caddy_104.reverse_proxy: 192.168.2.35:8007
+      caddy_104.reverse_proxy.transport: http
+      caddy_104.reverse_proxy.transport.tls_insecure_skip_verify: ""
+
+      caddy_105: ns0.d3adc3ii.site                      
+      caddy_105.reverse_proxy: 192.168.2.5:5380
       caddy_106: stash.d3adc3ii.site                      
       caddy_106.reverse_proxy: 192.168.2.26:9999
       caddy_107: ha.d3adc3ii.site                      
-      caddy_107.reverse_proxy: 192.168.99.5:8123      
+      caddy_107.reverse_proxy: 192.168.99.5:8123    
+      caddy_108: jelly.d3adc3ii.site                      
+      caddy_108.reverse_proxy: 192.168.2.33:8096
+      caddy_109: semaphore.d3adc3ii.site                      
+      caddy_109.reverse_proxy: 192.168.2.28:3000            
+      caddy_110: aria.d3adc3ii.site                      
+      caddy_110.reverse_proxy: 192.168.2.16:6880  
       # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
       #caddy_101: omv.example.com                         #👈 Subdomain using wildcard cert
       #caddy_101.reverse_proxy: host.docker.internal:4430 #👈 Port on host machine
