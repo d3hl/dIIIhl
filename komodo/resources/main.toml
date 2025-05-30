@@ -295,8 +295,8 @@ services:
 
       # For non-docker sites see https://gist.github.com/omltcat/241ef622070ca0580f2876a7cfa7de67
       # e.g.: Pi-Hole on another machine in the same LAN
-      caddy_100: netalertx.d3adc3ii.site                      #👈 Subdomain using wildcard cert
-      caddy_100.reverse_proxy: 192.168.2.31:20184            #👈 LAN IP and port
+      caddy_100: netalertx.d3adc3ii.site                      
+      caddy_100.reverse_proxy: 192.168.2.31:20184           
 
 
       # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
@@ -310,7 +310,6 @@ PUID=1000
 PGID=1000
 CADDY_DATA_DIR=/mnt/zApps/caddy
 CADDY_INGRESS_NETWORKS=caddy
-TZ= 'Asia/Singapore'
 CF_API_TOKEN= [[CF_API_TOKEN]]
 CADDY_EMAIL= d3tech@pm.me
 """
@@ -465,8 +464,8 @@ SITE_NAME= Healthcheck
 SUPERUSER_EMAIL= d3tech@pm.me
 SUPERUSER_PASSWORD= [[HEALTHCHECK_SUPERADMIN_PASSWORD]]
 SECRET_KEY= [[HEALTHCHECK_SECRET]]
-TZ=Asia/Singapore
 APPRISE_ENABLED=True
+TZ=Asia/Singapore
 """
 
 ##
@@ -902,7 +901,7 @@ services:
   netalertx:
     container_name: netalertx
     image: "ghcr.io/jokob-sk/netalertx:latest"      
-    network_mode: "host"        
+    network_mode: "host"     
     restart: unless-stopped
     volumes:
       - ${DATA_DIR}/config:/app/config
@@ -912,9 +911,6 @@ services:
         target: /app/api
     env_file:
       - .env
-    labels:
-      caddy: netalertx.d3adc3ii.site
-      caddy.reverse_proxy: "{{upstreams 20184}}"
 """
 environment = """
 DATA_DIR=/mnt/zApps/netalertx
