@@ -368,10 +368,15 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  caddy:
+    external: true
 services:
   fireshare:
     container_name: fireshare
     image: shaneisrael/fireshare:latest
+    networks:
+      - caddy
     ports:
       - "8585:80"
     volumes:
@@ -391,6 +396,9 @@ services:
       - DOMAIN=fs.d3adc3ii.cc
       - PUID=1000
       - PGID=1000
+    labels:
+      caddy: fs.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 8585}}"
 """
 environment = """
 FSHARE_DATA_DIR=/mnt/zApps/fileshare
