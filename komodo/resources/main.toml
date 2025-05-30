@@ -206,46 +206,17 @@ auto_update = true
 auto_update_all_services = true
 file_contents = """
 networks:
-  caddy:
-    driver: overlay
-  caddy_controller:
-    driver: overlay
+  caddy: 
+    name: caddy
     ipam:
-      driver: default
-      config:
-        - subnet: "192.168.2.0/24"
-volumes:
-  data: {}      
+      driver: default  
+    
 # Main Caddy
 services:
-  caddy_server:
-    image: homeall/caddy-reverse-proxy-cloudflare:latest
-    ports:
-      - 80:80
-      - 443:443
-      - "443:443/udp"
-    env_file:
-      - .env
-    networks:
-      - caddy_controller
-      - caddy
-    environment:
-      - CADDY_DOCKER_MODE=server
-      - CADDY_CONTROLLER_NETWORK=192.168.2.0/24
-    volumes:
-      - ${CADDY_DATA_DIR}/data:/data
-      - ${CADDY_DATA_DIR}/config/:/config/caddy  #👈 where to save configs 
-    labels:
-      caddy_controlled_server:  
-
   caddy:
     image: homeall/caddy-reverse-proxy-cloudflare:latest
     networks:
       - caddy
-      - caddy-controller
-    environment:
-      - CADDY_DOCKER_MODE=controller
-      - CADDY_CONTROLLER_NETWORK=192.168.2.0/24
     ports:
       - 80:80
       - 443:443
@@ -254,6 +225,8 @@ services:
       - .env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ${CADDY_DATA_DIR}/data:/data
+      - ${CADDY_DATA_DIR}/config/:/config/caddy  #👈 where to save configs 
     restart: unless-stopped
     extra_hosts:
       - host.docker.internal:host-gateway
