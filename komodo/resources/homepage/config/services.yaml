@@ -270,7 +270,7 @@
         widget:
             type: iframe
             name: pveDashboard
-            srv: {{HOMEPAGE_VAR_PULSE_URL}}
+            src: {{HOMEPAGE_VAR_PULSE_URL}}
             referrerPolicy: same-origin # optional, no default
 - M365:
     - Intune:
