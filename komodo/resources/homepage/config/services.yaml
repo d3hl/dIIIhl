@@ -16,6 +16,41 @@
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             href: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
             sitemonitor: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
+            widget:
+                type: beszel
+                #url: https://beszel.d3adc3ii.cc
+                url: http://192.168.2.9:8090
+                username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+                password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+                version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
+                systemid: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11}}
+                #status: {{HOMEPAGE_VAR_BESZEL_STATUS_pve11}}
+                #updated: {{HOMEPAGE_VAR_BESZEL_UPDATED_pve11}}
+                #cpu: {{HOMEPAGE_VAR_BESZEL_CPU_pve11}}
+                #memory: {{HOMEPAGE_VAR_BESZEL_MEMORY_pve11}}
+                #disk: {{HOMEPAGE_VAR_BESZEL_DISK}}
+                #network: {{HOMEPAGE_VAR_BESZEL_NETWORK}}
+        - pve12:
+            icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+            widget:
+                type: beszel
+                #url: https://beszel.d3adc3ii.cc
+                url: http://192.168.2.9:8090
+                username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+                password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+                version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
+                systemid: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12}}
+        - pve13:
+            icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+            widget:
+                type: beszel
+                #url: https://beszel.d3adc3ii.cc
+                url: http://192.168.2.9:8090
+                username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+                password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+                version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
+                systemid: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13}}
+
         - PBS: 
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             href: {{HOMEPAGE_VAR_PBS_URL}}
@@ -37,6 +72,11 @@
             icon: {{HOMEPAGE_VAR_DNS_ICON}}
             href: {{HOMEPAGE_VAR_DNS_URL}}
             sitemonitor: {{HOMEPAGE_VAR_DNS_URL}}
+            widget:
+                type: technitium
+                url: {{HOMEPAGE_VAR_DNS_URL}}
+                key: {{HOMEPAGE_VAR_DNS_KEY}}
+                range: {{HOMEPAGE_VAR_DNS_RANGE}}
     - Backend:
         - CaddyProxy:
             icon: {{HOMEPAGE_VAR_CADDYPROXY_ICON}} 
