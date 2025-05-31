@@ -286,6 +286,8 @@ services:
 
       # Caddy Admin Endpoint and Metrics
       caddy_20: :2020
+      #caddy_20.admin: "0.0.0.0:2019"
+      #caddy_20.admin.origin: "caddy.d3adc3ii.site"
       caddy_20.handle: /reverse_proxy/upstreams
       caddy_20.handle.reverse_proxy: localhost:2019
       caddy_20.handle.reverse_proxy.header_up: Host localhost:2019
@@ -336,7 +338,8 @@ services:
       caddy_110: aria.d3adc3ii.site                      
       caddy_110.reverse_proxy: 192.168.2.16:6880  
       caddy_111: pulse.d3adc3ii.site                      
-      caddy_111.reverse_proxy: 192.168.2.36:7655         
+      caddy_111.reverse_proxy: 192.168.2.36:7655     
+
       # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
       #caddy_101: omv.example.com                         #👈 Subdomain using wildcard cert
       #caddy_101.reverse_proxy: host.docker.internal:4430 #👈 Port on host machine
@@ -350,6 +353,71 @@ CADDY_DATA_DIR=/mnt/zApps/caddy
 CADDY_INGRESS_NETWORKS=caddy
 CF_API_TOKEN= [[CF_API_TOKEN]]
 CADDY_EMAIL= d3tech@pm.me
+"""
+
+##
+
+[[stack]]
+name = "checkmate"
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  server:
+    image: ghcr.io/bluewave-labs/checkmate:backend-dist-mono
+    restart: always
+    ports:
+      - "52345:52345"
+    env_file:
+      - .env
+    environment:
+      - DB_CONNECTION_STRING=mongodb://mongodb:27017/uptime_db?replicaSet=rs0
+    depends_on:
+      - redis
+      - mongodb
+  redis:
+    image: ghcr.io/bluewave-labs/checkmate:redis-dist
+    restart: always
+    env_file:
+      - .env
+    user: "1000:1000"  
+    volumes:
+      - ${DATA_DIR}/redis/data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+  mongodb:
+    image: ghcr.io/bluewave-labs/checkmate:mongo-dist
+    restart: always
+    command: ["mongod", "--quiet", "--replSet", "rs0", "--bind_ip_all"]
+    env_file:
+      - .env
+    user: "1000:1000"  
+    volumes:
+      - ${DATA_DIR}/mongo/data:/data/db
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'mongodb:27017'}]}) }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      start_interval: 1s
+      retries: 30
+"""
+environment = """
+PUID=1000
+PGID=1000
+DATA_DIR= /mnt/zApps/checkmate
+UPTIME_APP_API_BASE_URL: http://192.168.2.33:52345/api/v1
+UPTIME_APP_CLIENT_HOST: http://192.168.2.33
+REDIS_URL=redis://redis:6379
+CLIENT_HOST=http://192.168.2.33
+JWT_SECRET= [[CHECKMATE_JWT_SECRET]]
 """
 
 ##
@@ -733,6 +801,7 @@ HOMEPAGE_VAR_BESZEL_VERSION= "2"
 HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11= pve11
 HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12= pve12
 HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13= pve13
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs= pbs
 HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"] 
 # ZABBIX
 HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix.png"
