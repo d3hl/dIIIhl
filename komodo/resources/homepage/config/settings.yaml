@@ -2,20 +2,20 @@
 title: "{{HOMEPAGE_VAR_TITLE}}"
 favicon: "{{HOMEPAGE_VAR_FAVICON}}"
 
-headerStyle: boxedWidgets
+headerStyle: {{HOMEPAGE_VAR_HEADER_STYLE}}
 background:
   image: "{{HOMEPAGE_VAR_IMG_URL}}"
-  blur: md
-  saturate: 50
-  brightness: 50
-  opacity: 70
-theme: dark
-color: slate
-useEqualHeights: true
-statusStyle: per-service
-fullWidth: true
-showStats: true
-hideErrors: true
+  blur: "{{HOMEPAGE_VAR_IMG_BLUR}"
+  saturate: "{{HOMEPAGE_VAR_IMG_SATURATE}}"
+  brightness: "{{HOMEPAGE_VAR_IMG_BRIGHTNESS}}"
+  opacity: "{{HOMEPAGE_VAR_IMG_OPACITY}}"
+theme: {{HOMEPAGE_VAR_THEME}}
+color: {{HOMEPAGE_VAR_COLOR}}
+useEqualHeights: {{HOMEPAGE_VAR_USE_EQUAL_HEIGHTS}}
+statusStyle: {{HOMEPAGE_VAR_STATUS_STYLE}}
+fullWidth: {{HOMEPAGE_VAR_FULL_WIDTH}}
+showStats: {{HOMEPAGE_VAR_SHOW_STATS}}
+hideErrors: {{HOMEPAGE_VAR_HIDE_ERRORS}}
 
 layout:
   
