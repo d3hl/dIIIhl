@@ -396,6 +396,7 @@ services:
     command: ["mongod", "--quiet", "--replSet", "rs0", "--bind_ip_all"]
     env_file:
       - .env
+    user: "1000:1000"  
     volumes:
       - ${DATA_DIR}/mongo/data:/data/db
     healthcheck:
