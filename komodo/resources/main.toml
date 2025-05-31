@@ -4,7 +4,7 @@ name = "komodo-2"
 address = "https://192.168.2.32:8120"
 enabled = true
 
-## Sample ##
+##
 
 [[server]]
 name = "komodo-3"
@@ -31,14 +31,18 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  caddy:
+    external: true
+
 services:
   actual_server:
     image: docker.io/actualbudget/actual-server:latest
     ports:
       - '5006:5006'
+    networks:
+      - caddy
     volumes:
-      # Change './actual-data' below to the path to the folder you want Actual to store its data in on your server.
-      # '/data' is the path Actual will look for its files in by default, so leave that as-is.
       - ${ACTUAL_DATA_DIR}:/data
     healthcheck:
       # Enable health check for the instance
@@ -48,6 +52,9 @@ services:
       retries: 3
       start_period: 20s
     restart: unless-stopped
+    labels:
+      caddy: actual.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 5006}}"
 """
 environment = """
 ACTUAL_DATA_DIR=/mnt/zApps/actualbudget
@@ -201,8 +208,11 @@ auto_update = true
 auto_update_all_services = true
 file_contents = """
 networks:
-  caddy:
-    external: true
+  caddy: 
+    name: caddy
+    ipam:
+      driver: default  
+    
 # Main Caddy
 services:
   caddy:
@@ -217,8 +227,8 @@ services:
       - .env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${CADDY_DATA_DIR}/data:/data  # store SSL certs
-      - ${CADDY_DATA_DIR}/config/:/config/caddy  #👈 where to save configs
+      - ${CADDY_DATA_DIR}/data:/data
+      - ${CADDY_DATA_DIR}/config/:/config/caddy  #👈 where to save configs 
     restart: unless-stopped
     extra_hosts:
       - host.docker.internal:host-gateway
@@ -246,7 +256,7 @@ services:
       #### Snippets ####
       # Get wildcard certificate
       caddy_1: (wildcard)
-      #caddy_1.acme_dns: "cloudflare ${CF_API_TOKEN}"
+      #caddy_1.acme_dns: "cloudflare ${CF_API_TOKEN}" 
       caddy_1.tls.dns: "cloudflare ${CF_API_TOKEN}"
       caddy_1.tls.resolvers: 1.1.1.1 1.0.0.1
       caddy_1.handle.abort: ""
@@ -285,12 +295,48 @@ services:
       caddy_99: whoami.d3adc3ii.site                       #👈 Subdomain using wildcard cert
       caddy_99.reverse_proxy: "{{upstreams 80}}"         #👈 Container port
 
-      # For non-docker sites
+      # For non-docker sites see https://gist.github.com/omltcat/241ef622070ca0580f2876a7cfa7de67
       # e.g.: Pi-Hole on another machine in the same LAN
-      #caddy_100: pihole.example.com                      #👈 Subdomain using wildcard cert
-      #caddy_100.reverse_proxy: 192.168.1.4:88            #👈 LAN IP and port
-      #caddy_100.import: auth                             #👈 Enable protection by Authelia
+      caddy_100: netalertx.d3adc3ii.site                      
+      caddy_100.reverse_proxy: 192.168.2.31:20184
 
+      caddy_101: pve.d3adc3ii.site                      
+      caddy_101.reverse_proxy: 192.168.2.11:8006
+      caddy_101.reverse_proxy.transport: http
+      caddy_101.reverse_proxy.transport.tls_insecure_skip_verify: ""
+
+
+      caddy_102: opn.d3adc3ii.site                      
+      caddy_102.reverse_proxy: 192.168.2.1:2184
+      caddy_102.reverse_proxy.transport: http
+      caddy_102.reverse_proxy.transport.tls: ""
+      caddy_102.reverse_proxy.transport.versions: 1.1 1.2
+      caddy_102.reverse_proxy.transport.tls_insecure_skip_verify: ""
+
+      caddy_103: truenas.d3adc3ii.site                      
+      caddy_103.reverse_proxy: 192.168.2.7
+      caddy_103.reverse_proxy.transport: http
+      caddy_103.reverse_proxy.transport.tls_insecure_skip_verify: ""
+
+      caddy_104: pbs.d3adc3ii.site   
+      caddy_104.reverse_proxy: 192.168.2.35:8007
+      caddy_104.reverse_proxy.transport: http
+      caddy_104.reverse_proxy.transport.tls_insecure_skip_verify: ""
+
+      caddy_105: ns0.d3adc3ii.site                      
+      caddy_105.reverse_proxy: 192.168.2.5:5380
+      caddy_106: stash.d3adc3ii.site                      
+      caddy_106.reverse_proxy: 192.168.2.26:9999
+      caddy_107: ha.d3adc3ii.site                      
+      caddy_107.reverse_proxy: 192.168.99.5:8123    
+      caddy_108: jelly.d3adc3ii.site                      
+      caddy_108.reverse_proxy: 192.168.2.33:8096
+      caddy_109: semaphore.d3adc3ii.site                      
+      caddy_109.reverse_proxy: 192.168.2.28:3000            
+      caddy_110: aria.d3adc3ii.site                      
+      caddy_110.reverse_proxy: 192.168.2.16:6880  
+      caddy_111: pulse.d3adc3ii.site                      
+      caddy_111.reverse_proxy: 192.168.2.36:7655         
       # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
       #caddy_101: omv.example.com                         #👈 Subdomain using wildcard cert
       #caddy_101.reverse_proxy: host.docker.internal:4430 #👈 Port on host machine
@@ -302,7 +348,6 @@ PUID=1000
 PGID=1000
 CADDY_DATA_DIR=/mnt/zApps/caddy
 CADDY_INGRESS_NETWORKS=caddy
-TZ= 'Asia/Singapore'
 CF_API_TOKEN= [[CF_API_TOKEN]]
 CADDY_EMAIL= d3tech@pm.me
 """
@@ -363,10 +408,15 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  caddy:
+    external: true
 services:
   fireshare:
     container_name: fireshare
     image: shaneisrael/fireshare:latest
+    networks:
+      - caddy
     ports:
       - "8585:80"
     volumes:
@@ -386,6 +436,9 @@ services:
       - DOMAIN=fs.d3adc3ii.cc
       - PUID=1000
       - PGID=1000
+    labels:
+      caddy: fs.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 8585}}"
 """
 environment = """
 FSHARE_DATA_DIR=/mnt/zApps/fileshare
@@ -404,7 +457,10 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
----
+networks:
+  caddy:
+    external: true
+
 services:
   healthchecks:
     image: lscr.io/linuxserver/healthchecks:latest
@@ -428,16 +484,13 @@ services:
       #- SITE_LOGO_URL= #optional
     volumes:
       - ${DATA_DIR}/config:/config
-    labels:
-      caddy: health.d3adc3ii.site
-      caddy.reverse_proxy: "{{upstreams 8000}}"
     ports:
       - 8000:8000
       - 2525:2525 #optional
     restart: unless-stopped
-networks:
-  caddy:
-    external: true
+    labels:
+      caddy: health.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 8000}}"
 """
 environment = """
 PUID=1000
@@ -449,8 +502,8 @@ SITE_NAME= Healthcheck
 SUPERUSER_EMAIL= d3tech@pm.me
 SUPERUSER_PASSWORD= [[HEALTHCHECK_SUPERADMIN_PASSWORD]]
 SECRET_KEY= [[HEALTHCHECK_SECRET]]
-TZ=Asia/Singapore
 APPRISE_ENABLED=True
+TZ=Asia/Singapore
 """
 
 ##
@@ -485,8 +538,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
     labels:
-      caddy: homepage.d3adc3ii.site                    #👈 Subdomain
-      caddy.reverse_proxy: "{{upstreams 3000}}"    #👈 Container port
+      caddy: homepage.d3adc3ii.site                    
+      caddy.reverse_proxy: "{{upstreams 3000}}"
 """
 environment = """
 DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/homepage
@@ -507,18 +560,18 @@ HOMEPAGE_VAR_TRUENAS_KEY="1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBe
 HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
 # Proxmox
 HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox.png"
-HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.int.d3adc3ii.cc"
+HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.d3adc3ii.site"
 #HOMEPAGE_VAR_PROXMOX_USER= 
 #HOMEPAGE_VAR_PROXMOX_API_KEY=
-HOMEPAGE_VAR_PBS_URL= "https://pbs.int.d3adc3ii.cc"
+HOMEPAGE_VAR_PBS_URL= "https://pbs.d3adc3ii.site"
 
 ### INFRA ###
 # Opnsense
 HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense.png"
-HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.int.d3adc3ii.cc"
+HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.d3adc3ii.site"
 # DNS
 HOMEPAGE_VAR_DNS_ICON= "/icons/technitium.png"
-HOMEPAGE_VAR_DNS_URL= "https://ns0.int.d3adc3ii.cc"
+HOMEPAGE_VAR_DNS_URL= "https://ns0.d3adc3ii.site"
 # MIKROTIK
 HOMEPAGE_VAR_MIKROTIK_ICON= "/icons/mikrotik.png"
 HOMEPAGE_VAR_MIKROTIK_URL= "http://192.168.2.253"
@@ -532,7 +585,7 @@ HOMEPAGE_VAR_CADDYPROXY_ICON= "/icons/caddy.png"
 HOMEPAGE_VAR_CADDYPROXY_URL= "http://caddy:2020"
 # NetAlertX 
 HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx.png"
-HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.int.d3adc3ii.cc"
+HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3adc3ii.site"
 HOMEPAGE_VAR_NETALERTX_KEY="t_pJ26L2qEeUcR6bz5RCGI"
 HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"] 
 # APPRISE-API
@@ -554,12 +607,12 @@ HOMEPAGE_VAR_BOTB_URL= "https://botb.int.d3adc3ii.cc"
 ### BACKUP ###
 # Battle of the bandwidth
 HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest.png"
-HOMEPAGE_VAR_BACKREST_URL= "https://backrest.int.d3adc3ii.cc"
+HOMEPAGE_VAR_BACKREST_URL= "https://backrest.d3adc3ii.site"
 
 
 # Jellyfin
 HOMEPAGE_VAR_JELLY_ICON= "/icons/jellyfin.png"
-HOMEPAGE_VAR_JELLY_URL= "https://jelly.int.d3adc3ii.cc"
+HOMEPAGE_VAR_JELLY_URL= "https://jelly.d3adc3ii.site"
 HOMEAGE_VAR_JELLY_WIDGETURL= "http://192.168.2.33:8096"
 HOMEPAGE_VAR_JELLY_KEY= "a6a45c61dd1d4f059b02fa22ad8c0ef3"
 HOMEPAGE_VAR_JELLY_ENABLEBLOCK=true
@@ -567,7 +620,7 @@ HOMEPAGE_VAR_JELLY_NOWPLAY=false
 
 # Immich
 HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich.png"
-HOMEPAGE_VAR_IMMICH_URL= "https://imm.int.d3adc3ii.cc"
+HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3adc3ii.site"
 HOMEPAGE_VAR_IMMICH_KEY= "7zmatjhj9RVRPylp08hKaG1mkYDubUyeqfDlpaUHo"
 HOMEPAGE_VAR_IMMICH_VERSION= 2
 HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"] 
@@ -575,29 +628,29 @@ HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"]
 ### LOCAL APPS ###
 # Actual Budget
 HOMEPAGE_VAR_ACTUAL_ICON= "/icons/actual-budget.png"
-HOMEPAGE_VAR_ACTUAL_URL= "https://actual.int.d3adc3ii.cc"
+HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3adc3ii.site"
 # Sensei
 HOMEPAGE_VAR_SENSEI_ICON= "/icons/davis.png"
-HOMEPAGE_VAR_SENSEI_URL= "https://statement.int.d3adc3ii.cc"
+HOMEPAGE_VAR_SENSEI_URL= "https://statement.d3adc3ii.site"
 # Homeassistant
 HOMEPAGE_VAR_HA_ICON= "/icons/home-assistant.png"
-HOMEPAGE_VAR_HA_URL= "https://ha.int.d3adc3ii.cc"
+HOMEPAGE_VAR_HA_URL= "https://ha.d3adc3ii.site"
 # Qbit
 HOMEPAGE_VAR_QBIT_ICON= "/icons/qbittorrent.png"
-HOMEPAGE_VAR_QBIT_URL= "https://qbit.int.d3adc3ii.cc"
+HOMEPAGE_VAR_QBIT_URL= "https://qbit.d3adc3ii.site"
 HOMEPAGE_VAR_QBIT_USER= "d3adc3ii"
 HOMEPAGE_VAR_QBIT_PASSWORD= "WCxb2CcykoUmjiNAf3p8"
 # Stash
 HOMEPAGE_VAR_STASH_ICON= "/icons/stash.png"
-HOMEPAGE_VAR_STASH_URL= "https://stash.int.d3adc3ii.cc"
+HOMEPAGE_VAR_STASH_URL= "https://stash.d3adc3ii.site"
 HOMEPAGE_VAR_STASH_USER= "d3adc3ii"
 HOMEPAGE_VAR_QBIT_API= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg"
 # Semaphore
 HOMEPAGE_VAR_SEMAPHORE_ICON= "/icons/semaphore.png"
-HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.int.d3adc3ii.cc"
+HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3adc3ii.site"
 # Aria2
 HOMEPAGE_VAR_ARIA_ICON= "/icons/ariang.png"
-HOMEPAGE_VAR_ARIA_URL= "https://dl.int.d3adc3ii.cc"
+HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
 
 ### EXTERNAL ###
 
@@ -665,10 +718,15 @@ tags = ["internal", "production"]
 [stack.config]
 server = "server-bkxal"
 file_contents = """
+networks:
+  caddy:
+    external: true
 services:
   immich-server:
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    networks:
+      - caddy
     # extends:
     #   file: hwaccel.transcoding.yml
     #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
@@ -686,10 +744,15 @@ services:
     restart: always
     healthcheck:
       disable: false
+    labels:
+      caddy: immich.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 2283}}"
 
   immich-machine-learning:
     container_name: immich_machine_learning
     image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    networks:
+      - caddy
     volumes:
       - model-cache:/cache
     env_file:
@@ -701,6 +764,8 @@ services:
   redis:
     container_name: immich_redis
     image: docker.io/valkey/valkey:8-bookworm@sha256:42cba146593a5ea9a622002c1b7cba5da7be248650cbb64ecb9c6c33d29794b1
+    networks:
+      - caddy
     healthcheck:
       test: redis-cli ping || exit 1
     restart: always
@@ -708,6 +773,8 @@ services:
   database:
     container_name: immich_postgres
     image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
+    networks:
+      - caddy
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USERNAME}
@@ -750,6 +817,9 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  caddy:
+    external: true
 services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
@@ -769,6 +839,9 @@ services:
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     restart: unless-stopped
+    labels:
+      caddy: jelly.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 8096}}"
 """
 environment = """
 JELLYFIN_CONFIG_DIR=/mnt/zApps/jellyfin/config
@@ -880,68 +953,23 @@ services:
   netalertx:
     container_name: netalertx
     image: "ghcr.io/jokob-sk/netalertx:latest"      
-    network_mode: "host"        
+    network_mode: "host"     
     restart: unless-stopped
     volumes:
       - ${DATA_DIR}/config:/app/config
       - ${DATA_DIR}/db:/app/db      
       - ${DATA_DIR}/logs:/app/log
-      # (API: OPTION 1) use for performance
       - type: tmpfs
         target: /app/api
-      # (API: OPTION 2) use when debugging issues 
-      # -  local_path/api:/app/api
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Singapore
-      - PORT=20184
     env_file:
       - .env
 """
 environment = """
 DATA_DIR=/mnt/zApps/netalertx
-"""
-
-##
-
-[[stack]]
-name = "nexterm"
-[stack.config]
-server = "server-bkxal"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  nexterm:
-    environment:
-      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
-    env_file:
-      - .env
-    networks:
-      - caddy
-    labels:
-      caddy: nexterm.int.d3adc3ii.cc
-      caddy.reverse_proxy: "{{upstreams 6989}}"
-    ports:
-      - "6989:6989"
-    restart: always
-    volumes:
-      - ${DATA_DIR}:/app/data
-    image: germannewsmaker/nexterm:1.0.3-OPEN-PREVIEW
-volumes:
-  nexterm:
-    
-networks:
-  caddy:
-    external: true
-"""
-environment = """
-DATA_DIR=/mnt/zApps/nexterm
-ENCRYPTION_KEY= [[NEXTERM_KEY]]
-SERVER_PORT=6989
-NODE_ENV=development
+PUID=1000
+PGID=1000
+TZ=Asia/Singapore
+PORT=20184
 """
 
 ##
@@ -1016,57 +1044,6 @@ services:
 environment = """
 NZBGET_CF_DIR=/mnt/zApps/nzb/config
 NZBGET_DL_DIR=/mnt/zApps/nzb/downloads
-"""
-
-##
-
-[[stack]]
-name = "portnote"
-tags = ["internal", "testing"]
-[stack.config]
-server = "komodo-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  web:
-    image: haedlessdev/portnote:latest
-    ports:
-      - "3033:3000"
-    env_file:
-      - .env
-    environment:
-      JWT_SECRET: ${JWT_SECRET}
-      USER_SECRET: ${USER_SECRET}
-      LOGIN_USERNAE: ${LOGIN_USERNAME}
-      LOGIN_PASSWORD: ${LOGIN_PASSWORD}
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres"
-  agent:
-    image: haedlessdev/portnote-agent:latest
-    environment:
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres"
-
-  db:
-    image: postgres:17
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-    volumes:
-      - ${POSTGRES_DATA}:/var/lib/postgresql/data
-    user: "1000:1000"
-
-volumes:
-  postgres_data:
-"""
-environment = """
-JWT_SECRET=[[PORTNOTE_JWT_SECRET]]
-USER_SECRET=[[PORTNOTE_USER_SECRET]]
-LOGIN_USERNAME=d3
-LOGIN_PASSWORD=[[PORTNOTE_LOGIN_PASSWORD]]
-POSTGRES_DATA=/mnt/zApps/portnote/data
 """
 
 ##
@@ -1234,12 +1211,16 @@ image.type = "Image"
 image.params.image = "benjaminawd/statementsensei:latest"
 poll_for_updates = true
 auto_update = true
-network = "bridge"
+network = "--network caddy external: true"
 ports = """
 8501:8501
 """
 environment = """
   PDF_PASSWORD= [[PDF_PASSWORD]]
+"""
+labels = """
+caddy: statement.d3adc3ii.site
+caddy.reverse_proxy: "{{upstreams 8501}}"
 """
 
 ##
@@ -1330,11 +1311,6 @@ executions = [
 
 [[procedure]]
 name = "check_update"
-
-##
-
-[[procedure]]
-name = "check_update222"
 
 ##
 
