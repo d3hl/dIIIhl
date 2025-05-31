@@ -557,7 +557,7 @@ HOMEPAGE_VAR_PULSE_URL= "http://192.168.2.36:7655"
 HOMEPAGE_VAR_PULSE_ALLOWFULLSCREEN= true
 HOMEPAGE_VAR_PULSE_LOADING_STRATEGY=eager
 HOMEPAGE_VAR_PULSE_ALLOW_SCROLLING=false
-HOMEPAGE_VAR_PULSE_CLASSES= h-full sm:h-full md:h-full lg:h-full xl:h-full 2xl:h-full 
+#HOMEPAGE_VAR_PULSE_CLASSES= h-full sm:h-full md:h-full lg:h-full xl:h-full 2xl:h-full 
 HOMEPAGE_VAR_PULSE_HEIGHT= 500
 
 # Truenas
