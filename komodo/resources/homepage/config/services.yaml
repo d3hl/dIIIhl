@@ -194,6 +194,10 @@
         - Grafana:
             icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
             href: {{HOMEPAGE_VAR_GRAFANA_URL}}
+        - Checkmate:
+            icon: {{HOMEPAGE_VAR_CHECKMATE_ICON}}
+            href: {{HOMEPAGE_VAR_CHECKMATE_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_CHECKMATE_URL}}
         - Beszel:
             icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
             href: {{HOMEPAGE_VAR_BESZEL_URL}}
