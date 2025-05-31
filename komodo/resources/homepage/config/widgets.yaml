@@ -9,9 +9,9 @@
 #    timezone: Asia/Singapore
 #    cache: 5
 #    units: metric
-- search:
-    provider: duckduckgo
-    target: _blank
+#- search:
+#    provider: duckduckgo
+#    target: _blank
 
 - glances:
     url: {{HOMEPAGE_VAR_GL11_URL}}
