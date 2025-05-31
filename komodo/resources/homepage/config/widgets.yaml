@@ -14,18 +14,26 @@
     target: _blank
 
 - glances:
-    url: http://192.168.3.11:61208
-    version: 4 # required only if running glances v4 or higher, defaults to 3
-    cpu: true # optional, enabled by default, disable by setting to false
-    mem: true # optional, enabled by default, disable by setting to false
-    cputemp: true # disabled by default
-    uptime: true # disabled by default
-    label: pve11 # optional
+    url: {{HOMEPAGE_VAR_GL11_URL}}
+    version: {{HOMEPAGE_VAR_GL11_VERSION}} 
+    cpu: {{HOMEPAGE_VAR_GL11_CPU}} # optional, enabled by default, disable by setting to false
+    mem: {{HOMEPAGE_VAR_GL11_MEM}} # optional, enabled by default, disable by setting to false
+    cputemp: {{HOMEPAGE_VAR_GL11_CPUTEMP}} # disabled by default
+    uptime: {{HOMEPAGE_VAR_GL11_UPTIME}} # disabled by default
+    label: {{HOMEPAGE_VAR_GL11_LABEL}} # optional
 - glances:
-    url: http://192.168.3.12:61208
-    version: 4 # required only if running glances v4 or higher, defaults to 3
-    cpu: true # optional, enabled by default, disable by setting to false
-    mem: true # optional, enabled by default, disable by setting to false
-    cputemp: true # disabled by default
-    uptime: true # disabled by default
-    label: pve12 # optional
+    url: {{HOMEPAGE_VAR_GL12_URL}}
+    version: {{HOMEPAGE_VAR_GL12_VERSION}} 
+    cpu: {{HOMEPAGE_VAR_GL12_CPU}} # optional, enabled by default, disable by setting to false
+    mem: {{HOMEPAGE_VAR_GL12_MEM}} # optional, enabled by default, disable by setting to false
+    cputemp: {{HOMEPAGE_VAR_GL12_CPUTEMP}} # disabled by default
+    uptime: {{HOMEPAGE_VAR_GL12_UPTIME}} # disabled by default
+    label: {{HOMEPAGE_VAR_GL12_LABEL}} # optional
+- glances:
+    url: {{HOMEPAGE_VAR_GL13_URL}}
+    version: {{HOMEPAGE_VAR_GL13_VERSION}} 
+    cpu: {{HOMEPAGE_VAR_GL13_CPU}} # optional, enabled by default, disable by setting to false
+    mem: {{HOMEPAGE_VAR_GL13_MEM}} # optional, enabled by default, disable by setting to false
+    cputemp: {{HOMEPAGE_VAR_GL13_CPUTEMP}} # disabled by default
+    uptime: {{HOMEPAGE_VAR_GL13_UPTIME}} # disabled by default
+    label: {{HOMEPAGE_VAR_GL13_LABEL}} # optional
