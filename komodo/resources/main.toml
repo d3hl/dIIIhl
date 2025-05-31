@@ -792,6 +792,9 @@ HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.d3adc3ii.cc"
 # Grafana
 HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana.png"
 HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
+# Checkmate
+HOMEPAGE_VAR_CHECKMATE_ICON= "/icons/checkmate.png"
+HOMEPAGE_VAR_CHECKMATE_URL= "https://checkmate.d3adc3ii.cc"
 # Beszel
 HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel.png"
 HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
