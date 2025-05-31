@@ -41,6 +41,13 @@
                 password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
                 systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12}}
+                name: {{HOMEPAGE_VAR_BESZEL_NAME}}
+                status: {{HOMEPAGE_VAR_BESZEL_STATUS}}
+                updated: {{HOMEPAGE_VAR_BESZEL_UPDATED}}
+                cpu: {{HOMEPAGE_VAR_BESZEL_CPU}}
+                memory: {{HOMEPAGE_VAR_BESZEL_MEM}}
+                disk: {{HOMEPAGE_VAR_BESZEL_DISK}}
+                network: {{HOMEPAGE_VAR_BESZEL_NET}}
         - pve13:
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             widget:
@@ -51,6 +58,13 @@
                 password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
                 systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13}}
+                name: {{HOMEPAGE_VAR_BESZEL_NAME}}
+                status: {{HOMEPAGE_VAR_BESZEL_STATUS}}
+                updated: {{HOMEPAGE_VAR_BESZEL_UPDATED}}
+                cpu: {{HOMEPAGE_VAR_BESZEL_CPU}}
+                memory: {{HOMEPAGE_VAR_BESZEL_MEM}}
+                disk: {{HOMEPAGE_VAR_BESZEL_DISK}}
+                network: {{HOMEPAGE_VAR_BESZEL_NET}}
 
         - PBS: 
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
