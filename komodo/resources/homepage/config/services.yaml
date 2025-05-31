@@ -265,6 +265,13 @@
             url: {{HOMEPAGE_VAR_GLANCES_PVE13}}
             version: 4
             metric: sensor:Composite
+- GL4:
+    - PVE Dashboad:
+        widget:
+            type: iframe
+            name: pveDashboard
+            srv: {{HOMEPAGE_VAR_PULSE_URL}}
+            referrerPolicy: same-origin # optional, no default
 - M365:
     - Intune:
         icon: /icons/microsoft-365.png 

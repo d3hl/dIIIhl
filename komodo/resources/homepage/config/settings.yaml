@@ -92,15 +92,7 @@ layout:
     tab: Corp
     style: row
     columns: 4 
-  GL1:
-    tab: Monitoring
-    style: row
-    colums: 4
-  GL2:
-    tab: Monitoring
-    style: row
-    colums: 4
-  GL3:
+  GL4:
     tab: Monitoring
     style: row
     colums: 4
