@@ -1,6 +1,7 @@
 ---
 title: "{{HOMEPAGE_VAR_TITLE}}"
 favicon: "{{HOMEPAGE_VAR_FAVICON}}"
+
 headerStyle: boxedWidgets
 background:
   image: "{{HOMEPAGE_VAR_IMG_URL}}"
