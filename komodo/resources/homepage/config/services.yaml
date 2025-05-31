@@ -276,6 +276,7 @@
             loadingStraegy: {{HOMEPAGE_VAR_PULSE_LOADING_STRATEGY}}
             allowScrolling: {{HOMEPAGE_VAR_PULSE_ALLOW_SCROLLING}}
             referrerPolicy: same-origin # optional, no default
+            height: {{HOMEPAGE_VAR_PULSE_HEIGHT}}
 - M365:
     - Intune:
         icon: /icons/microsoft-365.png 
