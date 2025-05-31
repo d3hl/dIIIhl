@@ -24,12 +24,13 @@
                 password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
                 systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11}}
-                #status: {{HOMEPAGE_VAR_BESZEL_STATUS_pve11}}
-                #updated: {{HOMEPAGE_VAR_BESZEL_UPDATED_pve11}}
-                #cpu: {{HOMEPAGE_VAR_BESZEL_CPU_pve11}}
-                #memory: {{HOMEPAGE_VAR_BESZEL_MEMORY_pve11}}
-                #disk: {{HOMEPAGE_VAR_BESZEL_DISK}}
-                #network: {{HOMEPAGE_VAR_BESZEL_NETWORK}}
+                name: {{HOMEPAGE_VAR_BESZEL_NAME}}
+                status: {{HOMEPAGE_VAR_BESZEL_STATUS}}
+                updated: {{HOMEPAGE_VAR_BESZEL_UPDATED}}
+                cpu: {{HOMEPAGE_VAR_BESZEL_CPU}}
+                memory: {{HOMEPAGE_VAR_BESZEL_MEM}}
+                disk: {{HOMEPAGE_VAR_BESZEL_DISK}}
+                network: {{HOMEPAGE_VAR_BESZEL_NET}}
         - pve12:
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             widget:
