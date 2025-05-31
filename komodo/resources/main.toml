@@ -382,6 +382,7 @@ services:
     restart: always
     env_file:
       - .env
+    user: "1000:1000"  
     volumes:
       - ${DATA_DIR}/redis/data:/data
     healthcheck:
