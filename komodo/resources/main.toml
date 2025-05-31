@@ -335,6 +335,8 @@ services:
       caddy_109.reverse_proxy: 192.168.2.28:3000            
       caddy_110: aria.d3adc3ii.site                      
       caddy_110.reverse_proxy: 192.168.2.16:6880  
+      caddy_111: pulse.d3adc3ii.site                      
+      caddy_111.reverse_proxy: 192.168.2.36:7655         
       # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
       #caddy_101: omv.example.com                         #👈 Subdomain using wildcard cert
       #caddy_101.reverse_proxy: host.docker.internal:4430 #👈 Port on host machine
