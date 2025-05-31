@@ -24,9 +24,6 @@
                 password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
                 systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11}}
-                name: {{HOMEPAGE_VAR_BESZEL_NAME}}
-                status: {{HOMEPAGE_VAR_BESZEL_STATUS}}
-                updated: {{HOMEPAGE_VAR_BESZEL_UPDATED}}
                 cpu: {{HOMEPAGE_VAR_BESZEL_CPU}}
                 memory: {{HOMEPAGE_VAR_BESZEL_MEM}}
                 disk: {{HOMEPAGE_VAR_BESZEL_DISK}}
