@@ -1,14 +1,14 @@
 ---
 
-#- logo:
-   # icon: {{HOMEPAGE_VAR_FAVICO}}
-- openmeteo:
-    label: Singapore
-    latitude: 1.27
-    longitude: 103.8374
-    timezone: Asia/Singapore
-    cache: 5
-    units: metric
+- logo:
+    icon: {{HOMEPAGE_VAR_FAVICO}}
+#- openmeteo:
+#    label: Singapore
+#    latitude: 1.27
+#    longitude: 103.8374
+#    timezone: Asia/Singapore
+#    cache: 5
+#    units: metric
 - search:
     provider: duckduckgo
     target: _blank
