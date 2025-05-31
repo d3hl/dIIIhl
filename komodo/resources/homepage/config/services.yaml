@@ -18,55 +18,45 @@
             sitemonitor: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
             widget:
                 type: beszel
-                #url: https://beszel.d3adc3ii.cc
                 url: http://192.168.2.9:8090
                 username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
                 password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
                 systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11}}
-                cpu: {{HOMEPAGE_VAR_BESZEL_CPU}}
-                memory: {{HOMEPAGE_VAR_BESZEL_MEM}}
-                disk: {{HOMEPAGE_VAR_BESZEL_DISK}}
-                network: {{HOMEPAGE_VAR_BESZEL_NET}}
+                fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
+
         - pve12:
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             widget:
                 type: beszel
-                #url: https://beszel.d3adc3ii.cc
                 url: http://192.168.2.9:8090
                 username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
                 password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
                 systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12}}
-                name: {{HOMEPAGE_VAR_BESZEL_NAME}}
-                status: {{HOMEPAGE_VAR_BESZEL_STATUS}}
-                updated: {{HOMEPAGE_VAR_BESZEL_UPDATED}}
-                cpu: {{HOMEPAGE_VAR_BESZEL_CPU}}
-                memory: {{HOMEPAGE_VAR_BESZEL_MEM}}
-                disk: {{HOMEPAGE_VAR_BESZEL_DISK}}
-                network: {{HOMEPAGE_VAR_BESZEL_NET}}
+                fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
         - pve13:
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             widget:
                 type: beszel
-                #url: https://beszel.d3adc3ii.cc
                 url: http://192.168.2.9:8090
                 username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
                 password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
                 systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13}}
-                name: {{HOMEPAGE_VAR_BESZEL_NAME}}
-                status: {{HOMEPAGE_VAR_BESZEL_STATUS}}
-                updated: {{HOMEPAGE_VAR_BESZEL_UPDATED}}
-                cpu: {{HOMEPAGE_VAR_BESZEL_CPU}}
-                memory: {{HOMEPAGE_VAR_BESZEL_MEM}}
-                disk: {{HOMEPAGE_VAR_BESZEL_DISK}}
-                network: {{HOMEPAGE_VAR_BESZEL_NET}}
-
+                fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
         - PBS: 
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             href: {{HOMEPAGE_VAR_PBS_URL}}
             sitemonitor: {{HOMEPAGE_VAR_PBS_URL}} 
+            widget:
+                type: beszel
+                url: http://192.168.2.9:8090
+                username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+                password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+                version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
+                systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs}}
+                fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
     - Infra:        
         - Opnsense:
             icon: {{HOMEPAGE_VAR_OPNSENSE_ICON}} 
