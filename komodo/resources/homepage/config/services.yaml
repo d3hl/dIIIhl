@@ -116,6 +116,9 @@
             icon: {{HOMEPAGE_VAR_BACKREST_ICON}}
             href: {{HOMEPAGE_VAR_BACKREST_URL}}
             sitemonitor: {{HOMEPAGE_VAR_BACKREST_URL}}
+        - remote-backups:
+            icon: {{HOMEPAGE_VAR_REMOTEBACKUP_ICON}}
+            href: {{HOMEPAGE_VAR_REMOTEBACKUP_URL}}
     - Media:
         - Jellyfin:
             icon: {{HOMEPAGE_VAR_JELLY_ICON}}
