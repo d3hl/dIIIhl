@@ -1218,8 +1218,32 @@ DB_PASSWORD="ng--*UC*6W2Fz89GhAR_Bm9ZC3cx2okJ4yCTEhieCYX!MYL6C_VDaYcvmnxffVj*9_H
 
 [[stack]]
 name = "wallos"
+tags = ["external", "production"]
 [stack.config]
-
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  wallos:
+    container_name: wallos
+    image: bellamy/wallos:latest
+    ports:
+      - "8282:80/tcp"
+    env_file:
+      - .env
+    volumes:
+      - ${DATA_DIR}/db:/var/www/html/db'
+      - ${DATA_DIR}/logos:/var/www/html/images/uploads/logos'
+    restart: unless-stopped
+"""
+environment = """
+TZ= 'Asia/Singapore'
+DATA_DIR=/mnt/zApps/wallos
+PUID=1000
+PGID=1000
+"""
 
 ##
 
