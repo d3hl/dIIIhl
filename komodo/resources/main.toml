@@ -1182,12 +1182,10 @@ name = "scrutiny"
 [stack.config]
 server = "komodo-3"
 file_contents = """
-version: "3.4"
-
 networks:
-  monitoring: # A common network for all monitoring services to communicate into
+  scrutiny-monitoring: # A common network for all monitoring services to communicate into
     external: true
-  notifications: # To Gotify or another Notification service
+  scrutiny-notification: # To Gotify or another Notification service
     external: true
 
 services:
@@ -1204,13 +1202,13 @@ services:
       - ${DATA_DIR}/influxdb2/config:/etc/influxdb2
     restart: unless-stopped
     networks:
-      - monitoring
+      - scrutiny-monitoring
 
   scrutiny:
     container_name: scrutiny
     image: ghcr.io/analogj/scrutiny:master-web
     ports:
-      - 8080:8080
+      - 8785:8080
     volumes:
       - ${DATA_DIR}/config:/opt/scrutiny/config
     env_file:
@@ -1221,8 +1219,8 @@ services:
       - influxdb
     restart: unless-stopped
     networks:
-      - notifications
-      - monitoring
+      - scrutiny-notification
+      - scrutiny-monitoring
 """
 environment = """
 PGID= 1000 
