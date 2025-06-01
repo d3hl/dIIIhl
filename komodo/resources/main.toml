@@ -419,6 +419,7 @@ UPTIME_APP_CLIENT_HOST: https://checkmate.d3adc3ii.cc
 REDIS_URL=redis://redis:6379
 CLIENT_HOST=http://192.168.2.33
 JWT_SECRET= [[CHECKMATE_JWT_SECRET]]
+DOCKER_HOST=tcp://docker-socket-proxy:2375
 """
 
 ##
