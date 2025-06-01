@@ -1225,7 +1225,7 @@ services:
 environment = """
 PGID= 1000 
 PUID= 1000
-DATA_DIR=/mnt/zApps/scutiny
+DATA_DIR=/mnt/zApps/scrutiny
 DOCKER_INFLUXDB_INIT_MODE=setup
 DOCKER_INFLUXDB_INIT_USERNAME=Admin
 DOCKER_INFLUXDB_INIT_PASSWORD= 'q-A6o:tE2(r>~aC=MDh$:ZN%tNulHp6iYs|xv}l&IwVWPzZvn+Tvm399+2w#V$P'
