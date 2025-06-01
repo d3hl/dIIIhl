@@ -809,8 +809,8 @@ HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13= pve13
 HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs= pbs
 HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"]
 # Scutiny
-HOMEPAGE_VAR_SCUTINY_ICON= "/icons/scutiny.png"
-HOMEPAGE_VAR_SCUTINY_URL= "https://scutiny.d3adc3ii.cc" 
+HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny.png"
+HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
 # ZABBIX
 HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix.png"
 HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.int.d3adc3ii.cc/zabbix"
@@ -1225,16 +1225,16 @@ services:
 environment = """
 PGID= 1000 
 PUID= 1000
-DATA_DIR=/mnt/zApps/scrutiny
+DATA_DIR= '/mnt/zApps/scrutiny'
 DOCKER_INFLUXDB_INIT_MODE=setup
 DOCKER_INFLUXDB_INIT_USERNAME=Admin
-DOCKER_INFLUXDB_INIT_PASSWORD= 'q-A6o:tE2(r>~aC=MDh$:ZN%tNulHp6iYs|xv}l&IwVWPzZvn+Tvm399+2w#V$P'
+DOCKER_INFLUXDB_INIT_PASSWORD= 'qA6otE2(raC=MDh$ZN%tNulHp6iYs|xv}l&IwVWPzZvn+Tvm399+2w#V$P'
 DOCKER_INFLUXDB_INIT_ORG=homelab
 DOCKER_INFLUXDB_INIT_BUCKET=scrutiny
-DOCKER_INFLUXDB_INIT_ADMIN_TOKEN= '6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P*7+Kl!$G<(x['
+DOCKER_INFLUXDB_INIT_ADMIN_TOKEN= '6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7+Kl!$G<(x['
 SCRUTINY_WEB_INFLUXDB_HOST=influxdb
 SCRUTINY_WEB_INFLUXDB_PORT=8086
-SCRUTINY_WEB_INFLUXDB_TOKEN= 'wgTn,8_pqKN,#B|Nz?4`Ga$LZ=Z{MI%]fa{}.FP|&9?0%X#@K"}P7;}x9Y=Hbc'
+SCRUTINY_WEB_INFLUXDB_TOKEN= '6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7+Kl!$G<(x['
 SCRUTINY_WEB_INFLUXDB_ORG=homelab
 SCRUTINY_WEB_INFLUXDB_BUCKET=scrutiny
 """
