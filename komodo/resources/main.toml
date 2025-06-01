@@ -31,17 +31,11 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
-networks:
-  caddy:
-    external: true
-
 services:
   actual_server:
     image: docker.io/actualbudget/actual-server:latest
     ports:
       - '5006:5006'
-    networks:
-      - caddy
     volumes:
       - ${ACTUAL_DATA_DIR}:/data
     healthcheck:
@@ -339,6 +333,8 @@ services:
       caddy_110.reverse_proxy: 192.168.2.16:6880  
       caddy_111: pulse.d3adc3ii.site                      
       caddy_111.reverse_proxy: 192.168.2.36:7655     
+      caddy_112: backrest.d3adc3ii.site                      
+      caddy_112.reverse_proxy: 192.168.2.35:9898
 
       # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
       #caddy_101: omv.example.com                         #👈 Subdomain using wildcard cert
