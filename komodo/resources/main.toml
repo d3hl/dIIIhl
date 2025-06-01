@@ -719,9 +719,13 @@ HOMEPAGE_VAR_BOTB_ICON= "/icons/smokeping.png"
 HOMEPAGE_VAR_BOTB_URL= "https://botb.int.d3adc3ii.cc"
 
 ### BACKUP ###
-# Battle of the bandwidth
+# Backrest
 HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest.png"
 HOMEPAGE_VAR_BACKREST_URL= "https://backrest.d3adc3ii.site"
+
+# Backrest
+HOMEPAGE_VAR_REMOTEBACKUP_ICON= "/icons/pbs.png"
+HOMEPAGE_VAR_REMOTEBACKUP_URL= "https://dashboard.remote-backups.com"
 
 
 # Jellyfin
@@ -803,7 +807,10 @@ HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11= pve11
 HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12= pve12
 HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13= pve13
 HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs= pbs
-HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"] 
+HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"]
+# Scutiny
+HOMEPAGE_VAR_SCUTINY_ICON= "/icons/scutiny.png"
+HOMEPAGE_VAR_SCUTINY_URL= "https://scutiny.d3adc3ii.cc" 
 # ZABBIX
 HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix.png"
 HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.int.d3adc3ii.cc/zabbix"
