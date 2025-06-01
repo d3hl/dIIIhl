@@ -359,6 +359,7 @@ CADDY_EMAIL= d3tech@pm.me
 
 [[stack]]
 name = "checkmate"
+tags = ["external", "testing"]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -413,8 +414,8 @@ environment = """
 PUID=1000
 PGID=1000
 DATA_DIR= /mnt/zApps/checkmate
-UPTIME_APP_API_BASE_URL: http://192.168.2.33:52345/api/v1
-UPTIME_APP_CLIENT_HOST: http://192.168.2.33
+UPTIME_APP_API_BASE_URL: https://checkmate.d3adc3ii.cc/api/v1
+UPTIME_APP_CLIENT_HOST: https://checkmate.d3adc3ii.cc
 REDIS_URL=redis://redis:6379
 CLIENT_HOST=http://192.168.2.33
 JWT_SECRET= [[CHECKMATE_JWT_SECRET]]
