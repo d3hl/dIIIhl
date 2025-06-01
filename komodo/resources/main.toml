@@ -1216,6 +1216,13 @@ DB_PASSWORD="ng--*UC*6W2Fz89GhAR_Bm9ZC3cx2okJ4yCTEhieCYX!MYL6C_VDaYcvmnxffVj*9_H
 
 ##
 
+[[stack]]
+name = "wallos"
+[stack.config]
+
+
+##
+
 [[deployment]]
 name = "apprise"
 [deployment.config]
