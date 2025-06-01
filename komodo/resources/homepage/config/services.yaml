@@ -197,6 +197,9 @@
         - Grafana:
             icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
             href: {{HOMEPAGE_VAR_GRAFANA_URL}}
+        - Scrutiny:
+            icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
+            href: {{HOMEPAGE_VAR_SCRUTINY_URL}}
         - Checkmate:
             icon: {{HOMEPAGE_VAR_CHECKMATE_ICON}}
             href: {{HOMEPAGE_VAR_CHECKMATE_URL}}
