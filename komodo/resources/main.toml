@@ -1178,6 +1178,69 @@ NZBGET_DL_DIR=/mnt/zApps/nzb/downloads
 ##
 
 [[stack]]
+name = "scrutiny"
+[stack.config]
+server = "komodo-3"
+file_contents = """
+version: "3.4"
+
+networks:
+  monitoring: # A common network for all monitoring services to communicate into
+    external: true
+  notifications: # To Gotify or another Notification service
+    external: true
+
+services:
+  influxdb:
+    container_name: influxdb
+    image: influxdb:2.1-alpine
+    env_file:
+      - .env
+    ports:
+      - 8086:8086
+    volumes:
+      - ${DATA_DIR}/influxdb2/db:/var/lib/influxdb2
+      - ${DATA_DIR}/influxdb2/config:/etc/influxdb2
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  scrutiny:
+    container_name: scrutiny
+    image: ghcr.io/analogj/scrutiny:master-web
+    ports:
+      - 8080:8080
+    volumes:
+      - ${DATA_DIR}/config:/opt/scrutiny/config
+    env_file:
+      - .env
+      # Optional but highly recommended to notify you in case of a problem
+     # - SCRUTINY_NOTIFY_URLS=["http://gotify:80/message?token=a-gotify-token"]
+    depends_on:
+      - influxdb
+    restart: unless-stopped
+    networks:
+      - notifications
+      - monitoring
+"""
+environment = """
+DATA_DIR=/mnt/zApps/scutiny
+DOCKER_INFLUXDB_INIT_MODE=setup
+DOCKER_INFLUXDB_INIT_USERNAME=Admin
+DOCKER_INFLUXDB_INIT_PASSWORD=${PASSWORD}
+DOCKER_INFLUXDB_INIT_ORG=homelab
+DOCKER_INFLUXDB_INIT_BUCKET=scrutiny
+DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=your-very-secret-token
+SCRUTINY_WEB_INFLUXDB_HOST=influxdb
+SCRUTINY_WEB_INFLUXDB_PORT=8086
+SCRUTINY_WEB_INFLUXDB_TOKEN=your-very-secret-token
+SCRUTINY_WEB_INFLUXDB_ORG=homelab
+SCRUTINY_WEB_INFLUXDB_BUCKET=scrutiny
+"""
+
+##
+
+[[stack]]
 name = "speedtest-tracker"
 tags = ["internal", "testing"]
 [stack.config]
