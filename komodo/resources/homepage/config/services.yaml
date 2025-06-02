@@ -205,8 +205,8 @@
             href: {{HOMEPAGE_VAR_CHECKMATE_URL}}
             sitemonitor: {{HOMEPAGE_VAR_CHECKMATE_URL}}
         - Pulse:
-            icon: {{HOMEPAGE_VAR_PULSE_ICON}}
-            href: {{HOMEPAGE_VAR_PULSE_URL}}
+            icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
+            href: {{HOMEPAGE_VAR_PULSEXT_URL}}
         - Beszel:
             icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
             href: {{HOMEPAGE_VAR_BESZEL_URL}}
