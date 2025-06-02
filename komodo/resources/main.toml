@@ -1559,6 +1559,11 @@ executions = [
 
 ##
 
+[[procedure]]
+name = "sync_and_redeploy_homepage"
+
+##
+
 [[builder]]
 name = "local"
 [builder.config]
