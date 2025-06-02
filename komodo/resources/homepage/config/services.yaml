@@ -309,16 +309,16 @@
         href: http://ems.ntn.com.sg
     - Cisco:
         icon: cisco 
-        href: http://10.203.1.254 
+        href: http://10.203.1.254/webui 
     - Synology:
         icon: synology 
         href: http://10.203.1.111:5000 
     - Crestron:
         icon: https://static.wixstatic.com/media/007dac_d97541360d5849a492f61055994b510e~mv2.png/v1/fill/w_281,h_281,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/007dac_d97541360d5849a492f61055994b510e~mv2.png
-        href: http://10.203.2.125:5000 
+        href: http://10.203.7.125
     - Ruckus:
         icon: rundeck 
-        href: http://10.203.7.200
+        href: http://10.203.6.200
 - System:
     - Wordpress:
         icon: wordpress
