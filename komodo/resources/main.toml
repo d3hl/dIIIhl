@@ -1559,6 +1559,32 @@ executions = [
 
 ##
 
+[[procedure]]
+name = "sync_and_redeploy_homepage"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Stage 2"
+enabled = true
+executions = [
+  { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Stage 3"
+enabled = true
+executions = [
+  { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
+]
+
+##
+
 [[builder]]
 name = "local"
 [builder.config]
