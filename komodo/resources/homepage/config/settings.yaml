@@ -24,17 +24,14 @@ layout:
     style: column
     columns: 1
     header: false
-    useEqualHeights: true
     Core:
       style: row
       columns: 3
       header: true
-      useEqualHeights: true
     Monitoring:
       style: row
       columns: 4
       header: true
-      useEqualHeights: true
     Apps:
       style: row
       columns: 4
@@ -60,7 +57,10 @@ layout:
       style: row
       columns: 3 
       header: true
-      useEqualHeights: true
+    Backup:
+      style: row
+      columns: 2 
+      header: true
     I1:
       style: row
       columns: 2
@@ -73,7 +73,6 @@ layout:
       style: row
       columns: 4
       header: true
-      useEqualHeights: true
   M365:
     tab: Cloud
     style: row
@@ -82,7 +81,6 @@ layout:
     tab: Cloud
     style: row
     columns: 4
-  
   Network:
     header: true
     tab: Corp
