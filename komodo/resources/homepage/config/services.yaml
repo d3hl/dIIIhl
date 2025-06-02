@@ -70,6 +70,7 @@
             icon: {{HOMEPAGE_VAR_TPLINK_ICON}} 
             href: {{HOMEPAGE_VAR_TPLINK_URL}}
             sitemonitor: {{HOMEPAGE_VAR_TPLINK_URL}}
+    - Backend:
         - DNS:
             icon: {{HOMEPAGE_VAR_DNS_ICON}}
             href: {{HOMEPAGE_VAR_DNS_URL}}
@@ -79,7 +80,6 @@
                 url: {{HOMEPAGE_VAR_DNS_URL}}
                 key: {{HOMEPAGE_VAR_DNS_KEY}}
                 range: {{HOMEPAGE_VAR_DNS_RANGE}}
-    - Backend:
         - CaddyProxy:
             icon: {{HOMEPAGE_VAR_CADDYPROXY_ICON}} 
             sitemonitor: {{HOMEPAGE_VAR_CADDYPROXY_URL}}
