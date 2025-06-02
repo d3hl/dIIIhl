@@ -271,7 +271,7 @@
             type: iframe
             name: pveDashboard
             src: {{HOMEPAGE_VAR_PULSE_URL}}
-            classes: {{HOMEPAGE_VAR_PULSE_CLASSES}}
+            #classes: {{HOMEPAGE_VAR_PULSE_CLASSES}}
             allowfullscreen: {{HOMEPAGE_VAR_PULSE_ALLOWFULLSCREEN}}
             loadingStraegy: {{HOMEPAGE_VAR_PULSE_LOADING_STRATEGY}}
             allowScrolling: {{HOMEPAGE_VAR_PULSE_ALLOW_SCROLLING}}
