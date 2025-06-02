@@ -1569,7 +1569,7 @@ executions = [
   { execution.type = "RunSync", execution.params.sync = "sync", enabled = true },
   { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true },
   { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true },
-  { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = "homepage", enabled = true }
+  { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
 ]
 
 ##
