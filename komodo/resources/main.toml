@@ -818,6 +818,11 @@ HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.int.d3adc3ii.cc/zabbix"
 HOMEPAGE_VAR_CHECKMK_ICON= "/icons/checkmk.png"
 HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"
 
+# Pulse
+HOMEPAGE_VAR_PULSEXT_ICON= "/icons/pulse.png"
+HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
+
+
 ### APPS ###
 # Karakeep
 HOMEPAGE_VAR_KARAKEEP_ICON= "/icons/karakeep.png"
