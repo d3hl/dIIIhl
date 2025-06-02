@@ -61,10 +61,6 @@ layout:
       style: row
       columns: 2 
       header: true
-    I1:
-      style: row
-      columns: 2
-      header: false
     Media:
       style: row
       columns: 2
