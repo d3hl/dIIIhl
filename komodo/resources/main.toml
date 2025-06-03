@@ -578,8 +578,7 @@ services:
       - caddy.reverse_proxy= "{{upstreams 8000}}"
       - homepage.server= my-docker
       - homepage.container= healthchecks
-      - homepage.group= 'Internal'
-      - homepage.group= 'Local Apps'
+      - homepage.group= 'Media'
       - homepage.name= healthchecks2
       - homepage.icon= healthchecks.png
       - homepage.href= https://health.d3adc3ii.site
