@@ -31,17 +31,11 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
-networks:
-  caddy:
-    external: true
-
 services:
   actual_server:
     image: docker.io/actualbudget/actual-server:latest
     ports:
       - '5006:5006'
-    networks:
-      - caddy
     env_file:
       - .env  
     volumes:
@@ -57,10 +51,10 @@ services:
     labels:
       caddy: actual.d3adc3ii.site
       caddy.reverse_proxy: "{{upstreams 5006}}"
-      homepage.group='Local Apps'
-      homepage.name=Actual
-      homepage.icon=actual-budget.png
-      homepage.href=https://actual.d3adc3ii.site
+      homepage.group: "Local Apps"
+      homepage.name: Actual2
+      homepage.icon: actual-budget.png
+      homepage.href: https://actual.d3adc3ii.site
 """
 environment = """
 ACTUAL_DATA_DIR=/mnt/zApps/actualbudget
