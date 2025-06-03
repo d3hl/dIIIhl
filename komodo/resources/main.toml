@@ -1568,6 +1568,7 @@ repo = "d3adc3iii/dIIIhl"
 
 [[procedure]]
 name = "autosync"
+config.failure_alert = false
 config.schedule = "Run every 30 minutes"
 
 [[procedure.config.stage]]
