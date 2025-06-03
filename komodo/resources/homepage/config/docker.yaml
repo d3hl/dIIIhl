@@ -1,4 +1,4 @@
 my-docker:
   host: dockerproxy
-  port: 443
-  protocol: https
+  port: 2375
+  #protocol: https
