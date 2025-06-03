@@ -579,7 +579,7 @@ services:
       - homepage.server= my-docker
       - homepage.container= healthchecks
       - homepage.name= Test
-      - homepage.group= Media
+      - homepage.group= Testa
       - homepage.icon= /icons/healthchecks.png
       - homepage.href= https://health.d3adc3ii.site
       - homepage.description= cronjob monitor
@@ -1568,6 +1568,7 @@ repo = "d3adc3iii/dIIIhl"
 
 [[procedure]]
 name = "autosync"
+config.failure_alert = false
 config.schedule = "Run every 30 minutes"
 
 [[procedure.config.stage]]
