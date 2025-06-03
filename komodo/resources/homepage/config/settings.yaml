@@ -69,6 +69,10 @@ layout:
       style: row
       columns: 4
       header: true
+    Testa:
+      style: row
+      columns: 4
+      header: true
   M365:
     tab: Cloud
     style: row

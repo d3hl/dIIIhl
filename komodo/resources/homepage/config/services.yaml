@@ -140,6 +140,8 @@
                 key: {{HOMEPAGE_VAR_IMMICH_KEY}}
                 version: {{HOMEPAGE_VAR_IMMICH_VERSION}}
                 fields:  {{HOMEPAGE_VAR_IMMICH_FIELDS}}  
+    - Testa:
+        - Tmp:
     - Local Apps: # remote
         - Actual:
             icon: {{HOMEPAGE_VAR_ACTUAL_ICON}}
