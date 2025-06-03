@@ -552,6 +552,10 @@ services:
     container_name: healthchecks
     networks:
       - caddy
+    server: 
+      - my-docker
+    container:
+      - healthchecks
     env_file:
       - .env
     #environment:
@@ -574,8 +578,13 @@ services:
       - 2525:2525 #optional
     restart: unless-stopped
     labels:
-      caddy: health.d3adc3ii.site
-      caddy.reverse_proxy: "{{upstreams 8000}}"
+      - caddy: health.d3adc3ii.site
+      - caddy.reverse_proxy: "{{upstreams 8000}}"
+      - homepage.group: 'Local Apps'
+      - homepage.name: healthchecks2
+      - homepage.icon: healthchecks.png
+      - homepage.href: https://health.d3adc3ii.site
+      - homepage.description: cronjob monitor
 """
 environment = """
 PUID=1000
