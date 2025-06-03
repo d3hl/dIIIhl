@@ -1482,7 +1482,7 @@ image.type = "Image"
 image.params.image = "benjaminawd/statementsensei:latest"
 poll_for_updates = true
 auto_update = true
-network = "--network caddy external: true"
+network = "bridge"
 ports = """
 8501:8501
 """
