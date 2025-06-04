@@ -864,6 +864,14 @@ HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"
 HOMEPAGE_VAR_PULSEXT_ICON= "/icons/pulse.png"
 HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
 
+# NETBOX CLOUD
+HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox.png"
+HOMEPAGE_VAR_NETBOXCL_URL= "https://wmfk3018.cloud.netboxapp.com"
+# NETBOX CONSOLE
+HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox.png"
+HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
+
+
 
 ### APPS ###
 # Karakeep
