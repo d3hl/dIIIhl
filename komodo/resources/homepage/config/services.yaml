@@ -199,6 +199,9 @@
         - Grafana:
             icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
             href: {{HOMEPAGE_VAR_GRAFANA_URL}}
+        - Netbox Cloud:
+            icon: {{HOMEPAGE_VAR_NETBOX_ICON}}
+            href: {{HOMEPAGE_VAR_NETBOXC_URL}}
         - Scrutiny:
             icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
             href: {{HOMEPAGE_VAR_SCRUTINY_URL}}
