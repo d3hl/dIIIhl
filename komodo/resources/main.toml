@@ -113,7 +113,7 @@ services:
     volumes:
       - redis:/data
   server:
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.4.1}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.0}
     restart: unless-stopped
     command: server
     environment:
@@ -863,6 +863,14 @@ HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"
 # Pulse
 HOMEPAGE_VAR_PULSEXT_ICON= "/icons/pulse.png"
 HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
+
+# NETBOX CLOUD
+HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox.png"
+HOMEPAGE_VAR_NETBOXCL_URL= "https://wmfk3018.cloud.netboxapp.com"
+# NETBOX CONSOLE
+HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox.png"
+HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
+
 
 
 ### APPS ###
