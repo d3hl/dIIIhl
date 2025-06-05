@@ -357,6 +357,8 @@ services:
       # Wazuh
       caddy_114: wazuh.d3adc3ii.site                      
       caddy_114.reverse_proxy: 192.168.2.30:443
+      caddy_114.reverse_proxy.transport: http
+      caddy_114.reverse_proxy.transport.tls_insecure_skip_verify: ""
 
 
 
