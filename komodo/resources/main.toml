@@ -354,6 +354,14 @@ services:
       caddy_112.reverse_proxy: 192.168.2.35:9898
       caddy_113: actual.d3adc3ii.site                      
       caddy_113.reverse_proxy: 192.168.2.32:5006
+      # Wazuh
+      caddy_114: wazuh.d3adc3ii.site                      
+      caddy_114.reverse_proxy: 192.168.2.30:443
+
+
+
+
+      
 
       # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
       #caddy_101: omv.example.com                         #👈 Subdomain using wildcard cert
@@ -744,6 +752,9 @@ HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx.png"
 HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3adc3ii.site"
 HOMEPAGE_VAR_NETALERTX_KEY="t_pJ26L2qEeUcR6bz5RCGI"
 HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"] 
+# Wazuh
+HOMEPAGE_VAR_WAZUH_ICON= "/icons/wazuh.png"
+HOMEPAGE_VAR_WAZUH_URL= "https://wazuh.d3adc3ii.site"
 # APPRISE-API
 HOMEPAGE_VAR_APPRISE_ICON= "/icons/apprise.png"
 HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
