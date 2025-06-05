@@ -95,6 +95,9 @@
                 key: {{HOMEPAGE_VAR_NETALERTX_KEY}}
                 url: {{HOMEPAGE_VAR_NETALERTX_URL}}
                 fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
+        - Wazuh:
+            icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
+            href: {{HOMEPAGE_VAR_WAZUH_URL}}
         - Apprise-API:
             icon: {{HOMEPAGE_VAR_APPRISE_ICON}}
             href: {{HOMEPAGE_VAR_APPRISE_URL}}
