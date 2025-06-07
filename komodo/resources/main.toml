@@ -704,24 +704,24 @@ HOMEPAGE_VAR_USE_EQUAL_HEIGHTS= true
 ### GLANCES WIDGET SETTINGS
 HOMEPAGE_VAR_GL11_URL= http://192.168.3.11:61208
 HOMEPAGE_VAR_GL11_VERSION= 4 # required only if running glances v4 or higher, defaults to 3
-HOMEPAGE_VAR_GL11_CPU= true # optional, enabled by default, disable by setting to false
-HOMEPAGE_VAR_GL11_MEM= true # optional, enabled by default, disable by setting to false
+HOMEPAGE_VAR_GL11_CPU= false # optional, enabled by default, disable by setting to false
+HOMEPAGE_VAR_GL11_MEM= false # optional, enabled by default, disable by setting to false
 HOMEPAGE_VAR_GL11_CPUTEMP= true # disabled by default
 HOMEPAGE_VAR_GL11_UPTIME= true # disabled by default
 HOMEPAGE_VAR_GL11_LABEL= pve11 # optional
 
 HOMEPAGE_VAR_GL12_URL= http://192.168.3.12:61208
 HOMEPAGE_VAR_GL12_VERSION= 4 
-HOMEPAGE_VAR_GL12_CPU= true 
-HOMEPAGE_VAR_GL12_MEM= true 
+HOMEPAGE_VAR_GL12_CPU= false 
+HOMEPAGE_VAR_GL12_MEM= false 
 HOMEPAGE_VAR_GL12_CPUTEMP= true 
 HOMEPAGE_VAR_GL12_UPTIME= true 
 HOMEPAGE_VAR_GL12_LABEL= pve12 
 
 HOMEPAGE_VAR_GL13_URL= http://192.168.3.13:61208
 HOMEPAGE_VAR_GL13_VERSION= 4
-HOMEPAGE_VAR_GL13_CPU= true 
-HOMEPAGE_VAR_GL13_MEM= true 
+HOMEPAGE_VAR_GL13_CPU= false 
+HOMEPAGE_VAR_GL13_MEM= false 
 HOMEPAGE_VAR_GL13_CPUTEMP= true 
 HOMEPAGE_VAR_GL13_UPTIME= true 
 HOMEPAGE_VAR_GL13_LABEL= pve13 
