@@ -1525,15 +1525,14 @@ name = "checkmate-1"
 [deployment.config]
 server = "server-bkxal"
 image.type = "Image"
-image.params.image = "bluewave-labs/capture:latest"
+image.params.image = "ghcr.io/bluewave-labs/capture:v1.1.0"
 poll_for_updates = true
 auto_update = true
+network = "bridge"
+restart = "unless-stopped"
 command = "run -v /etc/os-release:/etc/os-release:ro"
 ports = """
- 59232:5923
-"""
-volumes = """
- ghcr.io/bluewave-labs/capture:latest
+59232:59232 
 """
 environment = """
 API_SECRET=IHmqPfMq0LVgRhPBjkwATrs8P3QdqBzp
@@ -1646,6 +1645,13 @@ environment = """
   TWINGATE_REFRESH_TOKEN=mrNJNc7hirY3gO3-q9l6dnN_YjYl-8q79XRXg1ffZstYm8EYyH6xNXMIVviMaQ-2-GAa4wuSMv1J5ebEf9KvzIK94jmq7j9QGPH2Tr7ZnjlYADuKrEpKUkrmnbrROkgQy6nzWg
   TWINGATE_LOG_ANALYTICS=v2
 """
+
+##
+
+[[build]]
+name = "checkmate"
+[build.config]
+builder = "local"
 
 ##
 
