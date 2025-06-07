@@ -370,6 +370,8 @@ services:
       caddy_114.reverse_proxy.transport.tls_insecure_skip_verify: ""
       caddy_115: guaca.d3adc3ii.site                      
       caddy_115.reverse_proxy: 192.168.2.20
+      caddy_116: checkmate.d3adc3ii.site                      
+      caddy_116.reverse_proxy: 192.168.2.33:52345
      
 
       # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
@@ -446,10 +448,10 @@ environment = """
 PUID=1000
 PGID=1000
 DATA_DIR= /mnt/zApps/checkmate
-UPTIME_APP_API_BASE_URL: http://192.168.2.33:52345/api/v1
-UPTIME_APP_CLIENT_HOST: http://192.168.2.33
+UPTIME_APP_API_BASE_URL: https://checkmate.d3adc3ii.site/api/v1
+UPTIME_APP_CLIENT_HOST: https://checkmate.d3adc3ii.site
 REDIS_URL=redis://redis:6379
-CLIENT_HOST=http://192.168.2.33
+CLIENT_HOST=https://checkmate.d3adc3ii.site
 JWT_SECRET= [[CHECKMATE_JWT_SECRET]]
 DOCKER_HOST=tcp://192.168.2.31:2375
 """
@@ -1539,6 +1541,19 @@ volumes = """
 environment = """
 API_SECRET=IHmqPfMq0LVgRhPBjkwATrs8P3QdqBzp
 GIN_MODE=release
+"""
+
+##
+
+[[deployment]]
+name = "checkmate-2"
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "ghcr.io/bluewave-labs/capture:v1.1.0"
+network = "bridge"
+ports = """
+59232:59232
 """
 
 ##
