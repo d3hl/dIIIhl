@@ -1415,6 +1415,10 @@ name = "xpipe-webtop"
 [stack.config]
 server = "server-bkxal"
 file_contents = """
+networks:
+  caddy:
+    external: true
+
 services:
   webtop:
     image: ghcr.io/xpipe-io/xpipe-webtop:latest
