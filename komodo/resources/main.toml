@@ -1386,6 +1386,39 @@ DB_PASSWORD="ng--*UC*6W2Fz89GhAR_Bm9ZC3cx2okJ4yCTEhieCYX!MYL6C_VDaYcvmnxffVj*9_H
 ##
 
 [[stack]]
+name = "uptime-kuma"
+tags = [
+  "external",
+  "monitoring",
+  "komodo-3"
+]
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    env_file:
+      - .env
+    volumes:
+      - ${DATA_DIR}:/app/data
+    ports:
+      - 3001:3001  # <Host Port>:<Container Port>
+    restart: always
+"""
+environment = """
+DATA_DIR=/mnt/zApps/uptime-kuma/data
+PGID= 1000 
+PUID= 1000
+"""
+
+##
+
+[[stack]]
 name = "wallos"
 tags = ["external", "production"]
 [stack.config]
