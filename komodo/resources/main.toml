@@ -784,9 +784,7 @@ HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
 # Smokeping
 HOMEPAGE_VAR_SMOKEPING_ICON= "/icons/smokeping.png"
 HOMEPAGE_VAR_SMOKEPING_URL= "http://192.168.2.21/smokeping"
-# Guacamole
-HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/guacamole.png"
-HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.int.d3adc3ii.cc/guacamole"
+
 # Battle of the bandwidth
 HOMEPAGE_VAR_BOTB_ICON= "/icons/smokeping.png"
 HOMEPAGE_VAR_BOTB_URL= "https://botb.int.d3adc3ii.cc"
@@ -858,6 +856,12 @@ HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
 # Twingate
 HOMEPAGE_VAR_TWINGATE_ICON= "/icons/twingate.png"
 HOMEPAGE_VAR_TWINGATE_URL= "https://d3net.twinget.com"
+
+### Remote ###
+# Guacamole
+HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/guacamole.png"
+HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.d3adc3ii.site/guacamole"
+HOMEPAGE_VAR_GUACAMOLEEXT_URL= "https://guaca.d3adc3ii.cc/guacamole"
 # Dumbterm
 HOMEPAGE_VAR_DUMBTERM_ICON= "/icons/dumbterm.png"
 HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.d3adc3ii.cc"
