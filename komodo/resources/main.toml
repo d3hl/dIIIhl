@@ -75,7 +75,11 @@ DATA_DIR=/mnt/zApps/actualbudget
 
 [[stack]]
 name = "authentik"
-tags = ["external", "production"]
+tags = [
+  "external",
+  "production",
+  "komodo-1"
+]
 [stack.config]
 server = "server-bkxal"
 poll_for_updates = true
@@ -211,7 +215,12 @@ run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-t
 
 [[stack]]
 name = "caddy"
-tags = ["internal", "production", "core"]
+tags = [
+  "internal",
+  "production",
+  "core",
+  "komodo-1"
+]
 [stack.config]
 server = "server-bkxal"
 poll_for_updates = true
@@ -546,6 +555,11 @@ SECRET_KEY=[[FSHARE_SECRET_KEY]]
 
 [[stack]]
 name = "healthcheck"
+tags = [
+  "internal",
+  "monitoring",
+  "komodo-1"
+]
 [stack.config]
 server = "server-bkxal"
 poll_for_updates = true
@@ -612,7 +626,11 @@ TZ=Asia/Singapore
 
 [[stack]]
 name = "homepage"
-tags = ["external", "production"]
+tags = [
+  "external",
+  "production",
+  "komodo-1"
+]
 [stack.config]
 server = "server-bkxal"
 poll_for_updates = true
@@ -911,7 +929,11 @@ HOMEPAGE_VAR_GLANCES_PVE13= "http://192.168.3.13:61208"
 
 [[stack]]
 name = "immich"
-tags = ["internal", "production"]
+tags = [
+  "internal",
+  "production",
+  "komodo-1"
+]
 [stack.config]
 server = "server-bkxal"
 file_contents = """
@@ -1139,7 +1161,11 @@ environment = """
 
 [[stack]]
 name = "netalertx"
-tags = ["internal", "monitoring"]
+tags = [
+  "internal",
+  "monitoring",
+  "komodo-1"
+]
 [stack.config]
 server = "server-bkxal"
 poll_for_updates = true
