@@ -1410,6 +1410,40 @@ PGID=1000
 
 ##
 
+[[stack]]
+name = "xpipe-webtop"
+[stack.config]
+server = "server-bkxal"
+file_contents = """
+services:
+  webtop:
+    image: ghcr.io/xpipe-io/xpipe-webtop:latest
+    container_name: xpipe-webtop
+    network:
+      - caddy
+    env_file:
+      - .env
+    volumes:
+      - ${DATA_DIR}:/config
+      - /var/run/docker.sock:/var/run/docker.sock #optional
+    ports:
+      - 127.0.0.1:3000:3000
+      - 127.0.0.1:3001:3001
+    restart: unless-stopped
+    labels:
+      - caddy= xpipe.d3adc3ii.site
+      - caddy.reverse_proxy= "{{upstreams 3000}}"
+      - homepage.container= xpipe
+      - homepage.group= Remote
+      - homepage.icon= /icons/xpipe.png
+      - homepage.href= https://xpipe.d3adc3ii.site
+"""
+environment = """
+DATA_DIR=/mnt/xpipe/config
+"""
+
+##
+
 [[deployment]]
 name = "apprise"
 [deployment.config]
