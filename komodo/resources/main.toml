@@ -446,12 +446,12 @@ environment = """
 PUID=1000
 PGID=1000
 DATA_DIR= /mnt/zApps/checkmate
-UPTIME_APP_API_BASE_URL: https://checkmate.d3adc3ii.cc/api/v1
-UPTIME_APP_CLIENT_HOST: https://checkmate.d3adc3ii.cc
+UPTIME_APP_API_BASE_URL: http://192.168.2.33:52345/api/v1
+UPTIME_APP_CLIENT_HOST: http://192.168.2.33
 REDIS_URL=redis://redis:6379
 CLIENT_HOST=http://192.168.2.33
 JWT_SECRET= [[CHECKMATE_JWT_SECRET]]
-DOCKER_HOST=tcp://docker-socket-proxy:2375
+DOCKER_HOST=tcp://192.168.2.31:2375
 """
 
 ##
@@ -1530,12 +1530,15 @@ poll_for_updates = true
 auto_update = true
 network = "bridge"
 restart = "unless-stopped"
-command = "run -v /etc/os-release:/etc/os-release:ro"
 ports = """
 59232:59232 
 """
+volumes = """
+/etc/os-release:/etc/os-release:ro
+"""
 environment = """
 API_SECRET=IHmqPfMq0LVgRhPBjkwATrs8P3QdqBzp
+GIN_MODE=release
 """
 
 ##
