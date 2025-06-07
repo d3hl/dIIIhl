@@ -371,8 +371,11 @@ services:
       caddy_115: guaca.d3adc3ii.site                      
       caddy_115.reverse_proxy: 192.168.2.20
       caddy_116: checkmate.d3adc3ii.site                      
-      caddy_116.reverse_proxy: 192.168.2.33:52345
-     
+      caddy_116.reverse_proxy: 192.168.2.33:52345  
+      caddy_117: checkmate2.d3adc3ii.site                      
+      caddy_117.reverse_proxy: 192.168.2.32:59232
+      caddy_118: checkmate3.d3adc3ii.site                      
+      caddy_118.reverse_proxy: 192.168.2.33:59232    
 
       # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
       #caddy_101: omv.example.com                         #👈 Subdomain using wildcard cert
@@ -1567,6 +1570,7 @@ GIN_MODE=release
 """
 
 ##
+
 [[deployment]]
 name = "checkmate-3"
 [deployment.config]
