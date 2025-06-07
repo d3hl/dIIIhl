@@ -197,7 +197,7 @@
     - Remote:
         - Guacamole:
             icon: {{HOMEPAGE_VAR_GUACAMOLE_ICON}} 
-            href: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
+            href: {{HOMEPAGE_VAR_GUACAMOLEEXT_URL}}
             sitemonitor: {{HOMEPAGE_VAR_GUACAMOLEEXT_URL}}
         - Dumbterm:
             icon: {{HOMEPAGE_VAR_DUMBTERM_ICON}}
