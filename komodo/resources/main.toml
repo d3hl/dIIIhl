@@ -1661,14 +1661,14 @@ name = "sync_and_redeploy_homepage"
 name = "Run sync"
 enabled = true
 executions = [
-  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
+  { execution.type = "RunSync", execution.params.sync = "sync", enabled = true }
 ]
 
 [[procedure.config.stage]]
 name = "Commit sync"
 enabled = true
 executions = [
-  { execution.type = "RunSync", execution.params.sync = "sync", enabled = true }
+  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
 ]
 
 [[procedure.config.stage]]
