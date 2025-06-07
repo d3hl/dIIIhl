@@ -1414,6 +1414,9 @@ PGID=1000
 name = "xpipe-webtop"
 [stack.config]
 server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 file_contents = """
 networks:
   caddy:
@@ -1443,7 +1446,7 @@ services:
       - homepage.href= https://xpipe.d3adc3ii.site
 """
 environment = """
-DATA_DIR=/mnt/xpipe/config
+DATA_DIR=/mnt/zApps/xpipe/config
 PUID=1000
 PGID=1000
 """
