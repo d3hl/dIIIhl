@@ -28,6 +28,10 @@ layout:
       style: row
       columns: 3
       header: true
+    Remote:
+      style: row
+      columns: 4
+      header: true
     Monitoring:
       style: row
       columns: 4
@@ -64,12 +68,12 @@ layout:
     Media:
       style: row
       columns: 2
-      header: false
+      header: true
     Local Apps:
       style: row
       columns: 4
       header: true
-    Testa:
+    Test:
       style: row
       columns: 4
       header: true
