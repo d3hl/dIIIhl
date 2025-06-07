@@ -1551,9 +1551,41 @@ name = "checkmate-2"
 server = "komodo-2"
 image.type = "Image"
 image.params.image = "ghcr.io/bluewave-labs/capture:v1.1.0"
+poll_for_updates = true
+auto_update = true
 network = "bridge"
+restart = "unless-stopped"
 ports = """
 59232:59232
+"""
+volumes = """
+/etc/os-release:/etc/os-release:ro
+"""
+environment = """
+API_SECRET=IHmqPfMq0LVgRhPBjkwATrs8P3QdqBzp
+GIN_MODE=release
+"""
+
+##
+[[deployment]]
+name = "checkmate-3"
+[deployment.config]
+server = "komodo-3"
+image.type = "Image"
+image.params.image = "ghcr.io/bluewave-labs/capture:v1.1.0"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+restart = "unless-stopped"
+ports = """
+59232:59232
+"""
+volumes = """
+/etc/os-release:/etc/os-release:ro
+"""
+environment = """
+API_SECRET=IHmqPfMq0LVgRhPBjkwATrs8P3QdqBzp
+GIN_MODE=release
 """
 
 ##
@@ -1663,13 +1695,6 @@ environment = """
   TWINGATE_REFRESH_TOKEN=mrNJNc7hirY3gO3-q9l6dnN_YjYl-8q79XRXg1ffZstYm8EYyH6xNXMIVviMaQ-2-GAa4wuSMv1J5ebEf9KvzIK94jmq7j9QGPH2Tr7ZnjlYADuKrEpKUkrmnbrROkgQy6nzWg
   TWINGATE_LOG_ANALYTICS=v2
 """
-
-##
-
-[[build]]
-name = "checkmate"
-[build.config]
-builder = "local"
 
 ##
 
