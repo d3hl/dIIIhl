@@ -204,6 +204,9 @@
             href: {{HOMEPAGE_VAR_DUMBTERM_URL}}
             sitemonitor: {{HOMEPAGE_VAR_DUMBTERM_URL}}
     - Monitoring:
+        - Uptime-Kuma:
+            icon: {{HOMEPAGE_VAR_KUMA_ICON}}
+            href: {{HOMEPAGE_VAR_KUMA_URL}}
         - Grafana:
             icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
             href: {{HOMEPAGE_VAR_GRAFANA_URL}}
