@@ -368,11 +368,9 @@ services:
       caddy_114.reverse_proxy: 192.168.2.30:443
       caddy_114.reverse_proxy.transport: http
       caddy_114.reverse_proxy.transport.tls_insecure_skip_verify: ""
-
-
-
-
-      
+      caddy_115: guaca.d3adc3ii.site                      
+      caddy_115.reverse_proxy: 192.168.2.20
+     
 
       # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
       #caddy_101: omv.example.com                         #👈 Subdomain using wildcard cert
