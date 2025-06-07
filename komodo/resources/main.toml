@@ -1423,7 +1423,7 @@ services:
   webtop:
     image: ghcr.io/xpipe-io/xpipe-webtop:latest
     container_name: xpipe-webtop
-    network:
+    networks:
       - caddy
     env_file:
       - .env
@@ -1431,12 +1431,12 @@ services:
       - ${DATA_DIR}:/config
       - /var/run/docker.sock:/var/run/docker.sock #optional
     ports:
-      - 127.0.0.1:3000:3000
-      - 127.0.0.1:3001:3001
+      - 127.0.0.1:3700:3000
+      - 127.0.0.1:3701:3001
     restart: unless-stopped
     labels:
       - caddy= xpipe.d3adc3ii.site
-      - caddy.reverse_proxy= "{{upstreams 3000}}"
+      - caddy.reverse_proxy= "{{upstreams 3700}}"
       - homepage.container= xpipe
       - homepage.group= Remote
       - homepage.icon= /icons/xpipe.png
@@ -1444,6 +1444,8 @@ services:
 """
 environment = """
 DATA_DIR=/mnt/xpipe/config
+PUID=1000
+PGID=1000
 """
 
 ##
