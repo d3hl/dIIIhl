@@ -1521,6 +1521,27 @@ KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU
 ##
 
 [[deployment]]
+name = "checkmate-1"
+[deployment.config]
+server = "server-bkxal"
+image.type = "Image"
+image.params.image = "bluewave-labs/capture:latest"
+poll_for_updates = true
+auto_update = true
+command = "run -v /etc/os-release:/etc/os-release:ro"
+ports = """
+ 59232:5923
+"""
+volumes = """
+ ghcr.io/bluewave-labs/capture:latest
+"""
+environment = """
+API_SECRET=IHmqPfMq0LVgRhPBjkwATrs8P3QdqBzp
+"""
+
+##
+
+[[deployment]]
 name = "nessus"
 tags = ["internal", "testing"]
 [deployment.config]
