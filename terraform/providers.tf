@@ -1,4 +1,10 @@
 terraform {
+  cloud {
+    organization = "ncdv_org"
+    workspaces {
+      name = "dIIIhl"
+      project = "k8s"
+  }
   required_providers {
 #     aws = {
 #       source  = "hashicorp/aws"
