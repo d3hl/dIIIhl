@@ -5,13 +5,6 @@ locals {
       if ip != "127.0.0.1"                         # Exclude loopback address
     ]
   ]))
-
-  ipv6_interface_list = join(",", flatten([
-    for node in proxmox_virtual_environment_vm.node : [
-      for ip in flatten([node.ipv6_addresses]) : ip
-      if ip != "::1" && !can(regex("^fe80:", ip))  # Exclude loopback and local-link addresses
-    ]
-  ]))
 }
 
 resource "proxmox_virtual_environment_firewall_options" "node" {
@@ -52,13 +45,6 @@ resource "proxmox_virtual_environment_firewall_alias" "node_ipv6" {
 # create aliases for each management ip
 resource "proxmox_virtual_environment_firewall_alias" "management_ipv4" {
   for_each = { for i, cidr in local.management_cidrs_ipv4_list : "${local.cluster_config.cluster_name}-mgmt-${i}-ipv4" => cidr if local.cluster_config.networking.use_pve_firewall }
-
-  name    = each.key
-  cidr    = each.value
-  comment = "Managed by Terraform"
-}
-resource "proxmox_virtual_environment_firewall_alias" "management_ipv6" {
-  for_each = { for i, cidr in local.management_cidrs_ipv6_list : "${local.cluster_config.cluster_name}-mgmt-${i}-ipv6" => cidr if local.cluster_config.networking.use_pve_firewall && local.cluster_config.networking.ipv6.enabled }
 
   name    = each.key
   cidr    = each.value
@@ -173,13 +159,7 @@ resource "proxmox_virtual_environment_firewall_ipset" "management_ipv6" {
   name    = "${local.cluster_config.cluster_name}-mgmt-ipv6"
   comment = "Managed by Terraform"
 
-  dynamic "cidr" {
-    for_each = { for i, cidr in local.management_cidrs_ipv6_list : "${local.cluster_config.cluster_name}-mgmt-${i}-ipv6" => cidr if local.cluster_config.networking.use_pve_firewall && local.cluster_config.networking.ipv6.enabled }
-    content {
-      name    = "dc/${cidr.key}"
-      comment = cidr.key
-    }
-  }
+
 }
 
 # alias for kube-vip
