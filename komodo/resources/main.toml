@@ -871,7 +871,9 @@ HOMEPAGE_VAR_DUMBTERM_ICON= "/icons/dumbterm.png"
 HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.d3adc3ii.cc"
 
 ### Monitoring ###
-
+# UPTIME KUMA
+HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma.png"
+HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
 # Grafana
 HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana.png"
 HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
@@ -1402,18 +1404,14 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma:1
     container_name: uptime-kuma
-    env_file:
-      - .env
     volumes:
-      - ${DATA_DIR}:/app/data
+      - ./uptime-kuma-data:/app/data
     ports:
       - 3001:3001  # <Host Port>:<Container Port>
     restart: always
 """
 environment = """
-DATA_DIR=/mnt/zApps/uptime-kuma/data
-PGID= 1000 
-PUID= 1000
+  # VARIABLE = val
 """
 
 ##
