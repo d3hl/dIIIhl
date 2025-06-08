@@ -67,10 +67,10 @@ variable "clusters" {
     }))
   }))
   default = { # create your clusters here using the above object
-    "alpha" = {
+    "dIIIhl" = {
       cluster_name             = "dIIIhl"
       cluster_id               = 1
-      kubeconfig_file_name     = "ncdv.yml"
+      kubeconfig_file_name     = "dIIIhl.yml"
       start_on_proxmox_boot    = false
       ssh = {
         ssh_user               = "d3"

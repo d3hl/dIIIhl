@@ -34,13 +34,6 @@ resource "proxmox_virtual_environment_firewall_alias" "node_ipv4" {
   cidr    = each.value.ipv4.vm_ip
   comment = "Managed by Terraform"
 }
-resource "proxmox_virtual_environment_firewall_alias" "node_ipv6" {
-  for_each = { for node in local.nodes : "${node.cluster_name}-${node.node_class}-${node.index}" => node if local.cluster_config.networking.use_pve_firewall && local.cluster_config.networking.ipv6.enabled }
-
-  name    = "${each.key}-ipv6"
-  cidr    = each.value.ipv6.vm_ip
-  comment = "Managed by Terraform"
-}
 
 # create aliases for each management ip
 resource "proxmox_virtual_environment_firewall_alias" "management_ipv4" {
