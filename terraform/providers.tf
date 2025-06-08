@@ -5,11 +5,8 @@ terraform {
       name = "dIIIhl"
       project = "k8s"
   }
+  }
   required_providers {
-#     aws = {
-#       source  = "hashicorp/aws"
-#       version = "5.90.0"
-#     }
     proxmox = {
       source  = "bpg/proxmox"
       version = "0.73.1"
