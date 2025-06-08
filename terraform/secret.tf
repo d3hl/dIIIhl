@@ -16,3 +16,15 @@ variable "proxmox_username" {
 variable "proxmox_api_token" {
   default = "terra@pve!tf:f2a62bea-f73a-43ec-b92e-77a628fa1f90"
 }
+
+variable "pve-creds" {
+  type=object({
+    proxmox_username  =  string
+    proxmox_api_token = string
+  })
+  default = {
+    proxmox_username  = "" 
+    proxmox_api_token = ""
+    
+  }
+}
