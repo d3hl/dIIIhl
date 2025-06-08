@@ -3,3 +3,11 @@ locals {
     proxmox_node   = "pve11"
     template_vm_id = 9999
 }
+
+
+variable "pve-creds" {
+  type=object({
+    proxmox_username  =  string
+    proxmox_api_token = string
+  })
+}
