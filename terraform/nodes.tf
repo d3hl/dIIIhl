@@ -93,21 +93,8 @@ resource "proxmox_virtual_environment_vm" "node" {
             gateway = each.value.ipv4.gateway
           }
         }
-        dynamic "ipv6" {
-          for_each = each.value.ipv6.enabled ? [1] : []
-          content {
-            address = "${each.value.ipv6.vm_ip}/64"
-            gateway = each.value.ipv6.gateway
-          }
-        }
+
       }
-    }
-    dns {
-      domain = each.value.dns_search_domain
-      servers = concat(
-        [each.value.ipv4.dns1, each.value.ipv4.dns2],
-          each.value.ipv6.enabled ? [each.value.ipv6.dns1, each.value.ipv6.dns2] : []
-      )
     }
   }
   network_device {

@@ -71,23 +71,7 @@ resource "proxmox_virtual_environment_firewall_ipset" "all_nodes_ipv4" {
   }
 }
 
-resource "proxmox_virtual_environment_firewall_ipset" "all_nodes_ipv6" {
-  count = local.cluster_config.networking.use_pve_firewall && local.cluster_config.networking.ipv6.enabled ? 1 : 0
-  depends_on = [
-    proxmox_virtual_environment_firewall_alias.node_ipv6
-  ]
 
-  name    = "${local.cluster_config.cluster_name}-all-nodes-ipv6"
-  comment = "Managed by Terraform"
-
-  dynamic "cidr" {
-    for_each = { for key, node in local.nodes : "${node.cluster_name}-${node.node_class}-${node.index}" => node if local.cluster_config.networking.ipv6.enabled }
-    content {
-      name    = "dc/${cidr.key}-ipv6"
-      comment = cidr.key
-    }
-  }
-}
 
 # group all controlplane nodes
 resource "proxmox_virtual_environment_firewall_ipset" "controlplane_nodes_ipv4" {
@@ -103,23 +87,6 @@ resource "proxmox_virtual_environment_firewall_ipset" "controlplane_nodes_ipv4" 
     for_each = { for key, node in local.nodes : "${node.cluster_name}-${node.node_class}-${node.index}" => node if node.node_class == "controlplane" }
     content {
       name    = "dc/${cidr.key}-ipv4"
-      comment = cidr.key
-    }
-  }
-}
-resource "proxmox_virtual_environment_firewall_ipset" "controlplane_nodes_ipv6" {
-  count = local.cluster_config.networking.use_pve_firewall && local.cluster_config.networking.ipv6.enabled ? 1 : 0
-  depends_on = [
-    proxmox_virtual_environment_firewall_alias.node_ipv6
-  ]
-
-  name    = "${local.cluster_config.cluster_name}-controlplane-nodes-ipv6"
-  comment = "Managed by Terraform"
-
-  dynamic "cidr" {
-    for_each = { for key, node in local.nodes : "${node.cluster_name}-${node.node_class}-${node.index}" => node if node.node_class == "controlplane" && local.cluster_config.networking.ipv6.enabled }
-    content {
-      name    = "dc/${cidr.key}-ipv6"
       comment = cidr.key
     }
   }
@@ -143,17 +110,7 @@ resource "proxmox_virtual_environment_firewall_ipset" "management_ipv4" {
     }
   }
 }
-resource "proxmox_virtual_environment_firewall_ipset" "management_ipv6" {
-  count = local.cluster_config.networking.use_pve_firewall && local.cluster_config.networking.ipv6.enabled ? 1 : 0
-  depends_on = [
-    proxmox_virtual_environment_firewall_alias.management_ipv6
-  ]
 
-  name    = "${local.cluster_config.cluster_name}-mgmt-ipv6"
-  comment = "Managed by Terraform"
-
-
-}
 
 # alias for kube-vip
 resource "proxmox_virtual_environment_firewall_ipset" "kube_vip" {
@@ -189,23 +146,7 @@ resource "proxmox_virtual_environment_firewall_ipset" "etcd_nodes_ipv4" {
     }
   }
 }
-resource "proxmox_virtual_environment_firewall_ipset" "etcd_nodes_ipv6" {
-  count = local.cluster_config.networking.use_pve_firewall && local.cluster_config.networking.ipv6.enabled ? 1 : 0
-  depends_on = [
-    proxmox_virtual_environment_firewall_alias.node_ipv6
-  ]
 
-  name    = "${local.cluster_config.cluster_name}-etcd-nodes-ipv6"
-  comment = "Managed by Terraform"
-
-  dynamic "cidr" {
-    for_each = { for key, node in local.nodes : "${node.cluster_name}-${node.node_class}-${node.index}" => node if node.node_class == "etcd" && local.cluster_config.networking.ipv6.enabled }
-    content {
-      name    = "dc/${cidr.key}-ipv6"
-      comment = cidr.key
-    }
-  }
-}
 
 # group all worker nodes
 resource "proxmox_virtual_environment_firewall_ipset" "worker_nodes_ipv4" {
@@ -225,22 +166,9 @@ resource "proxmox_virtual_environment_firewall_ipset" "worker_nodes_ipv4" {
     }
   }
 }
-resource "proxmox_virtual_environment_firewall_ipset" "worker_nodes_ipv6" {
-  count = local.cluster_config.networking.use_pve_firewall && local.cluster_config.networking.ipv6.enabled ? 1 : 0
-  depends_on = [
-    proxmox_virtual_environment_firewall_alias.node_ipv6
-  ]
 
-  name    = "${local.cluster_config.cluster_name}-worker-nodes-ipv6"
-  comment = "Managed by Terraform"
 
-  dynamic "cidr" {
-    for_each = { for key, node in local.nodes : "${node.cluster_name}-${node.node_class}-${node.index}" => node if node.node_class != "controlplane" && node.node_class != "etcd" && local.cluster_config.networking.ipv6.enabled }
-    content {
-      name    = "dc/${cidr.key}-ipv6"
-      comment = cidr.key
-    }
-  }
+
 }
 
 # group all application load balancers
@@ -258,20 +186,7 @@ resource "proxmox_virtual_environment_firewall_ipset" "lbs_ipv4" {
     }
   }
 }
-resource "proxmox_virtual_environment_firewall_ipset" "lbs_ipv6" {
-  count = local.cluster_config.networking.use_pve_firewall && local.cluster_config.networking.ipv6.enabled ? 1 : 0
 
-  name    = "${local.cluster_config.cluster_name}-lbs-ipv6"
-  comment = "Managed by Terraform"
-
-  dynamic "cidr" {
-    for_each = toset(split(",", local.cluster_config.networking.ipv6.lb_cidrs))
-    content {
-      name    = cidr.value
-      comment = cidr.value
-    }
-  }
-}
 
 # allow k8s api
 resource "proxmox_virtual_environment_cluster_firewall_security_group" "k8s_api" {
@@ -290,19 +205,7 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "k8s_api"
       proto   = "tcp"
       log     = "info"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow K8s API from Management IP or Range IPV6"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.management_ipv6[0].name}"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.controlplane_nodes_ipv6[0].name}"
-      dport   = "6443"
-      proto   = "tcp"
-      log     = "info"
-    }
-  }
+
   rule {
       type    = "in"
       action  = "ACCEPT"
@@ -313,19 +216,7 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "k8s_api"
       proto   = "tcp"
       log     = "info"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type     = "in"
-      action   = "ACCEPT"
-      comment  = "Allow K8s API from Management IP or Range IPv6 VIP"
-      source   = "+${proxmox_virtual_environment_firewall_ipset.management_ipv6[0].name}"
-      dest     = "+${proxmox_virtual_environment_firewall_ipset.kube_vip[0].name}"
-      dport    = "6443"
-      proto    = "tcp"
-      log      = "info"
-    }
-  }
+
   rule {
     type    = "in"
     action  = "ACCEPT"
@@ -336,40 +227,8 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "k8s_api"
     proto   = "tcp"
     log     = "nolog"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow K8s API from all K8s Nodes IPV6"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.controlplane_nodes_ipv6[0].name}"
-      dport   = "6443"
-      proto   = "tcp"
-      log     = "nolog"
-    }
-  }
-  rule {
-    type    = "in"
-    action  = "ACCEPT"
-    comment = "Allow K8s API from all K8s Nodes VIP"
-    source  = local.cluster_config.networking.kube_vip.use_ipv6 ? "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}" : "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv4[0].name}"
-    dest    = "+${proxmox_virtual_environment_firewall_ipset.kube_vip[0].name}"
-    dport   = "6443"
-    proto   = "tcp"
-    log     = "nolog"
-  }
-  # FIXME - this isn't consistent across terraform runs
-  # rule {
-  #   type    = "in"
-  #   action  = "ACCEPT"
-  #   comment = "Allow K8s API from all K8s Nodes QEMU-found IPs"
-  #   source  = local.cluster_config.networking.kube_vip.use_ipv6 ? local.ipv6_interface_list : local.ipv4_interface_list
-  #   dest    = "+${proxmox_virtual_environment_firewall_ipset.kube_vip[0].name}"
-  #   dport   = "6443"
-  #   proto   = "tcp"
-  #   log     = "nolog"
-  # }
+
+
 }
 
 # allow admin ssh
@@ -389,19 +248,7 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "ssh" {
     proto   = "tcp"
     log     = "info"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow SSH from Management IP or Range IPv6"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.management_ipv6[0].name}"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      dport   = "22"
-      proto   = "tcp"
-      log     = "info"
-    }
-  }
+
 
   # allow etcd[0] ssh to other etcd nodes and controlplanes over ipv4. It's part of etcd-nodes-setup.yaml.
   rule {
@@ -443,27 +290,8 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "ping" {
     macro   = "Ping"
     log     = "info"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow Ping from Management IP or Range IPv6"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.management_ipv6[0].name}"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      macro   = "Ping"
-      log     = "info"
-    }
-  }
-  rule {
-    type    = "in"
-    action  = "ACCEPT"
-    comment = "Allow Ping from Management IP or Range VIP"
-    source  = local.cluster_config.networking.kube_vip.use_ipv6 ? "+${proxmox_virtual_environment_firewall_ipset.management_ipv6[0].name}":  "+${proxmox_virtual_environment_firewall_ipset.management_ipv4[0].name}"
-    dest    = "+${proxmox_virtual_environment_firewall_ipset.kube_vip[0].name}"
-    macro   = "Ping"
-    log     = "info"
-  }
+
+
 
   # Allow all nodes ping
   rule {
@@ -475,27 +303,8 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "ping" {
     macro   = "Ping"
     log     = "info"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow Ping from Management IP or Range IPv6"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      macro   = "Ping"
-      log     = "info"
-    }
-  }
-  rule {
-    type    = "in"
-    action  = "ACCEPT"
-    comment = "Allow Ping from nodes to VIP"
-    source  = local.cluster_config.networking.kube_vip.use_ipv6 ? "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}":  "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv4[0].name}"
-    dest    = "+${proxmox_virtual_environment_firewall_ipset.kube_vip[0].name}"
-    macro   = "Ping"
-    log     = "info"
-  }
+
+
 }
 
 # allow etcd
@@ -515,19 +324,7 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "etcd" {
     proto   = "tcp"
     log     = "nolog"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow Controlplanes to Etcd IPv6"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.controlplane_nodes_ipv6[0].name}"
-      dest    = try(local.cluster_config.node_classes.etcd.count, 0) == 0 ? "+${proxmox_virtual_environment_firewall_ipset.controlplane_nodes_ipv6[0].name}" : "+${proxmox_virtual_environment_firewall_ipset.etcd_nodes_ipv6[0].name}"
-      dport   = "2379:2380"
-      proto   = "tcp"
-      log     = "nolog"
-    }
-  }
+
   dynamic "rule" {
     for_each = try(local.cluster_config.node_classes.etcd.count, 0) > 0 ? [1] : []
     content {
@@ -541,19 +338,7 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "etcd" {
       log     = "nolog"
     }
   }
-  dynamic "rule" {
-    for_each = try(local.cluster_config.node_classes.etcd.count, 0) > 0 && local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow Etcd to Etcd IPv6"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.etcd_nodes_ipv6[0].name}"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.etcd_nodes_ipv6[0].name}"
-      dport   = "2379:2380"
-      proto   = "tcp"
-      log     = "nolog"
-    }
-  }
+
 }
 
 # allow kubelet api (control-plane)
@@ -573,19 +358,7 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "kubelet_
     proto   = "tcp"
     log     = "nolog"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow Kubelet API IPv6"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.controlplane_nodes_ipv6[0].name}"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.controlplane_nodes_ipv6[0].name}"
-      dport   = "10250"
-      proto   = "tcp"
-      log     = "nolog"
-    }
-  }
+
 }
 
 # allow kubelet api (worker)
@@ -605,19 +378,7 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "kubelet_
     proto   = "tcp"
     log     = "nolog"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow Kubelet API IPv6"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.controlplane_nodes_ipv6[0].name}"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.worker_nodes_ipv6[0].name}"
-      dport   = "10250"
-      proto   = "tcp"
-      log     = "nolog"
-    }
-  }
+
 }
 
 # allow metrics-server port
@@ -637,19 +398,7 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "metrics_
     proto   = "tcp"
     log     = "nolog"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow Metrics Server Port IPv6"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      dport   = "10250"
-      proto   = "tcp"
-      log     = "nolog"
-    }
-  }
+
 }
 
 # allow cilium ports
@@ -669,19 +418,7 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "cilium" 
     proto   = "tcp"
     log     = "nolog"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow Cilium TCP Ports IPv6 Part 1"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      dport   = "4240,4244,4245,4250,4251,6060,6061,6062,9878"
-      proto   = "tcp"
-      log     = "nolog"
-    }
-  }
+
   rule {
     type    = "in"
     action  = "ACCEPT"
@@ -692,19 +429,7 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "cilium" 
     proto   = "tcp"
     log     = "nolog"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow Cilium TCP Ports IPv6 Part 2"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      dport   = "9879,9890,9891,9893,9901,9962,9963,9964"
-      proto   = "tcp"
-      log     = "nolog"
-    }
-  }
+
   rule {
     type    = "in"
     action  = "ACCEPT"
@@ -715,19 +440,7 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "cilium" 
     proto   = "udp"
     log     = "nolog"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow Cilium UDP Ports IPv6"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      dport   = "51871,8472,6081,8472"
-      proto   = "udp"
-      log     = "nolog"
-    }
-  }
+
 }
 
 # allow NodePort services
@@ -747,19 +460,7 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "nodeport
     proto   = "tcp"
     log     = "nolog"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow NodePort Services IPv6"
-      source  = "+${proxmox_virtual_environment_firewall_ipset.all_nodes_ipv6[0].name}"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.worker_nodes_ipv6[0].name}"
-      dport   = "30000:32767"
-      proto   = "tcp"
-      log     = "nolog"
-    }
-  }
+
 }
 
 # allow anyone to reach load balancers
@@ -777,17 +478,7 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "lbs" {
     dest    = "+${proxmox_virtual_environment_firewall_ipset.lbs_ipv4[0].name}"
     log     = "nolog"
   }
-  dynamic "rule" {
-    for_each = local.cluster_config.networking.ipv6.enabled ? [1] : []
-    content {
-      type    = "in"
-      action  = "ACCEPT"
-      comment = "Allow Application LBs IPv6"
-      source  = "::"
-      dest    = "+${proxmox_virtual_environment_firewall_ipset.lbs_ipv6[0].name}"
-      log     = "nolog"
-    }
-  }
+
 }
 
 # activate all security groups on the VMs
