@@ -15,9 +15,9 @@ terraform {
 }
 provider "proxmox" {
   endpoint   = "https://${local.proxmox_host}:8006/api2/json"
-  api_token  = var.proxmox_api_token
+  api_token  = var.pve-creds.proxmox_api_token
   ssh {
-    username = var.proxmox_username
+    username = var.pve-creds.proxmox_username
     agent    = true
   }
   insecure   = true
