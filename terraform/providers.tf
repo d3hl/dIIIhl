@@ -8,7 +8,8 @@ terraform {
       source  = "bpg/proxmox"
       version = "0.73.1"
     }
-
+  }
+}
 provider "proxmox" {
   endpoint   = "https://${local.proxmox_host}:8006/api2/json"
   api_token  = var.proxmox_api_token
