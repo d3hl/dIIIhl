@@ -1,6 +1,7 @@
 terraform {
   cloud {
     organization = "ncdv_org"
+    hostname = ""
     workspaces {
       name = "dIIIhl"
       project = "k8s"
