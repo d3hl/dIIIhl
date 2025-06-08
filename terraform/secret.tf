@@ -2,7 +2,7 @@ variable "vm_username" {
   default = "d3" # change me to your username
 }
 variable "vm_password" {
-  default = "abcd"
+  default = "nLQuNCE4zHAyuMZbmZjn"
 }
 variable "vm_ssh_key" {
   type = list(string)
@@ -13,9 +13,9 @@ variable "vm_ssh_key" {
 #variable "proxmox_username" {
 #  default = "terra"
 #}
-variable "proxmox_api_token" {
-  default = "terra@pve!tf:f2a62bea-f73a-43ec-b92e-77a628fa1f90"
-}
+#variable "proxmox_api_token" {
+#  default = "terra@pve!tf:f2a62bea-f73a-43ec-b92e-77a628fa1f90"
+#}
 
 variable "pve-creds" {
   type=object({
@@ -23,8 +23,8 @@ variable "pve-creds" {
     proxmox_api_token = string
   })
   default = {
-    proxmox_username  = "" 
-    proxmox_api_token = ""
+    proxmox_username  = "terra" 
+    proxmox_api_token = "terra@pve!tf:f2a62bea-f73a-43ec-b92e-77a628fa1f90"
     
   }
 }
