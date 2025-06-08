@@ -24,7 +24,7 @@ variable "pve-creds" {
   })
   default = {
     proxmox_username  = "terra" 
-    proxmox_api_token = "terra@pve!tf:f2a62bea-f73a-43ec-b92e-77a628fa1f90"
+    proxmox_api_token = "terra@pve!tf=f2a62bea-f73a-43ec-b92e-77a628fa1f90"
     
   }
 }

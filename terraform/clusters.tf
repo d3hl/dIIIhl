@@ -67,10 +67,10 @@ variable "clusters" {
     }))
   }))
   default = { # create your clusters here using the above object
-    "dIIIhl" = {
-      cluster_name             = "dIIIhl"
+    "alpha" = {
+      cluster_name             = "alpha"
       cluster_id               = 1
-      kubeconfig_file_name     = "dIIIhl.yml"
+      kubeconfig_file_name     = "alpha.yml"
       start_on_proxmox_boot    = false
       ssh = {
         ssh_user               = "d3"
@@ -84,7 +84,7 @@ variable "clusters" {
         }
         kube_vip = {
           vip                  = "10.0.1.100"
-          vip_hostname         = "ncdv-api-server"
+          vip_hostname         = "alpha-api-server"
         }
       }
       node_classes = {
@@ -108,7 +108,7 @@ variable "clusters" {
       kubeconfig_file_name     = "beta.yml"
       start_on_proxmox_boot    = false
       ssh = {
-        ssh_user               = "line6"
+        ssh_user               = "d3"
       }
       networking = {
         ipv4 = {
@@ -156,7 +156,7 @@ variable "clusters" {
       kubeconfig_file_name     = "gamma.yml"
       start_on_proxmox_boot    = false
       ssh = {
-        ssh_user               = "line6"
+        ssh_user               = "d3"
       }
       networking = {
         ipv4 = {
