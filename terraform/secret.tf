@@ -10,9 +10,9 @@ variable "vm_ssh_key" {
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSIn+PaC2XfaYx77fHV/wwCZdi35VZ7ahBaaJwASQ0p"
   ]
 }
-variable "proxmox_username" {
-  default = "terra"
-}
+#variable "proxmox_username" {
+#  default = "terra"
+#}
 variable "proxmox_api_token" {
   default = "terra@pve!tf:f2a62bea-f73a-43ec-b92e-77a628fa1f90"
 }
