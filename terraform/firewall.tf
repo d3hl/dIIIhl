@@ -167,10 +167,6 @@ resource "proxmox_virtual_environment_firewall_ipset" "worker_nodes_ipv4" {
   }
 }
 
-
-
-}
-
 # group all application load balancers
 resource "proxmox_virtual_environment_firewall_ipset" "lbs_ipv4" {
   count = local.cluster_config.networking.use_pve_firewall ? 1 : 0
