@@ -1,7 +1,7 @@
-variable "vm_username" {
+variable "VM_USERNAME" {
   default = "d3" # change me to your username
 }
-variable "vm_password" {
+variable "VM_PASSWORD" {
   default = "nLQuNCE4zHAyuMZbmZjn"
 }
 variable "vm_ssh_key" {
