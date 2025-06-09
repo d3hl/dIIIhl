@@ -15,7 +15,7 @@ enabled = true
 ##
 
 [[server]]
-name = "komodo-1"
+name = "server-DULxe"
 [server.config]
 address = "https://host.docker.internal:8120"
 enabled = true
