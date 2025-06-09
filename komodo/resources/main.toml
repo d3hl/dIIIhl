@@ -736,12 +736,12 @@ HOMEPAGE_VAR_PULSE_CLASSES= h-60 sm:h-60 md:h-100 lg:h-200 xl:h-300 2xl:h-700
 #HOMEPAGE_VAR_PULSE_HEIGHT= 500
 
 # Truenas
-HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas.png"
+HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas-light.png"
 HOMEPAGE_VAR_TRUENAS_URL= "https://192.168.2.7"
 HOMEPAGE_VAR_TRUENAS_KEY="1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe"
 HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
 # Proxmox
-HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox.png"
+HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox-light.png"
 HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.d3adc3ii.site"
 #HOMEPAGE_VAR_PROXMOX_USER= 
 #HOMEPAGE_VAR_PROXMOX_API_KEY=
@@ -749,7 +749,7 @@ HOMEPAGE_VAR_PBS_URL= "https://pbs.d3adc3ii.site"
 
 ### INFRA ###
 # Opnsense
-HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense.png"
+HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense-light.png"
 HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.d3adc3ii.site"
 # DNS
 HOMEPAGE_VAR_DNS_ICON= "/icons/technitium.png"
@@ -757,29 +757,29 @@ HOMEPAGE_VAR_DNS_URL= "https://ns0.d3adc3ii.site"
 HOMEPAGE_VAR_DNS_KEY="664be7cf433c98c60e66d81cc782a9226cc8ba2e255933727285174f62980b1c"
 HOMEPAGE_VAR_DNS_RANGE: LastDay # optional, defaults to LastHour
 # MIKROTIK
-HOMEPAGE_VAR_MIKROTIK_ICON= "/icons/mikrotik.png"
+HOMEPAGE_VAR_MIKROTIK_ICON= "/icons/mikrotik-light.png"
 HOMEPAGE_VAR_MIKROTIK_URL= "http://192.168.2.253"
 # TPLINK
-HOMEPAGE_VAR_TPLINK_ICON= "/icons/tp-link.png"
+HOMEPAGE_VAR_TPLINK_ICON= "/icons/tp-link-light.png"
 HOMEPAGE_VAR_TPLINK_URL= "http://192.168.2.252"
 
 ### Monitoring ###
 # Caddy Proxy
-HOMEPAGE_VAR_CADDYPROXY_ICON= "/icons/caddy.png"
+HOMEPAGE_VAR_CADDYPROXY_ICON= "/icons/caddy-light.png"
 HOMEPAGE_VAR_CADDYPROXY_URL= "http://caddy:2020"
 # NetAlertX 
-HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx.png"
+HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx-light.png"
 HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3adc3ii.site"
 HOMEPAGE_VAR_NETALERTX_KEY="t_pJ26L2qEeUcR6bz5RCGI"
 HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"] 
 # Wazuh
-HOMEPAGE_VAR_WAZUH_ICON= "/icons/wazuh.png"
+HOMEPAGE_VAR_WAZUH_ICON= "/icons/wazuh-light.png"
 HOMEPAGE_VAR_WAZUH_URL= "https://wazuh.d3adc3ii.site"
 # APPRISE-API
 HOMEPAGE_VAR_APPRISE_ICON= "/icons/apprise.png"
 HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
 # Healthchecks
-HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks.png"
+HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks-light.png"
 HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
 # Smokeping
 HOMEPAGE_VAR_SMOKEPING_ICON= "/icons/smokeping.png"
@@ -800,7 +800,7 @@ HOMEPAGE_VAR_REMOTEBACKUP_URL= "https://dashboard.remote-backups.com"
 
 
 # Jellyfin
-HOMEPAGE_VAR_JELLY_ICON= "/icons/jellyfin.png"
+HOMEPAGE_VAR_JELLY_ICON= "/icons/jellyfin-light.png"
 HOMEPAGE_VAR_JELLY_URL= "https://jelly.d3adc3ii.site"
 HOMEAGE_VAR_JELLY_WIDGETURL= "http://192.168.2.33:8096"
 HOMEPAGE_VAR_JELLY_KEY= "a6a45c61dd1d4f059b02fa22ad8c0ef3"
@@ -808,7 +808,7 @@ HOMEPAGE_VAR_JELLY_ENABLEBLOCK=true
 HOMEPAGE_VAR_JELLY_NOWPLAY=false
 
 # Immich
-HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich.png"
+HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich-light.png"
 HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3adc3ii.site"
 HOMEPAGE_VAR_IMMICH_KEY= "7zmatjhj9RVRPylp08hKaG1mkYDubUyeqfDlpaUHo"
 HOMEPAGE_VAR_IMMICH_VERSION= 2
@@ -816,7 +816,7 @@ HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"]
 
 ### LOCAL APPS ###
 # Actual Budget
-HOMEPAGE_VAR_ACTUAL_ICON= "/icons/actual-budget.png"
+HOMEPAGE_VAR_ACTUAL_ICON= "/icons/actual-budget-light.png"
 HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3adc3ii.site"
 # Sensei
 HOMEPAGE_VAR_SENSEI_ICON= "/icons/davis.png"
@@ -825,12 +825,12 @@ HOMEPAGE_VAR_SENSEI_URL= "https://statement.d3adc3ii.site"
 HOMEPAGE_VAR_HA_ICON= "/icons/home-assistant.png"
 HOMEPAGE_VAR_HA_URL= "https://ha.d3adc3ii.site"
 # Qbit
-HOMEPAGE_VAR_QBIT_ICON= "/icons/qbittorrent.png"
+HOMEPAGE_VAR_QBIT_ICON= "/icons/qbittorrent-light.png"
 HOMEPAGE_VAR_QBIT_URL= "https://qbit.d3adc3ii.site"
 HOMEPAGE_VAR_QBIT_USER= "d3adc3ii"
 HOMEPAGE_VAR_QBIT_PASSWORD= "WCxb2CcykoUmjiNAf3p8"
 # Stash
-HOMEPAGE_VAR_STASH_ICON= "/icons/stash.png"
+HOMEPAGE_VAR_STASH_ICON= "/icons/stash-light.png"
 HOMEPAGE_VAR_STASH_URL= "https://stash.d3adc3ii.site"
 HOMEPAGE_VAR_STASH_USER= "d3adc3ii"
 HOMEPAGE_VAR_QBIT_API= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg"
@@ -902,7 +902,7 @@ HOMEPAGE_VAR_CHECKMK_ICON= "/icons/checkmk.png"
 HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"
 
 # Pulse
-HOMEPAGE_VAR_PULSEXT_ICON= "/icons/pulse.png"
+HOMEPAGE_VAR_PULSEXT_ICON= "/icons/pulse-light.png"
 HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
 
 # NETBOX CLOUD
