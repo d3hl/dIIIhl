@@ -193,7 +193,7 @@
             sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
             widget:
                 type: customapi
-                url:  <YOUR KOMODO URL>/read/
+                url:  {{HOMEPAGE_VAR_KOMODO_URL}}/read/
                 refreshInterval: 15000
                 method: POST
                 headers:
