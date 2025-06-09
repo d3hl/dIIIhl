@@ -207,7 +207,7 @@
             icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
             widget:
                 type: customapi
-                url: {{HOMEPAGE_VAR_KOMODO_APIURL}}
+                url: {{HOMEPAGE_VAR_KOMODO_CONTAINER_UPDATE_URL}}
                 refreshInterval: 30000
                 display: block
                 mappings:
