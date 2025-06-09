@@ -196,24 +196,6 @@ AUTHENTIK_EMAIL__FROM=authentik@localhost
 ##
 
 [[stack]]
-name = "battle-of-the-bandwidth"
-tags = [
-  "internal",
-  "testing",
-  "monitoring"
-]
-[stack.config]
-server = "komodo-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-the-bandwidth"
-
-##
-
-[[stack]]
 name = "caddy"
 tags = [
   "internal",
@@ -1282,6 +1264,23 @@ NZBGET_DL_DIR=/mnt/zApps/nzb/downloads
 ##
 
 [[stack]]
+name = "omni-tools"
+[stack.config]
+server = "komodo-2"
+auto_update = true
+file_contents = """
+services:
+  omni-tools:
+    image: iib0011/omni-tools:latest
+    container_name: omni-tools
+    restart: unless-stopped
+    ports:
+      - "8281:80"
+"""
+
+##
+
+[[stack]]
 name = "scrutiny"
 [stack.config]
 server = "komodo-3"
@@ -1655,23 +1654,6 @@ environment = """
 ##
 
 [[deployment]]
-name = "omni-tools"
-tags = ["external", "production"]
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "iib0011/omni-tools:latest"
-poll_for_updates = true
-auto_update = true
-network = "bridge"
-restart = "unless-stopped"
-ports = """
-8281:80
-"""
-
-##
-
-[[deployment]]
 name = "statementsensei"
 tags = ["internal", "testing"]
 [deployment.config]
@@ -1763,7 +1745,6 @@ git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
 
 ##
-
 
 [[builder]]
 name = "local"
