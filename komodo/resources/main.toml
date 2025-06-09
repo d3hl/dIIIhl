@@ -840,8 +840,8 @@ HOMEPAGE_VAR_AUTHENTIK_KEY="Boy9GZM04gnN8zn1RdTDSxgkeDr70a8XqFKmrp1HwVx7A3u4GA2p
 HOMEPAGE_VAR_KOMODO_ICON= "/icons/komodo.png"
 HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
 HOMEPAGE_VAR_KOMODO_APIURL= "https://komodo.d3adc3ii.cc/read"
-HOMEPAGE_VAR_KOMODO_API_KEY="K-BDtSOJIHB33Oj97ek82BTywb1qDvzyHcMcIIdNu4"
-HOMEPAGE_VAR_KOMODO_API_SECRET="S-GWUpyGuzGInu5Q15IZm9cVAXSkLf4FpTmoKPkfw9"
+HOMEPAGE_VAR_KOMODO_API_KEY="K-zJzjausI0s5PFi0B5tpRiZzz7JEjVddtR2cPyHsX"
+HOMEPAGE_VAR_KOMODO_API_SECRET="S-oOAnX7RSJ4vE7la3Tj66pPuiBODTKfXjl14jdMXW"
 # Twingate
 HOMEPAGE_VAR_TWINGATE_ICON= "/icons/twingate.png"
 HOMEPAGE_VAR_TWINGATE_URL= "https://d3net.twinget.com"
@@ -1765,3 +1765,11 @@ git_account = "d3hl"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
 include_user_groups = true
+
+##
+
+[[user_group]]
+name = "read-only"
+users = ["homepage", "kuma"]
+all.Server = "Read"
+all.Stack = "Read"
