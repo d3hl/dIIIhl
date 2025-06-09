@@ -316,6 +316,10 @@
     - Dokkio:
         href: https://app.dokkio.com/a/2266012572845539026/new
 
+- Applications:
+    - Komodo:
+        icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
+        href: {{HOMEPAGE_VAR_KOMODOCORP_URL}} 
 - Network:
     - Fortigate:
         icon: fortinet 
