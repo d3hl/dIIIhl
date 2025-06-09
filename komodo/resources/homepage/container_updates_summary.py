@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__)
 
-KOMODO_URL = "http://192.168.2.31:9120/read"
+KOMODO_URL = "http://komodo-core-1:9120/read"
 API_KEY = "K-zJzjausI0s5PFi0B5tpRiZzz7JEjVddtR2cPyHsX"
 API_SECRET = "S-oOAnX7RSJ4vE7la3Tj66pPuiBODTKfXjl14jdMXW"
 
