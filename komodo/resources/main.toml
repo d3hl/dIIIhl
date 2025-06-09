@@ -638,9 +638,9 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ${DATA_DIR}/config:/app/config 
-      - ${DATA_DIR}/icons:/app/public/icons
-      - ${DATA_DIR}/images:/app/public/images 
+      - ${HOMEPAGE_DATA_DIR}/homepage/config:/app/config 
+      - ${HOMEPAGE_DATA_DIR}/homepage/icons:/app/public/icons
+      - ${HOMEPAGE_DATA_DIR}/homepage/images:/app/public/images 
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
     labels:
@@ -662,9 +662,23 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
     restart: unless-stopped
+  
+  container-updates-summary:
+    image: python:3.12-slim
+    container_name: container-updates-summary
+    restart: unless-stopped
+    command: >
+      sh -c "pip install flask requests &&
+             python /app/container_updates_summary.py"
+    volumes:
+      - ${HOMEPAGE_DATA_DIR}/homepage:/app:ro
+    networks:
+      - internal
+    ports:
+      - "5070:5070"
 """
 environment = """
-DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/homepage
+HOMEPAGE_DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/
 HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,192.168.2.31:3000"
 PGID= 1000 
 PUID= 1000 
