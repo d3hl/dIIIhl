@@ -15,9 +15,9 @@ enabled = true
 ##
 
 [[server]]
-name = "server-bkxal"
+name = "komodo-1"
 [server.config]
-address = "https://periphery:8120"
+address = "https://host.docker.internal:8120"
 enabled = true
 
 ##
