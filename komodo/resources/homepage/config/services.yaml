@@ -193,7 +193,7 @@
             sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
             widget:
                 type: customapi
-                url:  {{HOMEPAGE_VAR_KOMODO_URL}}/read/
+                url:  {{HOMEPAGE_VAR_KOMODO_APIURL}}
                 refreshInterval: 15000
                 method: POST
                 headers:
@@ -203,7 +203,6 @@
                 requestBody:
                     type: GetStacksSummary
                     params: {}
-
                 display: block
                 mappings:
                     - field: total
