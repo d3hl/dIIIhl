@@ -1896,8 +1896,8 @@ params.server_id = "server-bkxal"
 [[resource_sync]]
 name = "s1"
 [resource_sync.config]
-repo = "d3adc3iii/dIIIhl"
-git_account = "d3adc3iii"
+repo = "d3hl/dIIIhl"
+git_account = "d3hl"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
 delete = true
