@@ -1765,3 +1765,11 @@ git_account = "d3hl"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
 include_user_groups = true
+
+##
+
+[[user_group]]
+name = "read-only"
+users = ["homepage", "kuma"]
+all.Server = "Read"
+all.Stack = "Read"
