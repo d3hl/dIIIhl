@@ -1773,14 +1773,54 @@ config.schedule = "Run every 30 minutes"
 name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "RunSync", execution.params.sync = "sync", enabled = true },
-  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
+  { execution.type = "RunSync", enabled = true },
+  { execution.type = "CommitSync", enabled = true }
 ]
 
 ##
 
 [[procedure]]
 name = "check_update"
+
+##
+
+[[procedure]]
+name = "commit_sync_to_repo_and_redeploy_homepage"
+
+[[procedure.config.stage]]
+name = "Run sync"
+enabled = true
+executions = [
+  { execution.type = "RunSync", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Commit sync"
+enabled = true
+executions = [
+  { execution.type = "CommitSync", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "pull repo"
+enabled = true
+executions = [
+  { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "deploy"
+enabled = true
+executions = [
+  { execution.type = "DestroyStack", execution.params.stack = "homepage", execution.params.services = [], execution.params.remove_orphans = false, enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Stage 5"
+enabled = true
+executions = [
+  { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
+]
 
 ##
 
@@ -1812,14 +1852,14 @@ name = "sync_and_redeploy_homepage"
 name = "Run sync"
 enabled = true
 executions = [
-  { execution.type = "RunSync", execution.params.sync = "sync", enabled = true }
+  { execution.type = "RunSync", enabled = true }
 ]
 
 [[procedure.config.stage]]
 name = "Commit sync"
 enabled = true
 executions = [
-  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
+  { execution.type = "CommitSync", enabled = true }
 ]
 
 [[procedure.config.stage]]
@@ -1854,10 +1894,10 @@ params.server_id = "server-bkxal"
 ##
 
 [[resource_sync]]
-name = "sync"
+name = "s1"
 [resource_sync.config]
-repo = "d3adc3iii/dIIIhl"
-git_account = "d3adc3iii"
+repo = "d3hl/dIIIhl"
+git_account = "d3hl"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
 delete = true
