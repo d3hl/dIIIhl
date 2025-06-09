@@ -839,6 +839,8 @@ HOMEPAGE_VAR_AUTHENTIK_KEY="Boy9GZM04gnN8zn1RdTDSxgkeDr70a8XqFKmrp1HwVx7A3u4GA2p
 # Komodo
 HOMEPAGE_VAR_KOMODO_ICON= "/icons/komodo.png"
 HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
+HOMEPAGE_VAR_KOMODO_API_KEY="K-BDtSOJIHB33Oj97ek82BTywb1qDvzyHcMcIIdNu4"
+HOMEPAGE_VAR_KOMODO_API_SECRET="S-GWUpyGuzGInu5Q15IZm9cVAXSkLf4FpTmoKPkfw9"
 # Twingate
 HOMEPAGE_VAR_TWINGATE_ICON= "/icons/twingate.png"
 HOMEPAGE_VAR_TWINGATE_URL= "https://d3net.twinget.com"
@@ -1721,8 +1723,8 @@ name = "diiihl"
 [repo.config]
 server = "server-DULxe"
 builder = "local"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
+git_account = "d3hl"
+repo = "d3hl/dIIIhl"
 
 ##
 
