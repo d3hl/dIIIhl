@@ -191,6 +191,34 @@
             icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
             href: {{HOMEPAGE_VAR_KOMODO_URL}}
             sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
+            widget:
+                type: customapi
+                url:  <YOUR KOMODO URL>/read/
+                refreshInterval: 15000
+                method: POST
+                headers:
+                    content-type: application/json
+                    x-api-key: {{HOMEPAGE_VAR_KOMODO_API_KEY}}
+                    x-api-secret: {{HOMEPAGE_VAR_KOMODO_API_SECRET}} 
+                requestBody:
+                    type: GetStacksSummary
+                    params: {}
+
+                display: block
+                mappings:
+                    - field: total
+                      label: Total Stacks
+                      format: number
+                    - field: running
+                      label: running
+                      format: number
+                    - field: unhealthy
+                      label: unhealthy
+                      format: number
+                    - field: down
+                      label: Stopped
+                      format: number
+
         - Twingate:
             icon: {{HOMEPAGE_VAR_TWINGATE_ICON}}
             href: {{HOMEPAGE_VAR_TWINGATE_URL}}
