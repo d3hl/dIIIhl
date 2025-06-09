@@ -205,7 +205,7 @@
                     format: number
         - Container Updates:
             icon: {{HOMEPAGE_VAR_KOMODO_ICON}}
-            #server: my-docker
+            server: my-docker
             #container: komodo-core-1 
             widget:
                 type: customapi
