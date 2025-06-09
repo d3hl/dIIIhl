@@ -206,7 +206,7 @@
         - Container Updates:
             icon: {{HOMEPAGE_VAR_KOMODO_ICON}}
             server: my-docker
-           # container: komodo-core-1 
+            container: komodo-core-1 
             widget:
                 type: customapi
                 url: {{HOMEPAGE_VAR_KOMODO_CONTAINER_UPDATE_URL}}
