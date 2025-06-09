@@ -49,12 +49,12 @@ services:
       start_period: 20s
     restart: unless-stopped
     labels:
-      caddy: actual.d3adc3ii.site
+      caddy: actual.d3hl.site
       caddy.reverse_proxy: "{{upstreams 5006}}"
       homepage.group: "Local Apps"
       homepage.name: Actual2
       homepage.icon: actual-budget.png
-      homepage.href: https://actual.d3adc3ii.site
+      homepage.href: https://actual.d3hl.site
 """
 environment = """
 PUID=1000
@@ -207,8 +207,8 @@ server = "komodo-2"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
+git_account = "d3hli"
+repo = "d3hli/dIIIhl"
 run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-the-bandwidth"
 
 ##
@@ -301,81 +301,81 @@ services:
       # acme_ca: "https://acme-staging-v02.api.letsencrypt.org/directory" # 👈 Staging
 
       ## Setup wildcard sites
-      caddy_10: "*.d3adc3ii.site"   #👈 Change to your domain
+      caddy_10: "*.d3hl.site"   #👈 Change to your domain
       caddy_10.import: wildcard
 
       # Caddy Admin Endpoint and Metrics
       caddy_20: :2020
       #caddy_20.admin: "0.0.0.0:2019"
-      #caddy_20.admin.origin: "caddy.d3adc3ii.site"
+      #caddy_20.admin.origin: "caddy.d3hl.site"
       caddy_20.handle: /reverse_proxy/upstreams
       caddy_20.handle.reverse_proxy: localhost:2019
       caddy_20.handle.reverse_proxy.header_up: Host localhost:2019
     
 
       # Add our first site, which this container itself
-      caddy_99: whoami.d3adc3ii.site                       #👈 Subdomain using wildcard cert
+      caddy_99: whoami.d3hl.site                       #👈 Subdomain using wildcard cert
       caddy_99.reverse_proxy: "{{upstreams 80}}"         #👈 Container port
 
       # For non-docker sites see https://gist.github.com/omltcat/241ef622070ca0580f2876a7cfa7de67
       # e.g.: Pi-Hole on another machine in the same LAN
-      caddy_100: netalertx.d3adc3ii.site                      
+      caddy_100: netalertx.d3hl.site                      
       caddy_100.reverse_proxy: 192.168.2.31:20184
 
-      caddy_101: pve.d3adc3ii.site                      
+      caddy_101: pve.d3hl.site                      
       caddy_101.reverse_proxy: 192.168.2.11:8006
       caddy_101.reverse_proxy.transport: http
       caddy_101.reverse_proxy.transport.tls_insecure_skip_verify: ""
 
 
-      caddy_102: opn.d3adc3ii.site                      
+      caddy_102: opn.d3hl.site                      
       caddy_102.reverse_proxy: 192.168.2.1:2184
       caddy_102.reverse_proxy.transport: http
       caddy_102.reverse_proxy.transport.tls: ""
       caddy_102.reverse_proxy.transport.versions: 1.1 1.2
       caddy_102.reverse_proxy.transport.tls_insecure_skip_verify: ""
 
-      caddy_103: truenas.d3adc3ii.site                      
+      caddy_103: truenas.d3hl.site                      
       caddy_103.reverse_proxy: 192.168.2.7
       caddy_103.reverse_proxy.transport: http
       caddy_103.reverse_proxy.transport.tls_insecure_skip_verify: ""
 
-      caddy_104: pbs.d3adc3ii.site   
+      caddy_104: pbs.d3hl.site   
       caddy_104.reverse_proxy: 192.168.2.35:8007
       caddy_104.reverse_proxy.transport: http
       caddy_104.reverse_proxy.transport.tls_insecure_skip_verify: ""
 
-      caddy_105: ns0.d3adc3ii.site                      
+      caddy_105: ns0.d3hl.site                      
       caddy_105.reverse_proxy: 192.168.2.5:5380
-      caddy_106: stash.d3adc3ii.site                      
+      caddy_106: stash.d3hl.site                      
       caddy_106.reverse_proxy: 192.168.2.26:9999
-      caddy_107: ha.d3adc3ii.site                      
+      caddy_107: ha.d3hl.site                      
       caddy_107.reverse_proxy: 192.168.99.5:8123    
-      caddy_108: jelly.d3adc3ii.site                      
+      caddy_108: jelly.d3hl.site                      
       caddy_108.reverse_proxy: 192.168.2.33:8096
-      caddy_109: semaphore.d3adc3ii.site                      
+      caddy_109: semaphore.d3hl.site                      
       caddy_109.reverse_proxy: 192.168.2.28:3000            
-      caddy_110: aria.d3adc3ii.site                      
+      caddy_110: aria.d3hl.site                      
       caddy_110.reverse_proxy: 192.168.2.16:6880  
-      caddy_111: pulse.d3adc3ii.site                      
+      caddy_111: pulse.d3hl.site                      
       caddy_111.reverse_proxy: 192.168.2.36:7655     
-      caddy_112: backrest.d3adc3ii.site                      
+      caddy_112: backrest.d3hl.site                      
       caddy_112.reverse_proxy: 192.168.2.35:9898
-      caddy_113: actual.d3adc3ii.site                      
+      caddy_113: actual.d3hl.site                      
       caddy_113.reverse_proxy: 192.168.2.32:5006
       # wazuh
-      caddy_114: wazuh.d3adc3ii.site                      
+      caddy_114: wazuh.d3hl.site                      
       caddy_114.reverse_proxy: 192.168.2.30:443
       caddy_114.reverse_proxy.transport: http
       caddy_114.reverse_proxy.transport.tls_insecure_skip_verify: ""
       # guaca
-      caddy_115: guaca.d3adc3ii.site                      
+      caddy_115: guaca.d3hl.site                      
       caddy_115.reverse_proxy: 192.168.2.20
-      #caddy_116: checkmate.d3adc3ii.site                      
+      #caddy_116: checkmate.d3hl.site                      
       #caddy_116.reverse_proxy: 192.168.2.33:52345  
-      #caddy_117: checkmate2.d3adc3ii.site                      
+      #caddy_117: checkmate2.d3hl.site                      
       #caddy_117.reverse_proxy: 192.168.2.32:59232
-      #caddy_118: checkmate3.d3adc3ii.site                      
+      #caddy_118: checkmate3.d3hl.site                      
       #caddy_118.reverse_proxy: 192.168.2.33:59232    
 
       # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
@@ -452,10 +452,10 @@ environment = """
 PUID=1000
 PGID=1000
 DATA_DIR= /mnt/zApps/checkmate
-UPTIME_APP_API_BASE_URL: https://checkmate.d3adc3ii.site/api/v1
-UPTIME_APP_CLIENT_HOST: https://checkmate.d3adc3ii.site
+UPTIME_APP_API_BASE_URL: https://checkmate.d3hl.site/api/v1
+UPTIME_APP_CLIENT_HOST: https://checkmate.d3hl.site
 REDIS_URL=redis://redis:6379
-CLIENT_HOST=https://checkmate.d3adc3ii.site
+CLIENT_HOST=https://checkmate.d3hl.site
 JWT_SECRET= [[CHECKMATE_JWT_SECRET]]
 DOCKER_HOST=tcp://192.168.2.31:2375
 """
@@ -503,7 +503,7 @@ DUMBTERM_DATA_DIR="/mnt/zApps/dumbterm/data"
 DUMBTERM_TZ="Asia/Singapore"
 DUMBTERM_PIN=1111
 DUMBTERM_PORT=3002
-DUMBTERM_BASE_URL=http://dumbterm.d3adc3ii.cc:3002
+DUMBTERM_BASE_URL=http://dumbterm.d3hl.cc:3002
 """
 
 ##
@@ -541,11 +541,11 @@ services:
       # The location in the video thumbnails are generated. A value between 0-100 where 50 would be the frame in the middle of the video file and 0 would be the first frame of the video.
       - THUMBNAIL_VIDEO_LOCATION=0
       # The domain your instance is hosted at. (do not add http or https) e.x: v.fireshare.net, this is required for opengraph to work correctly for shared links. DO NOT SURROUND IN QUOTES.
-      - DOMAIN=fs.d3adc3ii.cc
+      - DOMAIN=fs.d3hl.cc
       - PUID=1000
       - PGID=1000
     labels:
-      caddy: fs.d3adc3ii.site
+      caddy: fs.d3hl.site
       caddy.reverse_proxy: "{{upstreams 8585}}"
 """
 environment = """
@@ -602,22 +602,22 @@ services:
       - 2525:2525 #optional
     restart: unless-stopped
     labels:
-      - caddy= health.d3adc3ii.site
+      - caddy= health.d3hl.site
       - caddy.reverse_proxy= "{{upstreams 8000}}"
       - homepage.server= my-docker
       - homepage.container= healthchecks
       - homepage.name= Test
       - homepage.group= Testa
       - homepage.icon= /icons/healthchecks.png
-      - homepage.href= https://health.d3adc3ii.site
+      - homepage.href= https://health.d3hl.site
       - homepage.description= cronjob monitor
 """
 environment = """
 PUID=1000
 PGID=1000
 DATA_DIR=/mnt/zApps/healthcheck
-SITE_ROOT= "https://health.d3adc3ii.site"
-ALLOWED_HOSTS=health.d3adc3ii.site
+SITE_ROOT= "https://health.d3hl.site"
+ALLOWED_HOSTS=health.d3hl.site
 SITE_NAME= Healthcheck
 SUPERUSER_EMAIL= d3tech@pm.me
 SUPERUSER_PASSWORD= [[HEALTHCHECK_SUPERADMIN_PASSWORD]]
@@ -662,7 +662,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
     labels:
-      caddy: homepage.d3adc3ii.site                    
+      caddy: homepage.d3hl.site                    
       caddy.reverse_proxy: "{{upstreams 3000}}"
       
   dockerproxy:
@@ -683,7 +683,7 @@ services:
 """
 environment = """
 DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/homepage
-HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,192.168.2.31:3000"
+HOMEPAGE_ALLOWED_HOSTS= "homepage.d3hl.cc,homepage.d3hl.site,192.168.2.31:3000"
 PGID= 1000 
 PUID= 1000 
 # Site Config
@@ -746,18 +746,18 @@ HOMEPAGE_VAR_TRUENAS_KEY="1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBe
 HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
 # Proxmox
 HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox.png"
-HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.d3adc3ii.site"
+HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.d3hl.site"
 #HOMEPAGE_VAR_PROXMOX_USER= 
 #HOMEPAGE_VAR_PROXMOX_API_KEY=
-HOMEPAGE_VAR_PBS_URL= "https://pbs.d3adc3ii.site"
+HOMEPAGE_VAR_PBS_URL= "https://pbs.d3hl.site"
 
 ### INFRA ###
 # Opnsense
 HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense.png"
-HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.d3adc3ii.site"
+HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.d3hl.site"
 # DNS
 HOMEPAGE_VAR_DNS_ICON= "/icons/technitium.png"
-HOMEPAGE_VAR_DNS_URL= "https://ns0.d3adc3ii.site"
+HOMEPAGE_VAR_DNS_URL= "https://ns0.d3hl.site"
 HOMEPAGE_VAR_DNS_KEY="664be7cf433c98c60e66d81cc782a9226cc8ba2e255933727285174f62980b1c"
 HOMEPAGE_VAR_DNS_RANGE: LastDay # optional, defaults to LastHour
 # MIKROTIK
@@ -773,30 +773,30 @@ HOMEPAGE_VAR_CADDYPROXY_ICON= "/icons/caddy.png"
 HOMEPAGE_VAR_CADDYPROXY_URL= "http://caddy:2020"
 # NetAlertX 
 HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx.png"
-HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3adc3ii.site"
+HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3hl.site"
 HOMEPAGE_VAR_NETALERTX_KEY="t_pJ26L2qEeUcR6bz5RCGI"
 HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"] 
 # Wazuh
 HOMEPAGE_VAR_WAZUH_ICON= "/icons/wazuh.png"
-HOMEPAGE_VAR_WAZUH_URL= "https://wazuh.d3adc3ii.site"
+HOMEPAGE_VAR_WAZUH_URL= "https://wazuh.d3hl.site"
 # APPRISE-API
 HOMEPAGE_VAR_APPRISE_ICON= "/icons/apprise.png"
 HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
 # Healthchecks
 HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks.png"
-HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
+HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3hl.site"
 # Smokeping
 HOMEPAGE_VAR_SMOKEPING_ICON= "/icons/smokeping.png"
 HOMEPAGE_VAR_SMOKEPING_URL= "http://192.168.2.21/smokeping"
 
 # Battle of the bandwidth
 HOMEPAGE_VAR_BOTB_ICON= "/icons/smokeping.png"
-HOMEPAGE_VAR_BOTB_URL= "https://botb.int.d3adc3ii.cc"
+HOMEPAGE_VAR_BOTB_URL= "https://botb.int.d3hl.cc"
 
 ### BACKUP ###
 # Backrest
 HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest.png"
-HOMEPAGE_VAR_BACKREST_URL= "https://backrest.d3adc3ii.site"
+HOMEPAGE_VAR_BACKREST_URL= "https://backrest.d3hl.site"
 
 # Remote-Backups
 HOMEPAGE_VAR_REMOTEBACKUP_ICON= "/icons/proxmox.png"
@@ -805,7 +805,7 @@ HOMEPAGE_VAR_REMOTEBACKUP_URL= "https://dashboard.remote-backups.com"
 
 # Jellyfin
 HOMEPAGE_VAR_JELLY_ICON= "/icons/jellyfin.png"
-HOMEPAGE_VAR_JELLY_URL= "https://jelly.d3adc3ii.site"
+HOMEPAGE_VAR_JELLY_URL= "https://jelly.d3hl.site"
 HOMEAGE_VAR_JELLY_WIDGETURL= "http://192.168.2.33:8096"
 HOMEPAGE_VAR_JELLY_KEY= "a6a45c61dd1d4f059b02fa22ad8c0ef3"
 HOMEPAGE_VAR_JELLY_ENABLEBLOCK=true
@@ -813,7 +813,7 @@ HOMEPAGE_VAR_JELLY_NOWPLAY=false
 
 # Immich
 HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich.png"
-HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3adc3ii.site"
+HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3hl.site"
 HOMEPAGE_VAR_IMMICH_KEY= "7zmatjhj9RVRPylp08hKaG1mkYDubUyeqfDlpaUHo"
 HOMEPAGE_VAR_IMMICH_VERSION= 2
 HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"] 
@@ -821,42 +821,42 @@ HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"]
 ### LOCAL APPS ###
 # Actual Budget
 HOMEPAGE_VAR_ACTUAL_ICON= "/icons/actual-budget.png"
-HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3adc3ii.site"
+HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3hl.site"
 # Sensei
 HOMEPAGE_VAR_SENSEI_ICON= "/icons/davis.png"
-HOMEPAGE_VAR_SENSEI_URL= "https://statement.d3adc3ii.site"
+HOMEPAGE_VAR_SENSEI_URL= "https://statement.d3hl.site"
 # Homeassistant
 HOMEPAGE_VAR_HA_ICON= "/icons/home-assistant.png"
-HOMEPAGE_VAR_HA_URL= "https://ha.d3adc3ii.site"
+HOMEPAGE_VAR_HA_URL= "https://ha.d3hl.site"
 # Qbit
 HOMEPAGE_VAR_QBIT_ICON= "/icons/qbittorrent.png"
-HOMEPAGE_VAR_QBIT_URL= "https://qbit.d3adc3ii.site"
-HOMEPAGE_VAR_QBIT_USER= "d3adc3ii"
+HOMEPAGE_VAR_QBIT_URL= "https://qbit.d3hl.site"
+HOMEPAGE_VAR_QBIT_USER= "d3hl"
 HOMEPAGE_VAR_QBIT_PASSWORD= "WCxb2CcykoUmjiNAf3p8"
 # Stash
 HOMEPAGE_VAR_STASH_ICON= "/icons/stash.png"
-HOMEPAGE_VAR_STASH_URL= "https://stash.d3adc3ii.site"
-HOMEPAGE_VAR_STASH_USER= "d3adc3ii"
+HOMEPAGE_VAR_STASH_URL= "https://stash.d3hl.site"
+HOMEPAGE_VAR_STASH_USER= "d3hl"
 HOMEPAGE_VAR_QBIT_API= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg"
 # Semaphore
 HOMEPAGE_VAR_SEMAPHORE_ICON= "/icons/semaphore.png"
-HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3adc3ii.site"
+HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3hl.site"
 # Aria2
 HOMEPAGE_VAR_ARIA_ICON= "/icons/ariang.png"
-HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
+HOMEPAGE_VAR_ARIA_URL= "https://dl.d3hl.site"
 
 ### EXTERNAL ###
 
 # Pangolin
 HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin.png"
-HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.d3adc3ii.cc"
+HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.d3hl.cc"
 # Authentik
 HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik.png"
-HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3adc3ii.cc"
+HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3hl.cc"
 HOMEPAGE_VAR_AUTHENTIK_KEY="Boy9GZM04gnN8zn1RdTDSxgkeDr70a8XqFKmrp1HwVx7A3u4GA2pnVN2aZEO"
 # Komodo
 HOMEPAGE_VAR_KOMODO_ICON= "/icons/komodo.png"
-HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
+HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3hl.cc"
 # Twingate
 HOMEPAGE_VAR_TWINGATE_ICON= "/icons/twingate.png"
 HOMEPAGE_VAR_TWINGATE_URL= "https://d3net.twinget.com"
@@ -864,25 +864,25 @@ HOMEPAGE_VAR_TWINGATE_URL= "https://d3net.twinget.com"
 ### Remote ###
 # Guacamole
 HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/guacamole.png"
-HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.d3adc3ii.site/guacamole"
-HOMEPAGE_VAR_GUACAMOLEEXT_URL= "https://guaca.d3adc3ii.cc/guacamole"
+HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.d3hl.site/guacamole"
+HOMEPAGE_VAR_GUACAMOLEEXT_URL= "https://guaca.d3hl.cc/guacamole"
 # Dumbterm
 HOMEPAGE_VAR_DUMBTERM_ICON= "/icons/dumbterm.png"
-HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.d3adc3ii.cc"
+HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.d3hl.cc"
 
 ### Monitoring ###
 # UPTIME KUMA
 HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma.png"
-HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
+HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3hl.cc"
 # Grafana
 HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana.png"
-HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
+HOMEPAGE_VAR_GRAFANA_URL= "https://d3hl.grafana.net/dashboards"
 # Checkmate
 HOMEPAGE_VAR_CHECKMATE_ICON= "/icons/checkmate.png"
-HOMEPAGE_VAR_CHECKMATE_URL= "https://checkmate.d3adc3ii.cc"
+HOMEPAGE_VAR_CHECKMATE_URL= "https://checkmate.d3hl.cc"
 # Beszel
 HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel.png"
-HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
+HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3hl.cc"
 HOMEPAGE_VAR_BESZEL_USERNAME= "d3social@pm.me"
 HOMEPAGE_VAR_BESZEL_PASSWORD= "LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re"
 HOMEPAGE_VAR_BESZEL_VERSION= "2"
@@ -893,17 +893,17 @@ HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs= pbs
 HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"]
 # Scutiny
 HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny.png"
-HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
+HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3hl.cc" 
 # ZABBIX
 HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix.png"
-HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.int.d3adc3ii.cc/zabbix"
+HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.int.d3hl.cc/zabbix"
 # Checkmk
 HOMEPAGE_VAR_CHECKMK_ICON= "/icons/checkmk.png"
-HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"
+HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3hl.cc/d3/check_mk"
 
 # Pulse
 HOMEPAGE_VAR_PULSEXT_ICON= "/icons/pulse.png"
-HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
+HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3hl.cc"
 
 # NETBOX CLOUD
 HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox.png"
@@ -917,19 +917,19 @@ HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
 ### APPS ###
 # Karakeep
 HOMEPAGE_VAR_KARAKEEP_ICON= "/icons/karakeep.png"
-HOMEPAGE_VAR_KARAKEEP_URL= "https://kara.d3adc3ii.cc"
+HOMEPAGE_VAR_KARAKEEP_URL= "https://kara.d3hl.cc"
 # Wallos
 HOMEPAGE_VAR_WALLOS_ICON= "/icons/wallos.png"
-HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
+HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3hl.cc"
 # Ommni Tools
 HOMEPAGE_VAR_OMNITOOLS_ICON= "/icons/omni-tools.png"
-HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
+HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3hl.cc"
 
 ### GL1 ###
 # PVE11
-HOMEPAGE_VAR_PVE11_URL= "https://pve11.d3adc3ii.cc"
-HOMEPAGE_VAR_PVE12_URL= "https://pve12.d3adc3ii.cc"
-HOMEPAGE_VAR_PVE13_URL= "https://pve13.d3adc3ii.cc"
+HOMEPAGE_VAR_PVE11_URL= "https://pve11.d3hl.cc"
+HOMEPAGE_VAR_PVE12_URL= "https://pve12.d3hl.cc"
+HOMEPAGE_VAR_PVE13_URL= "https://pve13.d3hl.cc"
 HOMEPAGE_VAR_GLANCES_PVE11= "http://192.168.3.11:61208"
 HOMEPAGE_VAR_GLANCES_PVE12= "http://192.168.3.12:61208"
 HOMEPAGE_VAR_GLANCES_PVE13= "http://192.168.3.13:61208"
@@ -974,7 +974,7 @@ services:
     healthcheck:
       disable: false
     labels:
-      caddy: immich.d3adc3ii.site
+      caddy: immich.d3hl.site
       caddy.reverse_proxy: "{{upstreams 2283}}"
 
   immich-machine-learning:
@@ -1057,7 +1057,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Singapore
-      - JELLYFIN_PublishedServerUrl=https://jelly.int.d3adc3ii.cc #optional
+      - JELLYFIN_PublishedServerUrl=https://jelly.int.d3hl.cc #optional
     volumes:
       - ${JELLYFIN_CONFIG_DIR}:/config
       - ${JELLYFIN_DATA_DIR}/tvshows:/data/tvshows
@@ -1069,7 +1069,7 @@ services:
       - 1900:1900/udp #optional
     restart: unless-stopped
     labels:
-      caddy: jelly.d3adc3ii.site
+      caddy: jelly.d3hl.site
       caddy.reverse_proxy: "{{upstreams 8096}}"
 """
 environment = """
@@ -1475,12 +1475,12 @@ services:
       - 127.0.0.1:3701:3001
     restart: unless-stopped
     labels:
-      - caddy= xpipe.d3adc3ii.site
+      - caddy= xpipe.d3hl.site
       - caddy.reverse_proxy= "{{upstreams 3700}}"
       - homepage.container= xpipe
       - homepage.group= Remote
       - homepage.icon= /icons/xpipe.png
-      - homepage.href= https://xpipe.d3adc3ii.site
+      - homepage.href= https://xpipe.d3hl.site
 """
 environment = """
 DATA_DIR=/mnt/zApps/xpipe/config
@@ -1647,7 +1647,7 @@ poll_for_updates = true
 auto_update = true
 restart = "unless-stopped"
 environment = """
-  PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
+  PANGOLIN_ENDPOINT=https://pangolin.d3hl.cc
   NEWT_ID=[[NEWT_ID1]]
   NEWT_SECRET=[[NEWT_SECRET1]]
 """
@@ -1688,7 +1688,7 @@ environment = """
   PDF_PASSWORD= [[PDF_PASSWORD]]
 """
 labels = """
-caddy: statement.d3adc3ii.site
+caddy: statement.d3hl.site
 caddy.reverse_proxy: "{{upstreams 8501}}"
 """
 
@@ -1739,8 +1739,8 @@ name = "diiihl"
 [repo.config]
 server = "server-bkxal"
 builder = "local"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
+git_account = "d3hli"
+repo = "d3hli/dIIIhl"
 
 ##
 
@@ -1749,8 +1749,8 @@ name = "diiihl-k2"
 [repo.config]
 server = "komodo-2"
 builder = "local"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
+git_account = "d3hli"
+repo = "d3hli/dIIIhl"
 
 ##
 
@@ -1759,8 +1759,8 @@ name = "diiihl-k3"
 [repo.config]
 server = "komodo-3"
 builder = "local"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
+git_account = "d3hli"
+repo = "d3hli/dIIIhl"
 
 ##
 
@@ -1856,8 +1856,8 @@ params.server_id = "server-bkxal"
 [[resource_sync]]
 name = "sync"
 [resource_sync.config]
-repo = "d3adc3iii/dIIIhl"
-git_account = "d3adc3iii"
+repo = "d3hli/dIIIhl"
+git_account = "d3hli"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
 delete = true
