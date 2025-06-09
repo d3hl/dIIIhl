@@ -173,19 +173,7 @@
             sitemonitor: {{HOMEPAGE_VAR_ARIA_URL}}
 - External:
     - Core: 
-        - Pangolin:
-            icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
-            href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
-            sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
-        - Authentik:
-            icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
-            href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
-            sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
-            widget:
-                type: authentik
-                url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
-                key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}} 
-        - Komodo:
+        - Docker Stacks:
             icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
             href: {{HOMEPAGE_VAR_KOMODO_URL}}
             sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
@@ -215,7 +203,32 @@
                   - field: down
                     label: Stopped
                     format: number
-        
+        - Container Updates:
+            icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
+            widget:
+                type: customapi
+                url: {{HOMEPAGE_VAR_KOMODO_APIURL}}
+                refreshInterval: 30000
+                display: block
+                mappings:
+                  - field: total
+                    label: Containers
+                    format: number
+                  - field: updates
+                    label: With Updates
+                    format: number
+        - Pangolin:
+            icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
+            href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
+        - Authentik:
+            icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
+            href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+            widget:
+                type: authentik
+                url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+                key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}} 
         - Twingate:
             icon: {{HOMEPAGE_VAR_TWINGATE_ICON}}
             href: {{HOMEPAGE_VAR_TWINGATE_URL}}
