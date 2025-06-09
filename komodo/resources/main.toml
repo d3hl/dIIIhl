@@ -15,7 +15,7 @@ enabled = true
 ##
 
 [[server]]
-name = "server-bkxal"
+name = "server-DULxe"
 [server.config]
 address = "https://periphery:8120"
 enabled = true
@@ -81,7 +81,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "server-bkxal"
+server = "server-DULxe"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -196,24 +196,6 @@ AUTHENTIK_EMAIL__FROM=authentik@localhost
 ##
 
 [[stack]]
-name = "battle-of-the-bandwidth"
-tags = [
-  "internal",
-  "testing",
-  "monitoring"
-]
-[stack.config]
-server = "komodo-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-the-bandwidth"
-
-##
-
-[[stack]]
 name = "caddy"
 tags = [
   "internal",
@@ -222,7 +204,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "server-bkxal"
+server = "server-DULxe"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -565,7 +547,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "server-bkxal"
+server = "server-DULxe"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -636,7 +618,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "server-bkxal"
+server = "server-DULxe"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -945,7 +927,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "server-bkxal"
+server = "server-DULxe"
 file_contents = """
 networks:
   caddy:
@@ -1177,7 +1159,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "server-bkxal"
+server = "server-DULxe"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -1282,6 +1264,23 @@ NZBGET_DL_DIR=/mnt/zApps/nzb/downloads
 ##
 
 [[stack]]
+name = "omni-tools"
+[stack.config]
+server = "komodo-2"
+auto_update = true
+file_contents = """
+services:
+  omni-tools:
+    image: iib0011/omni-tools:latest
+    container_name: omni-tools
+    restart: unless-stopped
+    ports:
+      - "8281:80"
+"""
+
+##
+
+[[stack]]
 name = "scrutiny"
 [stack.config]
 server = "komodo-3"
@@ -1349,7 +1348,7 @@ SCRUTINY_WEB_INFLUXDB_BUCKET=scrutiny
 name = "speedtest-tracker"
 tags = ["internal", "testing"]
 [stack.config]
-server = "server-bkxal"
+server = "server-DULxe"
 file_contents = """
 services:
     speedtest-tracker:
@@ -1450,7 +1449,7 @@ PGID=1000
 [[stack]]
 name = "xpipe-webtop"
 [stack.config]
-server = "server-bkxal"
+server = "server-DULxe"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -1520,7 +1519,7 @@ APPRISE_WORKER_COUNT=1
 name = "beszel-k11"
 tags = ["internal", "monitoring"]
 [deployment.config]
-server = "server-bkxal"
+server = "server-DULxe"
 image.type = "Image"
 image.params.image = "henrygd/beszel-agent"
 poll_for_updates = true
@@ -1560,7 +1559,7 @@ KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU
 [[deployment]]
 name = "checkmate-1"
 [deployment.config]
-server = "server-bkxal"
+server = "server-DULxe"
 image.type = "Image"
 image.params.image = "ghcr.io/bluewave-labs/capture:v1.1.0"
 poll_for_updates = true
@@ -1640,7 +1639,7 @@ image.params.image = "tenable/nessus:latest-ubuntu"
 name = "newt1"
 tags = ["external", "production"]
 [deployment.config]
-server = "server-bkxal"
+server = "server-DULxe"
 image.type = "Image"
 image.params.image = "fosrl/newt"
 poll_for_updates = true
@@ -1650,23 +1649,6 @@ environment = """
   PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
   NEWT_ID=[[NEWT_ID1]]
   NEWT_SECRET=[[NEWT_SECRET1]]
-"""
-
-##
-
-[[deployment]]
-name = "omni-tools"
-tags = ["external", "production"]
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "iib0011/omni-tools:latest"
-poll_for_updates = true
-auto_update = true
-network = "bridge"
-restart = "unless-stopped"
-ports = """
-8281:80
 """
 
 ##
@@ -1737,7 +1719,7 @@ environment = """
 [[repo]]
 name = "diiihl"
 [repo.config]
-server = "server-bkxal"
+server = "server-DULxe"
 builder = "local"
 git_account = "d3adc3iii"
 repo = "d3adc3iii/dIIIhl"
@@ -1764,101 +1746,19 @@ repo = "d3adc3iii/dIIIhl"
 
 ##
 
-[[procedure]]
-name = "autosync"
-config.failure_alert = false
-config.schedule = "Run every 30 minutes"
-
-[[procedure.config.stage]]
-name = "Stage 1"
-enabled = true
-executions = [
-  { execution.type = "RunSync", execution.params.sync = "sync", enabled = true },
-  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
-]
-
-##
-
-[[procedure]]
-name = "check_update"
-
-##
-
-[[procedure]]
-name = "pull-deploy"
-description = "description = \"Pulls stack-repo, deploys stacks\""
-config.schedule_timezone = "Asia/Singapore"
-
-[[procedure.config.stage]]
-name = "\"Pull Repo"
-enabled = true
-executions = [
-  { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true }
-]
-
-[[procedure.config.stage]]
-name = "Deploy if changed"
-enabled = true
-executions = [
-  { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = "t*,o*,a*", enabled = true }
-]
-
-##
-
-[[procedure]]
-name = "sync_and_redeploy_homepage"
-
-[[procedure.config.stage]]
-name = "Run sync"
-enabled = true
-executions = [
-  { execution.type = "RunSync", execution.params.sync = "sync", enabled = true }
-]
-
-[[procedure.config.stage]]
-name = "Commit sync"
-enabled = true
-executions = [
-  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
-]
-
-[[procedure.config.stage]]
-name = "pull repo"
-enabled = true
-executions = [
-  { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true }
-]
-
-[[procedure.config.stage]]
-name = "deploy"
-enabled = true
-executions = [
-  { execution.type = "DestroyStack", execution.params.stack = "homepage", execution.params.services = [], execution.params.remove_orphans = false, enabled = true }
-]
-
-[[procedure.config.stage]]
-name = "Stage 5"
-enabled = true
-executions = [
-  { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
-]
-
-##
-
 [[builder]]
 name = "local"
 [builder.config]
 type = "Server"
-params.server_id = "server-bkxal"
+params.server_id = "server-DULxe"
 
 ##
 
 [[resource_sync]]
-name = "sync"
+name = "s1"
 [resource_sync.config]
-repo = "d3adc3iii/dIIIhl"
-git_account = "d3adc3iii"
+repo = "d3hl/dIIIhl"
+git_account = "d3hl"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
-delete = true
 include_user_groups = true
