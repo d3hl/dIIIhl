@@ -3,9 +3,9 @@ import requests
 
 app = Flask(__name__)
 
-KOMODO_URL = "http://KOMODO CORE/read"
-API_KEY = "YOUR KOMODO KEY"
-API_SECRET = "YOUR KOMODO SECRET"
+KOMODO_URL = "http://192.168.2.31:9120/read"
+API_KEY = "K-zJzjausI0s5PFi0B5tpRiZzz7JEjVddtR2cPyHsX"
+API_SECRET = "S-oOAnX7RSJ4vE7la3Tj66pPuiBODTKfXjl14jdMXW"
 
 HEADERS = {
     "Content-Type": "application/json",
