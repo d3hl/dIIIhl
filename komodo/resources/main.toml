@@ -1780,5 +1780,4 @@ repo = "d3hl/dIIIhl"
 git_account = "d3hl"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
-delete = true
 include_user_groups = true
