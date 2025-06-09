@@ -1,1 +1,1904 @@
-## Add resources to get started
+[[server]]
+name = "komodo-2"
+[server.config]
+address = "https://192.168.2.32:8120"
+enabled = true
+
+##
+
+[[server]]
+name = "komodo-3"
+[server.config]
+address = "https://192.168.2.33:8120"
+enabled = true
+
+##
+
+[[server]]
+name = "server-bkxal"
+[server.config]
+address = "https://periphery:8120"
+enabled = true
+
+##
+
+[[stack]]
+name = "actual-budget"
+tags = ["internal", "production"]
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  actual_server:
+    image: docker.io/actualbudget/actual-server:latest
+    ports:
+      - '5006:5006'
+    env_file:
+      - .env  
+    volumes:
+      - ${DATA_DIR}:/data
+    healthcheck:
+      # Enable health check for the instance
+      test: ['CMD-SHELL', 'node src/scripts/health-check.js']
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+    labels:
+      caddy: actual.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 5006}}"
+      homepage.group: "Local Apps"
+      homepage.name: Actual2
+      homepage.icon: actual-budget.png
+      homepage.href: https://actual.d3adc3ii.site
+"""
+environment = """
+PUID=1000
+PGID=1000
+DATA_DIR=/mnt/zApps/actualbudget
+      # Uncomment any of the lines below to set configuration options.
+      # - ACTUAL_HTTPS_KEY=/data/selfhost.key
+      # - ACTUAL_HTTPS_CERT=/data/selfhost.crt
+      # - ACTUAL_PORT=5006
+      # - ACTUAL_UPLOAD_FILE_SYNC_SIZE_LIMIT_MB=20
+      # - ACTUAL_UPLOAD_SYNC_ENCRYPTED_FILE_SYNC_SIZE_LIMIT_MB=50
+      # - ACTUAL_UPLOAD_FILE_SIZE_LIMIT_MB=20
+      # See all options and more details at https://actualbudget.github.io/docs/Installing/Configuration
+      # !! If you are not using any of these options, remove the 'environment:' tag entirely.
+"""
+
+##
+
+[[stack]]
+name = "authentik"
+tags = [
+  "external",
+  "production",
+  "komodo-1"
+]
+[stack.config]
+server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  postgresql:
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${PG_PASS}
+      POSTGRES_USER: ${PG_USER:-authentik}
+      POSTGRES_DB: ${PG_DB:-authentik}
+    env_file:
+      - .env
+  redis:
+    image: docker.io/library/redis:alpine
+    command: --save 60 1 --loglevel warning
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    volumes:
+      - redis:/data
+  server:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.1}
+    restart: unless-stopped
+    command: server
+    environment:
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+    volumes:
+      - ${AUTHENTIK_DATA_DIR}/media:/media
+      - ${AUTHENTIK_DATA_DIR}/custom-templates:/templates
+    env_file:
+      - .env
+    ports:
+      - "${COMPOSE_PORT_HTTP:-9000}:9000"
+      - "${COMPOSE_PORT_HTTPS:-9443}:9443"
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+  worker:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.4.0}
+    restart: unless-stopped
+    command: worker
+    environment:
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+    # `user: root` and the docker socket volume are optional.
+    # See more for the docker socket integration here:
+    # https://goauthentik.io/docs/outposts/integrations/docker
+    # Removing `user: root` also prevents the worker from fixing the permissions
+    # on the mounted folders, so when removing this make sure the folders have the correct UID/GID
+    # (1000:1000 by default)
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${AUTHENTIK_DATA_DIR}/media:/media
+      - ./certs:/certs
+      - ${AUTHENTIK_DATA_DIR}/custom-templates:/templates
+    env_file:
+      - .env
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  database:
+    driver: local
+  redis:
+    driver: local
+"""
+environment = """
+AUTHENTIK_SECRET_KEY= [[AUTHENTIK_SECRET_KEY]]
+PG_PASS= [[AUTHENTIK_PG_PASS]]
+AUTHENTIK_DATA_DIR=/mnt/zApps/authentik
+# SMTP Host Emails are sent to
+AUTHENTIK_EMAIL__HOST=localhost
+AUTHENTIK_EMAIL__PORT=25
+# Use StartTLS
+AUTHENTIK_EMAIL__USE_TLS=false
+# Use SSL
+AUTHENTIK_EMAIL__USE_SSL=false
+AUTHENTIK_EMAIL__TIMEOUT=10
+# Email address authentik will send from, should have a correct @domain
+AUTHENTIK_EMAIL__FROM=authentik@localhost
+"""
+
+##
+
+[[stack]]
+name = "battle-of-the-bandwidth"
+tags = [
+  "internal",
+  "testing",
+  "monitoring"
+]
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-the-bandwidth"
+
+##
+
+[[stack]]
+name = "caddy"
+tags = [
+  "internal",
+  "production",
+  "core",
+  "komodo-1"
+]
+[stack.config]
+server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+networks:
+  caddy: 
+    name: caddy
+    ipam:
+      driver: default  
+    
+# Main Caddy
+services:
+  caddy:
+    image: homeall/caddy-reverse-proxy-cloudflare:latest
+    networks:
+      - caddy
+    ports:
+      - 80:80
+      - 443:443
+      - "443:443/udp"
+    env_file:
+      - .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${CADDY_DATA_DIR}/data:/data
+      - ${CADDY_DATA_DIR}/config/:/config/caddy  #👈 where to save configs 
+    restart: unless-stopped
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+# Caddy-config container
+  caddy-config:
+    container_name: caddy-config
+    image: traefik/whoami:latest
+    networks:
+      - caddy
+    restart: always
+    env_file:
+      - .env
+    labels:
+    #############################################
+    # Settings and snippets to get things working
+    # You shouldn't need to modify this normally
+    # Custom settings and definitions are below
+    #############################################
+
+      #### Global Settings ####
+      caddy_0.email: ${CADDY_EMAIL}
+      caddy_0.auto_https: prefer_wildcard
+
+      #### Snippets ####
+      # Get wildcard certificate
+      caddy_1: (wildcard)
+      #caddy_1.acme_dns: "cloudflare ${CF_API_TOKEN}" 
+      caddy_1.tls.dns: "cloudflare ${CF_API_TOKEN}"
+      caddy_1.tls.resolvers: 1.1.1.1 1.0.0.1
+      caddy_1.handle.abort: ""
+
+      # Skip TLS verify for backend with self-signed HTTPS
+      caddy_3: (https)
+      caddy_3.transport: http
+      caddy_3.transport.tls: ""
+      caddy_3.transport.tls_insecure_skip_verify: ""
+
+    ###########################################
+    # Custom settings. Modify things below 👇:
+    # Make sure they have unique label numbers
+    ###########################################
+
+      # Custom global settings, add/edit as needed
+      # caddy_0.log: default
+      # caddy_0.log.format: console
+
+      # Uncomment this during testing to avoid hitting rate limit.
+      # It will try to obtain SSL from Let's Encrypt's staging endpoint.
+      # acme_ca: "https://acme-staging-v02.api.letsencrypt.org/directory" # 👈 Staging
+
+      ## Setup wildcard sites
+      caddy_10: "*.d3adc3ii.site"   #👈 Change to your domain
+      caddy_10.import: wildcard
+
+      # Caddy Admin Endpoint and Metrics
+      caddy_20: :2020
+      #caddy_20.admin: "0.0.0.0:2019"
+      #caddy_20.admin.origin: "caddy.d3adc3ii.site"
+      caddy_20.handle: /reverse_proxy/upstreams
+      caddy_20.handle.reverse_proxy: localhost:2019
+      caddy_20.handle.reverse_proxy.header_up: Host localhost:2019
+    
+
+      # Add our first site, which this container itself
+      caddy_99: whoami.d3adc3ii.site                       #👈 Subdomain using wildcard cert
+      caddy_99.reverse_proxy: "{{upstreams 80}}"         #👈 Container port
+
+      # For non-docker sites see https://gist.github.com/omltcat/241ef622070ca0580f2876a7cfa7de67
+      # e.g.: Pi-Hole on another machine in the same LAN
+      caddy_100: netalertx.d3adc3ii.site                      
+      caddy_100.reverse_proxy: 192.168.2.31:20184
+
+      caddy_101: pve.d3adc3ii.site                      
+      caddy_101.reverse_proxy: 192.168.2.11:8006
+      caddy_101.reverse_proxy.transport: http
+      caddy_101.reverse_proxy.transport.tls_insecure_skip_verify: ""
+
+
+      caddy_102: opn.d3adc3ii.site                      
+      caddy_102.reverse_proxy: 192.168.2.1:2184
+      caddy_102.reverse_proxy.transport: http
+      caddy_102.reverse_proxy.transport.tls: ""
+      caddy_102.reverse_proxy.transport.versions: 1.1 1.2
+      caddy_102.reverse_proxy.transport.tls_insecure_skip_verify: ""
+
+      caddy_103: truenas.d3adc3ii.site                      
+      caddy_103.reverse_proxy: 192.168.2.7
+      caddy_103.reverse_proxy.transport: http
+      caddy_103.reverse_proxy.transport.tls_insecure_skip_verify: ""
+
+      caddy_104: pbs.d3adc3ii.site   
+      caddy_104.reverse_proxy: 192.168.2.35:8007
+      caddy_104.reverse_proxy.transport: http
+      caddy_104.reverse_proxy.transport.tls_insecure_skip_verify: ""
+
+      caddy_105: ns0.d3adc3ii.site                      
+      caddy_105.reverse_proxy: 192.168.2.5:5380
+      caddy_106: stash.d3adc3ii.site                      
+      caddy_106.reverse_proxy: 192.168.2.26:9999
+      caddy_107: ha.d3adc3ii.site                      
+      caddy_107.reverse_proxy: 192.168.99.5:8123    
+      caddy_108: jelly.d3adc3ii.site                      
+      caddy_108.reverse_proxy: 192.168.2.33:8096
+      caddy_109: semaphore.d3adc3ii.site                      
+      caddy_109.reverse_proxy: 192.168.2.28:3000            
+      caddy_110: aria.d3adc3ii.site                      
+      caddy_110.reverse_proxy: 192.168.2.16:6880  
+      caddy_111: pulse.d3adc3ii.site                      
+      caddy_111.reverse_proxy: 192.168.2.36:7655     
+      caddy_112: backrest.d3adc3ii.site                      
+      caddy_112.reverse_proxy: 192.168.2.35:9898
+      caddy_113: actual.d3adc3ii.site                      
+      caddy_113.reverse_proxy: 192.168.2.32:5006
+      # wazuh
+      caddy_114: wazuh.d3adc3ii.site                      
+      caddy_114.reverse_proxy: 192.168.2.30:443
+      caddy_114.reverse_proxy.transport: http
+      caddy_114.reverse_proxy.transport.tls_insecure_skip_verify: ""
+      # guaca
+      caddy_115: guaca.d3adc3ii.site                      
+      caddy_115.reverse_proxy: 192.168.2.20
+      #caddy_116: checkmate.d3adc3ii.site                      
+      #caddy_116.reverse_proxy: 192.168.2.33:52345  
+      #caddy_117: checkmate2.d3adc3ii.site                      
+      #caddy_117.reverse_proxy: 192.168.2.32:59232
+      #caddy_118: checkmate3.d3adc3ii.site                      
+      #caddy_118.reverse_proxy: 192.168.2.33:59232    
+
+      # e.g. OpenMediaVault on the host machine, with self-signed https at port 4430
+      #caddy_101: omv.example.com                         #👈 Subdomain using wildcard cert
+      #caddy_101.reverse_proxy: host.docker.internal:4430 #👈 Port on host machine
+      #caddy_101.reverse_proxy.import: https              #👈 Allow self-signed cert between OMV and Caddy
+      #caddy_101.import: auth                             #👈 Enable protection by Authelia
+"""
+environment = """
+PUID=1000
+PGID=1000
+CADDY_DATA_DIR=/mnt/zApps/caddy
+CADDY_INGRESS_NETWORKS=caddy
+CF_API_TOKEN= [[CF_API_TOKEN]]
+CADDY_EMAIL= d3tech@pm.me
+"""
+
+##
+
+[[stack]]
+name = "checkmate"
+tags = ["external", "testing"]
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  server:
+    image: ghcr.io/bluewave-labs/checkmate:backend-dist-mono
+    restart: always
+    ports:
+      - "52345:52345"
+    env_file:
+      - .env
+    environment:
+      - DB_CONNECTION_STRING=mongodb://mongodb:27017/uptime_db?replicaSet=rs0
+    depends_on:
+      - redis
+      - mongodb
+  redis:
+    image: ghcr.io/bluewave-labs/checkmate:redis-dist
+    restart: always
+    env_file:
+      - .env
+    user: "1000:1000"  
+    volumes:
+      - ${DATA_DIR}/redis/data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+  mongodb:
+    image: ghcr.io/bluewave-labs/checkmate:mongo-dist
+    restart: always
+    command: ["mongod", "--quiet", "--replSet", "rs0", "--bind_ip_all"]
+    env_file:
+      - .env
+    user: "1000:1000"  
+    volumes:
+      - ${DATA_DIR}/mongo/data:/data/db
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'mongodb:27017'}]}) }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      start_interval: 1s
+      retries: 30
+"""
+environment = """
+PUID=1000
+PGID=1000
+DATA_DIR= /mnt/zApps/checkmate
+UPTIME_APP_API_BASE_URL: https://checkmate.d3adc3ii.site/api/v1
+UPTIME_APP_CLIENT_HOST: https://checkmate.d3adc3ii.site
+REDIS_URL=redis://redis:6379
+CLIENT_HOST=https://checkmate.d3adc3ii.site
+JWT_SECRET= [[CHECKMATE_JWT_SECRET]]
+DOCKER_HOST=tcp://192.168.2.31:2375
+"""
+
+##
+
+[[stack]]
+name = "dumbterm"
+tags = ["external", "production"]
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  dumbterm:
+    image: dumbwareio/dumbterm:latest
+    container_name: dumbterm
+    restart: unless-stopped
+    ports:
+      - ${DUMBTERM_PORT}:3000
+    volumes:
+      - ${DUMBTERM_CONFIG}:/root/.config
+      - ${DUMBTERM_DATA_DIR}:/root/data
+    environment:
+      # Container timezone
+      TZ: ${DUMBTERM_TZ}
+      # The title shown in the web interface
+      SITE_TITLE: ${DUMBTERM_SITE_TITLE:-DumbTerm}
+      # Recommended PIN protection (leave empty to disable)
+      DUMBTERM_PIN: ${DUMBTERM_PIN}
+      # The base URL for the application
+      BASE_URL: ${DUMBTERM_BASE_URL}
+      ENABLE_STARSHIP: ${ENABLE_STARSHIP:-true}
+      LOCKOUT_TIME: ${DUMBTERM_LOCKOUT_TIME:-15} # Minutes
+      # Session duration in hours before requiring re-authentication
+      MAX_SESSION_AGE: ${DUMBTERM_MAX_SESSION_AGE:-24} # Hours
+      # (OPTIONAL) - List of allowed origins for CORS
+      # ALLOWED_ORIGINS: ${DUMBTERM_ALLOWED_ORIGINS:-http://localhost:3000}
+"""
+environment = """
+DUMBTERM_CONFIG="/mnt/zApps/dumbterm/config"
+DUMBTERM_DATA_DIR="/mnt/zApps/dumbterm/data"
+DUMBTERM_TZ="Asia/Singapore"
+DUMBTERM_PIN=1111
+DUMBTERM_PORT=3002
+DUMBTERM_BASE_URL=http://dumbterm.d3adc3ii.cc:3002
+"""
+
+##
+
+[[stack]]
+name = "file-share"
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+networks:
+  caddy:
+    external: true
+services:
+  fireshare:
+    container_name: fireshare
+    image: shaneisrael/fireshare:latest
+    networks:
+      - caddy
+    ports:
+      - "8585:80"
+    volumes:
+      - ${FSHARE_DATA_DIR}/data:/data
+      - ${FSHARE_DATA_DIR}/processed:/processed
+      - ${FSHARE_DATA_DIR}/videos:/videos
+    env_file:
+      - .env
+    environment:
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - SECRET_KEY=${SECRET_KEY}
+      - MINUTES_BETWEEN_VIDEO_SCANS=5
+      # The location in the video thumbnails are generated. A value between 0-100 where 50 would be the frame in the middle of the video file and 0 would be the first frame of the video.
+      - THUMBNAIL_VIDEO_LOCATION=0
+      # The domain your instance is hosted at. (do not add http or https) e.x: v.fireshare.net, this is required for opengraph to work correctly for shared links. DO NOT SURROUND IN QUOTES.
+      - DOMAIN=fs.d3adc3ii.cc
+      - PUID=1000
+      - PGID=1000
+    labels:
+      caddy: fs.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 8585}}"
+"""
+environment = """
+FSHARE_DATA_DIR=/mnt/zApps/fileshare
+ADMIN_USERNAME=d3
+ADMIN_PASSWORD=[[FSHARE_ADMIN_PASSWORD]]
+SECRET_KEY=[[FSHARE_SECRET_KEY]]
+"""
+
+##
+
+[[stack]]
+name = "healthcheck"
+tags = [
+  "internal",
+  "monitoring",
+  "komodo-1"
+]
+[stack.config]
+server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+networks:
+  caddy:
+    external: true
+
+services:
+  healthchecks:
+    image: lscr.io/linuxserver/healthchecks:latest
+    container_name: healthchecks
+    networks:
+      - caddy
+    env_file:
+      - .env
+    #environment:
+      #- CSRF_TRUSTED_ORIGINS= #optional
+      #- DEBUG=True #optional
+      #- DEFAULT_FROM_EMAIL= #optional
+      #- EMAIL_HOST= #optional
+      #- EMAIL_PORT= #optional
+      #- EMAIL_HOST_USER= #optional
+      #- EMAIL_HOST_PASSWORD= #optional
+      #- EMAIL_USE_TLS= #optional
+      #- INTEGRATIONS_ALLOW_PRIVATE_IPS= #optional
+      #- PING_EMAIL_DOMAIN= #optional
+      #- RP_ID= #optional
+      #- SITE_LOGO_URL= #optional
+    volumes:
+      - ${DATA_DIR}/config:/config
+    ports:
+      - 8000:8000
+      - 2525:2525 #optional
+    restart: unless-stopped
+    labels:
+      - caddy= health.d3adc3ii.site
+      - caddy.reverse_proxy= "{{upstreams 8000}}"
+      - homepage.server= my-docker
+      - homepage.container= healthchecks
+      - homepage.name= Test
+      - homepage.group= Testa
+      - homepage.icon= /icons/healthchecks.png
+      - homepage.href= https://health.d3adc3ii.site
+      - homepage.description= cronjob monitor
+"""
+environment = """
+PUID=1000
+PGID=1000
+DATA_DIR=/mnt/zApps/healthcheck
+SITE_ROOT= "https://health.d3adc3ii.site"
+ALLOWED_HOSTS=health.d3adc3ii.site
+SITE_NAME= Healthcheck
+SUPERUSER_EMAIL= d3tech@pm.me
+SUPERUSER_PASSWORD= [[HEALTHCHECK_SUPERADMIN_PASSWORD]]
+SECRET_KEY= [[HEALTHCHECK_SECRET]]
+APPRISE_ENABLED=True
+TZ=Asia/Singapore
+"""
+
+##
+
+[[stack]]
+name = "homepage"
+tags = [
+  "external",
+  "production",
+  "komodo-1"
+]
+[stack.config]
+server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+networks:
+  caddy:
+    external: true
+
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:dev
+    container_name: homepage
+    networks:
+      - caddy
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    volumes:
+      - ${DATA_DIR}/config:/app/config 
+      - ${DATA_DIR}/icons:/app/public/icons
+      - ${DATA_DIR}/images:/app/public/images 
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+    labels:
+      caddy: homepage.d3adc3ii.site                    
+      caddy.reverse_proxy: "{{upstreams 3000}}"
+      
+  dockerproxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy:latest
+    container_name: dockerproxy
+    networks:
+      - caddy
+    environment:
+      - CONTAINERS=1 # Allow access to viewing containers
+      - SERVICES=1 # Allow access to viewing services (necessary when using Docker Swarm)
+      - TASKS=1 # Allow access to viewing tasks (necessary when using Docker Swarm)
+      - POST=0 # Disallow any POST operations (effectively read-only)
+    ports:
+      - 127.0.0.1:2375:2375
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
+    restart: unless-stopped
+"""
+environment = """
+DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/homepage
+HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,192.168.2.31:3000"
+PGID= 1000 
+PUID= 1000 
+# Site Config
+HOMEPAGE_VAR_TITLE= "d3 Homepage"
+HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
+HOMEPAGE_VAR_IMG_URL= "/images/culon.jpg"
+HOMEPAGE_VAR_HEADER_STYLE= boxedWidgets
+
+HOMEPAGE_VAR_IMG_BLUR= md
+HOMEPAGE_VAR_IMG_SATURATE= 50
+HOMEPAGE_VAR_IMG_BRIGHTNESS= 50
+HOMEPAGE_VAR_IMG_OPACITY=70
+HOMEPAGE_VAR_THEME= dark
+HOMEPAGE_VAR_COLOR= slate
+HOMEPAGE_VAR_STATUS_STYLE= per-service
+HOMEPAGE_VAR_IMG_FULLWIDTH= true
+HOMEPAGE_VAR_IMG_SHOWSTATS= true
+HOMEPAGE_VAR_IMG_HIDEERRORS= true
+HOMEPAGE_VAR_USE_EQUAL_HEIGHTS= true
+
+
+### GLANCES WIDGET SETTINGS
+HOMEPAGE_VAR_GL11_URL= http://192.168.3.11:61208
+HOMEPAGE_VAR_GL11_VERSION= 4 # required only if running glances v4 or higher, defaults to 3
+HOMEPAGE_VAR_GL11_CPU= false # optional, enabled by default, disable by setting to false
+HOMEPAGE_VAR_GL11_MEM= false # optional, enabled by default, disable by setting to false
+HOMEPAGE_VAR_GL11_CPUTEMP= true # disabled by default
+HOMEPAGE_VAR_GL11_UPTIME= true # disabled by default
+HOMEPAGE_VAR_GL11_LABEL= pve11 # optional
+
+HOMEPAGE_VAR_GL12_URL= http://192.168.3.12:61208
+HOMEPAGE_VAR_GL12_VERSION= 4 
+HOMEPAGE_VAR_GL12_CPU= false 
+HOMEPAGE_VAR_GL12_MEM= false 
+HOMEPAGE_VAR_GL12_CPUTEMP= true 
+HOMEPAGE_VAR_GL12_UPTIME= true 
+HOMEPAGE_VAR_GL12_LABEL= pve12 
+
+HOMEPAGE_VAR_GL13_URL= http://192.168.3.13:61208
+HOMEPAGE_VAR_GL13_VERSION= 4
+HOMEPAGE_VAR_GL13_CPU= false 
+HOMEPAGE_VAR_GL13_MEM= false 
+HOMEPAGE_VAR_GL13_CPUTEMP= true 
+HOMEPAGE_VAR_GL13_UPTIME= true 
+HOMEPAGE_VAR_GL13_LABEL= pve13 
+
+### INFRA ###
+# PULSE
+HOMEPAGE_VAR_PULSE_URL= "http://192.168.2.36:7655"
+HOMEPAGE_VAR_PULSE_ALLOWFULLSCREEN= true
+HOMEPAGE_VAR_PULSE_LOADING_STRATEGY=eager
+HOMEPAGE_VAR_PULSE_ALLOW_SCROLLING=false
+HOMEPAGE_VAR_PULSE_CLASSES= h-60 sm:h-60 md:h-100 lg:h-200 xl:h-300 2xl:h-700
+#HOMEPAGE_VAR_PULSE_HEIGHT= 500
+
+# Truenas
+HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas.png"
+HOMEPAGE_VAR_TRUENAS_URL= "https://192.168.2.7"
+HOMEPAGE_VAR_TRUENAS_KEY="1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe"
+HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
+# Proxmox
+HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox.png"
+HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.d3adc3ii.site"
+#HOMEPAGE_VAR_PROXMOX_USER= 
+#HOMEPAGE_VAR_PROXMOX_API_KEY=
+HOMEPAGE_VAR_PBS_URL= "https://pbs.d3adc3ii.site"
+
+### INFRA ###
+# Opnsense
+HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense.png"
+HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.d3adc3ii.site"
+# DNS
+HOMEPAGE_VAR_DNS_ICON= "/icons/technitium.png"
+HOMEPAGE_VAR_DNS_URL= "https://ns0.d3adc3ii.site"
+HOMEPAGE_VAR_DNS_KEY="664be7cf433c98c60e66d81cc782a9226cc8ba2e255933727285174f62980b1c"
+HOMEPAGE_VAR_DNS_RANGE: LastDay # optional, defaults to LastHour
+# MIKROTIK
+HOMEPAGE_VAR_MIKROTIK_ICON= "/icons/mikrotik.png"
+HOMEPAGE_VAR_MIKROTIK_URL= "http://192.168.2.253"
+# TPLINK
+HOMEPAGE_VAR_TPLINK_ICON= "/icons/tp-link.png"
+HOMEPAGE_VAR_TPLINK_URL= "http://192.168.2.252"
+
+### Monitoring ###
+# Caddy Proxy
+HOMEPAGE_VAR_CADDYPROXY_ICON= "/icons/caddy.png"
+HOMEPAGE_VAR_CADDYPROXY_URL= "http://caddy:2020"
+# NetAlertX 
+HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx.png"
+HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3adc3ii.site"
+HOMEPAGE_VAR_NETALERTX_KEY="t_pJ26L2qEeUcR6bz5RCGI"
+HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"] 
+# Wazuh
+HOMEPAGE_VAR_WAZUH_ICON= "/icons/wazuh.png"
+HOMEPAGE_VAR_WAZUH_URL= "https://wazuh.d3adc3ii.site"
+# APPRISE-API
+HOMEPAGE_VAR_APPRISE_ICON= "/icons/apprise.png"
+HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
+# Healthchecks
+HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks.png"
+HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
+# Smokeping
+HOMEPAGE_VAR_SMOKEPING_ICON= "/icons/smokeping.png"
+HOMEPAGE_VAR_SMOKEPING_URL= "http://192.168.2.21/smokeping"
+
+# Battle of the bandwidth
+HOMEPAGE_VAR_BOTB_ICON= "/icons/smokeping.png"
+HOMEPAGE_VAR_BOTB_URL= "https://botb.int.d3adc3ii.cc"
+
+### BACKUP ###
+# Backrest
+HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest.png"
+HOMEPAGE_VAR_BACKREST_URL= "https://backrest.d3adc3ii.site"
+
+# Remote-Backups
+HOMEPAGE_VAR_REMOTEBACKUP_ICON= "/icons/proxmox.png"
+HOMEPAGE_VAR_REMOTEBACKUP_URL= "https://dashboard.remote-backups.com"
+
+
+# Jellyfin
+HOMEPAGE_VAR_JELLY_ICON= "/icons/jellyfin.png"
+HOMEPAGE_VAR_JELLY_URL= "https://jelly.d3adc3ii.site"
+HOMEAGE_VAR_JELLY_WIDGETURL= "http://192.168.2.33:8096"
+HOMEPAGE_VAR_JELLY_KEY= "a6a45c61dd1d4f059b02fa22ad8c0ef3"
+HOMEPAGE_VAR_JELLY_ENABLEBLOCK=true
+HOMEPAGE_VAR_JELLY_NOWPLAY=false
+
+# Immich
+HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich.png"
+HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3adc3ii.site"
+HOMEPAGE_VAR_IMMICH_KEY= "7zmatjhj9RVRPylp08hKaG1mkYDubUyeqfDlpaUHo"
+HOMEPAGE_VAR_IMMICH_VERSION= 2
+HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"] 
+
+### LOCAL APPS ###
+# Actual Budget
+HOMEPAGE_VAR_ACTUAL_ICON= "/icons/actual-budget.png"
+HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3adc3ii.site"
+# Sensei
+HOMEPAGE_VAR_SENSEI_ICON= "/icons/davis.png"
+HOMEPAGE_VAR_SENSEI_URL= "https://statement.d3adc3ii.site"
+# Homeassistant
+HOMEPAGE_VAR_HA_ICON= "/icons/home-assistant.png"
+HOMEPAGE_VAR_HA_URL= "https://ha.d3adc3ii.site"
+# Qbit
+HOMEPAGE_VAR_QBIT_ICON= "/icons/qbittorrent.png"
+HOMEPAGE_VAR_QBIT_URL= "https://qbit.d3adc3ii.site"
+HOMEPAGE_VAR_QBIT_USER= "d3adc3ii"
+HOMEPAGE_VAR_QBIT_PASSWORD= "WCxb2CcykoUmjiNAf3p8"
+# Stash
+HOMEPAGE_VAR_STASH_ICON= "/icons/stash.png"
+HOMEPAGE_VAR_STASH_URL= "https://stash.d3adc3ii.site"
+HOMEPAGE_VAR_STASH_USER= "d3adc3ii"
+HOMEPAGE_VAR_QBIT_API= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg"
+# Semaphore
+HOMEPAGE_VAR_SEMAPHORE_ICON= "/icons/semaphore.png"
+HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3adc3ii.site"
+# Aria2
+HOMEPAGE_VAR_ARIA_ICON= "/icons/ariang.png"
+HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
+
+### EXTERNAL ###
+
+# Pangolin
+HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin.png"
+HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.d3adc3ii.cc"
+# Authentik
+HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik.png"
+HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3adc3ii.cc"
+HOMEPAGE_VAR_AUTHENTIK_KEY="Boy9GZM04gnN8zn1RdTDSxgkeDr70a8XqFKmrp1HwVx7A3u4GA2pnVN2aZEO"
+# Komodo
+HOMEPAGE_VAR_KOMODO_ICON= "/icons/komodo.png"
+HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
+# Twingate
+HOMEPAGE_VAR_TWINGATE_ICON= "/icons/twingate.png"
+HOMEPAGE_VAR_TWINGATE_URL= "https://d3net.twinget.com"
+
+### Remote ###
+# Guacamole
+HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/guacamole.png"
+HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.d3adc3ii.site/guacamole"
+HOMEPAGE_VAR_GUACAMOLEEXT_URL= "https://guaca.d3adc3ii.cc/guacamole"
+# Dumbterm
+HOMEPAGE_VAR_DUMBTERM_ICON= "/icons/dumbterm.png"
+HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.d3adc3ii.cc"
+
+### Monitoring ###
+# UPTIME KUMA
+HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma.png"
+HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
+# Grafana
+HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana.png"
+HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
+# Checkmate
+HOMEPAGE_VAR_CHECKMATE_ICON= "/icons/checkmate.png"
+HOMEPAGE_VAR_CHECKMATE_URL= "https://checkmate.d3adc3ii.cc"
+# Beszel
+HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel.png"
+HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
+HOMEPAGE_VAR_BESZEL_USERNAME= "d3social@pm.me"
+HOMEPAGE_VAR_BESZEL_PASSWORD= "LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re"
+HOMEPAGE_VAR_BESZEL_VERSION= "2"
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11= pve11
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12= pve12
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13= pve13
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs= pbs
+HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"]
+# Scutiny
+HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny.png"
+HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
+# ZABBIX
+HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix.png"
+HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.int.d3adc3ii.cc/zabbix"
+# Checkmk
+HOMEPAGE_VAR_CHECKMK_ICON= "/icons/checkmk.png"
+HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"
+
+# Pulse
+HOMEPAGE_VAR_PULSEXT_ICON= "/icons/pulse.png"
+HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
+
+# NETBOX CLOUD
+HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox.png"
+HOMEPAGE_VAR_NETBOXCL_URL= "https://wmfk3018.cloud.netboxapp.com"
+# NETBOX CONSOLE
+HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox.png"
+HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
+
+
+
+### APPS ###
+# Karakeep
+HOMEPAGE_VAR_KARAKEEP_ICON= "/icons/karakeep.png"
+HOMEPAGE_VAR_KARAKEEP_URL= "https://kara.d3adc3ii.cc"
+# Wallos
+HOMEPAGE_VAR_WALLOS_ICON= "/icons/wallos.png"
+HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
+# Ommni Tools
+HOMEPAGE_VAR_OMNITOOLS_ICON= "/icons/omni-tools.png"
+HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
+
+### GL1 ###
+# PVE11
+HOMEPAGE_VAR_PVE11_URL= "https://pve11.d3adc3ii.cc"
+HOMEPAGE_VAR_PVE12_URL= "https://pve12.d3adc3ii.cc"
+HOMEPAGE_VAR_PVE13_URL= "https://pve13.d3adc3ii.cc"
+HOMEPAGE_VAR_GLANCES_PVE11= "http://192.168.3.11:61208"
+HOMEPAGE_VAR_GLANCES_PVE12= "http://192.168.3.12:61208"
+HOMEPAGE_VAR_GLANCES_PVE13= "http://192.168.3.13:61208"
+"""
+
+##
+
+[[stack]]
+name = "immich"
+tags = [
+  "internal",
+  "production",
+  "komodo-1"
+]
+[stack.config]
+server = "server-bkxal"
+file_contents = """
+networks:
+  caddy:
+    external: true
+services:
+  immich-server:
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    networks:
+      - caddy
+    # extends:
+    #   file: hwaccel.transcoding.yml
+    #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
+    volumes:
+      # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
+      - ${UPLOAD_LOCATION}:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    ports:
+      - '2283:2283'
+    depends_on:
+      - redis
+      - database
+    restart: always
+    healthcheck:
+      disable: false
+    labels:
+      caddy: immich.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 2283}}"
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    networks:
+      - caddy
+    volumes:
+      - model-cache:/cache
+    env_file:
+      - .env
+    restart: always
+    healthcheck:
+      disable: false
+
+  redis:
+    container_name: immich_redis
+    image: docker.io/valkey/valkey:8-bookworm@sha256:42cba146593a5ea9a622002c1b7cba5da7be248650cbb64ecb9c6c33d29794b1
+    networks:
+      - caddy
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+
+  database:
+    container_name: immich_postgres
+    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
+    networks:
+      - caddy
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE_NAME}
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+    volumes:
+      # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
+      - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
+    user: "1000:1000"
+    healthcheck:
+      test: >-
+        pg_isready --dbname="$${POSTGRES_DB}" --username="$${POSTGRES_USER}" || exit 1; Chksum="$$(psql --dbname="$${POSTGRES_DB}" --username="$${POSTGRES_USER}" --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')"; echo "checksum failure count is $$Chksum"; [ "$$Chksum" = '0' ] || exit 1
+      interval: 5m
+      start_interval: 30s
+      start_period: 5m
+    command: >-
+      postgres -c shared_preload_libraries=vectors.so -c 'search_path="$$user", public, vectors' -c logging_collector=on -c max_wal_size=2GB -c shared_buffers=512MB -c wal_compression=on
+    restart: always
+
+volumes:
+  model-cache:
+"""
+environment = """
+UPLOAD_LOCATION=/mnt/zApps/immich-external
+DB_DATA_LOCATION=/mnt/zApps/immich-external/postgres
+IMMICH_VERSION=release
+DB_PASSWORD=[[IMMICH_DB_PASSWORD]]
+DB_USERNAME=postgres
+DB_DATABASE_NAME=immich
+"""
+
+##
+
+[[stack]]
+name = "jellyfin"
+tags = ["internal", "production"]
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+networks:
+  caddy:
+    external: true
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Singapore
+      - JELLYFIN_PublishedServerUrl=https://jelly.int.d3adc3ii.cc #optional
+    volumes:
+      - ${JELLYFIN_CONFIG_DIR}:/config
+      - ${JELLYFIN_DATA_DIR}/tvshows:/data/tvshows
+      - ${JELLYFIN_DATA_DIR}/movies:/data/movies
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    restart: unless-stopped
+    labels:
+      caddy: jelly.d3adc3ii.site
+      caddy.reverse_proxy: "{{upstreams 8096}}"
+"""
+environment = """
+JELLYFIN_CONFIG_DIR=/mnt/zApps/jellyfin/config
+JELLYFIN_DATA_DIR=/mnt/zFiles/media
+
+"""
+
+##
+
+[[stack]]
+name = "karakeep"
+tags = ["external", "production"]
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+version: '3.8'
+services:
+  web:
+    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
+    restart: unless-stopped
+    volumes:
+      #- /etc/komodo/repos/diiihl/app-data/karakeep-data:/data
+      - ${DATA_DIR}:/data
+    ports:
+      - 3333:3000
+    env_file:
+      - .env
+    environment:
+      MEILI_ADDR: http://meilisearch:7700
+      BROWSER_WEB_URL: http://chrome:9222
+      DATA_DIR: /data
+  chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:123
+    restart: unless-stopped
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+  meilisearch:
+    image: getmeili/meilisearch:v1.13.3
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - meilisearch:/meili_data
+
+volumes:
+  meilisearch:
+  data:
+"""
+environment = """
+KARAKEEP_VERSION=release
+NEXTAUTH_SECRET=[[KARA_NEXTAUTH_SECRET]]
+MEILI_MASTER_KEY=[[KARA_MEILI_MASTER_KEY]]
+NEXTAUTH_URL=http://192.168.2.32:3333
+OPENAI_API_KEY=[[OPENAI_API_KEY]]
+DATA_DIR=/mnt/zApps/karakeep/data
+"""
+
+##
+
+[[stack]]
+name = "loggifly"
+tags = ["internal", "monitoring"]
+[stack.config]
+
+
+##
+
+[[stack]]
+name = "mailrise"
+[stack.config]
+server = "komodo-3"
+file_contents = """
+services:
+  mailrise:
+    image: yoryan/mailrise:latest
+    container_name: mailrise
+    ports:
+      - '8025:8025'
+    restart: unless-stopped
+    volumes:
+      -  /mnt/zApps/mailrise/mailrise.conf:/etc/mailrise.conf:ro
+"""
+environment = """
+
+"""
+
+##
+
+[[stack]]
+name = "netalertx"
+tags = [
+  "internal",
+  "monitoring",
+  "komodo-1"
+]
+[stack.config]
+server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  netalertx:
+    container_name: netalertx
+    image: "ghcr.io/jokob-sk/netalertx:latest"      
+    network_mode: "host"     
+    restart: unless-stopped
+    volumes:
+      - ${DATA_DIR}/config:/app/config
+      - ${DATA_DIR}/db:/app/db      
+      - ${DATA_DIR}/logs:/app/log
+      - type: tmpfs
+        target: /app/api
+    env_file:
+      - .env
+"""
+environment = """
+DATA_DIR=/mnt/zApps/netalertx
+PUID=1000
+PGID=1000
+TZ=Asia/Singapore
+PORT=20184
+"""
+
+##
+
+[[stack]]
+name = "ntfy"
+tags = ["internal", "monitoring"]
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  ntfy:
+    image: binwiederhier/ntfy
+    container_name: ntfy
+    command:
+      - serve
+    environment:
+      - TZ=Asia/Singapore    # optional: set desired timezone
+    user: 1000:1000 # optional: replace with your own user/group or uid/gid
+    env_file:
+      - .env
+    volumes:
+      - /var/cache/ntfy:/var/cache/ntfy
+      - ${NTFY_DATA_DIR}:/etc/ntfy
+    ports:
+      - 8193:80
+    healthcheck: # optional: remember to adapt the host:port to your environment
+        test: ["CMD-SHELL", "wget -q --tries=1 http://localhost:80/v1/health -O - | grep -Eo '\"healthy\"\\s*:\\s*true' || exit 1"]
+        interval: 60s
+        timeout: 10s
+        retries: 3
+        start_period: 40s
+    restart: unless-stopped
+"""
+environment = """
+NTFY_DATA_DIR=/mnt/zApps/ntfy
+"""
+
+##
+
+[[stack]]
+name = "nzbget"
+tags = ["internal", "testing"]
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  nzbget:
+    image: lscr.io/linuxserver/nzbget:latest
+    container_name: nzbget
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - NZBGET_USER=nzbget #optional
+      - NZBGET_PASS=tegbzn6789 #optional
+    volumes:
+      - ${NZBGET_CF_DIR}:/config
+      - ${NZBGET_DL_DIR}:/downloads #optional
+    ports:
+      - 6789:6789
+    restart: unless-stopped
+"""
+environment = """
+NZBGET_CF_DIR=/mnt/zApps/nzb/config
+NZBGET_DL_DIR=/mnt/zApps/nzb/downloads
+"""
+
+##
+
+[[stack]]
+name = "scrutiny"
+[stack.config]
+server = "komodo-3"
+file_contents = """
+networks:
+  scrutiny-monitoring: # A common network for all monitoring services to communicate into
+    external: true
+  scrutiny-notification: # To Gotify or another Notification service
+    external: true
+
+services:
+  influxdb:
+    container_name: influxdb
+    image: influxdb:2.1-alpine
+    env_file:
+      - .env
+    user: 1000:1000
+    ports:
+      - 8086:8086
+    volumes:
+      - ${DATA_DIR}/influxdb2/db:/var/lib/influxdb2
+      - ${DATA_DIR}/influxdb2/config:/etc/influxdb2
+    restart: unless-stopped
+    networks:
+      - scrutiny-monitoring
+
+  scrutiny:
+    container_name: scrutiny
+    image: ghcr.io/analogj/scrutiny:master-web
+    ports:
+      - 8785:8080
+    volumes:
+      - ${DATA_DIR}/config:/opt/scrutiny/config
+    env_file:
+      - .env
+      # Optional but highly recommended to notify you in case of a problem
+     # - SCRUTINY_NOTIFY_URLS=["http://gotify:80/message?token=a-gotify-token"]
+    depends_on:
+      - influxdb
+    restart: unless-stopped
+    networks:
+      - scrutiny-notification
+      - scrutiny-monitoring
+"""
+environment = """
+PGID= 1000 
+PUID= 1000
+DATA_DIR= '/mnt/zApps/scrutiny'
+DOCKER_INFLUXDB_INIT_MODE=setup
+DOCKER_INFLUXDB_INIT_USERNAME=Admin
+DOCKER_INFLUXDB_INIT_PASSWORD= 'qA6otE2(raC=MDh$ZN%tNulHp6iYs|xv}l&IwVWPzZvn+Tvm399+2w#V$P'
+DOCKER_INFLUXDB_INIT_ORG=homelab
+DOCKER_INFLUXDB_INIT_BUCKET=scrutiny
+DOCKER_INFLUXDB_INIT_ADMIN_TOKEN= '6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7+Kl!$G<(x['
+SCRUTINY_WEB_INFLUXDB_HOST=influxdb
+SCRUTINY_WEB_INFLUXDB_PORT=8086
+SCRUTINY_WEB_INFLUXDB_TOKEN= '6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7+Kl!$G<(x['
+SCRUTINY_WEB_INFLUXDB_ORG=homelab
+SCRUTINY_WEB_INFLUXDB_BUCKET=scrutiny
+"""
+
+##
+
+[[stack]]
+name = "speedtest-tracker"
+tags = ["internal", "testing"]
+[stack.config]
+server = "server-bkxal"
+file_contents = """
+services:
+    speedtest-tracker:
+        image: lscr.io/linuxserver/speedtest-tracker:latest
+        restart: unless-stopped
+        container_name: speedtest-tracker
+        ports:
+            - 8008:80
+            - 8043:443
+        environment:
+            -APP_DEBUG=true
+            - PUID=1000
+            - PGID=1000
+            - APP_KEY= ${APP_KEY}
+            - DB_CONNECTION=${DB_CONNECTION}
+          #  - DB_HOST=${DB_HOST}
+          #  - DB_PORT=${DB_PORT}
+           # - DB_DATABASE= ${DB_DATABASE}
+           # - DB_USERNAME= ${DB_USERNAME}
+           # - DB_PASSWORD= ${DB_PASSWORD}
+        volumes:
+            - ${DATA_DIR}/data:/config
+            #- /path/to-custom-ssl-keys:/config/keys
+"""
+environment = """
+DATA_DIR="/mnt/zApps/speedtest-tracker"
+APP_KEY="Kj1qpSM25ly7LbReMibYBly5Icl9D2TQXTHi8Xo+bIA="
+DB_CONNECTION=sqllite
+DB_HOST= db
+DB_PORT=3306
+DB_DATABASE=speedtest_tracker
+DB_USERNAME=d3
+DB_PASSWORD="ng--*UC*6W2Fz89GhAR_Bm9ZC3cx2okJ4yCTEhieCYX!MYL6C_VDaYcvmnxffVj*9_H.t2x@.@UC4hKx8nUrxJjrTb_NZqB4bYea"
+"""
+
+##
+
+[[stack]]
+name = "uptime-kuma"
+tags = [
+  "external",
+  "monitoring",
+  "komodo-3"
+]
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    volumes:
+      - ./uptime-kuma-data:/app/data
+    ports:
+      - 3001:3001  # <Host Port>:<Container Port>
+    restart: always
+"""
+environment = """
+  # VARIABLE = val
+"""
+
+##
+
+[[stack]]
+name = "wallos"
+tags = ["external", "production"]
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  wallos:
+    container_name: wallos
+    image: bellamy/wallos:latest
+    ports:
+      - "8282:80/tcp"
+    env_file:
+      - .env
+    volumes:
+      - ${DATA_DIR}/db:/var/www/html/db'
+      - ${DATA_DIR}/logos:/var/www/html/images/uploads/logos'
+    restart: unless-stopped
+"""
+environment = """
+TZ= 'Asia/Singapore'
+DATA_DIR=/mnt/zApps/wallos
+PUID=1000
+PGID=1000
+"""
+
+##
+
+[[stack]]
+name = "xpipe-webtop"
+[stack.config]
+server = "server-bkxal"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+networks:
+  caddy:
+    external: true
+
+services:
+  webtop:
+    image: ghcr.io/xpipe-io/xpipe-webtop:latest
+    container_name: xpipe-webtop
+    networks:
+      - caddy
+    env_file:
+      - .env
+    volumes:
+      - ${DATA_DIR}:/config
+      - /var/run/docker.sock:/var/run/docker.sock #optional
+    ports:
+      - 127.0.0.1:3700:3000
+      - 127.0.0.1:3701:3001
+    restart: unless-stopped
+    labels:
+      - caddy= xpipe.d3adc3ii.site
+      - caddy.reverse_proxy= "{{upstreams 3700}}"
+      - homepage.container= xpipe
+      - homepage.group= Remote
+      - homepage.icon= /icons/xpipe.png
+      - homepage.href= https://xpipe.d3adc3ii.site
+"""
+environment = """
+DATA_DIR=/mnt/zApps/xpipe/config
+PUID=1000
+PGID=1000
+"""
+
+##
+
+[[deployment]]
+name = "apprise"
+[deployment.config]
+server = "komodo-3"
+image.type = "Image"
+image.params.image = "caronc/apprise:latest"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+ports = """
+8000:8000
+"""
+volumes = """
+/mnt/zApps/apprise_api/config:/opt/apprise/config
+/mnt/zApps/apprise_api/plugin:/opt/apprise/plugin
+/mnt/zApps/apprise_api/attach:/opt/apprise/attach
+"""
+environment = """
+PUID=1000
+PGID=1000
+APPRISE_STATEFUL_MODE=simple
+APPRISE_WORKER_COUNT=1
+"""
+
+##
+
+[[deployment]]
+name = "beszel-k11"
+tags = ["internal", "monitoring"]
+[deployment.config]
+server = "server-bkxal"
+image.type = "Image"
+image.params.image = "henrygd/beszel-agent"
+poll_for_updates = true
+auto_update = true
+restart = "unless-stopped"
+volumes = """
+/var/run/docker.sock:/var/run/docker.sock:ro
+"""
+environment = """
+LISTEN=45876
+KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU6cTY/"
+  # VARIABLE = value
+"""
+
+##
+
+[[deployment]]
+name = "beszel-k12"
+tags = ["internal", "monitoring"]
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "henrygd/beszel-agent"
+poll_for_updates = true
+auto_update = true
+restart = "unless-stopped"
+volumes = """
+/var/run/docker.sock:/var/run/docker.sock:ro
+"""
+environment = """
+LISTEN=45876
+KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU6cTY/"
+"""
+
+##
+
+[[deployment]]
+name = "checkmate-1"
+[deployment.config]
+server = "server-bkxal"
+image.type = "Image"
+image.params.image = "ghcr.io/bluewave-labs/capture:v1.1.0"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+restart = "unless-stopped"
+ports = """
+59232:59232 
+"""
+volumes = """
+/etc/os-release:/etc/os-release:ro
+"""
+environment = """
+API_SECRET=IHmqPfMq0LVgRhPBjkwATrs8P3QdqBzp
+GIN_MODE=release
+"""
+
+##
+
+[[deployment]]
+name = "checkmate-2"
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "ghcr.io/bluewave-labs/capture:v1.1.0"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+restart = "unless-stopped"
+ports = """
+59232:59232
+"""
+volumes = """
+/etc/os-release:/etc/os-release:ro
+"""
+environment = """
+API_SECRET=IHmqPfMq0LVgRhPBjkwATrs8P3QdqBzp
+GIN_MODE=release
+"""
+
+##
+
+[[deployment]]
+name = "checkmate-3"
+[deployment.config]
+server = "komodo-3"
+image.type = "Image"
+image.params.image = "ghcr.io/bluewave-labs/capture:v1.1.0"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+restart = "unless-stopped"
+ports = """
+59232:59232
+"""
+volumes = """
+/etc/os-release:/etc/os-release:ro
+"""
+environment = """
+API_SECRET=IHmqPfMq0LVgRhPBjkwATrs8P3QdqBzp
+GIN_MODE=release
+"""
+
+##
+
+[[deployment]]
+name = "nessus"
+tags = ["internal", "testing"]
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "tenable/nessus:latest-ubuntu"
+
+##
+
+[[deployment]]
+name = "newt1"
+tags = ["external", "production"]
+[deployment.config]
+server = "server-bkxal"
+image.type = "Image"
+image.params.image = "fosrl/newt"
+poll_for_updates = true
+auto_update = true
+restart = "unless-stopped"
+environment = """
+  PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
+  NEWT_ID=[[NEWT_ID1]]
+  NEWT_SECRET=[[NEWT_SECRET1]]
+"""
+
+##
+
+[[deployment]]
+name = "omni-tools"
+tags = ["external", "production"]
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "iib0011/omni-tools:latest"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+restart = "unless-stopped"
+ports = """
+8281:80
+"""
+
+##
+
+[[deployment]]
+name = "statementsensei"
+tags = ["internal", "testing"]
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "benjaminawd/statementsensei:latest"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+ports = """
+8501:8501
+"""
+environment = """
+  PDF_PASSWORD= [[PDF_PASSWORD]]
+"""
+labels = """
+caddy: statement.d3adc3ii.site
+caddy.reverse_proxy: "{{upstreams 8501}}"
+"""
+
+##
+
+[[deployment]]
+name = "true-command"
+tags = ["internal", "testing"]
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "ixsystems/truecommand"
+poll_for_updates = true
+auto_update = true
+network = "bridge"
+restart = "unless-stopped"
+ports = """
+8880:80
+4443:443
+"""
+volumes = """
+/mnt/zApps/truecommand:/data
+"""
+
+##
+
+[[deployment]]
+name = "twingate"
+tags = ["external", "production"]
+[deployment.config]
+server = "komodo-2"
+image.type = "Image"
+image.params.image = "twingate/connector:latest"
+poll_for_updates = true
+auto_update = true
+restart = "unless-stopped"
+environment = """
+  TWINGATE_NETWORK=d3net
+  TWINGATE_ACCESS_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6Inp3dkU1dHpJZzV4X2pSVEU4RTFWQll6MW0tX2g1dXlMZlhTV1VSS1BEVE0iLCJ0eXAiOiJEQVQifQ.eyJudCI6IkFOIiwiYWlkIjoiNTExMjE5IiwiZGlkIjoiMjE5MTEwMCIsImp0aSI6ImIxZjU3N2FkLTZmNDItNDYyYS05ZGIzLTY1NTE5ZmQyMTJlNCIsImlzcyI6InR3aW5nYXRlIiwiYXVkIjoiZDNuZXQiLCJleHAiOjE3NDYxNDQ5MDAsImlhdCI6MTc0NjE0MTMwMCwidmVyIjoiNCIsInRpZCI6IjEwMzU2NCIsInJudyI6MTc0NjE0MTU3OCwicm5ldGlkIjoiMTM1OTMxIn0.OxT4qXnqonLPGb1GwJTRcYoSwZG16x2JGA_Xu2pOo0dZH3jpqfd1SkjWy8JjcVePboTum2e0WEdNu4SFcJUy_A
+  TWINGATE_REFRESH_TOKEN=mrNJNc7hirY3gO3-q9l6dnN_YjYl-8q79XRXg1ffZstYm8EYyH6xNXMIVviMaQ-2-GAa4wuSMv1J5ebEf9KvzIK94jmq7j9QGPH2Tr7ZnjlYADuKrEpKUkrmnbrROkgQy6nzWg
+  TWINGATE_LOG_ANALYTICS=v2
+"""
+
+##
+
+[[repo]]
+name = "diiihl"
+[repo.config]
+server = "server-bkxal"
+builder = "local"
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+
+##
+
+[[repo]]
+name = "diiihl-k2"
+[repo.config]
+server = "komodo-2"
+builder = "local"
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+
+##
+
+[[repo]]
+name = "diiihl-k3"
+[repo.config]
+server = "komodo-3"
+builder = "local"
+git_account = "d3adc3iii"
+repo = "d3adc3iii/dIIIhl"
+
+##
+
+[[procedure]]
+name = "autosync"
+config.failure_alert = false
+config.schedule = "Run every 30 minutes"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "RunSync", enabled = true },
+  { execution.type = "CommitSync", enabled = true }
+]
+
+##
+
+[[procedure]]
+name = "check_update"
+
+##
+
+[[procedure]]
+name = "commit_sync_to_repo_and_redeploy_homepage"
+
+[[procedure.config.stage]]
+name = "Run sync"
+enabled = true
+executions = [
+  { execution.type = "RunSync", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Commit sync"
+enabled = true
+executions = [
+  { execution.type = "CommitSync", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "pull repo"
+enabled = true
+executions = [
+  { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "deploy"
+enabled = true
+executions = [
+  { execution.type = "DestroyStack", execution.params.stack = "homepage", execution.params.services = [], execution.params.remove_orphans = false, enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Stage 5"
+enabled = true
+executions = [
+  { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
+]
+
+##
+
+[[procedure]]
+name = "pull-deploy"
+description = "description = \"Pulls stack-repo, deploys stacks\""
+config.schedule_timezone = "Asia/Singapore"
+
+[[procedure.config.stage]]
+name = "\"Pull Repo"
+enabled = true
+executions = [
+  { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Deploy if changed"
+enabled = true
+executions = [
+  { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = "t*,o*,a*", enabled = true }
+]
+
+##
+
+[[procedure]]
+name = "sync_and_redeploy_homepage"
+
+[[procedure.config.stage]]
+name = "Run sync"
+enabled = true
+executions = [
+  { execution.type = "RunSync", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Commit sync"
+enabled = true
+executions = [
+  { execution.type = "CommitSync", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "pull repo"
+enabled = true
+executions = [
+  { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "deploy"
+enabled = true
+executions = [
+  { execution.type = "DestroyStack", execution.params.stack = "homepage", execution.params.services = [], execution.params.remove_orphans = false, enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Stage 5"
+enabled = true
+executions = [
+  { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
+]
+
+##
+
+[[builder]]
+name = "local"
+[builder.config]
+type = "Server"
+params.server_id = "server-bkxal"
+
+##
+
+[[resource_sync]]
+name = "s1"
+[resource_sync.config]
+repo = "d3hl/dIIIhl"
+git_account = "d3hl"
+resource_path = ["komodo/resources/main.toml"]
+managed = true
+delete = true
+include_user_groups = true
