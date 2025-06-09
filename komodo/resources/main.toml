@@ -673,7 +673,7 @@ services:
     volumes:
       - ${HOMEPAGE_DATA_DIR}/homepage:/app:ro
     networks:
-      - internal
+      - caddy
     ports:
       - "5070:5070"
 """
