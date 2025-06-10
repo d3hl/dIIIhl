@@ -947,6 +947,9 @@ HOMEPAGE_VAR_TPLINK_ICON= "/icons/tp-link-light.png"
 HOMEPAGE_VAR_TPLINK_URL= "http://192.168.2.252"
 
 ### Monitoring ###
+# GoDoxy
+HOMEPAGE_VAR_GODOXY_ICON= "/icons/godoxy-light.png"
+HOMEPAGE_VAR_GODOXY_URL= "https://doxy.int.d3adc3ii.site"
 # Caddy Proxy
 HOMEPAGE_VAR_CADDYPROXY_ICON= "/icons/caddy-light.png"
 HOMEPAGE_VAR_CADDYPROXY_URL= "http://caddy:2020"
@@ -1256,8 +1259,9 @@ services:
       - 1900:1900/udp #optional
     restart: unless-stopped
     labels:
-      caddy: jelly.d3adc3ii.site
-      caddy.reverse_proxy: "{{upstreams 8096}}"
+      proxy.aliases: jelly
+      proxy.idle_timeout: 30m
+      proxy.jelly.port: 8096
 """
 environment = """
 JELLYFIN_CONFIG_DIR=/mnt/zApps/jellyfin/config
@@ -1954,20 +1958,27 @@ rm *clus*
 ##
 
 [[procedure]]
-name = "pull repo and deploy GoDoxy"
+name = "pull repo and deploy homepage"
 
 [[procedure.config.stage]]
 name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "PullRepo", execution.params.repo = "diiihl-k3", enabled = true }
+  { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true }
 ]
 
 [[procedure.config.stage]]
 name = "Stage 3"
 enabled = true
 executions = [
-  { execution.type = "DeployStack", execution.params.stack = "godoxy", execution.params.services = [], enabled = true }
+  { execution.type = "DestroyStack", execution.params.stack = "homepage", execution.params.services = [], execution.params.remove_orphans = false, enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Stage 3"
+enabled = true
+executions = [
+  { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
 ]
 
 ##
