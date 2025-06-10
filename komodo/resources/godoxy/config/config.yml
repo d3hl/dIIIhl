@@ -6,14 +6,14 @@
 #   provider: local
 
 # 2. cloudflare
-# autocert:
-#   provider: cloudflare
-#   email: abc@gmail.com # ACME Email
-#   domains: # a list of domains for cert registration
-#     - "*.domain.com"
-#     - "domain.com"
+autocert:
+  provider: cloudflare
+  email: abc@gmail.com # ACME Email
+  domains: # a list of domains for cert registration
+    - "*.d3adc3ii.site"
+    # - "domain.com"
 #   options:
-#     auth_token: c1234565789-abcdefghijklmnopqrst # your zone API token
+  auth_token: ${CF_API_TOKEN} # your zone API token
 
 # 3. other providers, see https://github.com/yusing/godoxy/wiki/Supported-DNS%E2%80%9001-Providers#supported-dns-01-providers
 
