@@ -379,7 +379,7 @@ CADDY_EMAIL= d3tech@pm.me
 
 [[stack]]
 name = "checkmate"
-tags = ["external", "testing"]
+tags = ["external", "testing", "komodo-3"]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -541,7 +541,12 @@ SECRET_KEY=[[FSHARE_SECRET_KEY]]
 
 [[stack]]
 name = "godoxy"
-tags = ["internal", "core", "proxy"]
+tags = [
+  "internal",
+  "core",
+  "proxy",
+  "komodo-3"
+]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -589,7 +594,7 @@ services:
       PORT: ${GODOXY_FRONTEND_PORT:-3000}
     labels:
       proxy.aliases: ${GODOXY_FRONTEND_ALIASES:-godoxy}
-      proxy.#1.port: ${GODOXY_FRONTEND_PORT:-3000}
+      proxy.doxy.port: ${GODOXY_FRONTEND_PORT:-3000}
       # proxy.#1.middlewares.cidr_whitelist: |
       #   status: 403
       #   message: IP not allowed
@@ -704,7 +709,7 @@ DOCKER_SOCKET=/var/run/docker.sock
 SOCKET_PROXY_LISTEN_ADDR=127.0.0.1:2375
 
 # Debug mode
-GODOXY_DEBUG=false
+GODOXY_DEBUG=true
 """
 
 ##
@@ -1210,7 +1215,11 @@ DB_DATABASE_NAME=immich
 
 [[stack]]
 name = "jellyfin"
-tags = ["internal", "production"]
+tags = [
+  "internal",
+  "production",
+  "komodo-3"
+]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -1321,6 +1330,7 @@ tags = ["internal", "monitoring"]
 
 [[stack]]
 name = "mailrise"
+tags = ["komodo-3"]
 [stack.config]
 server = "komodo-3"
 file_contents = """
@@ -1419,7 +1429,7 @@ NTFY_DATA_DIR=/mnt/zApps/ntfy
 
 [[stack]]
 name = "nzbget"
-tags = ["internal", "testing"]
+tags = ["internal", "testing", "komodo-3"]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -1471,6 +1481,7 @@ services:
 
 [[stack]]
 name = "scrutiny"
+tags = ["komodo-3"]
 [stack.config]
 server = "komodo-3"
 file_contents = """
@@ -1606,7 +1617,11 @@ environment = """
 
 [[stack]]
 name = "wallos"
-tags = ["external", "production"]
+tags = [
+  "external",
+  "production",
+  "komodo-3"
+]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
