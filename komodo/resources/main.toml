@@ -617,7 +617,7 @@ services:
     environment:
       - DOCKER_HOST=tcp://${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}
     volumes:
-      - ${DOCKER_DATA}/godoxy/config:/app/config
+      - ${CONFIG_DIR}:/app/config
       - ${DOCKER_DATA}/godoxy/logs:/app/logs
       - ${DOCKER_DATA}/godoxy/error_pages:/app/error_pages:ro
       - ${DOCKER_DATA}/godoxy/data:/app/data
@@ -632,7 +632,9 @@ TAG=latest
 TZ=Asia/Singapore
 UID=1000
 GID=1000
-
+CF_API_TOKEN= [[CF_API_TOKEN]]
+GODOXY_EMAIL= d3tech@pm.me
+CONFIG_DIR=/etc/komodo/repos/diiihl-k3/komodo/resources/godoxy/config
 # API JWT Configuration (common)
 # generate secret with `openssl rand -base64 32`
 GODOXY_API_JWT_SECRET=4m64Gth6C6VZeLHxGOQzVe3Myigx5gqHm4KqN5HxwM8=
@@ -1910,23 +1912,37 @@ repo = "d3hl/dIIIhl"
 ##
 
 [[repo]]
-name = "diiihl-k2"
-[repo.config]
-server = "komodo-2"
-builder = "local"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-
-##
-
-[[repo]]
 name = "diiihl-k3"
 [repo.config]
 server = "komodo-3"
 builder = "local"
 git_account = "d3hl"
 repo = "d3hl/dIIIhl"
-path = "komodo/resources"
+on_pull.command = """
+rm -rf *ansi*
+rm -rf *scri*
+rm -rf *terra*
+rm *clus*
+"""
+
+##
+
+[[procedure]]
+name = "pull repo and deploy GoDoxy"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "PullRepo", execution.params.repo = "diiihl-k3", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Stage 3"
+enabled = true
+executions = [
+  { execution.type = "DeployStack", execution.params.stack = "godoxy", execution.params.services = [], enabled = true }
+]
 
 ##
 
