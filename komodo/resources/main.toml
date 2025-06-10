@@ -666,11 +666,12 @@ GODOXY_API_PASSWORD=ahZiedhSGzembZRfrsWT3S4BA9iSYO0P
 # Uncomment and configure these values to enable OIDC authentication.
 #
 #GODOXY_OIDC_ISSUER_URL=https://auth.d3adc3ii.cc/application/o/go-doxy/
-#GODOXY_OIDC_CLIENT_ID=xvrsAgTSXF3zpOxhKQD8Y81x9OVD20nVsvm31241
-#GODOXY_OIDC_CLIENT_SECRET=u7cl7so3ZLwIhMGIgLBbCWA63k4nmbWwq62PSwP8sAnjtuQ1W2pjJcqs8zPCtjlWpwCNczgOj24gdD0aThPji1EJHvimhpPwopSJc4ioULcq463ftkcOMepoRd84SqYb
-#GODOXY_OIDC_SCOPES=openid, profile, email, groups # you may also include `offline_access` if your Idp supports it (e.g. Authentik, Pocket ID)
+ GODOXY_OIDC_ISSUER_URL=https://auth.d3adc3ii.cc/application/o/godoxy/
+GODOXY_OIDC_CLIENT_ID=VZPLobQtKqBbRdUwmD56uG7IdTevoUJdMZtRm8Fx
+GODOXY_OIDC_CLIENT_SECRET=aq4WP391mMExMxWfcTfAktU9qJFZPv2bOvOLc0Mdb0gfYmZg4osMYZNUegpKvvash7KazoGfT5kNJpssJwtcOHK7rtvhRChUUdQx9ZHKMN8Qhu76kjuOKHTOKok05vhx
+GODOXY_OIDC_SCOPES=openid, profile, email, groups,offline_access # you may also include `offline_access` if your Idp supports it (e.g. Authentik, Pocket ID)
 #
-#GODOXY_OIDC_ALLOWED_USERS: d3
+GODOXY_OIDC_ALLOWED_USERS: d3
 # User definitions: Uncomment and configure these values to restrict access to specific users or groups.
 # These two fields act as a logical AND operator. For example, given the following membership:
 #   user1, group1
