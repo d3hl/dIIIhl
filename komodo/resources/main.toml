@@ -1999,6 +1999,18 @@ is_secret = true
 
 ##
 
+[[variable]]
+name = "AUTHENTIK_SECRET_KEY"
+value = "_7WB2IB9GR612BYM9A9VTRS4OHFNOA0DVp?{Y=,St,C-%FK)mbpF`yIf}lm&Q]oWLpc;<y?%>xXU=rq71PWqLC4yYFno9OJG"
+is_secret = true
+
+##
+
+[[variable]]
+name = "AUTHENTIK_PG_PASS"
+value = "RAMKPLQF6F5FGKBZ6IH4UP4UPFPO6W2M"
+is_secret = true
+
 ##
 
 [[variable]]
@@ -2018,13 +2030,6 @@ is_secret = true
 [[variable]]
 name = "OPENAI_API_KEY"
 value = "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"
-is_secret = true
-
-##
-
-[[variable]]
-name = "AUTHENTIK_SECRET_KEY"
-value = "_7WB2IB9GR612BYM9A9VTRS4OHFNOA0DVp?{Y=,St,C-%FK)mbpF`yIf}lm&Q]oWLpc;<y?%>xXU=rq71PWqLC4yYFno9OJG"
 is_secret = true
 
 ##
@@ -2122,13 +2127,6 @@ is_secret = true
 ##
 
 [[variable]]
-name = "AUTHENTIK_PG_PASS"
-value = "RAMKPLQF6F5FGKBZ6IH4UP4UPFPO6W2M"
-is_secret = true
-
-##
-
-[[variable]]
 name = "FSHARE_ADMIN_PASSWORD"
 value = "}[oCz6td_pSjRWbapn4&&n,JS~qLv7(J"
 is_secret = true
@@ -2171,18 +2169,9 @@ is_secret = true
 ##
 
 [[variable]]
-name = "CF_API_TOKEN"
-description = "for d3adc3ii.site"
-value = "fGv97BwiDyj5cUYTCQcXcfsee5VSwJkay4FdPLDF"
-is_secret = true
-
-##
-
-[[variable]]
 name = "CHECKMATE_JWT_SECRET"
 value = "Nt49d0c01LQZM1Ko6OoU6Yosop9sVqhv"
 is_secret = true
-
 
 ##
 
