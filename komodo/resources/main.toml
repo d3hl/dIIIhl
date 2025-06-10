@@ -779,7 +779,8 @@ name = "homepage"
 tags = [
   "external",
   "production",
-  "komodo-1"
+  "komodo-1",
+  "proxy"
 ]
 [stack.config]
 server = "server-DULxe"
@@ -1923,8 +1924,9 @@ name = "diiihl-k3"
 [repo.config]
 server = "komodo-3"
 builder = "local"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
+git_account = "d3hl"
+repo = "d3hl/dIIIhl"
+path = "komodo/resources"
 
 ##
 
