@@ -17,7 +17,7 @@ enabled = true
 [[server]]
 name = "server-DULxe"
 [server.config]
-address = "https://periphery:8120"
+address = "https://192.168.2.31:8120"
 enabled = true
 
 ##
@@ -100,8 +100,8 @@ services:
       - database:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${PG_PASS}
-      POSTGRES_USER: ${PG_USER:-authentik}
-      POSTGRES_DB: ${PG_DB:-authentik}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_DB: ${PG_DB}
     env_file:
       - .env
   redis:
@@ -128,8 +128,8 @@ services:
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
     volumes:
-      - ${AUTHENTIK_DATA_DIR}/media:/media
-      - ${AUTHENTIK_DATA_DIR}/custom-templates:/templates
+      - ${DOCKER_DATA}/authentik/media:/media
+      - ${DOCKER_DATA}/authentik/custom-templates:/templates
     env_file:
       - .env
     ports:
@@ -141,15 +141,15 @@ services:
       redis:
         condition: service_healthy
   worker:
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.4.0}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.1}
     restart: unless-stopped
     command: worker
     environment:
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
       AUTHENTIK_REDIS__HOST: redis
       AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
-      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
     # `user: root` and the docker socket volume are optional.
     # See more for the docker socket integration here:
@@ -178,9 +178,10 @@ volumes:
     driver: local
 """
 environment = """
+PG_USER= authentik
+PG_DB= authentik
 AUTHENTIK_SECRET_KEY= [[AUTHENTIK_SECRET_KEY]]
 PG_PASS= [[AUTHENTIK_PG_PASS]]
-AUTHENTIK_DATA_DIR=/mnt/zApps/authentik
 # SMTP Host Emails are sent to
 AUTHENTIK_EMAIL__HOST=localhost
 AUTHENTIK_EMAIL__PORT=25
@@ -1986,7 +1987,29 @@ repo = "d3hl/dIIIhl"
 git_account = "d3hl"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
+include_variables = true
 include_user_groups = true
+
+##
+
+[[variable]]
+name = "CF_API_TOKEN"
+value = "Ux58Uue17Fzagp131_BztTBZWrgicPidL_lB0rKE"
+is_secret = true
+
+##
+
+[[variable]]
+name = "AUTHENTIK_SECRET_KEY"
+value = "t46W/4ZIp6TNR6x//ma+Qcif1+kpT/Q4Lx7yLKl+x4j5Z+h+M4KvX/rP6eGzpeVVJ7sOrECMdAMjKXK1"
+is_secret = true
+
+##
+
+[[variable]]
+name = "AUTHENTIK_PG_PASS"
+value = "GX*eghi5sJws3M**gppVs@PMuovr3rdK8NP^^@rt"
+is_secret = true
 
 ##
 
