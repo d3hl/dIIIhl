@@ -868,7 +868,7 @@ PUID= 1000
 # Site Config
 HOMEPAGE_VAR_TITLE= "d3 Homepage"
 HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
-HOMEPAGE_VAR_IMG_URL= "/images/culon.jpg"
+HOMEPAGE_VAR_IMG_URL= "/images/extra-12.jpg"
 HOMEPAGE_VAR_HEADER_STYLE= boxedWidgets
 
 HOMEPAGE_VAR_IMG_BLUR= md
@@ -962,7 +962,7 @@ HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"]
 HOMEPAGE_VAR_WAZUH_ICON= "/icons/wazuh-light.png"
 HOMEPAGE_VAR_WAZUH_URL= "https://wazuh.d3adc3ii.site"
 # APPRISE-API
-HOMEPAGE_VAR_APPRISE_ICON= "/icons/apprise.png"
+HOMEPAGE_VAR_APPRISE_ICON= "/icons/gotify-dark.png"
 HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
 # Healthchecks
 HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks-light.png"
@@ -1037,7 +1037,7 @@ HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik-light.png"
 HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3adc3ii.cc"
 HOMEPAGE_VAR_AUTHENTIK_KEY="Boy9GZM04gnN8zn1RdTDSxgkeDr70a8XqFKmrp1HwVx7A3u4GA2pnVN2aZEO"
 # Komodo
-HOMEPAGE_VAR_KOMODO_ICON= "/icons/komodo.png"
+HOMEPAGE_VAR_KOMODO_ICON= "/icons/docker-light.png"
 HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
 HOMEPAGE_VAR_KOMODO_APIURL= "http://192.168.2.31:9120/read"
 HOMEPAGE_VAR_KOMODO_CONTAINER_UPDATE_URL= "http://container-updates-summary:5070/"
@@ -1092,10 +1092,9 @@ HOMEPAGE_VAR_PULSEXT_ICON= "/icons/pulse-light.png"
 HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
 
 # NETBOX CLOUD
-HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox.png"
+HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox-light.png"
 HOMEPAGE_VAR_NETBOXCL_URL= "https://wmfk3018.cloud.netboxapp.com"
 # NETBOX CONSOLE
-HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox.png"
 HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
 
 
@@ -1105,10 +1104,10 @@ HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
 HOMEPAGE_VAR_KARAKEEP_ICON= "/icons/karakeep.png"
 HOMEPAGE_VAR_KARAKEEP_URL= "https://kara.d3adc3ii.cc"
 # Wallos
-HOMEPAGE_VAR_WALLOS_ICON= "/icons/wallos.png"
+HOMEPAGE_VAR_WALLOS_ICON= "/icons/wallos-light.png"
 HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
 # Ommni Tools
-HOMEPAGE_VAR_OMNITOOLS_ICON= "/icons/omni-tools.png"
+HOMEPAGE_VAR_OMNITOOLS_ICON= "/icons/omni-tools-light.png"
 HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
 
 ### GL1 ###
