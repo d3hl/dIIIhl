@@ -86,6 +86,10 @@
             widget:
                 type: caddy
                 url: {{HOMEPAGE_VAR_CADDYPROXY_URL}}
+        - GoDoxy:
+            icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
+            href: {{HOMEPAGE_VAR_GODOXY_URL}} 
+            sitemonitor: {{HOMEPAGE_VAR_GODOXY_URL}}
         - NetAlertX:
             icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
             href: {{HOMEPAGE_VAR_NETALERTX_URL}}
@@ -143,8 +147,6 @@
                 key: {{HOMEPAGE_VAR_IMMICH_KEY}}
                 version: {{HOMEPAGE_VAR_IMMICH_VERSION}}
                 fields:  {{HOMEPAGE_VAR_IMMICH_FIELDS}}  
-    - Test:
-        - Tmp:
     - Local Apps: # remote
         - Actual:
             icon: {{HOMEPAGE_VAR_ACTUAL_ICON}}
@@ -175,6 +177,52 @@
             sitemonitor: {{HOMEPAGE_VAR_ARIA_URL}}
 - External:
     - Core: 
+        - Docker Stacks:
+            icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
+            href: {{HOMEPAGE_VAR_KOMODO_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
+            widget:
+                type: customapi
+                url:  {{HOMEPAGE_VAR_KOMODO_APIURL}}
+                refreshInterval: 15000
+                method: POST
+                headers:
+                    content-type: application/json
+                    x-api-key: {{HOMEPAGE_VAR_KOMODO_API_KEY}}
+                    x-api-secret: {{HOMEPAGE_VAR_KOMODO_API_SECRET}} 
+                requestBody:
+                    type: GetStacksSummary
+                    params: {}
+                display: block
+                mappings:
+                  - field: total
+                    label: Total Stacks
+                    format: number
+                  - field: running
+                    label: running
+                    format: number
+                  - field: unhealthy
+                    label: unhealthy
+                    format: number
+                  - field: down
+                    label: Stopped
+                    format: number
+        - Container Updates:
+            icon: {{HOMEPAGE_VAR_KOMODO_ICON}}
+            server: my-docker
+            #container: komodo-core-1 
+            widget:
+                type: customapi
+                url: {{HOMEPAGE_VAR_KOMODO_CONTAINER_UPDATE_URL}}
+                refreshInterval: 30000
+                display: block
+                mappings:
+                  - field: total
+                    label: Containers
+                    format: number
+                  - field: updates
+                    label: With Updates
+                    format: number
         - Pangolin:
             icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
             href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
@@ -187,10 +235,6 @@
                 type: authentik
                 url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
                 key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}} 
-        - Komodo:
-            icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
-            href: {{HOMEPAGE_VAR_KOMODO_URL}}
-            sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
         - Twingate:
             icon: {{HOMEPAGE_VAR_TWINGATE_ICON}}
             href: {{HOMEPAGE_VAR_TWINGATE_URL}}

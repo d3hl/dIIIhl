@@ -17,7 +17,7 @@ enabled = true
 [[server]]
 name = "server-DULxe"
 [server.config]
-address = "https://periphery:8120"
+address = "https://192.168.2.31:8120"
 enabled = true
 
 ##
@@ -100,8 +100,8 @@ services:
       - database:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${PG_PASS}
-      POSTGRES_USER: ${PG_USER:-authentik}
-      POSTGRES_DB: ${PG_DB:-authentik}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_DB: ${PG_DB}
     env_file:
       - .env
   redis:
@@ -128,8 +128,8 @@ services:
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
     volumes:
-      - ${AUTHENTIK_DATA_DIR}/media:/media
-      - ${AUTHENTIK_DATA_DIR}/custom-templates:/templates
+      - ${DOCKER_DATA}/authentik/media:/media
+      - ${DOCKER_DATA}/authentik/custom-templates:/templates
     env_file:
       - .env
     ports:
@@ -141,15 +141,15 @@ services:
       redis:
         condition: service_healthy
   worker:
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.4.0}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.1}
     restart: unless-stopped
     command: worker
     environment:
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
       AUTHENTIK_REDIS__HOST: redis
       AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
-      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
     # `user: root` and the docker socket volume are optional.
     # See more for the docker socket integration here:
@@ -178,9 +178,10 @@ volumes:
     driver: local
 """
 environment = """
+PG_USER= authentik
+PG_DB= authentik
 AUTHENTIK_SECRET_KEY= [[AUTHENTIK_SECRET_KEY]]
 PG_PASS= [[AUTHENTIK_PG_PASS]]
-AUTHENTIK_DATA_DIR=/mnt/zApps/authentik
 # SMTP Host Emails are sent to
 AUTHENTIK_EMAIL__HOST=localhost
 AUTHENTIK_EMAIL__PORT=25
@@ -192,24 +193,6 @@ AUTHENTIK_EMAIL__TIMEOUT=10
 # Email address authentik will send from, should have a correct @domain
 AUTHENTIK_EMAIL__FROM=authentik@localhost
 """
-
-##
-
-[[stack]]
-name = "battle-of-the-bandwidth"
-tags = [
-  "internal",
-  "testing",
-  "monitoring"
-]
-[stack.config]
-server = "komodo-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-run_directory = "/etc/komodo/stacks/battle-of-the-bandwidth/server12/battle-of-the-bandwidth"
 
 ##
 
@@ -397,7 +380,7 @@ CADDY_EMAIL= d3tech@pm.me
 
 [[stack]]
 name = "checkmate"
-tags = ["external", "testing"]
+tags = ["external", "testing", "komodo-3"]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -558,6 +541,187 @@ SECRET_KEY=[[FSHARE_SECRET_KEY]]
 ##
 
 [[stack]]
+name = "godoxy"
+tags = [
+  "internal",
+  "core",
+  "proxy",
+  "komodo-3"
+]
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+---
+services:
+  socket-proxy:
+    container_name: socket-proxy
+    image: ghcr.io/yusing/socket-proxy:latest
+    environment:
+      - ALLOW_START=1
+      - ALLOW_STOP=1
+      - ALLOW_RESTARTS=1
+      - CONTAINERS=1
+      - EVENTS=1
+      - INFO=1
+      - PING=1
+      - POST=1
+      - VERSION=1
+    volumes:
+      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
+    restart: unless-stopped
+    tmpfs:
+      - /run
+    ports:
+      - ${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}:2375
+  frontend:
+    image: ghcr.io/yusing/godoxy-frontend:${TAG:-latest}
+    container_name: godoxy-frontend
+    restart: unless-stopped
+    network_mode: host
+    env_file: .env
+    user: 1000:1000
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - all
+    depends_on:
+      - app
+    environment:
+      HOSTNAME: 127.0.0.1
+      PORT: ${GODOXY_FRONTEND_PORT:-3000}
+    labels:
+      proxy.aliases: ${GODOXY_FRONTEND_ALIASES:-godoxy}
+      proxy.doxy.port: ${GODOXY_FRONTEND_PORT:-3000}
+     # proxy.doxy.middlewares.oidc:
+      # proxy.#1.middlewares.cidr_whitelist: |
+      #   status: 403
+      #   message: IP not allowed
+      #   allow:
+      #     - 127.0.0.1
+      #     - 10.0.0.0/8
+      #     - 192.168.0.0/16
+      #     - 172.16.0.0/12
+  app:
+    image: ghcr.io/yusing/godoxy:${TAG:-latest}
+    container_name: godoxy-proxy
+    restart: always
+    network_mode: host # do not change this
+    dns:
+      - 1.1.1.1
+      - 1.1.1.2
+    environment:
+      - CF_API_TOKEN= ${CF_API_TOKEN}
+      - CF_EMAIL= ${CF_EMAIL}
+      - DOCKER_HOST=tcp://${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}
+    env_file: .env
+    user: 1000:1000
+    depends_on:
+      socket-proxy:
+        condition: service_started
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - all
+    cap_add:
+      - NET_BIND_SERVICE
+    volumes:
+      - ${DOCKER_DATA}/godoxy/config:/app/config
+      - ${DOCKER_DATA}/godoxy/logs:/app/logs
+      - ${DOCKER_DATA}/godoxy/error_pages:/app/error_pages:ro
+      - ${DOCKER_DATA}/godoxy/data:/app/data
+      - ${DOCKER_DATA}/godoxy/certs:/app/certs
+
+      # remove "./certs:/app/certs" and uncomment below to use existing certificate
+      # - /path/to/certs/cert.crt:/app/certs/cert.crt
+      # - /path/to/certs/priv.key:/app/certs/priv.key
+"""
+environment = """
+TAG=latest
+TZ=Asia/Singapore
+UID=1000
+GID=1000
+GODOXY_EMAIL= d3tech@pm.me
+CONFIG_DIR=/etc/komodo/repos/diiihl-k3/komodo/resources/godoxy/config
+CF_API_TOKEN= [[CF_API_TOKEN]]
+CF_EMAIL= d3tech@pm.me
+DATA_DIR=/mnt/zApps/godoxy
+# API JWT Configuration (common)
+# generate secret with `openssl rand -base64 32`
+GODOXY_API_JWT_SECRET=4m64Gth6C6VZeLHxGOQzVe3Myigx5gqHm4KqN5HxwM8=
+# the JWT token time-to-live
+# leave empty to use default (24 hours)
+# format: https://pkg.go.dev/time#Duration
+GODOXY_API_JWT_TOKEN_TTL=
+
+# API/WebUI user password login credentials (optional)
+# These fields are not required for OIDC authentication
+GODOXY_API_USER=d3
+GODOXY_API_PASSWORD=ahZiedhSGzembZRfrsWT3S4BA9iSYO0P
+
+# OIDC Configuration (optional)
+# Uncomment and configure these values to enable OIDC authentication.
+#
+#GODOXY_OIDC_ISSUER_URL=https://auth.d3adc3ii.cc/application/o/go-doxy/
+ GODOXY_OIDC_ISSUER_URL=https://auth.d3adc3ii.cc/application/o/godoxy/
+GODOXY_OIDC_CLIENT_ID=VZPLobQtKqBbRdUwmD56uG7IdTevoUJdMZtRm8Fx
+GODOXY_OIDC_CLIENT_SECRET=aq4WP391mMExMxWfcTfAktU9qJFZPv2bOvOLc0Mdb0gfYmZg4osMYZNUegpKvvash7KazoGfT5kNJpssJwtcOHK7rtvhRChUUdQx9ZHKMN8Qhu76kjuOKHTOKok05vhx
+GODOXY_OIDC_SCOPES=openid, profile, email, groups,offline_access # you may also include `offline_access` if your Idp supports it (e.g. Authentik, Pocket ID)
+#
+GODOXY_OIDC_ALLOWED_USERS: d3
+# User definitions: Uncomment and configure these values to restrict access to specific users or groups.
+# These two fields act as a logical AND operator. For example, given the following membership:
+#   user1, group1
+#   user2, group1
+#   user3, group2
+#   user1, group2
+# You can allow access to user3 AND all users of group1 by providing:
+#   # GODOXY_OIDC_ALLOWED_USERS=user3
+#   # GODOXY_OIDC_ALLOWED_GROUPS=group1
+#
+# Comma-separated list of allowed users.
+# GODOXY_OIDC_ALLOWED_USERS=user1,user2
+# Optional: Comma-separated list of allowed groups.
+# GODOXY_OIDC_ALLOWED_GROUPS=group1,group2
+
+# Proxy listening address
+GODOXY_HTTP_ADDR=:80
+GODOXY_HTTPS_ADDR=:443
+
+# Enable HTTP3
+GODOXY_HTTP3_ENABLED=true
+
+# API listening address
+GODOXY_API_ADDR=127.0.0.1:8888
+
+# Metrics
+GODOXY_METRICS_DISABLE_CPU=false
+GODOXY_METRICS_DISABLE_MEMORY=false
+GODOXY_METRICS_DISABLE_DISK=false
+GODOXY_METRICS_DISABLE_NETWORK=false
+GODOXY_METRICS_DISABLE_SENSORS=false
+
+# Frontend listening port
+GODOXY_FRONTEND_PORT=3716
+
+# Frontend aliases (subdomains / FQDNs, e.g. godoxy, godoxy.domain.com)
+GODOXY_FRONTEND_ALIASES=doxy
+
+# Docker socket
+# /var/run/podman/podman.sock for podman
+DOCKER_SOCKET=/var/run/docker.sock
+SOCKET_PROXY_LISTEN_ADDR=127.0.0.1:2375
+
+# Debug mode
+GODOXY_DEBUG=true
+"""
+
+##
+
+[[stack]]
 name = "healthcheck"
 tags = [
   "internal",
@@ -633,7 +797,8 @@ name = "homepage"
 tags = [
   "external",
   "production",
-  "komodo-1"
+  "komodo-1",
+  "proxy"
 ]
 [stack.config]
 server = "server-DULxe"
@@ -656,9 +821,9 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ${DATA_DIR}/config:/app/config 
-      - ${DATA_DIR}/icons:/app/public/icons
-      - ${DATA_DIR}/images:/app/public/images 
+      - ${HOMEPAGE_DATA_DIR}/homepage/config:/app/config 
+      - ${HOMEPAGE_DATA_DIR}/homepage/icons:/app/public/icons
+      - ${HOMEPAGE_DATA_DIR}/homepage/images:/app/public/images 
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
     labels:
@@ -680,9 +845,23 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
     restart: unless-stopped
+  
+  container-updates-summary:
+    image: python:3.12-slim
+    container_name: container-updates-summary
+    restart: unless-stopped
+    command: >
+      sh -c "pip install flask requests &&
+             python /app/container_updates_summary.py"
+    volumes:
+      - ${HOMEPAGE_DATA_DIR}/homepage:/app:ro
+    networks:
+      - caddy
+    ports:
+      - "5070:5070"
 """
 environment = """
-DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/homepage
+HOMEPAGE_DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/
 HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,192.168.2.31:3000"
 PGID= 1000 
 PUID= 1000 
@@ -698,7 +877,7 @@ HOMEPAGE_VAR_IMG_BRIGHTNESS= 50
 HOMEPAGE_VAR_IMG_OPACITY=70
 HOMEPAGE_VAR_THEME= dark
 HOMEPAGE_VAR_COLOR= slate
-HOMEPAGE_VAR_STATUS_STYLE= per-service
+HOMEPAGE_VAR_STATUS_STYLE= dot
 HOMEPAGE_VAR_IMG_FULLWIDTH= true
 HOMEPAGE_VAR_IMG_SHOWSTATS= true
 HOMEPAGE_VAR_IMG_HIDEERRORS= true
@@ -740,12 +919,12 @@ HOMEPAGE_VAR_PULSE_CLASSES= h-60 sm:h-60 md:h-100 lg:h-200 xl:h-300 2xl:h-700
 #HOMEPAGE_VAR_PULSE_HEIGHT= 500
 
 # Truenas
-HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas.png"
+HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas-scale-light.png"
 HOMEPAGE_VAR_TRUENAS_URL= "https://192.168.2.7"
 HOMEPAGE_VAR_TRUENAS_KEY="1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe"
 HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
 # Proxmox
-HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox.png"
+HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox-light.png"
 HOMEPAGE_VAR_PROXMOX_URL_PVE_1= "https://pve.d3adc3ii.site"
 #HOMEPAGE_VAR_PROXMOX_USER= 
 #HOMEPAGE_VAR_PROXMOX_API_KEY=
@@ -753,37 +932,40 @@ HOMEPAGE_VAR_PBS_URL= "https://pbs.d3adc3ii.site"
 
 ### INFRA ###
 # Opnsense
-HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense.png"
+HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense-light.png"
 HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.d3adc3ii.site"
 # DNS
-HOMEPAGE_VAR_DNS_ICON= "/icons/technitium.png"
+HOMEPAGE_VAR_DNS_ICON= "/icons/technitium-light.png"
 HOMEPAGE_VAR_DNS_URL= "https://ns0.d3adc3ii.site"
 HOMEPAGE_VAR_DNS_KEY="664be7cf433c98c60e66d81cc782a9226cc8ba2e255933727285174f62980b1c"
 HOMEPAGE_VAR_DNS_RANGE: LastDay # optional, defaults to LastHour
 # MIKROTIK
-HOMEPAGE_VAR_MIKROTIK_ICON= "/icons/mikrotik.png"
+HOMEPAGE_VAR_MIKROTIK_ICON= "/icons/mikrotik-light.png"
 HOMEPAGE_VAR_MIKROTIK_URL= "http://192.168.2.253"
 # TPLINK
-HOMEPAGE_VAR_TPLINK_ICON= "/icons/tp-link.png"
+HOMEPAGE_VAR_TPLINK_ICON= "/icons/tp-link-light.png"
 HOMEPAGE_VAR_TPLINK_URL= "http://192.168.2.252"
 
 ### Monitoring ###
+# GoDoxy
+HOMEPAGE_VAR_GODOXY_ICON= "/icons/godoxy-light.png"
+HOMEPAGE_VAR_GODOXY_URL= "https://doxy.int.d3adc3ii.site"
 # Caddy Proxy
-HOMEPAGE_VAR_CADDYPROXY_ICON= "/icons/caddy.png"
+HOMEPAGE_VAR_CADDYPROXY_ICON= "/icons/caddy-light.png"
 HOMEPAGE_VAR_CADDYPROXY_URL= "http://caddy:2020"
 # NetAlertX 
-HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx.png"
+HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx-light.png"
 HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3adc3ii.site"
 HOMEPAGE_VAR_NETALERTX_KEY="t_pJ26L2qEeUcR6bz5RCGI"
 HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"] 
 # Wazuh
-HOMEPAGE_VAR_WAZUH_ICON= "/icons/wazuh.png"
+HOMEPAGE_VAR_WAZUH_ICON= "/icons/wazuh-light.png"
 HOMEPAGE_VAR_WAZUH_URL= "https://wazuh.d3adc3ii.site"
 # APPRISE-API
 HOMEPAGE_VAR_APPRISE_ICON= "/icons/apprise.png"
 HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
 # Healthchecks
-HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks.png"
+HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks-light.png"
 HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
 # Smokeping
 HOMEPAGE_VAR_SMOKEPING_ICON= "/icons/smokeping.png"
@@ -795,16 +977,16 @@ HOMEPAGE_VAR_BOTB_URL= "https://botb.int.d3adc3ii.cc"
 
 ### BACKUP ###
 # Backrest
-HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest.png"
+HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest-light.png"
 HOMEPAGE_VAR_BACKREST_URL= "https://backrest.d3adc3ii.site"
 
 # Remote-Backups
-HOMEPAGE_VAR_REMOTEBACKUP_ICON= "/icons/proxmox.png"
+HOMEPAGE_VAR_REMOTEBACKUP_ICON= "/icons/proxmox-light.png"
 HOMEPAGE_VAR_REMOTEBACKUP_URL= "https://dashboard.remote-backups.com"
 
 
 # Jellyfin
-HOMEPAGE_VAR_JELLY_ICON= "/icons/jellyfin.png"
+HOMEPAGE_VAR_JELLY_ICON= "/icons/jellyfin-light.png"
 HOMEPAGE_VAR_JELLY_URL= "https://jelly.d3adc3ii.site"
 HOMEAGE_VAR_JELLY_WIDGETURL= "http://192.168.2.33:8096"
 HOMEPAGE_VAR_JELLY_KEY= "a6a45c61dd1d4f059b02fa22ad8c0ef3"
@@ -812,7 +994,7 @@ HOMEPAGE_VAR_JELLY_ENABLEBLOCK=true
 HOMEPAGE_VAR_JELLY_NOWPLAY=false
 
 # Immich
-HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich.png"
+HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich-light.png"
 HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3adc3ii.site"
 HOMEPAGE_VAR_IMMICH_KEY= "7zmatjhj9RVRPylp08hKaG1mkYDubUyeqfDlpaUHo"
 HOMEPAGE_VAR_IMMICH_VERSION= 2
@@ -820,26 +1002,26 @@ HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"]
 
 ### LOCAL APPS ###
 # Actual Budget
-HOMEPAGE_VAR_ACTUAL_ICON= "/icons/actual-budget.png"
+HOMEPAGE_VAR_ACTUAL_ICON= "/icons/actual-budget-light.png"
 HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3adc3ii.site"
 # Sensei
 HOMEPAGE_VAR_SENSEI_ICON= "/icons/davis.png"
 HOMEPAGE_VAR_SENSEI_URL= "https://statement.d3adc3ii.site"
 # Homeassistant
-HOMEPAGE_VAR_HA_ICON= "/icons/home-assistant.png"
+HOMEPAGE_VAR_HA_ICON= "/icons/home-assistant-light.png"
 HOMEPAGE_VAR_HA_URL= "https://ha.d3adc3ii.site"
 # Qbit
-HOMEPAGE_VAR_QBIT_ICON= "/icons/qbittorrent.png"
+HOMEPAGE_VAR_QBIT_ICON= "/icons/qbittorrent-light.png"
 HOMEPAGE_VAR_QBIT_URL= "https://qbit.d3adc3ii.site"
 HOMEPAGE_VAR_QBIT_USER= "d3adc3ii"
 HOMEPAGE_VAR_QBIT_PASSWORD= "WCxb2CcykoUmjiNAf3p8"
 # Stash
-HOMEPAGE_VAR_STASH_ICON= "/icons/stash.png"
+HOMEPAGE_VAR_STASH_ICON= "/icons/stash-light.png"
 HOMEPAGE_VAR_STASH_URL= "https://stash.d3adc3ii.site"
 HOMEPAGE_VAR_STASH_USER= "d3adc3ii"
 HOMEPAGE_VAR_QBIT_API= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg"
 # Semaphore
-HOMEPAGE_VAR_SEMAPHORE_ICON= "/icons/semaphore.png"
+HOMEPAGE_VAR_SEMAPHORE_ICON= "/icons/semaphore-ui-light.png"
 HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3adc3ii.site"
 # Aria2
 HOMEPAGE_VAR_ARIA_ICON= "/icons/ariang.png"
@@ -848,40 +1030,44 @@ HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
 ### EXTERNAL ###
 
 # Pangolin
-HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin.png"
+HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin-light.png"
 HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.d3adc3ii.cc"
 # Authentik
-HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik.png"
+HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik-light.png"
 HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3adc3ii.cc"
 HOMEPAGE_VAR_AUTHENTIK_KEY="Boy9GZM04gnN8zn1RdTDSxgkeDr70a8XqFKmrp1HwVx7A3u4GA2pnVN2aZEO"
 # Komodo
 HOMEPAGE_VAR_KOMODO_ICON= "/icons/komodo.png"
 HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
+HOMEPAGE_VAR_KOMODO_APIURL= "http://192.168.2.31:9120/read"
+HOMEPAGE_VAR_KOMODO_CONTAINER_UPDATE_URL= "http://container-updates-summary:5070/"
+HOMEPAGE_VAR_KOMODO_API_KEY="K-zJzjausI0s5PFi0B5tpRiZzz7JEjVddtR2cPyHsX"
+HOMEPAGE_VAR_KOMODO_API_SECRET="S-oOAnX7RSJ4vE7la3Tj66pPuiBODTKfXjl14jdMXW"
 # Twingate
 HOMEPAGE_VAR_TWINGATE_ICON= "/icons/twingate.png"
 HOMEPAGE_VAR_TWINGATE_URL= "https://d3net.twinget.com"
 
 ### Remote ###
 # Guacamole
-HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/guacamole.png"
+HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/apache-guacamole-light.png"
 HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.d3adc3ii.site/guacamole"
 HOMEPAGE_VAR_GUACAMOLEEXT_URL= "https://guaca.d3adc3ii.cc/guacamole"
 # Dumbterm
-HOMEPAGE_VAR_DUMBTERM_ICON= "/icons/dumbterm.png"
+HOMEPAGE_VAR_DUMBTERM_ICON= "/icons/dumbterm-light.png"
 HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.d3adc3ii.cc"
 
 ### Monitoring ###
 # UPTIME KUMA
-HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma.png"
+HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma-light.png"
 HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
 # Grafana
-HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana.png"
+HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana-light.png"
 HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
 # Checkmate
-HOMEPAGE_VAR_CHECKMATE_ICON= "/icons/checkmate.png"
+HOMEPAGE_VAR_CHECKMATE_ICON= "/icons/checkmate-light.png"
 HOMEPAGE_VAR_CHECKMATE_URL= "https://checkmate.d3adc3ii.cc"
 # Beszel
-HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel.png"
+HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel-light.png"
 HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
 HOMEPAGE_VAR_BESZEL_USERNAME= "d3social@pm.me"
 HOMEPAGE_VAR_BESZEL_PASSWORD= "LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re"
@@ -892,17 +1078,17 @@ HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13= pve13
 HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs= pbs
 HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"]
 # Scutiny
-HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny.png"
+HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny-light.png"
 HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
 # ZABBIX
-HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix.png"
+HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix-light.png"
 HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.int.d3adc3ii.cc/zabbix"
 # Checkmk
-HOMEPAGE_VAR_CHECKMK_ICON= "/icons/checkmk.png"
+HOMEPAGE_VAR_CHECKMK_ICON= "/icons/checkmk-light.png"
 HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"
 
 # Pulse
-HOMEPAGE_VAR_PULSEXT_ICON= "/icons/pulse.png"
+HOMEPAGE_VAR_PULSEXT_ICON= "/icons/pulse-light.png"
 HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
 
 # NETBOX CLOUD
@@ -1039,7 +1225,11 @@ DB_DATABASE_NAME=immich
 
 [[stack]]
 name = "jellyfin"
-tags = ["internal", "production"]
+tags = [
+  "internal",
+  "production",
+  "komodo-3"
+]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -1069,8 +1259,9 @@ services:
       - 1900:1900/udp #optional
     restart: unless-stopped
     labels:
-      caddy: jelly.d3adc3ii.site
-      caddy.reverse_proxy: "{{upstreams 8096}}"
+      proxy.aliases: jelly
+      proxy.idle_timeout: 30m
+      proxy.jelly.port: 8096
 """
 environment = """
 JELLYFIN_CONFIG_DIR=/mnt/zApps/jellyfin/config
@@ -1150,6 +1341,7 @@ tags = ["internal", "monitoring"]
 
 [[stack]]
 name = "mailrise"
+tags = ["komodo-3"]
 [stack.config]
 server = "komodo-3"
 file_contents = """
@@ -1248,7 +1440,7 @@ NTFY_DATA_DIR=/mnt/zApps/ntfy
 
 [[stack]]
 name = "nzbget"
-tags = ["internal", "testing"]
+tags = ["internal", "testing", "komodo-3"]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -1282,7 +1474,25 @@ NZBGET_DL_DIR=/mnt/zApps/nzb/downloads
 ##
 
 [[stack]]
+name = "omni-tools"
+[stack.config]
+server = "komodo-2"
+auto_update = true
+file_contents = """
+services:
+  omni-tools:
+    image: iib0011/omni-tools:latest
+    container_name: omni-tools
+    restart: unless-stopped
+    ports:
+      - "8281:80"
+"""
+
+##
+
+[[stack]]
 name = "scrutiny"
+tags = ["komodo-3"]
 [stack.config]
 server = "komodo-3"
 file_contents = """
@@ -1418,7 +1628,11 @@ environment = """
 
 [[stack]]
 name = "wallos"
-tags = ["external", "production"]
+tags = [
+  "external",
+  "production",
+  "komodo-3"
+]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -1655,23 +1869,6 @@ environment = """
 ##
 
 [[deployment]]
-name = "omni-tools"
-tags = ["external", "production"]
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "iib0011/omni-tools:latest"
-poll_for_updates = true
-auto_update = true
-network = "bridge"
-restart = "unless-stopped"
-ports = """
-8281:80
-"""
-
-##
-
-[[deployment]]
 name = "statementsensei"
 tags = ["internal", "testing"]
 [deployment.config]
@@ -1739,18 +1936,8 @@ name = "diiihl"
 [repo.config]
 server = "server-DULxe"
 builder = "local"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
-
-##
-
-[[repo]]
-name = "diiihl-k2"
-[repo.config]
-server = "komodo-2"
-builder = "local"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
+git_account = "d3hl"
+repo = "d3hl/dIIIhl"
 
 ##
 
@@ -1759,11 +1946,42 @@ name = "diiihl-k3"
 [repo.config]
 server = "komodo-3"
 builder = "local"
-git_account = "d3adc3iii"
-repo = "d3adc3iii/dIIIhl"
+git_account = "d3hl"
+repo = "d3hl/dIIIhl"
+on_pull.command = """
+rm -rf *ansi*
+rm -rf *scri*
+rm -rf *terra*
+rm *clus*
+"""
 
 ##
 
+[[procedure]]
+name = "pull repo and deploy homepage"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Stage 3"
+enabled = true
+executions = [
+  { execution.type = "DestroyStack", execution.params.stack = "homepage", execution.params.services = [], execution.params.remove_orphans = false, enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Stage 3"
+enabled = true
+executions = [
+  { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
+]
+
+##
 
 [[builder]]
 name = "local"
@@ -1781,3 +1999,25 @@ git_account = "d3hl"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
 include_user_groups = true
+
+##
+
+[[resource_sync]]
+name = "variables"
+[resource_sync.config]
+repo = "d3hl/dIIIhl"
+git_account = "d3hl"
+resource_path = [
+  "komodo/resources/variables.toml"
+]
+managed = true
+include_resources = false
+include_variables = true
+
+##
+
+[[user_group]]
+name = "read-only"
+users = ["homepage", "kuma"]
+all.Server = "Read"
+all.Stack = "Read"
