@@ -1523,7 +1523,7 @@ services:
     ports:
       - 8785:8080
     volumes:
-      - ${DATA_DIR}/config:/opt/scrutiny/config
+      - ${DOCKER_DATA}/scrutiny/config:/opt/scrutiny/config
     env_file:
       - .env
       # Optional but highly recommended to notify you in case of a problem
@@ -1538,16 +1538,15 @@ services:
 environment = """
 PGID= 1000 
 PUID= 1000
-DATA_DIR= '/mnt/zApps/scrutiny'
 DOCKER_INFLUXDB_INIT_MODE=setup
 DOCKER_INFLUXDB_INIT_USERNAME=Admin
-DOCKER_INFLUXDB_INIT_PASSWORD= 'qA6otE2(raC=MDh$ZN%tNulHp6iYs|xv}l&IwVWPzZvn+Tvm399+2w#V$P'
+DOCKER_INFLUXDB_INIT_PASSWORD= [[SCRUTINY_DOCKER_INFLUXDB_INIT_PASSWORD]]
 DOCKER_INFLUXDB_INIT_ORG=homelab
 DOCKER_INFLUXDB_INIT_BUCKET=scrutiny
-DOCKER_INFLUXDB_INIT_ADMIN_TOKEN= '6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7+Kl!$G<(x['
+DOCKER_INFLUXDB_INIT_ADMIN_TOKEN= [[SCRUTINY_DOCKER_INFLUXDB_INIT_ADMIN_TOKEN]]
 SCRUTINY_WEB_INFLUXDB_HOST=influxdb
 SCRUTINY_WEB_INFLUXDB_PORT=8086
-SCRUTINY_WEB_INFLUXDB_TOKEN= '6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7+Kl!$G<(x['
+SCRUTINY_WEB_INFLUXDB_TOKEN= [[SCRUTINY_WEB_INFLUXDB_TOKEN]]
 SCRUTINY_WEB_INFLUXDB_ORG=homelab
 SCRUTINY_WEB_INFLUXDB_BUCKET=scrutiny
 """
