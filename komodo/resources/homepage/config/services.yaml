@@ -252,6 +252,9 @@
         - Uptime-Kuma:
             icon: {{HOMEPAGE_VAR_KUMA_ICON}}
             href: {{HOMEPAGE_VAR_KUMA_URL}}
+        - Grafana on:
+            icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+            href: {{HOMEPAGE_VAR_GRAFANAPANGOLIN_URL}}
         - Grafana:
             icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
             href: {{HOMEPAGE_VAR_GRAFANA_URL}}
