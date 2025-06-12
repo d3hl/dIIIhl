@@ -306,6 +306,9 @@
             icon: {{HOMEPAGE_VAR_OMNITOOLS_ICON}} 
             href: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
             sitemonitor: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
+        - Selfhst-icons:
+            icon: {{HOMEPAGE_VAR_SELFHST_ICON}} 
+            href: {{HOMEPAGE_VAR_SELFHST_URL}}
 #/ - GL1:
     #- Info: *#
      #   href: {{HOMEPAGE_VAR_PVE11_URL}}  
