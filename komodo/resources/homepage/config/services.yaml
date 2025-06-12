@@ -1,7 +1,8 @@
 ---
 - Internal:
     - Nas:
-        -  Truenas: 
+        -  Truenas:
+            id: truenas 
             icon: {{HOMEPAGE_VAR_TRUENAS_ICON}}
             href: {{HOMEPAGE_VAR_TRUENAS_URL}}
             sitemonitor: {{HOMEPAGE_VAR_TRUENAS_URL}}
