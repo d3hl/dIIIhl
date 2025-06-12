@@ -863,8 +863,8 @@ services:
 environment = """
 HOMEPAGE_DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/
 HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,192.168.2.31:3000"
-PGID= 1000 
-PUID= 1000 
+PGID= [[PGID]] 
+PUID= [[PUID]] 
 # Site Config
 HOMEPAGE_VAR_TITLE= "d3 Homepage"
 HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
@@ -1026,6 +1026,10 @@ HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3adc3ii.site"
 # Aria2
 HOMEPAGE_VAR_ARIA_ICON= "sh-aria2-light"
 HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
+# NZBGET
+HOMEPAGE_VAR_NZBGET_ICON= "sh-nzbget-light"
+HOMEPAGE_VAR_NZBGET_URL= "https://nzbget.int.d3adc3ii.site"
+
 
 
 
@@ -1460,7 +1464,7 @@ NTFY_DATA_DIR=/mnt/zApps/ntfy
 
 [[stack]]
 name = "nzbget"
-tags = ["internal", "testing", "komodo-3"]
+tags = ["internal", "komodo-3"]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -1473,22 +1477,21 @@ services:
     container_name: nzbget
     env_file:
       - .env
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-      - NZBGET_USER=nzbget #optional
-      - NZBGET_PASS=tegbzn6789 #optional
     volumes:
-      - ${NZBGET_CF_DIR}:/config
-      - ${NZBGET_DL_DIR}:/downloads #optional
+      - ${DOCKER_DATA}/nzb/config:/config
+      - ${DOCKER_DATA}/nzb/downloads:/downloads #optional
     ports:
       - 6789:6789
     restart: unless-stopped
+    labels:
+      proxy.idle_timeout: 10m
 """
 environment = """
-NZBGET_CF_DIR=/mnt/zApps/nzb/config
-NZBGET_DL_DIR=/mnt/zApps/nzb/downloads
+NZBGET_USER= [[NZBGET_USER]]
+NZBGET_PASS= [[NZBGET_PASS]]
+PUID= [[PUID]]
+PGID= [[PGID]]
+TZ= [[TZ]]
 """
 
 ##
