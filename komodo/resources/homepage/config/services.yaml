@@ -17,6 +17,7 @@
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             href: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
             sitemonitor: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
+            ping: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
             widget:
                 type: beszel
                 url: http://192.168.2.9:8090
@@ -261,10 +262,6 @@
         - Scrutiny:
             icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
             href: {{HOMEPAGE_VAR_SCRUTINY_URL}}
-        - Checkmate:
-            icon: {{HOMEPAGE_VAR_CHECKMATE_ICON}}
-            href: {{HOMEPAGE_VAR_CHECKMATE_URL}}
-            sitemonitor: {{HOMEPAGE_VAR_CHECKMATE_URL}}
         - Pulse:
             icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
             href: {{HOMEPAGE_VAR_PULSEXT_URL}}
