@@ -819,7 +819,7 @@ services:
     env_file:
       - .env
     ports:
-      - 3000:3000
+      - 3731:3000
     volumes:
       - ${HOMEPAGE_DATA_DIR}/homepage/config:/app/config 
       - ${HOMEPAGE_DATA_DIR}/homepage/icons:/app/public/icons
@@ -828,7 +828,7 @@ services:
     restart: unless-stopped
     labels:
       caddy: homepage.d3adc3ii.site                    
-      caddy.reverse_proxy: "{{upstreams 3000}}"
+      caddy.reverse_proxy: "{{upstreams 3731}}"
       
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy:latest
