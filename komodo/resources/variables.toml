@@ -93,7 +93,7 @@ is_secret = true
 [[variable]]
 name = "NZBGET_USER"
 value = "d3"
-is_secret = true
+is_secret = false
 
 ##
 
@@ -178,3 +178,24 @@ is_secret = true
 name = "SCRUTINY_WEB_INFLUXDB_TOKEN"
 value = "6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7+Kl!$G<(x["
 is_secret = true
+
+##
+
+[[variable]]
+name = "PGID"
+value = "1000"
+is_secret = false
+
+##
+
+[[variable]]
+name = "PUID"
+value = "1000"
+is_secret = false
+
+##
+
+[[variable]]
+name = "TZ"
+value = "Asia/Singapore"
+is_secret = false
