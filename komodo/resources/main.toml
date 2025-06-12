@@ -1027,7 +1027,24 @@ HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3adc3ii.site"
 HOMEPAGE_VAR_ARIA_ICON= "/icons/ariang.png"
 HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
 
-### EXTERNAL ###
+
+
+
+
+
+
+############  EXTERNAL ############ 
+###################################             
+###################################
+###################################
+
+
+
+
+
+
+
+
 
 # Pangolin
 HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin-light.png"
@@ -1063,6 +1080,7 @@ HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
 # Grafana
 HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana-light.png"
 HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
+HOMEPAGE_VAR_GRAFANAPANGOLIN_URL= "https://grafana.d3adc3ii.cc/d/n5bu_kv45/traefik-official-standalone-dashboard"
 # Checkmate
 HOMEPAGE_VAR_CHECKMATE_ICON= "/icons/checkmate-light.png"
 HOMEPAGE_VAR_CHECKMATE_URL= "https://checkmate.d3adc3ii.cc"
@@ -1109,6 +1127,9 @@ HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
 # Ommni Tools
 HOMEPAGE_VAR_OMNITOOLS_ICON= "/icons/omni-tools-light.png"
 HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
+# Selfhst-icons
+HOMEPAGE_VAR_SELFHST_ICON= "sh-selfh-st-light" 
+HOMEPAGE_VAR_SELFHST_URL= "https://selfhst-icons.d3adc3ii.cc"
 
 ### GL1 ###
 # PVE11
@@ -1552,6 +1573,24 @@ SCRUTINY_WEB_INFLUXDB_TOKEN= '6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7
 #SCRUTINY_WEB_INFLUXDB_TOKEN= [[SCRUTINY_WEB_INFLUXDB_TOKEN]]
 SCRUTINY_WEB_INFLUXDB_ORG=homelab
 SCRUTINY_WEB_INFLUXDB_BUCKET=scrutiny
+"""
+
+##
+
+[[stack]]
+name = "selfhst-icons"
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  selfhst-icons:
+    image: ghcr.io/selfhst/icons:latest
+    restart: unless-stopped
+    ports:
+      - 4050:4050
 """
 
 ##
