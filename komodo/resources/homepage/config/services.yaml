@@ -61,7 +61,7 @@
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
                 systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs}}
                 fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
-    - Infra:        
+    - Network:        
         - Opnsense:
             icon: {{HOMEPAGE_VAR_OPNSENSE_ICON}} 
             href: {{HOMEPAGE_VAR_OPNSENSE_URL}}
@@ -74,8 +74,8 @@
             icon: {{HOMEPAGE_VAR_TPLINK_ICON}} 
             href: {{HOMEPAGE_VAR_TPLINK_URL}}
             sitemonitor: {{HOMEPAGE_VAR_TPLINK_URL}}
-    - Backend:
-        - DNS:
+    - DNS:
+        - Technitium:
             icon: {{HOMEPAGE_VAR_DNS_ICON}}
             href: {{HOMEPAGE_VAR_DNS_URL}}
             ping: {{HOMEPAGE_VAR_DNS_URL}}
@@ -94,6 +94,7 @@
             icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
             href: {{HOMEPAGE_VAR_GODOXY_URL}} 
             ping: {{HOMEPAGE_VAR_GODOXY_URL}}
+    - Internal Monitor:
         - NetAlertX:
             icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
             href: {{HOMEPAGE_VAR_NETALERTX_URL}}
@@ -232,6 +233,7 @@
                   - field: updates
                     label: With Updates
                     format: number
+    - Identity: 
         - Pangolin:
             icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
             href: {{HOMEPAGE_VAR_PANGOLIN_URL}}

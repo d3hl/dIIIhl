@@ -23,15 +23,16 @@ layout:
     tab: Homelab
     style: column
     columns: 1
-    header: false
+    header: true
     Core:
       style: row
       columns: 2
-      header: true
+    Identity:
+      style: row
+      columns: 2
     Remote:
       style: row
       columns: 4
-      header: true
     Monitoring:
       style: row
       columns: 4
@@ -53,11 +54,15 @@ layout:
       style: row
       columns: 4 
       header: false
-    Infra:
+    Network:
       style: row
       columns: 4 
-      header: false
-    Backend:
+      header: true
+    DNS:
+      style: row
+      columns: 3 
+      header: true
+    Internal Monitor:
       style: row
       columns: 3 
       header: true
