@@ -1,3 +1,9 @@
 .bg-green-500 {
-  background-color: oklch(0.8 0.21 324.89) !important;
+  background-color: oklch(0.4 0.19 324.41) !important;
+}!important;
+}
+
+.dark\:bg-theme-900\/40:is(.dark *) {
+    background-color: 
+ color-mix(in oklab, rgb(247 126 255) 40%, transparent);
 }
