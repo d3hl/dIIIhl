@@ -180,6 +180,10 @@
             icon: {{HOMEPAGE_VAR_ARIA_ICON}}
             href: {{HOMEPAGE_VAR_ARIA_URL}}
             sitemonitor: {{HOMEPAGE_VAR_ARIA_URL}}
+        - nzbget:
+            icon: {{HOMEPAGE_VAR_NZBGET_ICON}}
+            href: {{HOMEPAGE_VAR_NZBGET_URL}}
+            ping: {{HOMEPAGE_VAR_NZBGET_URL}}
 - External:
     - Core: 
         - Docker Stacks:
