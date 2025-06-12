@@ -77,27 +77,6 @@ is_secret = true
 ##
 
 [[variable]]
-name = "PORTNOTE_JWT_SECRET"
-value = "XxockagcY8ApPXCUh6Ujo1Qu4sdrXwcb"
-is_secret = true
-
-##
-
-[[variable]]
-name = "PORTNOTE_USER_SECRET"
-value = "NBcMXXPJrGb7OPIzrRGgbCgvG5Gja2kK"
-is_secret = true
-
-##
-
-[[variable]]
-name = "PORTNOTE_LOGIN_PASSWORD"
-value = "jp2Pt7CG0AX5Y3Q0P3Inx8ESxyYUtVT2"
-is_secret = true
-
-##
-
-[[variable]]
 name = "CORECONTROL_JWT_SECRET"
 value = "^yv&5>qxi0#?C#^zqIqz(#81xBvY8?LEQkxj?U:Sd,uk^,K&>B=^zts*xT|~O|p"
 is_secret = true
@@ -177,4 +156,25 @@ is_secret = true
 [[variable]]
 name = "CHECKMATE_JWT_SECRET"
 value = "Nt49d0c01LQZM1Ko6OoU6Yosop9sVqhv"
+is_secret = true
+
+##
+
+[[variable]]
+name = "SCRUTINY_DOCKER_INFLUXDB_INIT_PASSWORD"
+value = "qA6otE2(raC=MDh$ZN%tNulHp6iYs|xv}l&IwVWPzZvn+Tvm399+2w#V$P"
+is_secret = true
+
+##
+
+[[variable]]
+name = "SCRUTINY_DOCKER_INFLUXDB_INIT_ADMIN_TOKEN"
+value = "6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7+Kl!$G<(x["
+is_secret = true
+
+##
+
+[[variable]]
+name = "SCRUTINY_WEB_INFLUXDB_TOKEN"
+value = "6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7+Kl!$G<(x["
 is_secret = true
