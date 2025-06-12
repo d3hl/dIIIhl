@@ -868,7 +868,7 @@ PUID= 1000
 # Site Config
 HOMEPAGE_VAR_TITLE= "d3 Homepage"
 HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
-HOMEPAGE_VAR_IMG_URL= "/images/culon.jpg"
+HOMEPAGE_VAR_IMG_URL= "/images/extra-12.jpg"
 HOMEPAGE_VAR_HEADER_STYLE= boxedWidgets
 
 HOMEPAGE_VAR_IMG_BLUR= md
@@ -947,6 +947,9 @@ HOMEPAGE_VAR_TPLINK_ICON= "/icons/tp-link-light.png"
 HOMEPAGE_VAR_TPLINK_URL= "http://192.168.2.252"
 
 ### Monitoring ###
+# GoDoxy
+HOMEPAGE_VAR_GODOXY_ICON= "/icons/godoxy-light.png"
+HOMEPAGE_VAR_GODOXY_URL= "https://doxy.int.d3adc3ii.site"
 # Caddy Proxy
 HOMEPAGE_VAR_CADDYPROXY_ICON= "/icons/caddy-light.png"
 HOMEPAGE_VAR_CADDYPROXY_URL= "http://caddy:2020"
@@ -959,7 +962,7 @@ HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"]
 HOMEPAGE_VAR_WAZUH_ICON= "/icons/wazuh-light.png"
 HOMEPAGE_VAR_WAZUH_URL= "https://wazuh.d3adc3ii.site"
 # APPRISE-API
-HOMEPAGE_VAR_APPRISE_ICON= "/icons/apprise.png"
+HOMEPAGE_VAR_APPRISE_ICON= "/icons/gotify-dark.png"
 HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
 # Healthchecks
 HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks-light.png"
@@ -1034,7 +1037,7 @@ HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik-light.png"
 HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3adc3ii.cc"
 HOMEPAGE_VAR_AUTHENTIK_KEY="Boy9GZM04gnN8zn1RdTDSxgkeDr70a8XqFKmrp1HwVx7A3u4GA2pnVN2aZEO"
 # Komodo
-HOMEPAGE_VAR_KOMODO_ICON= "/icons/komodo.png"
+HOMEPAGE_VAR_KOMODO_ICON= "/icons/docker-light.png"
 HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
 HOMEPAGE_VAR_KOMODO_APIURL= "http://192.168.2.31:9120/read"
 HOMEPAGE_VAR_KOMODO_CONTAINER_UPDATE_URL= "http://container-updates-summary:5070/"
@@ -1089,10 +1092,9 @@ HOMEPAGE_VAR_PULSEXT_ICON= "/icons/pulse-light.png"
 HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
 
 # NETBOX CLOUD
-HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox.png"
+HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox-light.png"
 HOMEPAGE_VAR_NETBOXCL_URL= "https://wmfk3018.cloud.netboxapp.com"
 # NETBOX CONSOLE
-HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox.png"
 HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
 
 
@@ -1102,10 +1104,10 @@ HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
 HOMEPAGE_VAR_KARAKEEP_ICON= "/icons/karakeep.png"
 HOMEPAGE_VAR_KARAKEEP_URL= "https://kara.d3adc3ii.cc"
 # Wallos
-HOMEPAGE_VAR_WALLOS_ICON= "/icons/wallos.png"
+HOMEPAGE_VAR_WALLOS_ICON= "/icons/wallos-light.png"
 HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
 # Ommni Tools
-HOMEPAGE_VAR_OMNITOOLS_ICON= "/icons/omni-tools.png"
+HOMEPAGE_VAR_OMNITOOLS_ICON= "/icons/omni-tools-light.png"
 HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
 
 ### GL1 ###
@@ -1256,8 +1258,9 @@ services:
       - 1900:1900/udp #optional
     restart: unless-stopped
     labels:
-      caddy: jelly.d3adc3ii.site
-      caddy.reverse_proxy: "{{upstreams 8096}}"
+      proxy.aliases: jelly
+      proxy.idle_timeout: 30m
+      proxy.jelly.port: 8096
 """
 environment = """
 JELLYFIN_CONFIG_DIR=/mnt/zApps/jellyfin/config
@@ -1520,7 +1523,7 @@ services:
     ports:
       - 8785:8080
     volumes:
-      - ${DATA_DIR}/config:/opt/scrutiny/config
+      - ${DOCKER_DATA}/scrutiny/config:/opt/scrutiny/config
     env_file:
       - .env
       # Optional but highly recommended to notify you in case of a problem
@@ -1535,16 +1538,15 @@ services:
 environment = """
 PGID= 1000 
 PUID= 1000
-DATA_DIR= '/mnt/zApps/scrutiny'
 DOCKER_INFLUXDB_INIT_MODE=setup
 DOCKER_INFLUXDB_INIT_USERNAME=Admin
-DOCKER_INFLUXDB_INIT_PASSWORD= 'qA6otE2(raC=MDh$ZN%tNulHp6iYs|xv}l&IwVWPzZvn+Tvm399+2w#V$P'
+DOCKER_INFLUXDB_INIT_PASSWORD= [[SCRUTINY_DOCKER_INFLUXDB_INIT_PASSWORD]]
 DOCKER_INFLUXDB_INIT_ORG=homelab
 DOCKER_INFLUXDB_INIT_BUCKET=scrutiny
-DOCKER_INFLUXDB_INIT_ADMIN_TOKEN= '6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7+Kl!$G<(x['
+DOCKER_INFLUXDB_INIT_ADMIN_TOKEN= [[SCRUTINY_DOCKER_INFLUXDB_INIT_ADMIN_TOKEN]]
 SCRUTINY_WEB_INFLUXDB_HOST=influxdb
 SCRUTINY_WEB_INFLUXDB_PORT=8086
-SCRUTINY_WEB_INFLUXDB_TOKEN= '6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7+Kl!$G<(x['
+SCRUTINY_WEB_INFLUXDB_TOKEN= [[SCRUTINY_WEB_INFLUXDB_TOKEN]]
 SCRUTINY_WEB_INFLUXDB_ORG=homelab
 SCRUTINY_WEB_INFLUXDB_BUCKET=scrutiny
 """
@@ -1954,20 +1956,27 @@ rm *clus*
 ##
 
 [[procedure]]
-name = "pull repo and deploy GoDoxy"
+name = "pull repo and deploy homepage"
 
 [[procedure.config.stage]]
 name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "PullRepo", execution.params.repo = "diiihl-k3", enabled = true }
+  { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true }
 ]
 
 [[procedure.config.stage]]
 name = "Stage 3"
 enabled = true
 executions = [
-  { execution.type = "DeployStack", execution.params.stack = "godoxy", execution.params.services = [], enabled = true }
+  { execution.type = "DestroyStack", execution.params.stack = "homepage", execution.params.services = [], execution.params.remove_orphans = false, enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Stage 3"
+enabled = true
+executions = [
+  { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
 ]
 
 ##
