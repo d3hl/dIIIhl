@@ -27,6 +27,7 @@ layout:
     Core:
       style: row
       columns: 2
+    header: false
     Identity:
       style: row
       columns: 2
