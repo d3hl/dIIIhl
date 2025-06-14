@@ -27,10 +27,10 @@ layout:
     Core:
       style: row
       columns: 2
-    header: false
+      header: false
     Empty:
       style: row
-    header: false
+      header: false
     Identity:
       style: row
       columns: 2
