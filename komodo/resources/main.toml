@@ -230,8 +230,8 @@ services:
       - .env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${CADDY_DATA_DIR}/data:/data
-      - ${CADDY_DATA_DIR}/config/:/config/caddy  #👈 where to save configs 
+      - ${DOCKER_DATA}/caddy/data:/data
+      - ${DOCKER_DATA}/caddy/config/:/config/caddy  #👈 where to save configs 
     restart: unless-stopped
     extra_hosts:
       - host.docker.internal:host-gateway
@@ -368,9 +368,8 @@ services:
       #caddy_101.import: auth                             #👈 Enable protection by Authelia
 """
 environment = """
-PUID=1000
-PGID=1000
-CADDY_DATA_DIR=/mnt/zApps/caddy
+PUID= [[PUID]]
+PGID= [[PGID]]
 CADDY_INGRESS_NETWORKS=caddy
 CF_API_TOKEN= [[CF_API_TOKEN]]
 CADDY_EMAIL= d3tech@pm.me
@@ -797,8 +796,7 @@ name = "homepage"
 tags = [
   "external",
   "production",
-  "komodo-1",
-  "proxy"
+  "komodo-1"
 ]
 [stack.config]
 server = "server-DULxe"
@@ -1117,7 +1115,11 @@ HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
 HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox-light.png"
 HOMEPAGE_VAR_NETBOXCL_URL= "https://wmfk3018.cloud.netboxapp.com"
 # NETBOX CONSOLE
+HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"# NETBOX CONSOLE
 HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
+
+HOMEPAGE_VAR_NAUTOBOT_URL= "https://nautobot.d3adc3ii.cc/"
+HOMEPAGE_VAR_NAUTOBOT_ICON= "/icons/netbox-light.png"
 
 
 
@@ -1129,7 +1131,7 @@ HOMEPAGE_VAR_KARAKEEP_URL= "https://kara.d3adc3ii.cc"
 HOMEPAGE_VAR_WALLOS_ICON= "/icons/wallos-light.png"
 HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
 # Ommni Tools
-HOMEPAGE_VAR_OMNITOOLS_ICON= "/icons/omni-tools-light.png"
+HOMEPAGE_VAR_OMNITOOLS_ICON= "sh-omnitools-light"
 HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
 # Selfhst-icons
 HOMEPAGE_VAR_SELFHST_ICON= "sh-selfh-st-light" 
@@ -1594,6 +1596,8 @@ services:
     restart: unless-stopped
     ports:
       - 4050:4050
+    labels:
+      proxy.idle_timeout: 10m
 """
 
 ##
@@ -1694,6 +1698,8 @@ services:
       - ${DATA_DIR}/db:/var/www/html/db'
       - ${DATA_DIR}/logos:/var/www/html/images/uploads/logos'
     restart: unless-stopped
+    labels:
+    proxy.idle_timeout: 15m
 """
 environment = """
 TZ= 'Asia/Singapore'
