@@ -33,8 +33,8 @@ layout:
       columns: 1
       header: false
     Zero TRust:
-      style: row
-      columns: 2
+      style: column
+      rows: 2
     Remote:
       style: row
       columns: 4
