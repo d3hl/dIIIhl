@@ -299,6 +299,9 @@
         - Netbox Console:
             icon: {{HOMEPAGE_VAR_NETBOX_ICON}}
             href: {{HOMEPAGE_VAR_NETBOXCS_URL}}
+        - Nautobox:
+            icon: {{HOMEPAGE_VAR_NAUTOBOT_ICON}}
+            href: {{HOMEPAGE_VAR_NAUTOBOT_URL}}
     - Apps: # Applications
         - Karakeep:
             icon: {{HOMEPAGE_VAR_KARAKEEP_ICON}}
