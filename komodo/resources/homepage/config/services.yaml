@@ -61,7 +61,7 @@
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
                 systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs}}
                 fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
-    - Network:        
+    - Local:        
         - Opnsense:
             icon: {{HOMEPAGE_VAR_OPNSENSE_ICON}} 
             href: {{HOMEPAGE_VAR_OPNSENSE_URL}}
@@ -242,7 +242,7 @@
                 type: authentik
                 url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
                 key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}} 
-    - Identity2: 
+    - Zero Trust: 
         - Pangolin:
             icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
             href: {{HOMEPAGE_VAR_PANGOLIN_URL}}

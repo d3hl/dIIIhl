@@ -32,7 +32,7 @@ layout:
       style: row
       columns: 1
       header: false
-    Identity2:
+    Zero TRust:
       style: row
       columns: 2
     Remote:
@@ -59,7 +59,7 @@ layout:
       style: row
       columns: 4 
       header: false
-    Network:
+    Local:
       style: row
       columns: 4 
       header: true
