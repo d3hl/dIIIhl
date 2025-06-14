@@ -1002,7 +1002,7 @@ HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"]
 
 ### LOCAL APPS ###
 # Actual Budget
-HOMEPAGE_VAR_ACTUAL_ICON= "/icons/actual-budget-light.png"
+HOMEPAGE_VAR_ACTUAL_ICON= "sh-actual-budget-light"
 HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3adc3ii.site"
 # Sensei
 HOMEPAGE_VAR_SENSEI_ICON= "sh-sentry-light"
