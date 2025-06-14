@@ -233,6 +233,7 @@
                   - field: updates
                     label: With Updates
                     format: number
+    - Empty: 
     - Identity: 
         - Pangolin:
             icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
