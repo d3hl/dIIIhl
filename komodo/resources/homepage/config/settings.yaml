@@ -28,10 +28,11 @@ layout:
       style: row
       columns: 2
       header: false
-    Empty:
-      style: row
-      header: false
     Identity:
+      style: row
+      columns: 1
+      header: false
+    Identity2:
       style: row
       columns: 2
     Remote:

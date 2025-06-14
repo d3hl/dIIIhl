@@ -233,12 +233,7 @@
                   - field: updates
                     label: With Updates
                     format: number
-    - Empty: 
     - Identity: 
-        - Pangolin:
-            icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
-            href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
-            sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
         - Authentik:
             icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
             href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
@@ -247,6 +242,11 @@
                 type: authentik
                 url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
                 key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}} 
+    - Identity2: 
+        - Pangolin:
+            icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
+            href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
         - Twingate:
             icon: {{HOMEPAGE_VAR_TWINGATE_ICON}}
             href: {{HOMEPAGE_VAR_TWINGATE_URL}}
