@@ -24,7 +24,11 @@ enabled = true
 
 [[stack]]
 name = "actual-budget"
-tags = ["internal", "production"]
+tags = [
+  "internal",
+  "production",
+  "komodo-2"
+]
 [stack.config]
 server = "komodo-2"
 poll_for_updates = true
@@ -334,8 +338,8 @@ services:
       caddy_106.reverse_proxy: 192.168.2.26:9999
       caddy_107: ha.d3adc3ii.site                      
       caddy_107.reverse_proxy: 192.168.99.5:8123    
-      caddy_108: jelly.d3adc3ii.site                      
-      caddy_108.reverse_proxy: 192.168.2.33:8096
+      #caddy_108: jelly.d3adc3ii.site                      
+      #caddy_108.reverse_proxy: 192.168.2.33:8096
       caddy_109: semaphore.d3adc3ii.site                      
       caddy_109.reverse_proxy: 192.168.2.28:3000            
       caddy_110: aria.d3adc3ii.site                      
@@ -445,8 +449,88 @@ DOCKER_HOST=tcp://192.168.2.31:2375
 ##
 
 [[stack]]
+name = "dozzle"
+tags = [
+  "internal",
+  "monitoring",
+  "komodo-3"
+]
+[stack.config]
+server = "komodo-3"
+file_contents = """
+services:
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8787:8080
+    env_file:
+      - .env
+    labels:
+      proxy.dozzle.port: 8787
+      proxy.dozzle-backend.port: 8080
+"""
+environment = """
+DOZZLE_ENABLE_ACTIONS=true
+DOZZLE_ENABLE_SHELL=true
+#DOZZLE_AUTH_PROVIDER: forward-proxy
+DOZZLE_REMOTE_AGENT=192.168.2.31:7007,192.168.2.32:7007
+"""
+
+##
+
+[[stack]]
+name = "dozzle-agent-1"
+tags = [
+  "internal",
+  "monitoring",
+  "komodo-1"
+]
+[stack.config]
+server = "server-DULxe"
+file_contents = """
+services:
+  dozzle-agent:
+    image: amir20/dozzle:latest
+    command: agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 7007:7007
+"""
+
+##
+
+[[stack]]
+name = "dozzle-agent-2"
+tags = [
+  "internal",
+  "monitoring",
+  "komodo-2"
+]
+[stack.config]
+server = "komodo-2"
+file_contents = """
+services:
+  dozzle-agent:
+    image: amir20/dozzle:latest
+    command: agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 7007:7007
+"""
+
+##
+
+[[stack]]
 name = "dumbterm"
-tags = ["external", "production"]
+tags = [
+  "external",
+  "production",
+  "komodo-2"
+]
 [stack.config]
 server = "komodo-2"
 poll_for_updates = true
@@ -899,6 +983,9 @@ HOMEPAGE_VAR_TPLINK_URL= "http://192.168.2.252"
 # GoDoxy
 HOMEPAGE_VAR_GODOXY_ICON= "/icons/godoxy-light.png"
 HOMEPAGE_VAR_GODOXY_URL= "https://doxy.int.d3adc3ii.site"
+# Dozzle
+HOMEPAGE_VAR_DOZZLE_ICON= "sh-dozzle-light"
+HOMEPAGE_VAR_DOZZLE_URL= "https://dozzle.int.d3adc3ii.site"
 # Caddy Proxy
 HOMEPAGE_VAR_CADDYPROXY_ICON= "/icons/caddy-light.png"
 HOMEPAGE_VAR_CADDYPROXY_URL= "http://caddy:2020"
@@ -1250,7 +1337,11 @@ JELLYFIN_DATA_DIR=/mnt/zFiles/media
 
 [[stack]]
 name = "karakeep"
-tags = ["external", "production"]
+tags = [
+  "external",
+  "production",
+  "komodo-2"
+]
 [stack.config]
 server = "komodo-2"
 poll_for_updates = true
@@ -1378,7 +1469,11 @@ PORT=20184
 
 [[stack]]
 name = "ntfy"
-tags = ["internal", "monitoring"]
+tags = [
+  "internal",
+  "monitoring",
+  "komodo-2"
+]
 [stack.config]
 server = "komodo-2"
 poll_for_updates = true
@@ -1451,6 +1546,7 @@ TZ= [[TZ]]
 
 [[stack]]
 name = "omni-tools"
+tags = ["komodo-2"]
 [stack.config]
 server = "komodo-2"
 auto_update = true
