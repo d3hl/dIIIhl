@@ -491,55 +491,6 @@ DUMBTERM_BASE_URL=http://dumbterm.d3adc3ii.cc:3002
 ##
 
 [[stack]]
-name = "file-share"
-[stack.config]
-server = "komodo-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-networks:
-  caddy:
-    external: true
-services:
-  fireshare:
-    container_name: fireshare
-    image: shaneisrael/fireshare:latest
-    networks:
-      - caddy
-    ports:
-      - "8585:80"
-    volumes:
-      - ${FSHARE_DATA_DIR}/data:/data
-      - ${FSHARE_DATA_DIR}/processed:/processed
-      - ${FSHARE_DATA_DIR}/videos:/videos
-    env_file:
-      - .env
-    environment:
-      - ADMIN_USERNAME=${ADMIN_USERNAME}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
-      - SECRET_KEY=${SECRET_KEY}
-      - MINUTES_BETWEEN_VIDEO_SCANS=5
-      # The location in the video thumbnails are generated. A value between 0-100 where 50 would be the frame in the middle of the video file and 0 would be the first frame of the video.
-      - THUMBNAIL_VIDEO_LOCATION=0
-      # The domain your instance is hosted at. (do not add http or https) e.x: v.fireshare.net, this is required for opengraph to work correctly for shared links. DO NOT SURROUND IN QUOTES.
-      - DOMAIN=fs.d3adc3ii.cc
-      - PUID=1000
-      - PGID=1000
-    labels:
-      caddy: fs.d3adc3ii.site
-      caddy.reverse_proxy: "{{upstreams 8585}}"
-"""
-environment = """
-FSHARE_DATA_DIR=/mnt/zApps/fileshare
-ADMIN_USERNAME=d3
-ADMIN_PASSWORD=[[FSHARE_ADMIN_PASSWORD]]
-SECRET_KEY=[[FSHARE_SECRET_KEY]]
-"""
-
-##
-
-[[stack]]
 name = "godoxy"
 tags = [
   "internal",
@@ -1816,75 +1767,6 @@ volumes = """
 environment = """
 LISTEN=45876
 KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU6cTY/"
-"""
-
-##
-
-[[deployment]]
-name = "checkmate-1"
-[deployment.config]
-server = "server-DULxe"
-image.type = "Image"
-image.params.image = "ghcr.io/bluewave-labs/capture:v1.1.0"
-poll_for_updates = true
-auto_update = true
-network = "bridge"
-restart = "unless-stopped"
-ports = """
-59232:59232 
-"""
-volumes = """
-/etc/os-release:/etc/os-release:ro
-"""
-environment = """
-API_SECRET=IHmqPfMq0LVgRhPBjkwATrs8P3QdqBzp
-GIN_MODE=release
-"""
-
-##
-
-[[deployment]]
-name = "checkmate-2"
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "ghcr.io/bluewave-labs/capture:v1.1.0"
-poll_for_updates = true
-auto_update = true
-network = "bridge"
-restart = "unless-stopped"
-ports = """
-59232:59232
-"""
-volumes = """
-/etc/os-release:/etc/os-release:ro
-"""
-environment = """
-API_SECRET=IHmqPfMq0LVgRhPBjkwATrs8P3QdqBzp
-GIN_MODE=release
-"""
-
-##
-
-[[deployment]]
-name = "checkmate-3"
-[deployment.config]
-server = "komodo-3"
-image.type = "Image"
-image.params.image = "ghcr.io/bluewave-labs/capture:v1.1.0"
-poll_for_updates = true
-auto_update = true
-network = "bridge"
-restart = "unless-stopped"
-ports = """
-59232:59232
-"""
-volumes = """
-/etc/os-release:/etc/os-release:ro
-"""
-environment = """
-API_SECRET=IHmqPfMq0LVgRhPBjkwATrs8P3QdqBzp
-GIN_MODE=release
 """
 
 ##
