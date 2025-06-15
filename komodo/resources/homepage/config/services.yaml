@@ -75,6 +75,15 @@
             href: {{HOMEPAGE_VAR_TPLINK_URL}}
             sitemonitor: {{HOMEPAGE_VAR_TPLINK_URL}}
     - DNS:
+        - NetAlertX:
+            icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
+            href: {{HOMEPAGE_VAR_NETALERTX_URL}}
+            ping: {{HOMEPAGE_VAR_NETALERTX_URL}}
+            widget:
+                type: netalertx
+                key: {{HOMEPAGE_VAR_NETALERTX_KEY}}
+                url: {{HOMEPAGE_VAR_NETALERTX_URL}}
+                fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
         - Technitium:
             icon: {{HOMEPAGE_VAR_DNS_ICON}}
             href: {{HOMEPAGE_VAR_DNS_URL}}
@@ -90,24 +99,18 @@
             widget:
                 type: caddy
                 url: {{HOMEPAGE_VAR_CADDYPROXY_URL}}
+    - Internal Monitor:
         - GoDoxy:
             icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
             href: {{HOMEPAGE_VAR_GODOXY_URL}} 
             ping: {{HOMEPAGE_VAR_GODOXY_URL}}
-    - Internal Monitor:
-        - NetAlertX:
-            icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
-            href: {{HOMEPAGE_VAR_NETALERTX_URL}}
-            ping: {{HOMEPAGE_VAR_NETALERTX_URL}}
-            widget:
-                type: netalertx
-                key: {{HOMEPAGE_VAR_NETALERTX_KEY}}
-                url: {{HOMEPAGE_VAR_NETALERTX_URL}}
-                fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
         - Wazuh:
             icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
             href: {{HOMEPAGE_VAR_WAZUH_URL}}
             ping: {{HOMEPAGE_VAR_WAZUH_URL}}
+        - Dozzle:
+            icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
+            href: {{HOMEPAGE_VAR_DOZZLE_URL}}
         - Apprise-API:
             icon: {{HOMEPAGE_VAR_APPRISE_ICON}}
             href: {{HOMEPAGE_VAR_APPRISE_URL}}
