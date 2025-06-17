@@ -1254,11 +1254,8 @@ services:
     image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
     networks:
       - caddy
-    environment:
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_DB: ${DB_DATABASE_NAME}
-      POSTGRES_INITDB_ARGS: '--data-checksums'
+    env_file:
+      - .env
     volumes:
       # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
       - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
@@ -1277,12 +1274,16 @@ volumes:
   model-cache:
 """
 environment = """
-UPLOAD_LOCATION=/mnt/zApps/immich-external
-DB_DATA_LOCATION=/mnt/zApps/immich-external/postgres
+PUID=1000
+PGUI=1000
+UPLOAD_LOCATION=/mnt/zApps/immich
+DB_DATA_LOCATION=/mnt/zApps/immich/postgres
 IMMICH_VERSION=release
-DB_PASSWORD=[[IMMICH_DB_PASSWORD]]
-DB_USERNAME=postgres
-DB_DATABASE_NAME=immich
+#DB_PASSWORD=[[IMMICH_DB_PASSWORD]]
+POSTGRES_PASSWORD=[[IMMICH_DB_PASSWORD]]
+POSTGRES_USER: postgres
+POSTGRES_DB: immich
+POSTGRES_INITDB_ARGS: '--data-checksums'
 """
 
 ##
@@ -1300,9 +1301,6 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
-networks:
-  caddy:
-    external: true
 services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
@@ -1323,7 +1321,6 @@ services:
       - 1900:1900/udp #optional
     restart: unless-stopped
     labels:
-      proxy.aliases: jelly
       proxy.idle_timeout: 30m
       proxy.jelly.port: 8096
 """
@@ -1650,6 +1647,13 @@ services:
 ##
 
 [[stack]]
+name = "sitrling-pdf"
+[stack.config]
+
+
+##
+
+[[stack]]
 name = "speedtest-tracker"
 tags = ["internal", "testing"]
 [stack.config]
@@ -1687,6 +1691,35 @@ DB_PORT=3306
 DB_DATABASE=speedtest_tracker
 DB_USERNAME=d3
 DB_PASSWORD="ng--*UC*6W2Fz89GhAR_Bm9ZC3cx2okJ4yCTEhieCYX!MYL6C_VDaYcvmnxffVj*9_H.t2x@.@UC4hKx8nUrxJjrTb_NZqB4bYea"
+"""
+
+##
+
+[[stack]]
+name = "stirling-pdf"
+[stack.config]
+server = "komodo-3"
+file_contents = """
+services:
+  stirling-pdf:
+    image: docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest
+    ports:
+      - '8989:8080'
+    volumes:
+      - ./StirlingPDF/extraConfigs:/configs
+      - ./StirlingPDF/customFiles:/customFiles/
+      - ./StirlingPDF/logs:/logs/
+      - ./StirlingPDF/pipeline:/pipeline/
+    env_file:
+      - .env
+    labels:
+      proxy.stirling-pdf.port: 8989
+      proxy.stirling-pdf-backend.port: 8080
+      proxy.idle_timeout: 5m
+"""
+environment = """
+DISABLE_ADDITIONAL_FEATURES=false
+LANGS=en_GB
 """
 
 ##
