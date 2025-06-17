@@ -382,68 +382,113 @@ CADDY_EMAIL= d3tech@pm.me
 ##
 
 [[stack]]
-name = "checkmate"
-tags = ["external", "testing", "komodo-3"]
+name = "doxy-31"
 [stack.config]
-server = "komodo-3"
+server = "server-DULxe"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
 services:
-  server:
-    image: ghcr.io/bluewave-labs/checkmate:backend-dist-mono
+  agent:
+    image: "ghcr.io/yusing/godoxy-agent:latest"
+    container_name: godoxy-agent
     restart: always
-    ports:
-      - "52345:52345"
-    env_file:
-      - .env
+    network_mode: host # do not change this
     environment:
-      - DB_CONNECTION_STRING=mongodb://mongodb:27017/uptime_db?replicaSet=rs0
-    depends_on:
-      - redis
-      - mongodb
-  redis:
-    image: ghcr.io/bluewave-labs/checkmate:redis-dist
-    restart: always
-    env_file:
-      - .env
-    user: "1000:1000"  
+      AGENT_NAME: "doxy-31"
+      AGENT_PORT: "8890"
+      AGENT_CA_CERT: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJsVENDQVR5Z0F3SUJBZ0lSQU5XOFNrbmFQYy9qejRtQXZhT3JhKzB3Q2dZSUtvWkl6ajBFQXdJd0tERVAKTUEwR0ExVUVDaE1HUjI5RWIzaDVNUlV3RXdZRFZRUURFd3huYjJSdmVIa3VZV2RsYm5Rd0lCY05NalV3TmpFMwpNakUwTWpBMldoZ1BNekF5TlRBMk1UY3lNVFF5TURaYU1DZ3hEekFOQmdOVkJBb1RCa2R2Ukc5NGVURVZNQk1HCkExVUVBeE1NWjI5a2IzaDVMbUZuWlc1ME1Ga3dFd1lIS29aSXpqMENBUVlJS29aSXpqMERBUWNEUWdBRVVpYUgKL0RWaHZZYWZ4a1BINHdSSkptYVpyWTh3QjR6dkJ5M2tDUllYeWFyTTBJWVU1V3dSdFd3SThtenlDYkRHWVhYSgo2d3NjVnRvUWRxZmxkdUhaaUtORk1FTXdEZ1lEVlIwUEFRSC9CQVFEQWdFR01CSUdBMVVkRXdFQi93UUlNQVlCCkFmOENBUUF3SFFZRFZSME9CQllFRkFVVDNISTdCaDd4aVZaa0RKUTZmenN3S3kyZk1Bb0dDQ3FHU000OUJBTUMKQTBjQU1FUUNJRzU2OXkwSGZnSjBxREt1MjYxcGswelVqenkwRW1VZGJKSTZRZ0lKNHB5VkFpQXNTak0vM25xYwpCVHo0ZWErbXduOW14SS8vTVZ2c3p2TkxZMmExN0d2TVhRPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=;LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUhLdFhJUU5kaGpsMWhJcHluSWNHZGd5WENVZk4ycys2M040MncremlqWVFvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFVWlhSC9EVmh2WWFmeGtQSDR3UkpKbWFaclk4d0I0enZCeTNrQ1JZWHlhck0wSVlVNVd3Ugp0V3dJOG16eUNiREdZWFhKNndzY1Z0b1FkcWZsZHVIWmlBPT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo="
+      AGENT_SSL_CERT: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJvakNDQVVpZ0F3SUJBZ0lSQUs0U09qMHo4UzYvcTFIQ2RIbHlSdWt3Q2dZSUtvWkl6ajBFQXdJd0tERVAKTUEwR0ExVUVDaE1HUjI5RWIzaDVNUlV3RXdZRFZRUURFd3huYjJSdmVIa3VZV2RsYm5Rd0lCY05NalV3TmpFMwpNakUwTWpBMldoZ1BNekF5TlRBMk1UY3lNVFF5TURaYU1Ea3hEekFOQmdOVkJBb1RCa2R2Ukc5NGVURVBNQTBHCkExVUVDeE1HVTJWeWRtVnlNUlV3RXdZRFZRUURFd3huYjJSdmVIa3VZV2RsYm5Rd1dUQVRCZ2NxaGtqT1BRSUIKQmdncWhrak9QUU1CQndOQ0FBUnpMbUE0eUhCcWtnOG50d2RsQ29XL1c1WGc3RFFkTVo2QStYckszM1FnUmN3YgphdTBPTzNGNFdmWkhSQTZMNDkvL3NvOHV2Yng2R2tXYWFRUTQ2bGE4bzBBd1BqQU9CZ05WSFE4QkFmOEVCQU1DCkI0QXdFd1lEVlIwbEJBd3dDZ1lJS3dZQkJRVUhBd0V3RndZRFZSMFJCQkF3RG9JTVoyOWtiM2g1TG1GblpXNTAKTUFvR0NDcUdTTTQ5QkFNQ0EwZ0FNRVVDSVFETURPSitiTHFvdjQ3SDJDQzlscnpqeHEwSCtPdjNGcWJOaXk4WAo0NDQ1WUFJZ0JEclo5MTlHQnhmMGtHd2U2VGVhYU1TTGMzWEE1QWlJNityVUJscUdZTjg9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K;LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUd6bzA0amtRckE3MjJ1blJuNTZScHF3ZGZyREl5WEx4L3B1NzIrSnM4M0xvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFY3k1Z09NaHdhcElQSjdjSFpRcUZ2MXVWNE93MEhUR2VnUGw2eXQ5MElFWE1HMnJ0RGp0eAplRm4yUjBRT2krUGYvN0tQTHIyOGVocEZtbWtFT09wV3ZBPT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo="
+      # use agent as a docker socket proxy: [host]:port
+      # set LISTEN_ADDR to enable (e.g. 127.0.0.1:2375)
+      LISTEN_ADDR:
+      POST: false
+      ALLOW_RESTARTS: false
+      ALLOW_START: false
+      ALLOW_STOP: false
+      AUTH: false
+      BUILD: false
+      COMMIT: false
+      CONFIGS: false
+      CONTAINERS: false
+      DISTRIBUTION: false
+      EVENTS: true
+      EXEC: false
+      GRPC: false
+      IMAGES: false
+      INFO: false
+      NETWORKS: false
+      NODES: false
+      PING: true
+      PLUGINS: false
+      SECRETS: false
+      SERVICES: false
+      SESSION: false
+      SWARM: false
+      SYSTEM: false
+      TASKS: false
+      VERSION: true
+      VOLUMES: false
     volumes:
-      - ${DATA_DIR}/redis/data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 5s
-  mongodb:
-    image: ghcr.io/bluewave-labs/checkmate:mongo-dist
-    restart: always
-    command: ["mongod", "--quiet", "--replSet", "rs0", "--bind_ip_all"]
-    env_file:
-      - .env
-    user: "1000:1000"  
-    volumes:
-      - ${DATA_DIR}/mongo/data:/data/db
-    healthcheck:
-      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'mongodb:27017'}]}) }" | mongosh --port 27017 --quiet
-      interval: 5s
-      timeout: 30s
-      start_period: 0s
-      start_interval: 1s
-      retries: 30
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/app/data
 """
-environment = """
-PUID=1000
-PGID=1000
-DATA_DIR= /mnt/zApps/checkmate
-UPTIME_APP_API_BASE_URL: https://checkmate.d3adc3ii.site/api/v1
-UPTIME_APP_CLIENT_HOST: https://checkmate.d3adc3ii.site
-REDIS_URL=redis://redis:6379
-CLIENT_HOST=https://checkmate.d3adc3ii.site
-JWT_SECRET= [[CHECKMATE_JWT_SECRET]]
-DOCKER_HOST=tcp://192.168.2.31:2375
+
+##
+
+[[stack]]
+name = "doxy-32"
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  agent:
+    image: "ghcr.io/yusing/godoxy-agent:latest"
+    container_name: godoxy-agent
+    restart: always
+    network_mode: host # do not change this
+    environment:
+      AGENT_NAME: "doxy-32"
+      AGENT_PORT: "8890"
+      AGENT_CA_CERT: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJsakNDQVR5Z0F3SUJBZ0lSQUozcnFBdGcvM2Vxd29IcjhWVWQzemN3Q2dZSUtvWkl6ajBFQXdJd0tERVAKTUEwR0ExVUVDaE1HUjI5RWIzaDVNUlV3RXdZRFZRUURFd3huYjJSdmVIa3VZV2RsYm5Rd0lCY05NalV3TmpFMwpNakUwTmpFMldoZ1BNekF5TlRBMk1UY3lNVFEyTVRaYU1DZ3hEekFOQmdOVkJBb1RCa2R2Ukc5NGVURVZNQk1HCkExVUVBeE1NWjI5a2IzaDVMbUZuWlc1ME1Ga3dFd1lIS29aSXpqMENBUVlJS29aSXpqMERBUWNEUWdBRTdHSEkKZkl0NW5UR1o2SVM2L3Bna3ZjNExockZROGNLUkRlcnhSTjY0RTd2c1FHbkEraXowamNFc1RBTHFOb05KV3dBYQp4cTdVdzZPaXdYMVJISkRCSjZORk1FTXdEZ1lEVlIwUEFRSC9CQVFEQWdFR01CSUdBMVVkRXdFQi93UUlNQVlCCkFmOENBUUF3SFFZRFZSME9CQllFRkt0N3RwWlhuTVVwNG9OZ1dGMkdaMVB3a3JuT01Bb0dDQ3FHU000OUJBTUMKQTBnQU1FVUNJRWlhWTN6bXJqQ09IejMrSzArU21Qa2NJK2lySG5uZ3Ezc1h2NWF0QVRQL0FpRUF5TUNRb2t6eQpVeTBKREVSUHArd1QrcVh4bjI1ZnlaRWpSNGRMZ2R0bzA2QT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=;LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSVBhNVBSYTA5S0dvaXg0U2Y4cTR3YjFmQlJGZ0g3UXNEeHZtNGlZdkxRZXlvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFN0dISWZJdDVuVEdaNklTNi9wZ2t2YzRMaHJGUThjS1JEZXJ4Uk42NEU3dnNRR25BK2l6MApqY0VzVEFMcU5vTkpXd0FheHE3VXc2T2l3WDFSSEpEQkp3PT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo="
+      AGENT_SSL_CERT: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJvakNDQVVpZ0F3SUJBZ0lSQUpuekxPUFdLUTEzSmxXNWlHVWFFNmN3Q2dZSUtvWkl6ajBFQXdJd0tERVAKTUEwR0ExVUVDaE1HUjI5RWIzaDVNUlV3RXdZRFZRUURFd3huYjJSdmVIa3VZV2RsYm5Rd0lCY05NalV3TmpFMwpNakUwTmpFMldoZ1BNekF5TlRBMk1UY3lNVFEyTVRaYU1Ea3hEekFOQmdOVkJBb1RCa2R2Ukc5NGVURVBNQTBHCkExVUVDeE1HVTJWeWRtVnlNUlV3RXdZRFZRUURFd3huYjJSdmVIa3VZV2RsYm5Rd1dUQVRCZ2NxaGtqT1BRSUIKQmdncWhrak9QUU1CQndOQ0FBU0lDTE56b2dwdnE2YmxnTjFNSkV1UlBETjhLZmRqM0JDdDF6MlBVa0ZWUmgvZgpPK2JqMWFWSlRmYnBwMVp3dUtVeTVUblpVMGE2QjZKSHJjOTF0NEtsbzBBd1BqQU9CZ05WSFE4QkFmOEVCQU1DCkI0QXdFd1lEVlIwbEJBd3dDZ1lJS3dZQkJRVUhBd0V3RndZRFZSMFJCQkF3RG9JTVoyOWtiM2g1TG1GblpXNTAKTUFvR0NDcUdTTTQ5QkFNQ0EwZ0FNRVVDSVFDWmIyeXBnbHBjMTd2clJQUWxtTGMrN1hHOGtnVnU3QTNxdjVsOApwS3JTZ3dJZ2FFdmRtOVZ2TysyV2pDZ29CMlBwTktXcXgzazU3bjdIWm5BbVNpTDJTc3c9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K;LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUNyRXJDUTJrdURITlg4YjhEMHVCczRiSjNDcVhuMm1heFlqMDM1WVFpbVlvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFaUFpemM2SUtiNnVtNVlEZFRDUkxrVHd6ZkNuM1k5d1FyZGM5ajFKQlZVWWYzenZtNDlXbApTVTMyNmFkV2NMaWxNdVU1MlZOR3VnZWlSNjNQZGJlQ3BRPT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo="
+      # use agent as a docker socket proxy: [host]:port
+      # set LISTEN_ADDR to enable (e.g. 127.0.0.1:2375)
+      LISTEN_ADDR:
+      POST: false
+      ALLOW_RESTARTS: false
+      ALLOW_START: false
+      ALLOW_STOP: false
+      AUTH: false
+      BUILD: false
+      COMMIT: false
+      CONFIGS: false
+      CONTAINERS: false
+      DISTRIBUTION: false
+      EVENTS: true
+      EXEC: false
+      GRPC: false
+      IMAGES: false
+      INFO: false
+      NETWORKS: false
+      NODES: false
+      PING: true
+      PLUGINS: false
+      SECRETS: false
+      SERVICES: false
+      SESSION: false
+      SWARM: false
+      SYSTEM: false
+      TASKS: false
+      VERSION: true
+      VOLUMES: false
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/app/data
 """
 
 ##
@@ -674,6 +719,7 @@ services:
       # - /path/to/certs/priv.key:/app/certs/priv.key
 """
 environment = """
+COMPOSE_PROJECT_NAME= godoxy
 TAG=latest
 TZ=Asia/Singapore
 UID=1000
@@ -700,12 +746,12 @@ GODOXY_API_PASSWORD=ahZiedhSGzembZRfrsWT3S4BA9iSYO0P
 # Uncomment and configure these values to enable OIDC authentication.
 #
 #GODOXY_OIDC_ISSUER_URL=https://auth.d3adc3ii.cc/application/o/go-doxy/
- GODOXY_OIDC_ISSUER_URL=https://auth.d3adc3ii.cc/application/o/godoxy/
-GODOXY_OIDC_CLIENT_ID=VZPLobQtKqBbRdUwmD56uG7IdTevoUJdMZtRm8Fx
-GODOXY_OIDC_CLIENT_SECRET=aq4WP391mMExMxWfcTfAktU9qJFZPv2bOvOLc0Mdb0gfYmZg4osMYZNUegpKvvash7KazoGfT5kNJpssJwtcOHK7rtvhRChUUdQx9ZHKMN8Qhu76kjuOKHTOKok05vhx
-GODOXY_OIDC_SCOPES=openid, profile, email, groups,offline_access # you may also include `offline_access` if your Idp supports it (e.g. Authentik, Pocket ID)
+#GODOXY_OIDC_ISSUER_URL= https://auth.d3adc3ii.cc/application/o/godoxy/
+#GODOXY_OIDC_CLIENT_ID=Rt3zPuKiW1txQ8nzeKULIdGsCFoEHtiPTNALOWGZ
+#GODOXY_OIDC_CLIENT_SECRET=xK2FUsumPN9TJsvxdOm5wr4UsRf3CsxDc2sY4ejKYIrxqgFCB2WrDRhrximi6pUJmHQ3jbxDeK55FvCcI2gVabU2h7YooKlsRTjs8LZUOiPBPFd2rPjjdqTk6yX4NK4w
+#GODOXY_OIDC_SCOPES=openid, profile, email, groups,offline_access # you may also include `offline_access` if your Idp supports it (e.g. Authentik, Pocket ID)
 #
-GODOXY_OIDC_ALLOWED_USERS: d3
+#GODOXY_OIDC_ALLOWED_USERS: d3
 # User definitions: Uncomment and configure these values to restrict access to specific users or groups.
 # These two fields act as a logical AND operator. For example, given the following membership:
 #   user1, group1
@@ -839,16 +885,16 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
-networks:
-  caddy:
-    external: true
+#networks:
+#  caddy:
+#    external: true
 
 services:
   homepage:
     image: ghcr.io/gethomepage/homepage:dev
     container_name: homepage
-    networks:
-      - caddy
+#    networks:
+#      - caddy
     env_file:
       - .env
     ports:
@@ -866,8 +912,8 @@ services:
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy:latest
     container_name: dockerproxy
-    networks:
-      - caddy
+#    networks:
+#      - caddy
     environment:
       - CONTAINERS=1 # Allow access to viewing containers
       - SERVICES=1 # Allow access to viewing services (necessary when using Docker Swarm)
@@ -982,10 +1028,10 @@ HOMEPAGE_VAR_TPLINK_URL= "http://192.168.2.252"
 ### Monitoring ###
 # GoDoxy
 HOMEPAGE_VAR_GODOXY_ICON= "/icons/godoxy-light.png"
-HOMEPAGE_VAR_GODOXY_URL= "https://doxy.int.d3adc3ii.site"
+HOMEPAGE_VAR_GODOXY_URL= "https://doxy.d3adc3ii.site"
 # Dozzle
 HOMEPAGE_VAR_DOZZLE_ICON= "sh-dozzle-light"
-HOMEPAGE_VAR_DOZZLE_URL= "https://dozzle.int.d3adc3ii.site"
+HOMEPAGE_VAR_DOZZLE_URL= "https://dozzle.d3adc3ii.site"
 # Caddy Proxy
 HOMEPAGE_VAR_CADDYPROXY_ICON= "/icons/caddy-light.png"
 HOMEPAGE_VAR_CADDYPROXY_URL= "http://caddy:2020"
@@ -1009,7 +1055,7 @@ HOMEPAGE_VAR_SMOKEPING_URL= "http://192.168.2.21/smokeping"
 
 # Battle of the bandwidth
 HOMEPAGE_VAR_BOTB_ICON= "/icons/smokeping.png"
-HOMEPAGE_VAR_BOTB_URL= "https://botb.int.d3adc3ii.cc"
+HOMEPAGE_VAR_BOTB_URL= "https://botb.d3adc3ii.cc"
 
 ### BACKUP ###
 # Backrest
@@ -1064,7 +1110,7 @@ HOMEPAGE_VAR_ARIA_ICON= "sh-aria2-light"
 HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
 # NZBGET
 HOMEPAGE_VAR_NZBGET_ICON= "sh-nzbget-light"
-HOMEPAGE_VAR_NZBGET_URL= "https://nzbget.int.d3adc3ii.site"
+HOMEPAGE_VAR_NZBGET_URL= "https://nzbget.d3adc3ii.site"
 
 
 
@@ -1140,7 +1186,7 @@ HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny-light.png"
 HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
 # ZABBIX
 HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix-light.png"
-HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.int.d3adc3ii.cc/zabbix"
+HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.d3adc3ii.cc/zabbix"
 # Checkmk
 HOMEPAGE_VAR_CHECKMK_ICON= "/icons/checkmk-light.png"
 HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"
@@ -1192,20 +1238,15 @@ name = "immich"
 tags = [
   "internal",
   "production",
-  "komodo-1"
+  "komodo-3"
 ]
 [stack.config]
-server = "server-DULxe"
+server = "komodo-3"
 file_contents = """
-networks:
-  caddy:
-    external: true
 services:
   immich-server:
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
-    networks:
-      - caddy
     # extends:
     #   file: hwaccel.transcoding.yml
     #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
@@ -1224,14 +1265,12 @@ services:
     healthcheck:
       disable: false
     labels:
-      caddy: immich.d3adc3ii.site
-      caddy.reverse_proxy: "{{upstreams 2283}}"
-
+      proxy.aliases: immich
+      proxy.immich.port: 2283
+      proxy.idle_timeout: 30m
   immich-machine-learning:
     container_name: immich_machine_learning
     image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
-    networks:
-      - caddy
     volumes:
       - model-cache:/cache
     env_file:
@@ -1239,12 +1278,9 @@ services:
     restart: always
     healthcheck:
       disable: false
-
   redis:
     container_name: immich_redis
     image: docker.io/valkey/valkey:8-bookworm@sha256:42cba146593a5ea9a622002c1b7cba5da7be248650cbb64ecb9c6c33d29794b1
-    networks:
-      - caddy
     healthcheck:
       test: redis-cli ping || exit 1
     restart: always
@@ -1252,14 +1288,14 @@ services:
   database:
     container_name: immich_postgres
     image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
-    networks:
-      - caddy
-    env_file:
-      - .env
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE_NAME}
+      POSTGRES_INITDB_ARGS: '--data-checksums'
     volumes:
       # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
       - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
-    user: "1000:1000"
     healthcheck:
       test: >-
         pg_isready --dbname="$${POSTGRES_DB}" --username="$${POSTGRES_USER}" || exit 1; Chksum="$$(psql --dbname="$${POSTGRES_DB}" --username="$${POSTGRES_USER}" --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')"; echo "checksum failure count is $$Chksum"; [ "$$Chksum" = '0' ] || exit 1
@@ -1272,18 +1308,16 @@ services:
 
 volumes:
   model-cache:
+  pgdata:
 """
 environment = """
-PUID=1000
-PGUI=1000
-UPLOAD_LOCATION=/mnt/zApps/immich
-DB_DATA_LOCATION=/mnt/zApps/immich/postgres
+UPLOAD_LOCATION=/mnt/zApps/immich/upload
+DB_DATA_LOCATION=./postgres
 IMMICH_VERSION=release
-#DB_PASSWORD=[[IMMICH_DB_PASSWORD]]
+DB_PASSWORD=[[IMMICH_DB_PASSWORD]]
 POSTGRES_PASSWORD=[[IMMICH_DB_PASSWORD]]
-POSTGRES_USER: postgres
-POSTGRES_DB: immich
-POSTGRES_INITDB_ARGS: '--data-checksums'
+DB_USERNAME: postgres
+DB_DATABASE_NAME=immich
 """
 
 ##
