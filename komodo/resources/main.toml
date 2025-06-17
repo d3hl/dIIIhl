@@ -2088,8 +2088,7 @@ params.server_id = "server-DULxe"
 [[resource_sync]]
 name = "s1"
 [resource_sync.config]
-repo = "d3hl/dIIIhl"
-git_account = "d3hl"
+linked_repo = "diiihl"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
 include_user_groups = true
