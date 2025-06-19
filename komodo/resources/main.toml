@@ -31,6 +31,7 @@ tags = [
 ]
 [stack.config]
 server = "komodo-2"
+project_name = "actual-budget"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -43,7 +44,7 @@ services:
     env_file:
       - .env  
     volumes:
-      - ${DATA_DIR}:/data
+      - ${DOCKER_DATA}/actualbudget:/data
     healthcheck:
       # Enable health check for the instance
       test: ['CMD-SHELL', 'node src/scripts/health-check.js']
@@ -53,17 +54,13 @@ services:
       start_period: 20s
     restart: unless-stopped
     labels:
-      caddy: actual.d3adc3ii.site
-      caddy.reverse_proxy: "{{upstreams 5006}}"
-      homepage.group: "Local Apps"
-      homepage.name: Actual2
-      homepage.icon: actual-budget.png
-      homepage.href: https://actual.d3adc3ii.site
+      proxy.aliases: actual
+      proxy.actual.port: 5006
+      proxy.idle_timeout: 30m
 """
 environment = """
 PUID=1000
 PGID=1000
-DATA_DIR=/mnt/zApps/actualbudget
       # Uncomment any of the lines below to set configuration options.
       # - ACTUAL_HTTPS_KEY=/data/selfhost.key
       # - ACTUAL_HTTPS_CERT=/data/selfhost.crt
@@ -144,6 +141,9 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    labels:
+       proxy.aliases: auth
+       proxy.auth.port: 9000
   worker:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.1}
     restart: unless-stopped
@@ -607,6 +607,8 @@ services:
       MAX_SESSION_AGE: ${DUMBTERM_MAX_SESSION_AGE:-24} # Hours
       # (OPTIONAL) - List of allowed origins for CORS
       # ALLOWED_ORIGINS: ${DUMBTERM_ALLOWED_ORIGINS:-http://localhost:3000}
+    labels:
+      proxy.idle_timeout: 30m
 """
 environment = """
 DUMBTERM_CONFIG="/mnt/zApps/dumbterm/config"
@@ -814,16 +816,16 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
-networks:
-  caddy:
-    external: true
+#networks:
+#  caddy:
+#    external: true
 
 services:
   healthchecks:
     image: lscr.io/linuxserver/healthchecks:latest
     container_name: healthchecks
-    networks:
-      - caddy
+    #networks:
+    #  - caddy
     env_file:
       - .env
     #environment:
@@ -846,15 +848,7 @@ services:
       - 2525:2525 #optional
     restart: unless-stopped
     labels:
-      - caddy= health.d3adc3ii.site
-      - caddy.reverse_proxy= "{{upstreams 8000}}"
-      - homepage.server= my-docker
-      - homepage.container= healthchecks
-      - homepage.name= Test
-      - homepage.group= Testa
-      - homepage.icon= /icons/healthchecks.png
-      - homepage.href= https://health.d3adc3ii.site
-      - homepage.description= cronjob monitor
+       proxy.idle_timeout: 1h
 """
 environment = """
 PUID=1000
@@ -1484,6 +1478,8 @@ services:
         target: /app/api
     env_file:
       - .env
+    labels:
+      proxy.port: 20184
 """
 environment = """
 DATA_DIR=/mnt/zApps/netalertx
@@ -1586,6 +1582,8 @@ services:
     restart: unless-stopped
     ports:
       - "8281:80"
+    labels:
+      - proxy.idle_timeout: 30m
 """
 
 ##
@@ -1772,39 +1770,73 @@ name = "speedtest-tracker"
 tags = ["internal", "testing"]
 [stack.config]
 server = "server-DULxe"
+project_name = "speedtest-tracker"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 file_contents = """
 services:
-    speedtest-tracker:
-        image: lscr.io/linuxserver/speedtest-tracker:latest
-        restart: unless-stopped
-        container_name: speedtest-tracker
-        ports:
-            - 8008:80
-            - 8043:443
+  speedtest-tracker:
+    image: lscr.io/linuxserver/speedtest-tracker:latest
+    container_name: speedtest-tracker
+    env_file:
+      - .env
+    environment:
+      - DB_CONNECTION=mariadb
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=speedtest_tracker
+      - DB_USERNAME=speedtest_tracker
+      - DB_PASSWORD=password
+    volumes:
+      - ${DOCKER_DATA}/speedtest-tracker/data:/config
+    ports:
+      - 8785:80
+    restart: unless-stopped
+    depends_on:
+      - db
+    labels:
+        proxy.aliases: speedtest
+        proxy.port: 8785
+  db:
+        image: mariadb:11
+        restart: always
+        env_file:
+          - .env
         environment:
-            -APP_DEBUG=true
-            - PUID=1000
-            - PGID=1000
-            - APP_KEY= ${APP_KEY}
-            - DB_CONNECTION=${DB_CONNECTION}
-          #  - DB_HOST=${DB_HOST}
-          #  - DB_PORT=${DB_PORT}
-           # - DB_DATABASE= ${DB_DATABASE}
-           # - DB_USERNAME= ${DB_USERNAME}
-           # - DB_PASSWORD= ${DB_PASSWORD}
+            - MYSQL_RANDOM_ROOT_PASSWORD=true
         volumes:
-            - ${DATA_DIR}/data:/config
-            #- /path/to-custom-ssl-keys:/config/keys
+            - speedtest-db:/var/lib/mysql
+        healthcheck:
+            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+            interval: 5s
+            retries: 3
+            timeout: 5s
+volumes:
+  speedtest-db:
 """
 environment = """
-DATA_DIR="/mnt/zApps/speedtest-tracker"
-APP_KEY="Kj1qpSM25ly7LbReMibYBly5Icl9D2TQXTHi8Xo+bIA="
-DB_CONNECTION=sqllite
-DB_HOST= db
-DB_PORT=3306
+APP_DEBUG=true
+PUID=1000
+PGID=1000
+DISPLAY_TIMEZONE=Asia/Singapore #optional
+PRUNE_RESULTS_OLDER_THAN=10 #optional
+
+SPEEDTEST_SCHEDULE= @hourly
+SPEEDTEST_SERVERS= 5935
+
+APP_KEY="base64:KbesVaBvct5cPnyLQBmWgFdY6u7DAVmoo8YFO8EV3W8="
 DB_DATABASE=speedtest_tracker
-DB_USERNAME=d3
-DB_PASSWORD="ng--*UC*6W2Fz89GhAR_Bm9ZC3cx2okJ4yCTEhieCYX!MYL6C_VDaYcvmnxffVj*9_H.t2x@.@UC4hKx8nUrxJjrTb_NZqB4bYea"
+APP_URL= http://192.168.2.31:8785
+#DB_CONNECTION=mariadb
+#DB_HOST=db
+#DB_PORT=3306
+#DB_DATABASE=speedtest_tracker
+#DB_USERNAME=speedtest_tracker
+#DB_PASSWORD=sVaBvct5cPnyLQBmWgFdY6u7DA
+MYSQL_DATABASE=speedtest_tracker
+MYSQL_USER=speedtest_tracker
+MYSQL_PASSWORD=password
 """
 
 ##
