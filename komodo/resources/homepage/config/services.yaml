@@ -93,12 +93,15 @@
                 url: {{HOMEPAGE_VAR_DNS_URL}}
                 key: {{HOMEPAGE_VAR_DNS_KEY}}
                 range: {{HOMEPAGE_VAR_DNS_RANGE}}
-        - CaddyProxy:
-            icon: {{HOMEPAGE_VAR_CADDYPROXY_ICON}} 
-            ping: {{HOMEPAGE_VAR_CADDYPROXY_URL}}
-            widget:
-                type: caddy
-                url: {{HOMEPAGE_VAR_CADDYPROXY_URL}}
+        - Speedtest:
+            icon: {{HOMEPAGE_VAR_SPEDDTEST_ICON}}
+            href: {{HOMEPAGE_VAR_SPEEDTEST_URL}}
+     #   - CaddyProxy:
+      #      icon: {{HOMEPAGE_VAR_CADDYPROXY_ICON}} 
+      #      ping: {{HOMEPAGE_VAR_CADDYPROXY_URL}}
+       #     widget:
+        #        type: caddy
+         #       url: {{HOMEPAGE_VAR_CADDYPROXY_URL}}
     - Internal Monitor:
         - GoDoxy:
             icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
@@ -262,6 +265,9 @@
             icon: {{HOMEPAGE_VAR_DUMBTERM_ICON}}
             href: {{HOMEPAGE_VAR_DUMBTERM_URL}}
             sitemonitor: {{HOMEPAGE_VAR_DUMBTERM_URL}}
+        - Shellhub:
+            icon: {{HOMEPAGE_VAR_SHELLHUB_ICON}}
+            href: {{HOMEPAGE_VAR_SHELLHUB_URL}}
     - Monitoring:
         - Uptime-Kuma:
             icon: {{HOMEPAGE_VAR_KUMA_ICON}}
