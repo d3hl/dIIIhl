@@ -1327,6 +1327,7 @@ tags = [
 ]
 [stack.config]
 server = "komodo-3"
+project_name = "jellyfin"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -1590,10 +1591,75 @@ services:
 ##
 
 [[stack]]
+name = "phpipam"
+tags = ["internal", "komodo-3"]
+[stack.config]
+server = "komodo-3"
+project_name = "phpipam"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  phpipam-web:
+    image: phpipam/phpipam-www:latest
+    ports:
+      - "8087:80"
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - phpipam-logo:/phpipam/css/images/logo
+      - phpipam-ca:/usr/local/share/ca-certificates:ro
+    depends_on:
+      - phpipam-mariadb
+
+  phpipam-cron:
+    image: phpipam/phpipam-cron:latest
+    environment:
+      - TZ=Europe/London
+      - IPAM_DATABASE_HOST=phpipam-mariadb
+      - IPAM_DATABASE_PASS=password
+      - SCAN_INTERVAL=1h
+    restart: always
+    volumes:
+      - phpipam-ca:/usr/local/share/ca-certificates:ro
+    depends_on:
+      - phpipam-mariadb
+
+  phpipam-mariadb:
+    image: mariadb:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    restart: always
+    volumes:
+      - phpipam-db-data:/var/lib/mysql
+
+volumes:
+  phpipam-db-data:
+  phpipam-logo:
+  phpipam-ca:
+"""
+environment = """
+
+      - TZ=America/Chicago
+      - IPAM_DATABASE_HOST=phpipam-mariadb
+      - IPAM_DATABASE_PASS=password
+      - IPAM_DATABASE_WEBHOST=%
+"""
+
+##
+
+[[stack]]
 name = "scrutiny"
 tags = ["komodo-3"]
 [stack.config]
 server = "komodo-3"
+links = [
+  "https://scrutiny.d3adc3ii.cc/web/dashboard"
+]
+auto_update = true
+auto_update_all_services = true
 file_contents = """
 networks:
   scrutiny-monitoring: # A common network for all monitoring services to communicate into
@@ -1673,6 +1739,24 @@ services:
     labels:
       proxy.idle_timeout: 10m
 """
+
+##
+
+[[stack]]
+name = "shellhub"
+[stack.config]
+server = "server-DULxe"
+project_name = "shellhub"
+files_on_host = true
+run_directory = "/home/d3/shellhub"
+file_paths = [
+  "docker-compose.agent.yml",
+  "docker-compose.autossl.yml",
+  "docker-compose.dev.yml",
+  "docker-compose.enterprise.yml",
+  "docker-compose.test.yml",
+  "docker-compose.yml"
+]
 
 ##
 
@@ -1774,7 +1858,7 @@ services:
     volumes:
       - ./uptime-kuma-data:/app/data
     ports:
-      - 3001:3001  # <Host Port>:<Container Port>
+      - 3111:3111  # <Host Port>:<Container Port>
     restart: always
 """
 environment = """
