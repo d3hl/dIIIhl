@@ -83,6 +83,7 @@ tags = [
 ]
 [stack.config]
 server = "server-DULxe"
+project_name = "authentik"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -118,7 +119,7 @@ services:
     volumes:
       - redis:/data
   server:
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.1}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.2}
     restart: unless-stopped
     command: server
     environment:
@@ -145,7 +146,7 @@ services:
        proxy.aliases: auth
        proxy.auth.port: 9000
   worker:
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.1}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.2}
     restart: unless-stopped
     command: worker
     environment:
@@ -196,6 +197,36 @@ AUTHENTIK_EMAIL__USE_SSL=false
 AUTHENTIK_EMAIL__TIMEOUT=10
 # Email address authentik will send from, should have a correct @domain
 AUTHENTIK_EMAIL__FROM=authentik@localhost
+"""
+
+##
+
+[[stack]]
+name = "authentik-outpost-33"
+[stack.config]
+server = "komodo-3"
+project_name = "authentik"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+    authentik_proxy:
+        image: ghcr.io/goauthentik/proxy:2025.6.2
+        # Optionally specify which networks the container should be
+        # might be needed to reach the core authentik server
+        # networks:
+        #   - foo
+        ports:
+            - 9000:9000
+            - 9443:9443
+        environment:
+            AUTHENTIK_HOST: https://auth.d3adc3ii.cc
+            AUTHENTIK_INSECURE: "false"
+            AUTHENTIK_TOKEN: 5rw0z0liBvwUBPlLeCLwULg2gZbzLPCiGItYcL8oT3JI9RH86KUl4xQkrSDX
+            # Starting with 2021.9, you can optionally set this too
+            # when authentik_host for internal communication doesn't match the public URL
+            # AUTHENTIK_HOST_BROWSER: https://external-domain.tld
 """
 
 ##
@@ -502,6 +533,9 @@ tags = [
 ]
 [stack.config]
 server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 file_contents = """
 services:
   dozzle:
@@ -742,18 +776,17 @@ GODOXY_API_JWT_TOKEN_TTL=
 # API/WebUI user password login credentials (optional)
 # These fields are not required for OIDC authentication
 GODOXY_API_USER=d3
-GODOXY_API_PASSWORD=ahZiedhSGzembZRfrsWT3S4BA9iSYO0P
+GODOXY_API_PASSWORD=qyp.kmr2ktf5vcj3CYM
 
 # OIDC Configuration (optional)
 # Uncomment and configure these values to enable OIDC authentication.
 #
-#GODOXY_OIDC_ISSUER_URL=https://auth.d3adc3ii.cc/application/o/go-doxy/
-#GODOXY_OIDC_ISSUER_URL= https://auth.d3adc3ii.cc/application/o/godoxy/
-#GODOXY_OIDC_CLIENT_ID=Rt3zPuKiW1txQ8nzeKULIdGsCFoEHtiPTNALOWGZ
-#GODOXY_OIDC_CLIENT_SECRET=xK2FUsumPN9TJsvxdOm5wr4UsRf3CsxDc2sY4ejKYIrxqgFCB2WrDRhrximi6pUJmHQ3jbxDeK55FvCcI2gVabU2h7YooKlsRTjs8LZUOiPBPFd2rPjjdqTk6yX4NK4w
-#GODOXY_OIDC_SCOPES=openid, profile, email, groups,offline_access # you may also include `offline_access` if your Idp supports it (e.g. Authentik, Pocket ID)
-#
-#GODOXY_OIDC_ALLOWED_USERS: d3
+
+#GODOXY_OIDC_ISSUER_URL= https://auth.d3adc3ii.cc/application/o/godoxy/                       
+#GODOXY_OIDC_CLIENT_ID=LLYuk9x6gWycwkdfiAsjVQtANvtuQyqH4iVHQmMK
+#GODOXY_OIDC_CLIENT_SECRET=FKnuEPQQRq5ZTu2hBhd2uTeCjWg1CT6PtjgD1d2AcBZK2L0BYomunCWhkO7vcuNdAHfD0MbZEeqiFGBTAfjjWyU3FRdgLyqh3bsoGTM7zCf7O7wdPrZW4SIQeLRLfqCm
+#GODOXY_OIDC_SCOPES=openid, profile, email, groups
+#GODOXY_OIDC_ALLOWED_USERS=d3
 # User definitions: Uncomment and configure these values to restrict access to specific users or groups.
 # These two fields act as a logical AND operator. For example, given the following membership:
 #   user1, group1
@@ -762,7 +795,7 @@ GODOXY_API_PASSWORD=ahZiedhSGzembZRfrsWT3S4BA9iSYO0P
 #   user1, group2
 # You can allow access to user3 AND all users of group1 by providing:
 #   # GODOXY_OIDC_ALLOWED_USERS=user3
-#   # GODOXY_OIDC_ALLOWED_GROUPS=group1
+#GODOXY_OIDC_ALLOWED_GROUPS=	"authentik Admins"
 #
 # Comma-separated list of allowed users.
 # GODOXY_OIDC_ALLOWED_USERS=user1,user2
@@ -1016,6 +1049,9 @@ HOMEPAGE_VAR_TPLINK_ICON= "/icons/tp-link-light.png"
 HOMEPAGE_VAR_TPLINK_URL= "http://192.168.2.252"
 
 ### Monitoring ###
+# SPEEDTEST
+HOMEPAGE_VAR_SPEEDTEST_ICON= "sh-speedtest-tracker-light"
+HOMEPAGE_VAR_SPEEDTEST_URL= "https://speedtest.d3adc3ii.site"
 # GoDoxy
 HOMEPAGE_VAR_GODOXY_ICON= "/icons/godoxy-light.png"
 HOMEPAGE_VAR_GODOXY_URL= "https://doxy.d3adc3ii.site"
@@ -1042,10 +1078,6 @@ HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
 # Smokeping
 HOMEPAGE_VAR_SMOKEPING_ICON= "/icons/smokeping.png"
 HOMEPAGE_VAR_SMOKEPING_URL= "http://192.168.2.21/smokeping"
-
-# Battle of the bandwidth
-HOMEPAGE_VAR_BOTB_ICON= "/icons/smokeping.png"
-HOMEPAGE_VAR_BOTB_URL= "https://botb.d3adc3ii.cc"
 
 ### BACKUP ###
 # Backrest
@@ -1148,6 +1180,10 @@ HOMEPAGE_VAR_GUACAMOLEEXT_URL= "https://guaca.d3adc3ii.cc/guacamole"
 # Dumbterm
 HOMEPAGE_VAR_DUMBTERM_ICON= "/icons/dumbterm-light.png"
 HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.d3adc3ii.cc"
+
+# SHELLHUB
+HOMEPAGE_VAR_SHELLHUB_ICON= "sh-shellhub-light"
+HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.253"
 
 ### Monitoring ###
 # UPTIME KUMA
