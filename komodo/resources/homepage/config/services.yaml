@@ -94,7 +94,7 @@
                 key: {{HOMEPAGE_VAR_DNS_KEY}}
                 range: {{HOMEPAGE_VAR_DNS_RANGE}}
         - Speedtest:
-            icon: {{HOMEPAGE_VAR_SPEDDTEST_ICON}}
+            icon: {{HOMEPAGE_VAR_SPEEDTEST_ICON}}
             href: {{HOMEPAGE_VAR_SPEEDTEST_URL}}
      #   - CaddyProxy:
       #      icon: {{HOMEPAGE_VAR_CADDYPROXY_ICON}} 
