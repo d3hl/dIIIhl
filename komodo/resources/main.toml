@@ -1,7 +1,7 @@
 [[server]]
 name = "komodo-2"
 [server.config]
-address = "https://192.168.2.32:8120"
+address = "https://10.10.10.32:8120"
 enabled = true
 
 ##
@@ -9,7 +9,7 @@ enabled = true
 [[server]]
 name = "komodo-3"
 [server.config]
-address = "https://192.168.2.33:8120"
+address = "https://10.10.10.33:8120"
 enabled = true
 
 ##
@@ -17,7 +17,7 @@ enabled = true
 [[server]]
 name = "server-DULxe"
 [server.config]
-address = "https://192.168.2.31:8120"
+address = "https://10.10.10.31:8120"
 enabled = true
 
 ##
@@ -198,6 +198,13 @@ AUTHENTIK_EMAIL__TIMEOUT=10
 # Email address authentik will send from, should have a correct @domain
 AUTHENTIK_EMAIL__FROM=authentik@localhost
 """
+
+##
+
+[[stack]]
+name = "authentik-outpost-32"
+[stack.config]
+
 
 ##
 
@@ -877,11 +884,12 @@ services:
     volumes:
       - ${DATA_DIR}/config:/config
     ports:
-      - 8000:8000
+      - 8898:8000
       - 2525:2525 #optional
     restart: unless-stopped
     labels:
        proxy.idle_timeout: 1h
+       proxy.port: 8898
 """
 environment = """
 PUID=1000
@@ -964,7 +972,7 @@ services:
 """
 environment = """
 HOMEPAGE_DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/
-HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,192.168.2.31:3000"
+HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,10.10.10.31:3000"
 PGID= [[PGID]] 
 PUID= [[PUID]] 
 # Site Config
@@ -987,7 +995,7 @@ HOMEPAGE_VAR_USE_EQUAL_HEIGHTS= true
 
 
 ### GLANCES WIDGET SETTINGS
-HOMEPAGE_VAR_GL11_URL= http://192.168.3.11:61208
+HOMEPAGE_VAR_GL11_URL= http://10.10.10.11:61208
 HOMEPAGE_VAR_GL11_VERSION= 4 # required only if running glances v4 or higher, defaults to 3
 HOMEPAGE_VAR_GL11_CPU= false # optional, enabled by default, disable by setting to false
 HOMEPAGE_VAR_GL11_MEM= false # optional, enabled by default, disable by setting to false
@@ -995,7 +1003,7 @@ HOMEPAGE_VAR_GL11_CPUTEMP= true # disabled by default
 HOMEPAGE_VAR_GL11_UPTIME= true # disabled by default
 HOMEPAGE_VAR_GL11_LABEL= pve11 # optional
 
-HOMEPAGE_VAR_GL12_URL= http://192.168.3.12:61208
+HOMEPAGE_VAR_GL12_URL= http://10.10.10.12:61208
 HOMEPAGE_VAR_GL12_VERSION= 4 
 HOMEPAGE_VAR_GL12_CPU= false 
 HOMEPAGE_VAR_GL12_MEM= false 
@@ -1003,7 +1011,7 @@ HOMEPAGE_VAR_GL12_CPUTEMP= true
 HOMEPAGE_VAR_GL12_UPTIME= true 
 HOMEPAGE_VAR_GL12_LABEL= pve12 
 
-HOMEPAGE_VAR_GL13_URL= http://192.168.3.13:61208
+HOMEPAGE_VAR_GL13_URL= http://10.10.10.13:61208
 HOMEPAGE_VAR_GL13_VERSION= 4
 HOMEPAGE_VAR_GL13_CPU= false 
 HOMEPAGE_VAR_GL13_MEM= false 
@@ -1013,7 +1021,7 @@ HOMEPAGE_VAR_GL13_LABEL= pve13
 
 ### INFRA ###
 # PULSE
-HOMEPAGE_VAR_PULSE_URL= "http://192.168.2.36:7655"
+HOMEPAGE_VAR_PULSE_URL= "http://10.10.10.36:7655"
 HOMEPAGE_VAR_PULSE_ALLOWFULLSCREEN= true
 HOMEPAGE_VAR_PULSE_LOADING_STRATEGY=eager
 HOMEPAGE_VAR_PULSE_ALLOW_SCROLLING=false
@@ -1022,7 +1030,7 @@ HOMEPAGE_VAR_PULSE_CLASSES= h-60 sm:h-60 md:h-100 lg:h-200 xl:h-300 2xl:h-700
 
 # Truenas
 HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas-scale-light.png"
-HOMEPAGE_VAR_TRUENAS_URL= "https://192.168.2.7"
+HOMEPAGE_VAR_TRUENAS_URL= "https://10.10.10.7"
 HOMEPAGE_VAR_TRUENAS_KEY="1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe"
 HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
 # Proxmox
@@ -1183,7 +1191,7 @@ HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.d3adc3ii.cc"
 
 # SHELLHUB
 HOMEPAGE_VAR_SHELLHUB_ICON= "sh-shellhub-light"
-HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.253"
+HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
 
 ### Monitoring ###
 # UPTIME KUMA
@@ -1250,8 +1258,8 @@ HOMEPAGE_VAR_SELFHST_URL= "https://selfhst-icons.d3adc3ii.cc"
 ### GL1 ###
 # PVE11
 HOMEPAGE_VAR_PVE11_URL= "https://pve11.d3adc3ii.cc"
-HOMEPAGE_VAR_PVE12_URL= "https://pve12.d3adc3ii.cc"
-HOMEPAGE_VAR_PVE13_URL= "https://pve13.d3adc3ii.cc"
+HOMEPAGE_VAR_PVE12_URL= "192.168.2.12"
+HOMEPAGE_VAR_PVE13_URL= "192.168.2.13"
 HOMEPAGE_VAR_GLANCES_PVE11= "http://192.168.3.11:61208"
 HOMEPAGE_VAR_GLANCES_PVE12= "http://192.168.3.12:61208"
 HOMEPAGE_VAR_GLANCES_PVE13= "http://192.168.3.13:61208"
@@ -1315,6 +1323,8 @@ services:
     container_name: immich_postgres
     image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
     environment:
+      PUID: 1000
+      PGID: 1000
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_DB: ${DB_DATABASE_NAME}
@@ -1337,6 +1347,8 @@ volumes:
   pgdata:
 """
 environment = """
+PGID=1000
+PUID=1000
 UPLOAD_LOCATION=/mnt/zApps/immich/upload
 DB_DATA_LOCATION=./postgres
 IMMICH_VERSION=release
@@ -1412,8 +1424,7 @@ services:
     image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
     restart: unless-stopped
     volumes:
-      #- /etc/komodo/repos/diiihl/app-data/karakeep-data:/data
-      - ${DATA_DIR}:/data
+      - ${DOCKER_DATA}/karakeep/data:/data
     ports:
       - 3333:3000
     env_file:
@@ -1450,9 +1461,13 @@ environment = """
 KARAKEEP_VERSION=release
 NEXTAUTH_SECRET=[[KARA_NEXTAUTH_SECRET]]
 MEILI_MASTER_KEY=[[KARA_MEILI_MASTER_KEY]]
-NEXTAUTH_URL=http://192.168.2.32:3333
+NEXTAUTH_URL='https://kara.d3adc3ii.cc'
 OPENAI_API_KEY=[[OPENAI_API_KEY]]
-DATA_DIR=/mnt/zApps/karakeep/data
+OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING= true
+OAUTH_WELLKNOWN_URL='https://auth.d3adc3ii.cc/application/o/karakeep/'
+OAUTH_CLIENT_SECRET=db64i7QZ2MHMVkjOvZfcOyWTh1y1ECG2XNamIkLXBZxi0UqLfcfvVxYcsQ7nWbZvFeRQBGnJB2vnVqGQgKkUopKGlGooRuGW2R8DnvxoORYAVWhW77x5PVhwlOB0Cr9s
+OAUTH_CLIENT_ID=D8rw3kVA932oWoPiLud8z5FgomI3sXT4oOTYMBIr
+OAUTH_PROVIDER_NAME= authentik
 """
 
 ##
@@ -1797,7 +1812,29 @@ file_paths = [
 [[stack]]
 name = "sitrling-pdf"
 [stack.config]
-
+server = "komodo-3"
+file_contents = """
+version: '3.3'
+services:
+  stirling-pdf:
+    image: docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./StirlingPDF/trainingData:/usr/share/tessdata # Required for extra OCR languages
+      - ./StirlingPDF/extraConfigs:/configs
+      - ./StirlingPDF/customFiles:/customFiles/
+      - ./StirlingPDF/logs:/logs/
+      - ./StirlingPDF/pipeline:/pipeline/
+    env-file:
+      - .env
+    labels:
+      proxy.aliases: pdf
+"""
+environment = """
+      - DISABLE_ADDITIONAL_FEATURES=false
+      - LANGS=en_GB
+"""
 
 ##
 
@@ -1873,35 +1910,6 @@ APP_URL= http://192.168.2.31:8785
 MYSQL_DATABASE=speedtest_tracker
 MYSQL_USER=speedtest_tracker
 MYSQL_PASSWORD=password
-"""
-
-##
-
-[[stack]]
-name = "stirling-pdf"
-[stack.config]
-server = "komodo-3"
-file_contents = """
-services:
-  stirling-pdf:
-    image: docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest
-    ports:
-      - '8989:8080'
-    volumes:
-      - ./StirlingPDF/extraConfigs:/configs
-      - ./StirlingPDF/customFiles:/customFiles/
-      - ./StirlingPDF/logs:/logs/
-      - ./StirlingPDF/pipeline:/pipeline/
-    env_file:
-      - .env
-    labels:
-      proxy.stirling-pdf.port: 8989
-      proxy.stirling-pdf-backend.port: 8080
-      proxy.idle_timeout: 5m
-"""
-environment = """
-DISABLE_ADDITIONAL_FEATURES=false
-LANGS=en_GB
 """
 
 ##
