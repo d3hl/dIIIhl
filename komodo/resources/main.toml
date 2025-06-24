@@ -1,4 +1,12 @@
 [[server]]
+name = "komodo-1"
+[server.config]
+address = "https://10.10.10.31:8120"
+enabled = true
+
+##
+
+[[server]]
 name = "komodo-2"
 [server.config]
 address = "https://10.10.10.32:8120"
@@ -11,14 +19,6 @@ enabled = true
 name = "komodo-3"
 [server.config]
 address = "https://10.10.10.33:8120"
-enabled = true
-
-##
-
-[[server]]
-name = "server-DULxe"
-[server.config]
-address = "https://10.10.10.31:8120"
 enabled = true
 
 ##
@@ -83,7 +83,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "server-DULxe"
+server = "komodo-1"
 project_name = "authentik"
 poll_for_updates = true
 auto_update = true
@@ -250,7 +250,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "server-DULxe"
+server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -425,7 +425,7 @@ CADDY_EMAIL= d3tech@pm.me
 [[stack]]
 name = "doxy-31"
 [stack.config]
-server = "server-DULxe"
+server = "komodo-1"
 file_contents = """
 services:
   agent:
@@ -574,7 +574,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "server-DULxe"
+server = "komodo-1"
 file_contents = """
 services:
   dozzle-agent:
@@ -852,7 +852,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "server-DULxe"
+server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -916,7 +916,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "server-DULxe"
+server = "komodo-1"
 links = ["https://homepage.d3adc3ii.cc"]
 poll_for_updates = true
 auto_update = true
@@ -1520,7 +1520,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "server-DULxe"
+server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -1804,7 +1804,7 @@ services:
 [[stack]]
 name = "shellhub"
 [stack.config]
-server = "server-DULxe"
+server = "komodo-1"
 project_name = "shellhub"
 files_on_host = true
 run_directory = "/home/d3/shellhub"
@@ -1852,7 +1852,7 @@ environment = """
 name = "speedtest-tracker"
 tags = ["internal", "testing"]
 [stack.config]
-server = "server-DULxe"
+server = "komodo-1"
 project_name = "speedtest-tracker"
 poll_for_updates = true
 auto_update = true
@@ -1993,7 +1993,7 @@ PGID=1000
 [[stack]]
 name = "xpipe-webtop"
 [stack.config]
-server = "server-DULxe"
+server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2063,7 +2063,7 @@ APPRISE_WORKER_COUNT=1
 name = "beszel-k11"
 tags = ["internal", "monitoring"]
 [deployment.config]
-server = "server-DULxe"
+server = "komodo-1"
 image.type = "Image"
 image.params.image = "henrygd/beszel-agent"
 poll_for_updates = true
@@ -2114,7 +2114,7 @@ image.params.image = "tenable/nessus:latest-ubuntu"
 name = "newt1"
 tags = ["external", "production"]
 [deployment.config]
-server = "server-DULxe"
+server = "komodo-1"
 image.type = "Image"
 image.params.image = "fosrl/newt"
 poll_for_updates = true
@@ -2194,7 +2194,7 @@ environment = """
 [[repo]]
 name = "diiihl"
 [repo.config]
-server = "server-DULxe"
+server = "komodo-1"
 builder = "local"
 git_account = "d3hl"
 repo = "d3hl/dIIIhl"
@@ -2241,7 +2241,7 @@ executions = [
 name = "local"
 [builder.config]
 type = "Server"
-params.server_id = "server-DULxe"
+params.server_id = "komodo-1"
 
 ##
 
