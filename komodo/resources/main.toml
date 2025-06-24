@@ -2,6 +2,7 @@
 name = "komodo-2"
 [server.config]
 address = "https://10.10.10.32:8120"
+region = "Singapore"
 enabled = true
 
 ##
@@ -1638,7 +1639,7 @@ file_contents = """
 services:
   omni-tools:
     image: iib0011/omni-tools:latest
-    container_name: omni-tools
+    container_name: omnitools
     restart: unless-stopped
     ports:
       - "8281:80"
