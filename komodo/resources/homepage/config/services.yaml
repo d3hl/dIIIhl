@@ -382,10 +382,6 @@
     - AzureDevOps:
         icon: /icons/azure-devops.png 
         href: https://dev.azure.com/ntnsg/intune
-- Other Cloud:
-    - Dokkio:
-        href: https://app.dokkio.com/a/2266012572845539026/new
-
 - Applications:
     - Komodo:
         icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 

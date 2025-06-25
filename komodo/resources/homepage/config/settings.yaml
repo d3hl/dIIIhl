@@ -91,12 +91,7 @@ layout:
     tab: Cloud
     style: row
     columns: 4
-  
-  
-  
-  
-  
-  Corp:
+  Work:
     tab: Corp
     style: column
     columns: 1
