@@ -390,6 +390,9 @@
     - Komodo:
         icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
         href: {{HOMEPAGE_VAR_KOMODOCORP_URL}} 
+    - Fenrus:
+        icon: {{HOMEPAGE_VAR_FENRUS_ICON}} 
+        href: {{HOMEPAGE_VAR_FENRUS_URL}} 
 - Network:
     - Fortigate:
         icon: fortinet 
