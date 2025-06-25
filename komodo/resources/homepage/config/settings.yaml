@@ -91,7 +91,7 @@ layout:
     tab: Cloud
     style: row
     columns: 4
-  Work:
+  Work-Left:
     tab: Corp
     style: column
     columns: 1
@@ -101,16 +101,21 @@ layout:
       tab: Corp
       style: row
       columns: 4  
-    System:
-      header: true
-      tab: Corp
-      style: row
-      columns: 4 
     Applications: 
       header: true
       tab: Corp
       style: row
       columns: 2 
+  Work-Right:
+    tab: Corp
+    style: column
+    columns: 1
+    header: False
+    System:
+      header: true
+      tab: Corp
+      style: row
+      columns: 4 
   GL4:
     tab: Monitoring
     style: row
