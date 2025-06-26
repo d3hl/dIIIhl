@@ -20,7 +20,7 @@
             ping: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
             widget:
                 type: beszel
-                url: http://192.168.2.9:8090
+                url: http://10.10.10.9:8090
                 username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
                 password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
@@ -31,7 +31,7 @@
             ping: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_2}}
             widget:
                 type: beszel
-                url: http://192.168.2.9:8090
+                url: http://10.10.10.9:8090
                 username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
                 password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
@@ -42,7 +42,7 @@
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             widget:
                 type: beszel
-                url: http://192.168.2.9:8090
+                url: http://10.10.10.9:8090
                 username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
                 password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
@@ -381,6 +381,8 @@
     - AzureDevOps:
         icon: /icons/azure-devops.png 
         href: https://dev.azure.com/ntnsg/intune
+
+### CORP TAB ###        
 - Applications:
     - Komodo:
         icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
@@ -413,7 +415,7 @@
     - Ruckus:
         icon: rundeck 
         href: http://10.203.6.200
-- System:
+- Systems:
     - Wordpress:
         icon: wordpress
         href: https://ntn.com.sg/wp-login.php
