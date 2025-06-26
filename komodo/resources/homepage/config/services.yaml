@@ -388,7 +388,7 @@
     - Fenrus:
         icon: {{HOMEPAGE_VAR_FENRUS_ICON}} 
         href: {{HOMEPAGE_VAR_FENRUS_URL}} 
-    - PVE:
+    - PVECORP:
         icon: {{HOMEPAGE_VAR_PVE_ICON}} 
         href: {{HOMEPAGE_VAR_PVECORP_URL}} 
 - Network:
