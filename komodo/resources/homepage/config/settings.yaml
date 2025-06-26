@@ -91,7 +91,6 @@ layout:
       tab: Cloud
       style: column
       columns: 4
-
   WorkLeft:
     tab: Corp
     style: column
@@ -102,6 +101,31 @@ layout:
       tab: Corp
       style: row
       columns: 2 
+    Network:
+      header: true
+      tab: Corp
+      style: row
+      columns: 4  
+  Work-Right:
+    tab: Corp
+    style: column
+    columns: 1
+    header: False
+    Systems:
+      header: true
+      tab: Corp
+      style: row
+      columns: 4 
+
+
+
+
+
+
+
+
+
+
   GL4:
     tab: Monitoring
     style: row
