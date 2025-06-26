@@ -26,7 +26,6 @@
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
                 systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11}}
                 fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
-
         - pve12:
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             ping: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_2}}
@@ -55,7 +54,7 @@
             ping: {{HOMEPAGE_VAR_PBS_URL}} 
             widget:
                 type: beszel
-                url: http://192.168.2.9:8090
+                url: http://10.10.10.9:8090
                 username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
                 password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
@@ -389,6 +388,9 @@
     - Fenrus:
         icon: {{HOMEPAGE_VAR_FENRUS_ICON}} 
         href: {{HOMEPAGE_VAR_FENRUS_URL}} 
+    - PVE:
+        icon: {{HOMEPAGE_VAR_PVE_ICON}} 
+        href: {{HOMEPAGE_VAR_PVECORP_URL}} 
 - Network:
     - Fortigate:
         icon: fortinet 
