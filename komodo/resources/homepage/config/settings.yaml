@@ -91,3 +91,14 @@ layout:
       tab: Cloud
       style: column
       columns: 4
+
+  Work-Left:
+    tab: Corp
+    style: column
+    columns: 1
+    header: False
+    Applications: 
+      header: true
+      tab: Corp
+      style: row
+      columns: 2 
