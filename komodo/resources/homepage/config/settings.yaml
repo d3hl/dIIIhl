@@ -83,3 +83,11 @@ layout:
       style: row
       columns: 4
       header: true
+  M365:
+    tab: Cloud
+    style: row
+    columns: 4
+    Other Cloud:
+      tab: Cloud
+      style: column
+      columns: 4
