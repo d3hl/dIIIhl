@@ -97,8 +97,12 @@ layout:
     style: column
     columns: 1
     header: False
-    Applications-Corp: 
+    Applications: 
       header: true
       tab: Corp
       style: row
       columns: 2 
+  GL4:
+    tab: Monitoring
+    style: row
+    colums: 4

@@ -341,7 +341,7 @@
             height: {{HOMEPAGE_VAR_PULSE_HEIGHT}}
 
 ### CORP TAB ###        
-- Appplications-Corp:
+- Appplications:
 #    - Komodocorp:
 #        icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
 #        href: {{HOMEPAGE_VAR_KOMODOCORP_URL}} 
