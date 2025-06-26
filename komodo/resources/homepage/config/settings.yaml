@@ -92,12 +92,12 @@ layout:
       style: column
       columns: 4
 
-  Work-Left:
+  WorkLeft:
     tab: Corp
     style: column
     columns: 1
     header: False
-    Applications: 
+    Applications-Corp: 
       header: true
       tab: Corp
       style: row
