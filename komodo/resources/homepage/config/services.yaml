@@ -342,7 +342,7 @@
 
 ### CORP TAB ###        
 - Applications:
-    - Komodo:
+    - Komodocorp:
         icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
         href: {{HOMEPAGE_VAR_KOMODOCORP_URL}} 
     - Fenrus:
