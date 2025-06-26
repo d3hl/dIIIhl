@@ -222,22 +222,25 @@
                   - field: down
                     label: Stopped
                     format: number
-        - Container Updates:
-            icon: {{HOMEPAGE_VAR_KOMODO_ICON}}
-            server: my-docker
+        - Dozzle:
+            icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
+            href: {{HOMEPAGE_VAR_DOZZLE_URL}}
+#        - Container Updates:
+#            icon: {{HOMEPAGE_VAR_KOMODO_ICON}}
+#            server: my-docker
             #container: komodo-core-1 
-            widget:
-                type: customapi
-                url: {{HOMEPAGE_VAR_KOMODO_CONTAINER_UPDATE_URL}}
-                refreshInterval: 30000
-                display: block
-                mappings:
-                  - field: total
-                    label: Containers
-                    format: number
-                  - field: updates
-                    label: With Updates
-                    format: number
+#            widget:
+#                type: customapi
+#                url: {{HOMEPAGE_VAR_KOMODO_CONTAINER_UPDATE_URL}}
+#                refreshInterval: 30000
+#                display: block
+#                mappings:
+#                  - field: total
+#                    label: Containers
+#                    format: number
+#                  - field: updates
+#                    label: With Updates
+#                    format: number
     - Identity: 
         - Authentik:
             icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
