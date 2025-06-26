@@ -341,16 +341,19 @@
             height: {{HOMEPAGE_VAR_PULSE_HEIGHT}}
 
 ### CORP TAB ###        
-- Appplications:
+- Applications:
+    - PVECORP:
+        icon: {{HOMEPAGE_VAR_PVE_ICON}} 
+        href: {{HOMEPAGE_VAR_PVECORP_URL}} 
 #    - Komodocorp:
 #        icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
 #        href: {{HOMEPAGE_VAR_KOMODOCORP_URL}} 
     - Fenrus:
         icon: {{HOMEPAGE_VAR_FENRUS_ICON}} 
         href: {{HOMEPAGE_VAR_FENRUS_URL}} 
-#    - PVECORP:
-#        icon: {{HOMEPAGE_VAR_PVE_ICON}} 
-#        href: {{HOMEPAGE_VAR_PVECORP_URL}} 
+    - PVECORP:
+        icon: {{HOMEPAGE_VAR_PVE_ICON}} 
+        href: {{HOMEPAGE_VAR_PVECORP_URL}} 
 ### CLOUD TAB ###        
 - M365:
     - Intune:
