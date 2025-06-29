@@ -2,6 +2,7 @@
 name = "komodo-1"
 [server.config]
 address = "https://10.10.10.31:8120"
+region = "Singapore"
 enabled = true
 
 ##
@@ -19,6 +20,7 @@ enabled = true
 name = "komodo-3"
 [server.config]
 address = "https://10.10.10.33:8120"
+region = "Singapore"
 enabled = true
 
 ##
@@ -202,13 +204,6 @@ AUTHENTIK_EMAIL__FROM=authentik@localhost
 COMPOSE_PORT_HTTP=9111
 COMPOSE_PORT_HTTPS=9444
 """
-
-##
-
-[[stack]]
-name = "authentik-outpost-32"
-[stack.config]
-
 
 ##
 
@@ -477,11 +472,32 @@ services:
 ##
 
 [[stack]]
+name = "dozzel-agent-1"
+[stack.config]
+server = "komodo-1"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  dozzle-agent:
+    image: amir20/dozzle:latest
+    command: agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 7007:7007
+"""
+
+##
+
+[[stack]]
 name = "dozzle"
 tags = [
   "internal",
   "monitoring",
-  "komodo-3"
+  "komodo-3",
+  "docker"
 ]
 [stack.config]
 server = "komodo-3"
@@ -506,29 +522,7 @@ environment = """
 DOZZLE_ENABLE_ACTIONS=true
 DOZZLE_ENABLE_SHELL=true
 #DOZZLE_AUTH_PROVIDER: forward-proxy
-DOZZLE_REMOTE_AGENT=192.168.2.31:7007,192.168.2.32:7007
-"""
-
-##
-
-[[stack]]
-name = "dozzle-agent-1"
-tags = [
-  "internal",
-  "monitoring",
-  "komodo-1"
-]
-[stack.config]
-server = "komodo-1"
-file_contents = """
-services:
-  dozzle-agent:
-    image: amir20/dozzle:latest
-    command: agent
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    ports:
-      - 7007:7007
+DOZZLE_REMOTE_AGENT=10.10.10.31:7007,10.10.10.32:7007
 """
 
 ##
@@ -542,6 +536,9 @@ tags = [
 ]
 [stack.config]
 server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 file_contents = """
 services:
   dozzle-agent:
@@ -1317,7 +1314,7 @@ services:
       - TZ=Asia/Singapore
       - JELLYFIN_PublishedServerUrl=https://jelly.int.d3adc3ii.cc #optional
     volumes:
-      - ${JELLYFIN_CONFIG_DIR}:/config
+      - ${DOCKER_DATA}/jellyfin/config:/config
       - ${JELLYFIN_DATA_DIR}/tvshows:/data/tvshows
       - ${JELLYFIN_DATA_DIR}/movies:/data/movies
     ports:
@@ -1331,7 +1328,6 @@ services:
       proxy.jelly.port: 8096
 """
 environment = """
-JELLYFIN_CONFIG_DIR=/mnt/zApps/jellyfin/config
 JELLYFIN_DATA_DIR=/mnt/zFiles/media
 
 """
@@ -1858,49 +1854,6 @@ services:
 environment = """
 TZ= 'Asia/Singapore'
 DATA_DIR=/mnt/zApps/wallos
-PUID=1000
-PGID=1000
-"""
-
-##
-
-[[stack]]
-name = "xpipe-webtop"
-[stack.config]
-server = "komodo-1"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-networks:
-  caddy:
-    external: true
-
-services:
-  webtop:
-    image: ghcr.io/xpipe-io/xpipe-webtop:latest
-    container_name: xpipe-webtop
-    networks:
-      - caddy
-    env_file:
-      - .env
-    volumes:
-      - ${DATA_DIR}:/config
-      - /var/run/docker.sock:/var/run/docker.sock #optional
-    ports:
-      - 127.0.0.1:3700:3000
-      - 127.0.0.1:3701:3001
-    restart: unless-stopped
-    labels:
-      - caddy= xpipe.d3adc3ii.site
-      - caddy.reverse_proxy= "{{upstreams 3700}}"
-      - homepage.container= xpipe
-      - homepage.group= Remote
-      - homepage.icon= /icons/xpipe.png
-      - homepage.href= https://xpipe.d3adc3ii.site
-"""
-environment = """
-DATA_DIR=/mnt/zApps/xpipe/config
 PUID=1000
 PGID=1000
 """
