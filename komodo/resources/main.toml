@@ -1512,6 +1512,36 @@ tags = ["internal", "monitoring"]
 ##
 
 [[stack]]
+name = "lunalytics"
+tags = ["testing"]
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+# docker-compose.yml
+services:
+  lunalytics:
+    image: ksjaay/lunalytics:latest
+    container_name: lunalytics
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - '2308:2308'
+    volumes:
+      - ${DOCKER_DATA}/lunalytics/data:/app/data
+      - ${DOCKER_DATA}/lunalytics/logs:/app/logs
+"""
+environment = """
+PGUI=1000
+PUID=1000
+"""
+
+##
+
+[[stack]]
 name = "mailrise"
 tags = ["komodo-3"]
 [stack.config]
