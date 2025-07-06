@@ -16,6 +16,7 @@ statusStyle: {{HOMEPAGE_VAR_STATUS_STYLE}}
 fullWidth: {{HOMEPAGE_VAR_FULL_WIDTH}}
 showStats: {{HOMEPAGE_VAR_SHOW_STATS}}
 hideErrors: {{HOMEPAGE_VAR_HIDE_ERRORS}}
+disableCollapse: {{HOMEPAGE_VAR_DISABLE_COLLAPSE}}
 
 layout:
   
@@ -96,35 +97,11 @@ layout:
     style: column
     columns: 1
     header: False
-    Applications: 
-      header: true
-      tab: Corp
-      style: row
-      columns: 2 
-    Network:
-      header: true
-      tab: Corp
-      style: row
-      columns: 4  
-  Work-Right:
+  WorkRight:
     tab: Corp
     style: column
     columns: 1
     header: False
-    Systems:
-      header: true
-      tab: Corp
-      style: row
-      columns: 4 
-
-
-
-
-
-
-
-
-
 
   GL4:
     tab: Monitoring

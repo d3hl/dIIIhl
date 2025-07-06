@@ -1,6 +1,9 @@
 ---
 - logo:
     icon: /icons/d3logo.svg
+- greeting:
+    text_size: 4xl
+    text: d3 Dashboad
 #- openmeteo:
 #    label: Singapore
 #    latitude: 1.27
@@ -20,6 +23,9 @@
     cputemp: {{HOMEPAGE_VAR_GL11_CPUTEMP}} # disabled by default
     uptime: {{HOMEPAGE_VAR_GL11_UPTIME}} # disabled by default
     label: {{HOMEPAGE_VAR_GL11_LABEL}} # optional
+- greeting:
+    text_size: 4xl
+    text: —
 - glances:
     url: {{HOMEPAGE_VAR_GL12_URL}}
     version: {{HOMEPAGE_VAR_GL12_VERSION}} 
@@ -28,6 +34,9 @@
     cputemp: {{HOMEPAGE_VAR_GL12_CPUTEMP}} # disabled by default
     uptime: {{HOMEPAGE_VAR_GL12_UPTIME}} # disabled by default
     label: {{HOMEPAGE_VAR_GL12_LABEL}} # optional
+- greeting:
+    text_size: 4xl
+    text: —
 - glances:
     url: {{HOMEPAGE_VAR_GL13_URL}}
     version: {{HOMEPAGE_VAR_GL13_VERSION}} 
@@ -36,3 +45,8 @@
     cputemp: {{HOMEPAGE_VAR_GL13_CPUTEMP}} # disabled by default
     uptime: {{HOMEPAGE_VAR_GL13_UPTIME}} # disabled by default
     label: {{HOMEPAGE_VAR_GL13_LABEL}} # optional
+- datetime:
+    text_size: md
+    format:
+        dateStyle: long
+        hour12: false
