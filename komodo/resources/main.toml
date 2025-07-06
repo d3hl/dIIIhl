@@ -2,6 +2,7 @@
 name = "komodo-1"
 [server.config]
 address = "https://10.10.10.31:8120"
+region = "Singapore"
 enabled = true
 
 ##
@@ -19,6 +20,7 @@ enabled = true
 name = "komodo-3"
 [server.config]
 address = "https://10.10.10.33:8120"
+region = "Singapore"
 enabled = true
 
 ##
@@ -206,13 +208,6 @@ COMPOSE_PORT_HTTPS=9444
 ##
 
 [[stack]]
-name = "authentik-outpost-32"
-[stack.config]
-
-
-##
-
-[[stack]]
 name = "authentik-outpost-33"
 [stack.config]
 server = "komodo-3"
@@ -224,6 +219,7 @@ file_contents = """
 services:
     authentik_proxy:
         image: ghcr.io/goauthentik/proxy:2025.6.2
+        restart: unless-stopped
         # Optionally specify which networks the container should be
         # might be needed to reach the core authentik server
         # networks:
@@ -238,6 +234,100 @@ services:
             # Starting with 2021.9, you can optionally set this too
             # when authentik_host for internal communication doesn't match the public URL
             # AUTHENTIK_HOST_BROWSER: https://external-domain.tld
+"""
+
+##
+
+[[stack]]
+name = "beszel"
+tags = [
+  "komodo-1",
+  "external",
+  "monitoring",
+  "beszel"
+]
+[stack.config]
+server = "komodo-1"
+file_contents = """
+services:
+  beszel:
+    image: henrygd/beszel:latest
+    container_name: beszel
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - 8090:8090
+    volumes:
+      - ${DOCKER_DATA}/beszel/beszel_data:/beszel_data
+      - ${DOCKER_DATA}/beszel/beszel_socket:/beszel_socket
+  beszel-agent:
+    image: henrygd/beszel-agent:latest
+    container_name: beszel-agent
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ${DOCKER_DATA}/beszel/beszel_socket:/beszel_socket
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    env_file:
+      - .env
+    environment:
+      LISTEN: /beszel_socket/beszel.sock
+      # Do not remove quotes around the key
+      KEY: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+PtfmPHdKiaE+gbET/6wZeFSnsUEgOXpKM1qJ4gCPp'
+"""
+environment = """
+PGID=1000
+PUID=1000
+"""
+
+##
+
+[[stack]]
+name = "beszel-agent-k2"
+tags = ["agent", "komodo-2", "beszel"]
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  beszel-agent:
+    image: "henrygd/beszel-agent"
+    container_name: "beszel-agent"
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # monitor other disks / partitions by mounting a folder in /extra-filesystems
+      # - /mnt/disk/.beszel:/extra-filesystems/sda1:ro
+    environment:
+      LISTEN: 45876
+      KEY: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+PtfmPHdKiaE+gbET/6wZeFSnsUEgOXpKM1qJ4gCPp"
+"""
+
+##
+
+[[stack]]
+name = "beszel-agent-k3"
+tags = ["komodo-3", "agent", "beszel"]
+[stack.config]
+server = "komodo-3"
+file_contents = """
+services:
+  beszel-agent:
+    image: "henrygd/beszel-agent"
+    container_name: "beszel-agent-k3"
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # monitor other disks / partitions by mounting a folder in /extra-filesystems
+      # - /mnt/disk/.beszel:/extra-filesystems/sda1:ro
+    environment:
+      LISTEN: 45876
+      KEY: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+PtfmPHdKiaE+gbET/6wZeFSnsUEgOXpKM1qJ4gCPp"
 """
 
 ##
@@ -477,49 +567,12 @@ services:
 ##
 
 [[stack]]
-name = "dozzle"
-tags = [
-  "internal",
-  "monitoring",
-  "komodo-3"
-]
+name = "dozzel-agent-1"
 [stack.config]
-server = "komodo-3"
+server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
-file_contents = """
-services:
-  dozzle:
-    image: amir20/dozzle:latest
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - 8787:8080
-    env_file:
-      - .env
-    labels:
-      proxy.dozzle.port: 8787
-      proxy.dozzle-backend.port: 8080
-"""
-environment = """
-DOZZLE_ENABLE_ACTIONS=true
-DOZZLE_ENABLE_SHELL=true
-#DOZZLE_AUTH_PROVIDER: forward-proxy
-DOZZLE_REMOTE_AGENT=192.168.2.31:7007,192.168.2.32:7007
-"""
-
-##
-
-[[stack]]
-name = "dozzle-agent-1"
-tags = [
-  "internal",
-  "monitoring",
-  "komodo-1"
-]
-[stack.config]
-server = "komodo-1"
 file_contents = """
 services:
   dozzle-agent:
@@ -534,6 +587,43 @@ services:
 ##
 
 [[stack]]
+name = "dozzle"
+tags = [
+  "internal",
+  "monitoring",
+  "komodo-3",
+  "docker"
+]
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  dozzle:
+    image: amir20/dozzle:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8787:8080
+    env_file:
+      - .env
+    labels:
+      proxy.dozzle.port: 8787
+      proxy.dozzle-backend.port: 8080
+"""
+environment = """
+DOZZLE_ENABLE_ACTIONS=true
+DOZZLE_ENABLE_SHELL=true
+#DOZZLE_AUTH_PROVIDER: forward-proxy
+DOZZLE_REMOTE_AGENT=10.10.10.31:7007,10.10.10.32:7007
+"""
+
+##
+
+[[stack]]
 name = "dozzle-agent-2"
 tags = [
   "internal",
@@ -542,6 +632,9 @@ tags = [
 ]
 [stack.config]
 server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 file_contents = """
 services:
   dozzle-agent:
@@ -949,7 +1042,7 @@ HOMEPAGE_VAR_PULSE_CLASSES= h-60 sm:h-60 md:h-100 lg:h-200 xl:h-300 2xl:h-700
 
 # Truenas
 HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas-scale-light.png"
-HOMEPAGE_VAR_TRUENAS_URL= "https://10.10.10.7"
+HOMEPAGE_VAR_TRUENAS_URL= "https://truenas.d3adc3ii.site"
 HOMEPAGE_VAR_TRUENAS_KEY="1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe"
 HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
 # Proxmox
@@ -1181,6 +1274,7 @@ HOMEPAGE_VAR_KOMODOCORP_URL="http://10.203.1.121:9120"
 # Fenrus
 HOMEPAGE_VAR_FENRUS_ICON="sh-fenrus"
 HOMEPAGE_VAR_FENRUS_URL="http://10.203.1.120:3222"
+# PVECORP
 HOMEPAGE_VAR_PVECORP_URL="https://10.203.1.113:8006"
 
 ### GL1 ###
@@ -1196,7 +1290,7 @@ HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
 ##
 
 [[stack]]
-name = "imm"
+name = "immich"
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -1224,9 +1318,14 @@ services:
       - no-new-privileges:true
     ports:
       - '2283:2283'
+    #depends_on:
+    #  - redis
+    #  - database
     depends_on:
-      - redis
-      - database
+      redis:
+        condition: service_healthy
+      database:
+        condition: service_started    
     restart: always
     healthcheck:
       disable: false
@@ -1310,14 +1409,14 @@ file_contents = """
 services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
-    container_name: jellyfin
+    container_name: jelly
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Singapore
-      - JELLYFIN_PublishedServerUrl=https://jelly.int.d3adc3ii.cc #optional
+      - JELLYFIN_PublishedServerUrl=https://jelly.d3adc3ii.site #optional
     volumes:
-      - ${JELLYFIN_CONFIG_DIR}:/config
+      - ${DOCKER_DATA}/jellyfin/config:/config
       - ${JELLYFIN_DATA_DIR}/tvshows:/data/tvshows
       - ${JELLYFIN_DATA_DIR}/movies:/data/movies
     ports:
@@ -1331,7 +1430,6 @@ services:
       proxy.jelly.port: 8096
 """
 environment = """
-JELLYFIN_CONFIG_DIR=/mnt/zApps/jellyfin/config
 JELLYFIN_DATA_DIR=/mnt/zFiles/media
 
 """
@@ -1410,6 +1508,36 @@ name = "loggifly"
 tags = ["internal", "monitoring"]
 [stack.config]
 
+
+##
+
+[[stack]]
+name = "lunalytics"
+tags = ["testing"]
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+# docker-compose.yml
+services:
+  lunalytics:
+    image: ksjaay/lunalytics:latest
+    container_name: lunalytics
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - '2308:2308'
+    volumes:
+      - ${DOCKER_DATA}/lunalytics/data:/app/data
+      - ${DOCKER_DATA}/lunalytics/logs:/app/logs
+"""
+environment = """
+PGUI=1000
+PUID=1000
+"""
 
 ##
 
@@ -1799,6 +1927,28 @@ MYSQL_PASSWORD=password
 ##
 
 [[stack]]
+name = "true-command"
+tags = ["komodo-3"]
+[stack.config]
+server = "komodo-3"
+file_contents = """
+services:
+  true-command:
+    container_name: true-command
+    image: ixsystems/truecommand:latest
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_DATA}/truecommand:/data
+    ports:
+      - 8880:80
+      - 4443:443
+    labels:  
+      proxy.idle_timeout: 15m
+"""
+
+##
+
+[[stack]]
 name = "uptime-kuma"
 tags = [
   "external",
@@ -1807,6 +1957,7 @@ tags = [
 ]
 [stack.config]
 server = "komodo-3"
+project_name = "uptime-kuma"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -1815,14 +1966,18 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma:1
     container_name: uptime-kuma
+    env_file:
+      - .env
     volumes:
-      - ./uptime-kuma-data:/app/data
+      - ${DOCKER_DATA}/uptime-kuma/data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - 3111:3111  # <Host Port>:<Container Port>
+      - 3111:3001
     restart: always
 """
 environment = """
-  # VARIABLE = val
+PUID=1000
+PGID=1000
 """
 
 ##
@@ -1864,49 +2019,6 @@ PGID=1000
 
 ##
 
-[[stack]]
-name = "xpipe-webtop"
-[stack.config]
-server = "komodo-1"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-networks:
-  caddy:
-    external: true
-
-services:
-  webtop:
-    image: ghcr.io/xpipe-io/xpipe-webtop:latest
-    container_name: xpipe-webtop
-    networks:
-      - caddy
-    env_file:
-      - .env
-    volumes:
-      - ${DATA_DIR}:/config
-      - /var/run/docker.sock:/var/run/docker.sock #optional
-    ports:
-      - 127.0.0.1:3700:3000
-      - 127.0.0.1:3701:3001
-    restart: unless-stopped
-    labels:
-      - caddy= xpipe.d3adc3ii.site
-      - caddy.reverse_proxy= "{{upstreams 3700}}"
-      - homepage.container= xpipe
-      - homepage.group= Remote
-      - homepage.icon= /icons/xpipe.png
-      - homepage.href= https://xpipe.d3adc3ii.site
-"""
-environment = """
-DATA_DIR=/mnt/zApps/xpipe/config
-PUID=1000
-PGID=1000
-"""
-
-##
-
 [[deployment]]
 name = "apprise"
 [deployment.config]
@@ -1929,47 +2041,6 @@ PUID=1000
 PGID=1000
 APPRISE_STATEFUL_MODE=simple
 APPRISE_WORKER_COUNT=1
-"""
-
-##
-
-[[deployment]]
-name = "beszel-k11"
-tags = ["internal", "monitoring"]
-[deployment.config]
-server = "komodo-1"
-image.type = "Image"
-image.params.image = "henrygd/beszel-agent"
-poll_for_updates = true
-auto_update = true
-restart = "unless-stopped"
-volumes = """
-/var/run/docker.sock:/var/run/docker.sock:ro
-"""
-environment = """
-LISTEN=45876
-KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU6cTY/"
-  # VARIABLE = value
-"""
-
-##
-
-[[deployment]]
-name = "beszel-k12"
-tags = ["internal", "monitoring"]
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "henrygd/beszel-agent"
-poll_for_updates = true
-auto_update = true
-restart = "unless-stopped"
-volumes = """
-/var/run/docker.sock:/var/run/docker.sock:ro
-"""
-environment = """
-LISTEN=45876
-KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq8OcGRupFySjJHa5aIjeWFHd17+Lfwn+TVfwU6cTY/"
 """
 
 ##
@@ -2021,27 +2092,6 @@ environment = """
 labels = """
 caddy: statement.d3adc3ii.site
 caddy.reverse_proxy: "{{upstreams 8501}}"
-"""
-
-##
-
-[[deployment]]
-name = "true-command"
-tags = ["internal", "testing"]
-[deployment.config]
-server = "komodo-2"
-image.type = "Image"
-image.params.image = "ixsystems/truecommand"
-poll_for_updates = true
-auto_update = true
-network = "bridge"
-restart = "unless-stopped"
-ports = """
-8880:80
-4443:443
-"""
-volumes = """
-/mnt/zApps/truecommand:/data
 """
 
 ##
