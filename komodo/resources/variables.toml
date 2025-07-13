@@ -199,3 +199,21 @@ is_secret = false
 name = "TZ"
 value = "Asia/Singapore"
 is_secret = false
+
+##
+
+[[variable]]
+name = "DISCORD_WEBHOOK"
+value = "https://discord.com/api/webhooks/1393861630898602024/w0oa-BDkHE3K7BaisBqhrL1gtbm9LYtPug5h_ZluzpVSVIg_bvuq10DQESNsXl7D2kyh"
+is_secret = false
+
+##
+
+[[alerter]]
+name = "discord-webhook"
+[alerter.config]
+enabled = true
+endpoint.type = "Custom"
+endpoint.params.url = "http://discord-alerter-ip:7000"
+
+##
