@@ -270,9 +270,7 @@
         - Shellhub:
             icon: {{HOMEPAGE_VAR_SHELLHUB_ICON}}
             href: {{HOMEPAGE_VAR_SHELLHUB_URL}}
-        - Termix:
-            icon: {{HOMEPAGE_VAR_TERMIX_ICON}}
-            href: {{HOMEPAGE_VAR_TERMIX_URL}}
+
     - Monitoring:
         - Uptime-Kuma:
             icon: {{HOMEPAGE_VAR_KUMA_ICON}}
