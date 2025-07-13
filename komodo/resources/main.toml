@@ -514,6 +514,38 @@ CADDY_EMAIL= d3tech@pm.me
 ##
 
 [[stack]]
+name = "discord-alerter"
+[stack.config]
+repo = "foxxmd/deploy-discord-alerter"
+file_paths = ["compose.yaml"]
+environment = """
+  ## Required
+
+  ## Your webhook URL
+  DISCORD_WEBHOOK = [[DISCORD_WEBHOOK]]
+
+  ## Optional
+
+  ## Set whether to include Komodo Severity Level in notification title
+  #LEVEL_IN_TITLE=true
+
+  # Prefixes messages with a checkmark when the Alert is in the 'Resolved' state
+  #INDICATE_RESOLVED=true
+
+  # Filter if an alert is pushed based on its Resolved status
+  # * leave unset to push all alerts
+  # * otherwise, alerts will only be pushed if Alert is one of the comma-separated states set here
+  #ALLOW_RESOLVED_TYPE=resolved,unresolved
+
+  ## Delay alerts with below types for X milliseconds 
+  ## and cancel pushing alert if it is resolved within that time
+  #UNRESOLVED_TIMEOUT_TYPES=ServerCpu,ServerMem
+  #UNRESOLVED_TIMEOUT=2000
+"""
+
+##
+
+[[stack]]
 name = "doxy-33"
 [stack.config]
 server = "komodo-3"
@@ -2080,40 +2112,6 @@ PGID=1000
 
 ##
 
-[[stack]]
-name = "discord-alerter"
-[stack.config]
-repo = "foxxmd/deploy-discord-alerter"
-file_paths = [
-  "compose.yaml",
-]
-environment = """
-  ## Required
-
-  ## Your webhook URL
-  DISCORD_WEBHOOK = [[DISCORD_WEBHOOK]]
-
-  ## Optional
-
-  ## Set whether to include Komodo Severity Level in notification title
-  #LEVEL_IN_TITLE=true
-
-  # Prefixes messages with a checkmark when the Alert is in the 'Resolved' state
-  #INDICATE_RESOLVED=true
-
-  # Filter if an alert is pushed based on its Resolved status
-  # * leave unset to push all alerts
-  # * otherwise, alerts will only be pushed if Alert is one of the comma-separated states set here
-  #ALLOW_RESOLVED_TYPE=resolved,unresolved
-
-  ## Delay alerts with below types for X milliseconds 
-  ## and cancel pushing alert if it is resolved within that time
-  #UNRESOLVED_TIMEOUT_TYPES=ServerCpu,ServerMem
-  #UNRESOLVED_TIMEOUT=2000
-"""
-
-##
-
 [[deployment]]
 name = "apprise"
 [deployment.config]
@@ -2278,20 +2276,4 @@ repo = "d3hl/dIIIhl"
 git_account = "d3hl"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
-include_user_groups = true
-
-##
-
-[[resource_sync]]
-name = "variable"
-[resource_sync.config]
-repo = "d3hl/dIIIhl"
-git_account = "d3hl"
-resource_path = [
-  "komodo/resources/variables.toml"
-]
-managed = true
-delete = true
-include_resources = false
-include_variables = true
 include_user_groups = true
