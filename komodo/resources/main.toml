@@ -1239,11 +1239,6 @@ HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.d3adc3ii.cc"
 HOMEPAGE_VAR_SHELLHUB_ICON= "sh-shellhub-light"
 HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
 
-# TERMIX
-HOMEPAGE_VAR_TERMIX_ICON= "sh-termix-light"
-HOMEPAGE_VAR_SHELLHUB_URL= "https://termix.d3adc3ii.cc"
-
-
 ### Monitoring ###
 # UPTIME KUMA
 HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma-light.png"
@@ -1774,6 +1769,37 @@ environment = """
       - IPAM_DATABASE_HOST=phpipam-mariadb
       - IPAM_DATABASE_PASS=password
       - IPAM_DATABASE_WEBHOST=%
+"""
+
+##
+
+[[stack]]
+name = "prowlarr"
+tags = ["internal", "komodo-2"]
+[stack.config]
+server = "komodo-2"
+links = [
+  "https://prowlarr.d3adc3ii.site/"
+]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ${DOCKER_DATA}/prowlarr/data:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    labels:
+      proxy.idle_timeout: 1h
 """
 
 ##
