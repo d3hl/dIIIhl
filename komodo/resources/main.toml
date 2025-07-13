@@ -1333,7 +1333,6 @@ services:
     labels:
       proxy.aliases: immich
       proxy.immich.port: 2283
-      proxy.idle_timeout: 30m
       
   immich-machine-learning:
     container_name: immich_machine_learning
@@ -1852,6 +1851,37 @@ file_paths = [
 ##
 
 [[stack]]
+name = "silverbullet"
+tags = ["external", "komodo-2"]
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  silverbullet:
+    image: ghcr.io/silverbulletmd/silverbullet:v2
+    container_name: silverbullet
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ${DOCKER_DATA}/silverbullet/space:/space
+    ports:
+      - 3718:3000
+    labels:
+      proxy.exclude: true
+"""
+environment = """
+SB_USER=[[SILVERBULLET_USER]]
+PGID=1000
+PUID=1000
+"""
+
+##
+
+[[stack]]
 name = "speedtest-tracker"
 tags = ["internal", "testing"]
 [stack.config]
@@ -1928,6 +1958,33 @@ MYSQL_PASSWORD=password
 ##
 
 [[stack]]
+name = "termix"
+[stack.config]
+server = "komodo-1"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  termix:
+    image: ghcr.io/lukegus/termix:latest
+    container_name: termix
+    restart: unless-stopped
+    ports:
+      - "8282:8080"
+    volumes:
+      - ${DOCKER_DATA}/termix/data:/app/data
+    env_file:
+      - .env
+"""
+environment = """
+SALT: "tJ,V_^12phQ=66k'<v*7G?-Qw:/o)dom"
+PORT: "8080"
+"""
+
+##
+
+[[stack]]
 name = "true-command"
 tags = ["komodo-3"]
 [stack.config]
@@ -1958,6 +2015,7 @@ tags = [
 ]
 [stack.config]
 server = "komodo-3"
+links = ["https://uptime.d3adc3ii.cc/"]
 project_name = "uptime-kuma"
 poll_for_updates = true
 auto_update = true
@@ -1975,6 +2033,8 @@ services:
     ports:
       - 3111:3001
     restart: always
+    labels:
+      proxy.exclude: true
 """
 environment = """
 PUID=1000
