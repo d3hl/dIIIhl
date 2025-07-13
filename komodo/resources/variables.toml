@@ -203,6 +203,7 @@ is_secret = false
 ##
 
 [[variable]]
+<<<<<<< HEAD
 name = "DISCORD_WEBHOOK"
 value = "https://discord.com/api/webhooks/1393861630898602024/w0oa-BDkHE3K7BaisBqhrL1gtbm9LYtPug5h_ZluzpVSVIg_bvuq10DQESNsXl7D2kyh"
 is_secret = false
@@ -217,3 +218,8 @@ endpoint.type = "Custom"
 endpoint.params.url = "http://discord-alerter-ip:7000"
 
 ##
+=======
+name = "SILVERBULLET_USER"
+value = "d3:=b0zS,IA&CW0NFwI}];xQTxZMRj%tJ4jlKC.f^G3toaZbm_!+a"
+is_secret = true
+>>>>>>> 35b9afda8daf708b34e8a75d64bc5aea49460115

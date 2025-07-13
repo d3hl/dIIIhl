@@ -991,19 +991,20 @@ PUID= [[PUID]]
 HOMEPAGE_VAR_TITLE= "d3 Homepage"
 HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
 HOMEPAGE_VAR_IMG_URL= "/images/extra-12.jpg"
-HOMEPAGE_VAR_HEADER_STYLE= boxedWidgets
+HOMEPAGE_VAR_HEADER_STYLE= boxed #boxedWidgets
 
 HOMEPAGE_VAR_IMG_BLUR= md
 HOMEPAGE_VAR_IMG_SATURATE= 50
 HOMEPAGE_VAR_IMG_BRIGHTNESS= 50
 HOMEPAGE_VAR_IMG_OPACITY=70
 HOMEPAGE_VAR_THEME= dark
-HOMEPAGE_VAR_COLOR= slate
+HOMEPAGE_VAR_COLOR= zinc
 HOMEPAGE_VAR_STATUS_STYLE= dot
 HOMEPAGE_VAR_IMG_FULLWIDTH= true
 HOMEPAGE_VAR_IMG_SHOWSTATS= true
 HOMEPAGE_VAR_IMG_HIDEERRORS= true
 HOMEPAGE_VAR_USE_EQUAL_HEIGHTS= true
+HOMEAGE_VAR_DISABLE_COLLAPSE= true
 
 
 ### GLANCES WIDGET SETTINGS
@@ -1330,9 +1331,8 @@ services:
     healthcheck:
       disable: false
     labels:
-      proxy.aliases: imm
+      proxy.aliases: immich
       proxy.immich.port: 2283
-      proxy.idle_timeout: 30m
       
   immich-machine-learning:
     container_name: immich_machine_learning
@@ -1381,7 +1381,7 @@ environment = """
 IMMICH_IGNORE_MOUNT_CHECK_ERRORS=true
 PGID=1000
 PUID=1000
-UPLOAD_LOCATION=/mnt/zApps/immich-library/upload
+UPLOAD_LOCATION=/mnt/zApps/immich-lib/upload
 DB_DATA_LOCATION=./postgres
 IMMICH_VERSION=release
 DB_PASSWORD=[[IMMICH_DB_PASSWORD]]
@@ -1851,6 +1851,37 @@ file_paths = [
 ##
 
 [[stack]]
+name = "silverbullet"
+tags = ["external", "komodo-2"]
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  silverbullet:
+    image: ghcr.io/silverbulletmd/silverbullet:v2
+    container_name: silverbullet
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ${DOCKER_DATA}/silverbullet/space:/space
+    ports:
+      - 3718:3000
+    labels:
+      proxy.exclude: true
+"""
+environment = """
+SB_USER=[[SILVERBULLET_USER]]
+PGID=1000
+PUID=1000
+"""
+
+##
+
+[[stack]]
 name = "speedtest-tracker"
 tags = ["internal", "testing"]
 [stack.config]
@@ -1927,6 +1958,33 @@ MYSQL_PASSWORD=password
 ##
 
 [[stack]]
+name = "termix"
+[stack.config]
+server = "komodo-1"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  termix:
+    image: ghcr.io/lukegus/termix:latest
+    container_name: termix
+    restart: unless-stopped
+    ports:
+      - "8282:8080"
+    volumes:
+      - ${DOCKER_DATA}/termix/data:/app/data
+    env_file:
+      - .env
+"""
+environment = """
+SALT: "tJ,V_^12phQ=66k'<v*7G?-Qw:/o)dom"
+PORT: "8080"
+"""
+
+##
+
+[[stack]]
 name = "true-command"
 tags = ["komodo-3"]
 [stack.config]
@@ -1957,6 +2015,7 @@ tags = [
 ]
 [stack.config]
 server = "komodo-3"
+links = ["https://uptime.d3adc3ii.cc/"]
 project_name = "uptime-kuma"
 poll_for_updates = true
 auto_update = true
@@ -1974,6 +2033,8 @@ services:
     ports:
       - 3111:3001
     restart: always
+    labels:
+      proxy.exclude: true
 """
 environment = """
 PUID=1000
