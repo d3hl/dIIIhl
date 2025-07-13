@@ -2261,6 +2261,15 @@ executions = [
 
 ##
 
+[[alerter]]
+name = "discord-webhook"
+[alerter.config]
+enabled = true
+endpoint.type = "Custom"
+endpoint.params.url = "http://discord-alerter-ip:7000"
+
+##
+
 [[builder]]
 name = "local"
 [builder.config]
@@ -2281,11 +2290,12 @@ include_user_groups = true
 
 ##
 
-[[alerter]]
-name = "discord-webhook"
-[alerter.config]
-enabled = true
-endpoint.type = "Custom"
-endpoint.params.url = "http://discord-alerter-ip:7000"
-
-##
+[[resource_sync]]
+name = "var"
+[resource_sync.config]
+repo = "d3hl/dIIIhl"
+git_account = "d3hl"
+resource_path = ["komodo/resources/var.toml"]
+managed = true
+include_resources = false
+include_variables = true
