@@ -199,3 +199,10 @@ is_secret = false
 name = "TZ"
 value = "Asia/Singapore"
 is_secret = false
+
+##
+
+[[variable]]
+name = "SILVERBULLET_USER"
+value = "d3:=b0zS,IA&CW0NFwI}];xQTxZMRj%tJ4jlKC.f^G3toaZbm_!+a"
+is_secret = true
