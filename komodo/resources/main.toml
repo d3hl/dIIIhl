@@ -516,6 +516,7 @@ CADDY_EMAIL= d3tech@pm.me
 [[stack]]
 name = "discord-alerter"
 [stack.config]
+server = "komodo-2"
 repo = "foxxmd/deploy-discord-alerter"
 file_paths = ["compose.yaml"]
 environment = """
@@ -2266,6 +2267,31 @@ executions = [
 
 ##
 
+[[alerter]]
+name = "discord-webhook"
+[alerter.config]
+enabled = true
+endpoint.type = "Custom"
+endpoint.params.url = "http://10.10.10.32:7000"
+alert_types = [
+  "ServerUnreachable",
+  "ServerMem",
+  "ServerCpu",
+  "ServerDisk",
+  "StackAutoUpdated",
+  "StackStateChange",
+  "ContainerStateChange",
+  "StackImageUpdateAvailable",
+  "DeploymentAutoUpdated",
+  "DeploymentImageUpdateAvailable",
+  "ResourceSyncPendingUpdates",
+  "AwsBuilderTerminationFailed",
+  "BuildFailed",
+  "RepoBuildFailed"
+]
+
+##
+
 [[builder]]
 name = "local"
 [builder.config]
@@ -2286,11 +2312,12 @@ include_user_groups = true
 
 ##
 
-[[alerter]]
-name = "discord-webhook"
-[alerter.config]
-enabled = true
-endpoint.type = "Custom"
-endpoint.params.url = "http://discord-alerter-ip:7000"
-
-##
+[[resource_sync]]
+name = "var"
+[resource_sync.config]
+repo = "d3hl/dIIIhl"
+git_account = "d3hl"
+resource_path = ["komodo/resources/var.toml"]
+managed = true
+include_resources = false
+include_variables = true
