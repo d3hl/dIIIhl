@@ -1,0 +1,225 @@
+[[variable]]
+name = "CF_API_TOKEN"
+value = "s4gzKuatLjzAMkjXm6qvrvRTZYVVCRQzl-V9FU0S"
+is_secret = true
+
+##
+
+[[variable]]
+name = "AUTHENTIK_SECRET_KEY"
+value = "_7WB2IB9GR612BYM9A9VTRS4OHFNOA0DVp?{Y=,St,C-%FK)mbpF`yIf}lm&Q]oWLpc;<y?%>xXU=rq71PWqLC4yYFno9OJG"
+is_secret = true
+
+##
+
+[[variable]]
+name = "AUTHENTIK_PG_PASS"
+value = "RAMKPLQF6F5FGKBZ6IH4UP4UPFPO6W2M"
+is_secret = true
+
+##
+
+[[variable]]
+name = "KARA_NEXTAUTH_SECRET"
+value = "4obmXxlcc8M7RIi95R4gGcqvH2mD29LLLx4C+sXAd7rLvNpM"
+is_secret = true
+
+##
+
+[[variable]]
+name = "KARA_MEILI_MASTER_KEY"
+value = "MwldJwDmieQWtyMZTTVi2yb2T0r2ZHeCNrAdgKeG1vTwpLWy"
+is_secret = true
+
+##
+
+[[variable]]
+name = "OPENAI_API_KEY"
+value = "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"
+is_secret = true
+
+##
+
+[[variable]]
+name = "PG_PASS"
+value = "RAMKPLQF6F5FGKBZ6IH4UP4UPFPO6W2M"
+is_secret = true
+
+##
+
+[[variable]]
+name = "NEWT_ID2"
+description = "for newt 2"
+value = "n04e204hc6rp5yk"
+is_secret = true
+
+##
+
+[[variable]]
+name = "NEWT_SECRET2"
+value = "fynufrzgj21byeusity9xojmox07l1fr6yoe2fpsg0dg7kwd"
+is_secret = true
+
+##
+
+[[variable]]
+name = "NEWT_ID1"
+value = "sc90bcxcbkg0smq"
+is_secret = true
+
+##
+
+[[variable]]
+name = "NEWT_SECRET1"
+value = "v5mkixs9kuz5oydxut39c17tody3ksttjk5b9utld02b8lwd"
+is_secret = true
+
+##
+
+[[variable]]
+name = "CORECONTROL_JWT_SECRET"
+value = "^yv&5>qxi0#?C#^zqIqz(#81xBvY8?LEQkxj?U:Sd,uk^,K&>B=^zts*xT|~O|p"
+is_secret = true
+
+##
+
+[[variable]]
+name = "NZBGET_PASS"
+value = "1VSHxgJx1F6FeDmizVLSFh3rtX1v1WBW"
+is_secret = true
+
+##
+
+[[variable]]
+name = "NZBGET_USER"
+value = "d3"
+is_secret = false
+
+##
+
+[[variable]]
+name = "PDF_PASSWORD"
+value = "Abcd1234"
+is_secret = true
+
+##
+
+[[variable]]
+name = "IMMICH_DB_PASSWORD"
+value = "AWv7y2sb9xjFz4NvKZKi"
+is_secret = true
+
+##
+
+[[variable]]
+name = "FSHARE_ADMIN_PASSWORD"
+value = "}[oCz6td_pSjRWbapn4&&n,JS~qLv7(J"
+is_secret = true
+
+##
+
+[[variable]]
+name = "FSHARE_SECRET_KEY"
+value = "f7&8[_Ep[-h%j(~LQ;y63v89kB`+xixC7o{nja[@0[/B+if(6$*(3Eq=Il]YHRK"
+is_secret = true
+
+##
+
+[[variable]]
+name = "MTP_SECRET"
+value = "&lAC0iRazNjZ;FnBhbe!.7zcB0MbLF>io3[&6`C2C3q'~9u#|P^dr~aUK7DNO0{"
+is_secret = true
+
+##
+
+[[variable]]
+name = "NEXTERM_KEY"
+value = "PhIUT\"4){K~N$XqHA~F]U\"\"hjJ@pMmm%MWJ}kE7.C^}OHd+0B%8qHn:*xVN>H*4"
+is_secret = true
+
+##
+
+[[variable]]
+name = "HEALTHCHECK_SUPERADMIN_PASSWORD"
+value = "fMpraGK4La2N@XJCaVR8pwEinbJ7ewrhcRiV7!YraRw@K@y7thy8wuL@aVPxPyH_6Wntrnka2BMgC3yEPfvKkXy6z_hjpVbfr4RT"
+is_secret = true
+
+##
+
+[[variable]]
+name = "HEALTHCHECK_SECRET"
+value = "F?oT#Ef|Qh+vE6Kfb2<z'l{iogmqj*?qSym1I{!O9\"0;B%wf`aGxzuC(V,_QOK*"
+is_secret = true
+
+##
+
+[[variable]]
+name = "CHECKMATE_JWT_SECRET"
+value = "Nt49d0c01LQZM1Ko6OoU6Yosop9sVqhv"
+is_secret = true
+
+##
+
+[[variable]]
+name = "SCRUTINY_DOCKER_INFLUXDB_INIT_PASSWORD"
+value = "qA6otE2(raC=MDh$ZN%tNulHp6iYs|xv}l&IwVWPzZvn+Tvm399+2w#V$P"
+is_secret = true
+
+##
+
+[[variable]]
+name = "SCRUTINY_DOCKER_INFLUXDB_INIT_ADMIN_TOKEN"
+value = "6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7+Kl!$G<(x["
+is_secret = true
+
+##
+
+[[variable]]
+name = "SCRUTINY_WEB_INFLUXDB_TOKEN"
+value = "6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7+Kl!$G<(x["
+is_secret = true
+
+##
+
+[[variable]]
+name = "PGID"
+value = "1000"
+is_secret = false
+
+##
+
+[[variable]]
+name = "PUID"
+value = "1000"
+is_secret = false
+
+##
+
+[[variable]]
+name = "TZ"
+value = "Asia/Singapore"
+is_secret = false
+
+##
+
+[[variable]]
+<<<<<<< HEAD
+name = "DISCORD_WEBHOOK"
+value = "https://discord.com/api/webhooks/1393861630898602024/w0oa-BDkHE3K7BaisBqhrL1gtbm9LYtPug5h_ZluzpVSVIg_bvuq10DQESNsXl7D2kyh"
+is_secret = false
+
+##
+
+[[alerter]]
+name = "discord-webhook"
+[alerter.config]
+enabled = true
+endpoint.type = "Custom"
+endpoint.params.url = "http://discord-alerter-ip:7000"
+
+##
+=======
+name = "SILVERBULLET_USER"
+value = "d3:=b0zS,IA&CW0NFwI}];xQTxZMRj%tJ4jlKC.f^G3toaZbm_!+a"
+is_secret = true
+>>>>>>> 35b9afda8daf708b34e8a75d64bc5aea49460115
