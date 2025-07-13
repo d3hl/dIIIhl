@@ -1239,6 +1239,10 @@ HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.d3adc3ii.cc"
 HOMEPAGE_VAR_SHELLHUB_ICON= "sh-shellhub-light"
 HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
 
+# Termix
+HOMEPAGE_VAR_TERMIX_ICON= "sh-termix-light"
+HOMEPAGE_VAR_TERMIX_URL= "https://termix.d3adc3ii.cc"
+
 ### Monitoring ###
 # UPTIME KUMA
 HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma-light.png"
