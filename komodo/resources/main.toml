@@ -2271,9 +2271,24 @@ params.server_id = "komodo-1"
 
 [[resource_sync]]
 name = "sync"
+template = true
 [resource_sync.config]
 repo = "d3hl/dIIIhl"
 git_account = "d3hl"
 resource_path = ["komodo/resources/main.toml"]
 managed = true
 include_user_groups = true
+
+##
+
+[[resource_sync]]
+name = "variable"
+[resource_sync.config]
+repo = "d3hl/dIIIhl "
+git_account = "d3hl"
+resource_path = [
+  "komodo/resources/variables.toml"
+]
+managed = true
+include_resources = false
+include_variables = true
