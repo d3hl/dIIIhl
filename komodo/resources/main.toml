@@ -2328,7 +2328,6 @@ params.server_id = "komodo-1"
 
 [[resource_sync]]
 name = "sync"
-template = true
 [resource_sync.config]
 repo = "d3hl/dIIIhl"
 git_account = "d3hl"
