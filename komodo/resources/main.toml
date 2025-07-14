@@ -2137,7 +2137,7 @@ services:
       - ${DATA_DIR}/logos:/var/www/html/images/uploads/logos'
     restart: unless-stopped
     labels:
-    proxy.idle_timeout: 15m
+      proxy.idle_timeout: 15m
 """
 environment = """
 TZ= 'Asia/Singapore'
