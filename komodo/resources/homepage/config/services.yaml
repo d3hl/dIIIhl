@@ -318,6 +318,9 @@
         - Nautobox:
             icon: {{HOMEPAGE_VAR_NAUTOBOT_ICON}}
             href: {{HOMEPAGE_VAR_NAUTOBOT_URL}}
+        - phpipam:
+            icon: {{HOMEPAGE_VAR_PHPIPAM_ICON}}
+            href: {{HOMEPAGE_VAR_PHPIPAM_URL}}
     - Apps: # Applications
         - Karakeep:
             icon: {{HOMEPAGE_VAR_KARAKEEP_ICON}}

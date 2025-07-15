@@ -1289,6 +1289,9 @@ HOMEPAGE_VAR_NAUTOBOT_URL= "https://nautobot.d3adc3ii.cc/"
 HOMEPAGE_VAR_NAUTOBOT_ICON= "/icons/netbox-light.png"
 
 
+# PHPIPAM
+HOMEPAGE_VAR_PHPIPAM_URL= "https://phpipam.d3adc3ii.cc/"
+HOMEPAGE_VAR_NAUTOBOT_ICON= "/icons/phpipam-light.png"
 
 ### APPS ###
 # Karakeep
