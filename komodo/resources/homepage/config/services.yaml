@@ -198,12 +198,9 @@
             sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
             widget:
                 type: komodo
-                url: http://10.10.10.31:9120
-                #url:  {{HOMEPAGE_VAR_KOMODO_URL}}
-                key: K-vtbPvxMmX1XWDnFN0QuTY2VVaaXNiHVWLilfv7IP
-                #key: {{HOMEPAGE_VAR_KOMODO_KEY}}
-                secret: S-MrzRNua1nyIKQNIJcpkOJCFqLx2oSJsM4g6pzVJz
-                #secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
+                url:  {{HOMEPAGE_VAR_KOMODO_URL}}
+                key: {{HOMEPAGE_VAR_KOMODO_KEY}}
+                secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
                 showSummary: true # optional, default: false
                 showStacks: true # optional, default: false
         - Dozzle:
