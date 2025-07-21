@@ -192,36 +192,17 @@
             ping: {{HOMEPAGE_VAR_NZBGET_URL}}
 - External:
     - Core: 
-        - Docker Stacks:
+        - Komodo:
             icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
             href: {{HOMEPAGE_VAR_KOMODO_URL}}
             sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
             widget:
-                type: customapi
-                url:  {{HOMEPAGE_VAR_KOMODO_APIURL}}
-                refreshInterval: 15000
-                method: POST
-                headers:
-                    content-type: application/json
-                    x-api-key: {{HOMEPAGE_VAR_KOMODO_API_KEY}}
-                    x-api-secret: {{HOMEPAGE_VAR_KOMODO_API_SECRET}} 
-                requestBody:
-                    type: GetStacksSummary
-                    params: {}
-                display: block
-                mappings:
-                  - field: total
-                    label: Total Stacks
-                    format: number
-                  - field: running
-                    label: running
-                    format: number
-                  - field: unhealthy
-                    label: unhealthy
-                    format: number
-                  - field: down
-                    label: Stopped
-                    format: number
+                type: komodo
+                url:  {{HOMEPAGE_VAR_KOMODO_URL}}
+                key: {{HOMEPAGE_VAR_KOMODO_KEY}}
+                secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
+                ShowSummary: true
+                ShowStacks: true
         - Dozzle:
             icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
             href: {{HOMEPAGE_VAR_DOZZLE_URL}}
