@@ -1643,6 +1643,106 @@ PORT=20184
 ##
 
 [[stack]]
+name = "ns1"
+tags = ["internal", "komodo-1", "dns"]
+[stack.config]
+server = "komodo-1"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  technitium-primary:
+    image: "technitium/dns-server:latest"
+    container_name: ns1
+    privileged: true
+    restart: always
+    environment:
+      - DNS_SERVER_LOG_USING_LOCAL_TIME=true
+    network_mode: "host"
+    ports:
+      - "5380:5380/tcp"
+    volumes:
+      - ./technitium:/etc/dns
+  keepalived:
+    image: shawly/keepalived:edge-7f210c3
+    restart: always
+    environment:
+      TZ: Asia/Singapore
+      KEEPALIVED_VIRTUAL_IP: ${VIRTUAL_IP}
+      KEEPALIVED_VIRTUAL_MASK: 24
+      KEEPALIVED_CHECK_IP: ${CHECK_IP}
+      KEEPALIVED_CHECK_PORT: ${CHECK_PORT}
+      KEEPALIVED_VRID: 150
+      # change to primary LAN interface used by the host
+      KEEPALIVED_INTERFACE: eth0
+      KEEPALIVED_PRIORITY: 255
+      KEEPALIVED_STATE: MASTER
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_BROADCAST
+"""
+environment = """
+# change to an unused IP in your LAN subnet -- will be the same value on both stacks
+VIRTUAL_IP=10.10.10.16
+# Host IP of the other machine
+CHECK_IP=10.10.10.18
+CHECK_PORT=53
+"""
+
+##
+
+[[stack]]
+name = "ns2"
+[stack.config]
+server = "komodo-3"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  technitium-secondary:
+    image: "technitium/dns-server:latest"
+    privileged: true
+    restart: always
+    environment:
+      - DNS_SERVER_LOG_USING_LOCAL_TIME=true
+    network_mode: "host"
+    ports:
+      - "5380:5380/tcp"
+    volumes:
+      - ./technitium:/etc/dns
+  keepalived:
+    image: shawly/keepalived:edge-7f210c3
+    restart: always
+    environment:
+      TZ: Asia/Singapore
+      KEEPALIVED_VIRTUAL_IP: ${VIRTUAL_IP}
+      KEEPALIVED_VIRTUAL_MASK: 24
+      KEEPALIVED_CHECK_IP: ${CHECK_IP}
+      KEEPALIVED_CHECK_PORT: ${CHECK_PORT}
+      KEEPALIVED_VRID: 150
+      # change to primary LAN interface used by the host
+      KEEPALIVED_INTERFACE: eth0
+      KEEPALIVED_PRIORITY: 100
+      KEEPALIVED_STATE: BACKUP
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_BROADCAST
+"""
+environment = """
+# change to an unused IP in your LAN subnet -- will be the same value on both stacks
+VIRTUAL_IP=10.10.10.16
+# Host IP of the other machine
+CHECK_IP=10.10.10.17
+CHECK_PORT=53
+"""
+
+##
+
+[[stack]]
 name = "ntfy"
 tags = [
   "internal",
