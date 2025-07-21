@@ -201,8 +201,8 @@
                 url:  {{HOMEPAGE_VAR_KOMODO_URL}}
                 key: {{HOMEPAGE_VAR_KOMODO_KEY}}
                 secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
-                ShowSummary: true
-                ShowStacks: true
+                showSummary: true
+                showStacks: true
         - Dozzle:
             icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
             href: {{HOMEPAGE_VAR_DOZZLE_URL}}
