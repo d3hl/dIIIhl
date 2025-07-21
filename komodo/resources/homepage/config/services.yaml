@@ -198,7 +198,7 @@
             sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
             widget:
                 type: komodo
-                url:  {{HOMEPAGE_VAR_KOMODO_URL}}
+                url:  {{HOMEPAGE_VAR_KOMODO_API_URL}}
                 key: {{HOMEPAGE_VAR_KOMODO_KEY}}
                 secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
                 showSummary: true # optional, default: false
