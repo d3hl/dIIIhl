@@ -198,7 +198,8 @@
             sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
             widget:
                 type: komodo
-                url:  {{HOMEPAGE_VAR_KOMODO_URL}}
+                url: http://10.10.10.31:9120
+                #url:  {{HOMEPAGE_VAR_KOMODO_URL}}
                 key: K-vtbPvxMmX1XWDnFN0QuTY2VVaaXNiHVWLilfv7IP
                 #key: {{HOMEPAGE_VAR_KOMODO_KEY}}
                 secret: S-MrzRNua1nyIKQNIJcpkOJCFqLx2oSJsM4g6pzVJz
