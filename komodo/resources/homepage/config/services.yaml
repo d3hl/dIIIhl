@@ -5,7 +5,7 @@
         sitemonitor: {{HOMEPAGE_VAR_PROXMOX_URL_PVE11}}
         widget:
             type: proxmox
-            url: {{HOMEPAGE_VAR_PROXMOX_IP_PVE_1}}
+            url: {{HOMEPAGE_VAR_PROXMOX_IP_PVE11}}
             username: {{HOMEPAGE_VAR_PROXMOX_USER}}
            # password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}
             password: 8cc78ffc-dd21-438f-8787-e4ab2ca48a16 
@@ -67,3 +67,71 @@
     - Uptime-Kuma:
         icon: {{HOMEPAGE_VAR_KUMA_ICON}}
         href: {{HOMEPAGE_VAR_KUMA_URL}}
+- Monitor:
+    - Speedtest:
+        icon: {{HOMEPAGE_VAR_SPEEDTEST_ICON}}
+        href: {{HOMEPAGE_VAR_SPEEDTEST_URL}}
+    - Wazuh:
+        icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
+        href: {{HOMEPAGE_VAR_WAZUH_URL}}
+        ping: {{HOMEPAGE_VAR_WAZUH_URL}}
+    - Dozzle:
+        icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
+        href: {{HOMEPAGE_VAR_DOZZLE_URL}}
+    - Apprise-API:
+        icon: {{HOMEPAGE_VAR_APPRISE_ICON}}
+        href: {{HOMEPAGE_VAR_APPRISE_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_APPRISE_URL}}
+    - Healthcheck:
+        icon: {{HOMEPAGE_VAR_HEALTHCHECKS_ICON}}
+        href: {{HOMEPAGE_VAR_HEALTHCHECKS_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_HEALTHCHECKS_URL}}
+    - Smokeping:
+        icon: {{HOMEPAGE_VAR_SMOKEPING_ICON}}
+        href: {{HOMEPAGE_VAR_SMOKEPING_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_SMOKEPING_URL}}
+    - Guacamole:
+        icon: {{HOMEPAGE_VAR_GUACAMOLE_ICON}} 
+        href: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
+- Backup: 
+    - PBS: 
+        icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+        href: {{HOMEPAGE_VAR_PBS_URL}}
+        ping: {{HOMEPAGE_VAR_PBS_URL}} 
+        widget:
+            type: beszel
+            url: http://10.10.10.9:8090
+            username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+            password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+            version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
+            systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs}}
+            fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
+    - Backrest:
+        icon: {{HOMEPAGE_VAR_BACKREST_ICON}}
+        href: {{HOMEPAGE_VAR_BACKREST_URL}}
+        ping: {{HOMEPAGE_VAR_BACKREST_URL}}
+    - remote-backups:
+        icon: {{HOMEPAGE_VAR_REMOTEBACKUP_ICON}}
+        href: {{HOMEPAGE_VAR_REMOTEBACKUP_URL}}
+- Media:
+    - Jellyfin:
+        icon: {{HOMEPAGE_VAR_JELLY_ICON}}
+        href: {{HOMEPAGE_VAR_JELLY_URL}}
+        ping: {{HOMEPAGE_VAR_JELLY_URL}}
+        widget:
+            type: jellyfin
+            url: {{HOMEPAGE_VAR_JELLY_URL}} 
+            key: {{HOMEPAGE_VAR_JELLY_KEY}}
+            enableBlock: {{HOMEPAGE_VAR_JELLY_ENABLEBLOCK}}
+            enableNowPlaying: {{HOMEPAGE_VAR_JELLY_NOWPLAY}}
+    - Immich:
+        icon: {{HOMEPAGE_VAR_IMMICH_ICON}} 
+        href: {{HOMEPAGE_VAR_IMMICH_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_IMMICH_URL}}
+        widget:
+            type: immich
+            url: {{HOMEPAGE_VAR_IMMICH_URL}} 
+            key: {{HOMEPAGE_VAR_IMMICH_KEY}}
+            version: {{HOMEPAGE_VAR_IMMICH_VERSION}}
+            fields:  {{HOMEPAGE_VAR_IMMICH_FIELDS}}  

@@ -25,3 +25,24 @@ layout:
       style: column
       tab: HOME
       icon: mdi-multimedia
+  Network:
+      tab: Home
+      style: column
+  Monitor:
+      tab: Home
+      style: column
+  Backup:
+      tab: Home
+      style: column
+  Media:
+      tab: Home
+      style: column
+  Access:
+      tab: Home
+      style: column
+  Troubleshoot:
+      tab: Home
+      style: column
+  Identity:
+      tab: Home
+      style: column
