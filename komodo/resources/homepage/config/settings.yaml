@@ -19,11 +19,11 @@ layout:
   # HOME Tab Items
   Infra Core:
       style: column
-      tab: HOME
+      tab: Home
       icon: mdi-file-multiple
   Domain:
       style: column
-      tab: HOME
+      tab: Home
       icon: mdi-multimedia
   Network:
       tab: Home
