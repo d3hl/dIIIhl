@@ -114,14 +114,6 @@
         href: {{HOMEPAGE_VAR_PBS_URL}}
         ping: {{HOMEPAGE_VAR_PBS_URL}} 
         widget:
-            type: beszel
-            url: http://10.10.10.9:8090
-            username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
-            password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
-            version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
-            systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs}}
-            fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
-        widget:
             type: proxmoxbackupserver
             url: {{HOMEPAGE_VAR_PBS_URL}} 
             username: {{HOMEPAGE_VAR_PBS_USER}}
