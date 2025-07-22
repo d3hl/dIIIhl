@@ -223,8 +223,13 @@ button[id$='-tab']:hover {
   flex: 1 1 var(--cols-5) !important;
   max-width: var(--cols-5) !important;
 }
+/* Services 10-12 - 20% width each */
+:is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="HOME-tab"])) #layout-groups > .services-group:nth-child(n+10):nth-child(-n+12) {
+  flex: 1 1 var(--cols-3) !important;
+  max-width: var(--cols-3) !important;
+}
 /* Hide services after the ninth one */
-:is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="HOME-tab"])) #layout-groups > .services-group:nth-child(n+10) {
+:is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="HOME-tab"])) #layout-groups > .services-group:nth-child(n+13) {
   display: none !important;
 }
 

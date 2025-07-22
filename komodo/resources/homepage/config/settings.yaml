@@ -46,3 +46,12 @@ layout:
   Identity:
       tab: Home
       style: column
+  Apps:
+      tab: Home
+      style: column
+  Tools:
+      tab: Home
+      style: column
+  Extras:
+      tab: Home
+      style: column
