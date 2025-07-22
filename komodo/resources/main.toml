@@ -2509,9 +2509,9 @@ name = "pull repo and deploy homepage"
 
 [[procedure.config.stage]]
 name = "Stage 4"
-enabled = true
+enabled = false
 executions = [
-  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
+  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = false }
 ]
 
 [[procedure.config.stage]]
