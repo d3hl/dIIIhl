@@ -36,3 +36,34 @@
         icon: {{HOMEPAGE_VAR_HA_ICON}}
         href: {{HOMEPAGE_VAR_HA_URL}}
         sitemonitor: {{HOMEPAGE_VAR_HA_URL}}
+- Domain:
+    - GoDoxy:
+        icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
+        href: {{HOMEPAGE_VAR_GODOXY_URL}} 
+        ping: {{HOMEPAGE_VAR_GODOXY_URL}}
+    - Technitium:
+        icon: {{HOMEPAGE_VAR_DNS_ICON}}
+        href: {{HOMEPAGE_VAR_DNS_URL}}
+        ping: {{HOMEPAGE_VAR_DNS_URL}}
+        widget:
+            type: technitium
+            url: {{HOMEPAGE_VAR_DNS_URL}}
+            key: {{HOMEPAGE_VAR_DNS_KEY}}
+            range: {{HOMEPAGE_VAR_DNS_RANGE}}
+- Network:
+    - NetAlertX:
+        icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
+        href: {{HOMEPAGE_VAR_NETALERTX_URL}}
+        ping: {{HOMEPAGE_VAR_NETALERTX_URL}}
+        widget:
+            type: netalertx
+            key: {{HOMEPAGE_VAR_NETALERTX_KEY}}
+            url: {{HOMEPAGE_VAR_NETALERTX_URL}}
+            fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
+    - Tplink:
+        icon: {{HOMEPAGE_VAR_TPLINK_ICON}} 
+        href: {{HOMEPAGE_VAR_TPLINK_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_TPLINK_URL}}
+    - Uptime-Kuma:
+        icon: {{HOMEPAGE_VAR_KUMA_ICON}}
+        href: {{HOMEPAGE_VAR_KUMA_URL}}
