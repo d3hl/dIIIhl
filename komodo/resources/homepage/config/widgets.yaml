@@ -1,19 +1,8 @@
----
 - logo:
     icon: /icons/d3logo.svg
 - greeting:
     text_size: 4xl
-    text: d3 Dashboad
-#- openmeteo:
-#    label: Singapore
-#    latitude: 1.27
-#    longitude: 103.8374
-#    timezone: Asia/Singapore
-#    cache: 5
-#    units: metric
-#- search:
-#    provider: duckduckgo
-#    target: _blank
+    text: d3 Dashboard
 
 - glances:
     url: {{HOMEPAGE_VAR_GL11_URL}}
@@ -50,3 +39,17 @@
     format:
         dateStyle: long
         hour12: false
+- openmeteo:
+    label: Singapore
+    latitude: 1.27
+    longitude: 103.8374
+    timezone: Asia/Singapore
+    cache: 5
+    units: metric
+    format:
+        maximumFractionDigits: 0
+- search:
+    provider: google
+    focus: true
+    showSearchSuggestions: true
+    target: _blank

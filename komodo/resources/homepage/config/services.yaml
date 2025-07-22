@@ -36,11 +36,8 @@
         icon: {{HOMEPAGE_VAR_HA_ICON}}
         href: {{HOMEPAGE_VAR_HA_URL}}
         sitemonitor: {{HOMEPAGE_VAR_HA_URL}}
+########################################################################################################################################################################################################
 - Domain:
-    - GoDoxy:
-        icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
-        href: {{HOMEPAGE_VAR_GODOXY_URL}} 
-        ping: {{HOMEPAGE_VAR_GODOXY_URL}}
     - Technitium:
         icon: {{HOMEPAGE_VAR_DNS_ICON}}
         href: {{HOMEPAGE_VAR_DNS_URL}}
@@ -50,6 +47,11 @@
             url: {{HOMEPAGE_VAR_DNS_URL}}
             key: {{HOMEPAGE_VAR_DNS_KEY}}
             range: {{HOMEPAGE_VAR_DNS_RANGE}}
+    - GoDoxy:
+        icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
+        href: {{HOMEPAGE_VAR_GODOXY_URL}} 
+        ping: {{HOMEPAGE_VAR_GODOXY_URL}}
+########################################################################################################################################################################################################
 - Network:
     - NetAlertX:
         icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
@@ -60,17 +62,28 @@
             key: {{HOMEPAGE_VAR_NETALERTX_KEY}}
             url: {{HOMEPAGE_VAR_NETALERTX_URL}}
             fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
+    - Uptime-Kuma:
+        icon: {{HOMEPAGE_VAR_KUMA_ICON}}
+        href: {{HOMEPAGE_VAR_KUMA_URL}}
+        widget:
+            type: uptimekuma
+            url: {{HOMEPAGE_VAR_KUMA_URL}}
+            slug: statuspageslug
     - Tplink:
         icon: {{HOMEPAGE_VAR_TPLINK_ICON}} 
         href: {{HOMEPAGE_VAR_TPLINK_URL}}
         sitemonitor: {{HOMEPAGE_VAR_TPLINK_URL}}
-    - Uptime-Kuma:
-        icon: {{HOMEPAGE_VAR_KUMA_ICON}}
-        href: {{HOMEPAGE_VAR_KUMA_URL}}
+########################################################################################################################################################################################################
 - Monitor:
     - Speedtest:
         icon: {{HOMEPAGE_VAR_SPEEDTEST_ICON}}
         href: {{HOMEPAGE_VAR_SPEEDTEST_URL}}
+        widget:
+            type: speedtest
+            url: {{HOMEPAGE_VAR_SPEEDTEST_URL}} 
+            version: 2
+            key: {{HOMEPAGE_VAR_SPEEDTEST_KEY}}
+            bitratePrecision: 3 # optional, default is 0        
     - Wazuh:
         icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
         href: {{HOMEPAGE_VAR_WAZUH_URL}}
@@ -94,6 +107,7 @@
         icon: {{HOMEPAGE_VAR_GUACAMOLE_ICON}} 
         href: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
         sitemonitor: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
+########################################################################################################################################################################################################
 - Backup: 
     - PBS: 
         icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
@@ -107,6 +121,12 @@
             version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
             systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs}}
             fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
+        widget:
+            type: proxmoxbackupserver
+            url: {{HOMEPAGE_VAR_PBS_URL}} 
+            username: {{HOMEPAGE_VAR_PBS_USER}}
+            password: {{HOMEPAGE_VAR_PBS_SECRET}}
+            #datastore: datastore_name #optional; if ommitted, will display a combination of all datastores used / total    
     - Backrest:
         icon: {{HOMEPAGE_VAR_BACKREST_ICON}}
         href: {{HOMEPAGE_VAR_BACKREST_URL}}
@@ -114,6 +134,7 @@
     - remote-backups:
         icon: {{HOMEPAGE_VAR_REMOTEBACKUP_ICON}}
         href: {{HOMEPAGE_VAR_REMOTEBACKUP_URL}}
+########################################################################################################################################################################################################
 - Media:
     - Jellyfin:
         icon: {{HOMEPAGE_VAR_JELLY_ICON}}
@@ -135,6 +156,7 @@
             key: {{HOMEPAGE_VAR_IMMICH_KEY}}
             version: {{HOMEPAGE_VAR_IMMICH_VERSION}}
             fields:  {{HOMEPAGE_VAR_IMMICH_FIELDS}}  
+########################################################################################################################################################################################################
 - Access:
     - Guacamole:
         icon: {{HOMEPAGE_VAR_GUACAMOLE_ICON}} 
@@ -150,10 +172,12 @@
     - Termix:
         icon: {{HOMEPAGE_VAR_TERMIX_ICON}}
         href: {{HOMEPAGE_VAR_TERMIX_URL}}
+########################################################################################################################################################################################################
 - Troubleshoot: 
     - Dozzle:
         icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
         href: {{HOMEPAGE_VAR_DOZZLE_URL}}
+########################################################################################################################################################################################################
 - Identity: 
     - Authentik:
         icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
@@ -170,6 +194,7 @@
     - Twingate:
         icon: {{HOMEPAGE_VAR_TWINGATE_ICON}}
         href: {{HOMEPAGE_VAR_TWINGATE_URL}}
+########################################################################################################################################################################################################
 - Appplications:
     - Actual:
         icon: {{HOMEPAGE_VAR_ACTUAL_ICON}}
@@ -198,6 +223,7 @@
         icon: {{HOMEPAGE_VAR_NZBGET_ICON}}
         href: {{HOMEPAGE_VAR_NZBGET_URL}}
         ping: {{HOMEPAGE_VAR_NZBGET_URL}}
+########################################################################################################################################################################################################
 - Tools:
     - Grafana on:
         icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
@@ -242,6 +268,7 @@
     - phpipam:
         icon: {{HOMEPAGE_VAR_PHPIPAM_ICON}}
         href: {{HOMEPAGE_VAR_PHPIPAM_URL}}
+########################################################################################################################################################################################################
 - Extras:
     - Karakeep:
         icon: {{HOMEPAGE_VAR_KARAKEEP_ICON}}
@@ -270,6 +297,7 @@
             referrerPolicy: same-origin # optional, no default
             height: {{HOMEPAGE_VAR_PULSE_HEIGHT}}
 
+########################################################################################################################################################################################################
 ### CORP TAB ###    
 - Office Core:
     - PVECORP:
@@ -285,6 +313,7 @@
     - Wordpress:
         icon: wordpress
         href: https://ntn.com.sg/wp-login.php
+########################################################################################################################################################################################################
 ### CLOUD TAB ###        
 - Corp Network:
     - Fortigate:
@@ -308,6 +337,7 @@
     - Ruckus:
         icon: rundeck 
         href: http://10.203.6.200
+########################################################################################################################################################################################################
 ### CLOUD TAB ###        
 - Corp Cloud:
     - Intune:
