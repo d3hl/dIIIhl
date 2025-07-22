@@ -134,7 +134,7 @@
         ping: {{HOMEPAGE_VAR_JELLY_URL}}
         widget:
             type: jellyfin
-            url: {{HOMEPAGE_VAR_JELLY_URL}} 
+            url: {{HOMEPAGE_VAR_JELLY_WIDGETURL}} 
             key: {{HOMEPAGE_VAR_JELLY_KEY}}
             enableBlock: {{HOMEPAGE_VAR_JELLY_ENABLEBLOCK}}
             enableNowPlaying: {{HOMEPAGE_VAR_JELLY_NOWPLAY}}
