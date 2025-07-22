@@ -1068,7 +1068,7 @@ PUID= [[PUID]]
 # Site Config
 HOMEPAGE_VAR_TITLE= "d3 Homepage"
 HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
-HOMEPAGE_VAR_IMG_URL= "/images/extra-12.jpg"
+HOMEPAGE_VAR_IMG_URL= "/images/hack.jpg"
 HOMEPAGE_VAR_HEADER_STYLE= boxed #boxedWidgets
 
 HOMEPAGE_VAR_IMG_BLUR= md
