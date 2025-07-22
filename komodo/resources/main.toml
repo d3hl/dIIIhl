@@ -1117,7 +1117,7 @@ HOMEPAGE_VAR_GL13_CPUTEMP= true
 HOMEPAGE_VAR_GL13_UPTIME= true 
 HOMEPAGE_VAR_GL13_LABEL= pve13 
 
-### INFRA ###
+#### INFRA ####################################################################################################################################################################################################
 # PULSE
 HOMEPAGE_VAR_PULSE_URL= "http://10.10.10.36:7655"
 HOMEPAGE_VAR_PULSE_ALLOWFULLSCREEN= true
@@ -1139,10 +1139,6 @@ HOMEPAGE_VAR_PROXMOX_IP_PVE11="https://10.10.10.11:8006"
 HOMEPAGE_VAR_PROXMOX_SECRET=dde7d522-1e7f-4a5f-a9cf-081b351a3a1f
 HOMEPAGE_VAR_PBS_URL= "https://pbs.d3adc3ii.site"
 
-### INFRA ###
-# Opnsense
-HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense-light.png"
-HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.d3adc3ii.site"
 # DNS
 HOMEPAGE_VAR_DNS_ICON= "/icons/technitium-light.png"
 HOMEPAGE_VAR_DNS_URL= "https://ns.d3adc3ii.site"
@@ -1186,7 +1182,10 @@ HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
 HOMEPAGE_VAR_SMOKEPING_ICON= "/icons/smokeping.png"
 HOMEPAGE_VAR_SMOKEPING_URL= "http://192.168.2.21/smokeping"
 
-### BACKUP ###
+#### BACKUP ####################################################################################################################################################################################################
+# PBS
+HOMEPAGE_VAR_PBS_USER=homepage@pbs!homepage
+HOMEPAGE_VAR_PBS_SECRET=56ff3a13-0620-432b-b173-d048b1298a50
 # Backrest
 HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest-light.png"
 HOMEPAGE_VAR_BACKREST_URL= "https://backrest.d3adc3ii.site"
@@ -1196,22 +1195,23 @@ HOMEPAGE_VAR_REMOTEBACKUP_ICON= "/icons/proxmox-light.png"
 HOMEPAGE_VAR_REMOTEBACKUP_URL= "https://dashboard.remote-backups.com"
 
 
+#### MEDIA ####################################################################################################################################################################################################
 # Jellyfin
 HOMEPAGE_VAR_JELLY_ICON= "/icons/jellyfin-light.png"
 HOMEPAGE_VAR_JELLY_URL= "https://jelly.d3adc3ii.site"
 HOMEAGE_VAR_JELLY_WIDGETURL= "http://192.168.2.33:8096"
-HOMEPAGE_VAR_JELLY_KEY= "a6a45c61dd1d4f059b02fa22ad8c0ef3"
+HOMEPAGE_VAR_JELLY_KEY=a6a45c61dd1d4f059b02fa22ad8c0ef3
 HOMEPAGE_VAR_JELLY_ENABLEBLOCK=true
 HOMEPAGE_VAR_JELLY_NOWPLAY=false
 
 # Immich
 HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich-light.png"
 HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3adc3ii.site"
-HOMEPAGE_VAR_IMMICH_KEY= "7zmatjhj9RVRPylp08hKaG1mkYDubUyeqfDlpaUHo"
+HOMEPAGE_VAR_IMMICH_KEY=W7IJnjVEIhc7d72AAm4sxJ49YJI1kdtkiVvmCZipVqc
 HOMEPAGE_VAR_IMMICH_VERSION= 2
 HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"] 
 
-### LOCAL APPS ###
+#### APPS ####################################################################################################################################################################################################
 # Actual Budget
 HOMEPAGE_VAR_ACTUAL_ICON= "sh-actual-budget-light"
 HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3adc3ii.site"
@@ -1240,23 +1240,6 @@ HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
 # NZBGET
 HOMEPAGE_VAR_NZBGET_ICON= "sh-nzbget-light"
 HOMEPAGE_VAR_NZBGET_URL= "https://nzbget.d3adc3ii.site"
-
-
-
-
-
-
-
-
-############  EXTERNAL ############ 
-###################################             
-###################################
-###################################
-
-
-
-
-
 
 
 
