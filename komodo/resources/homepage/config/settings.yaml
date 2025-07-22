@@ -10,9 +10,7 @@ background:
     opacity: "{{HOMEPAGE_VAR_IMG_OPACITY}}"
 theme: dark 
 color: zinc
-useEqualHeights: {{HOMEPAGE_VAR_USE_EQUAL_HEIGHTS}}
 statusStyle: "dot"
-showStats: {{HOMEPAGE_VAR_SHOW_STATS}}
 hideErrors: false
 disableCollapse: true
 
