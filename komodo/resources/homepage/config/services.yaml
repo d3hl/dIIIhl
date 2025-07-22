@@ -5,13 +5,11 @@
         sitemonitor: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
         ping: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
         widget:
-            type: beszel
-            url: http://10.10.10.9:8090
-            username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
-            password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
-            version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
-            systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11}}
-            fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
+            type: proxmox
+            url: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
+            username: {{HOMEPAGE_VAR_PROXMOX_USER}}
+            password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}
+            node: pve11
     -  Truenas:
         id: truenas 
         icon: {{HOMEPAGE_VAR_TRUENAS_ICON}}
