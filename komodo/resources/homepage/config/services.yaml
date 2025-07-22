@@ -135,3 +135,38 @@
             key: {{HOMEPAGE_VAR_IMMICH_KEY}}
             version: {{HOMEPAGE_VAR_IMMICH_VERSION}}
             fields:  {{HOMEPAGE_VAR_IMMICH_FIELDS}}  
+- Access:
+    - Guacamole:
+        icon: {{HOMEPAGE_VAR_GUACAMOLE_ICON}} 
+        href: {{HOMEPAGE_VAR_GUACAMOLEEXT_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_GUACAMOLEEXT_URL}}
+    - Dumbterm:
+        icon: {{HOMEPAGE_VAR_DUMBTERM_ICON}}
+        href: {{HOMEPAGE_VAR_DUMBTERM_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_DUMBTERM_URL}}
+    - Shellhub:
+        icon: {{HOMEPAGE_VAR_SHELLHUB_ICON}}
+        href: {{HOMEPAGE_VAR_SHELLHUB_URL}}
+    - Termix:
+        icon: {{HOMEPAGE_VAR_TERMIX_ICON}}
+        href: {{HOMEPAGE_VAR_TERMIX_URL}}
+- Troubleshoot: 
+    - Dozzle:
+        icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
+        href: {{HOMEPAGE_VAR_DOZZLE_URL}}
+- Identity: 
+    - Authentik:
+        icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
+        href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+        widget:
+            type: authentik
+            url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+            key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}} 
+    - Pangolin:
+        icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
+        href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
+    - Twingate:
+        icon: {{HOMEPAGE_VAR_TWINGATE_ICON}}
+        href: {{HOMEPAGE_VAR_TWINGATE_URL}}
