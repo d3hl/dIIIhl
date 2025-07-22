@@ -46,7 +46,7 @@ layout:
   Identity:
       tab: Home
       style: column
-  Apps:
+  Appplications:
       tab: Home
       style: column
   Tools:
@@ -55,3 +55,16 @@ layout:
   Extras:
       tab: Home
       style: column
+  Office Core:
+      tab: Corp
+      style: column
+  Corp Systems:
+      tab: Corp
+      style: column
+  Corp Network:
+      tab: Corp
+      style: column
+  Corp Cloud:
+      tab: Corp
+      style: column
+    

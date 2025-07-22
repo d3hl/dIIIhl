@@ -170,7 +170,7 @@
     - Twingate:
         icon: {{HOMEPAGE_VAR_TWINGATE_ICON}}
         href: {{HOMEPAGE_VAR_TWINGATE_URL}}
-- Apps:
+- Appplications:
     - Actual:
         icon: {{HOMEPAGE_VAR_ACTUAL_ICON}}
         href: {{HOMEPAGE_VAR_ACTUAL_URL}}
@@ -258,14 +258,68 @@
     - Selfhst-icons:
         icon: {{HOMEPAGE_VAR_SELFHST_ICON}} 
         href: {{HOMEPAGE_VAR_SELFHST_URL}}
-- PVE Dashboad:
-    widget:
-        type: iframe
-        name: pveDashboard
-        src: {{HOMEPAGE_VAR_PULSE_URL}}
-        #classes: {{HOMEPAGE_VAR_PULSE_CLASSES}}
-        allowfullscreen: {{HOMEPAGE_VAR_PULSE_ALLOWFULLSCREEN}}
-        loadingStraegy: {{HOMEPAGE_VAR_PULSE_LOADING_STRATEGY}}
-        allowScrolling: {{HOMEPAGE_VAR_PULSE_ALLOW_SCROLLING}}
-        referrerPolicy: same-origin # optional, no default
-        height: {{HOMEPAGE_VAR_PULSE_HEIGHT}}
+    - PVE Dashboad:
+        widget:
+            type: iframe
+            name: pveDashboard
+            src: {{HOMEPAGE_VAR_PULSE_URL}}
+            #classes: {{HOMEPAGE_VAR_PULSE_CLASSES}}
+            allowfullscreen: {{HOMEPAGE_VAR_PULSE_ALLOWFULLSCREEN}}
+            loadingStraegy: {{HOMEPAGE_VAR_PULSE_LOADING_STRATEGY}}
+            allowScrolling: {{HOMEPAGE_VAR_PULSE_ALLOW_SCROLLING}}
+            referrerPolicy: same-origin # optional, no default
+            height: {{HOMEPAGE_VAR_PULSE_HEIGHT}}
+
+### CORP TAB ###    
+- Office Core:
+    - PVECORP:
+        icon: {{HOMEPAGE_VAR_PROXMOX_ICON}} 
+        href: {{HOMEPAGE_VAR_PVECORP_URL}} 
+    - Komodocorp:
+        icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
+        href: {{HOMEPAGE_VAR_KOMODOCORP_URL}} 
+    - Fenrus:
+        icon: {{HOMEPAGE_VAR_FENRUS_ICON}} 
+        href: {{HOMEPAGE_VAR_FENRUS_URL}} 
+- Corp Systems:
+    - Wordpress:
+        icon: wordpress
+        href: https://ntn.com.sg/wp-login.php
+### CLOUD TAB ###        
+- Corp Network:
+    - Fortigate:
+        icon: fortinet 
+        href: http://fw.ntn.com.sg:7443 
+    - FortiAnalyzer:
+        icon: fortinet 
+        href: http://faz.ntn.com.sg
+    - FortiEMS:
+        icon: fortinet
+        href: http://ems.ntn.com.sg
+    - Cisco:
+        icon: cisco 
+        href: http://10.203.1.254/webui 
+    - Synology:
+        icon: synology 
+        href: http://10.203.1.111:5000 
+    - Crestron:
+        icon: https://static.wixstatic.com/media/007dac_d97541360d5849a492f61055994b510e~mv2.png/v1/fill/w_281,h_281,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/007dac_d97541360d5849a492f61055994b510e~mv2.png
+        href: http://10.203.7.125
+    - Ruckus:
+        icon: rundeck 
+        href: http://10.203.6.200
+### CLOUD TAB ###        
+- Corp Cloud:
+    - Intune:
+        icon: /icons/microsoft-365.png 
+        href: https://intune.microsoft.com
+    - Entra:
+        icon: /icons/microsoft-365.png
+        href: https://entra.microsoft.com
+    - Azure Portal:
+        icon: /icons/azure.png
+        href: https://portal.azure.com
+    - AzureDevOps:
+        icon: /icons/azure-devops.png 
+        href: https://dev.azure.com/ntnsg/intune
+    
