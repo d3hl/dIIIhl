@@ -1,12 +1,11 @@
 - Infra Core:
     - PVE:
         icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
-        href: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
-        sitemonitor: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
-        ping: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
+        href: {{HOMEPAGE_VAR_PROXMOX_URL_PVE11}}
+        sitemonitor: {{HOMEPAGE_VAR_PROXMOX_URL_PVE11}}
         widget:
             type: proxmox
-            url: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
+            url: {{HOMEPAGE_VAR_PROXMOX_IP_PVE_1}}
             username: {{HOMEPAGE_VAR_PROXMOX_USER}}
             password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}
             node: pve11
