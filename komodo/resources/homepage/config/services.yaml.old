@@ -1,5 +1,18 @@
 ---
-    - Infra:
+- Internal:
+    - Nas:
+        -  Truenas:
+            id: truenas 
+            icon: {{HOMEPAGE_VAR_TRUENAS_ICON}}
+            href: {{HOMEPAGE_VAR_TRUENAS_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_TRUENAS_URL}}
+            widget:
+                type: truenas
+                url: {{HOMEPAGE_VAR_TRUENAS_URL}}
+                key: {{HOMEPAGE_VAR_TRUENAS_KEY}}
+                enablePools: {{HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL}}
+                nasType: scale
+    - Pve: # proxmoxx
         - pve11:
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             href: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_1}}
@@ -13,47 +26,54 @@
                 version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
                 systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11}}
                 fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
-        -  Truenas:
-            id: truenas 
-            icon: {{HOMEPAGE_VAR_TRUENAS_ICON}}
-            href: {{HOMEPAGE_VAR_TRUENAS_URL}}
-            sitemonitor: {{HOMEPAGE_VAR_TRUENAS_URL}}
+        - pve12:
+            icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+            ping: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_2}}
             widget:
-                type: truenas
-                url: {{HOMEPAGE_VAR_TRUENAS_URL}}
-                key: {{HOMEPAGE_VAR_TRUENAS_KEY}}
-                enablePools: {{HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL}}
-                nasType: scale
-        - Komodo:
-            icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
-            href: {{HOMEPAGE_VAR_KOMODO_URL}}
-            sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
+                type: beszel
+                url: http://10.10.10.9:8090
+                username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+                password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+                version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
+                systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12}}
+                fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
+        - pve13:
+            ping: {{HOMEPAGE_VAR_PROXMOX_URL_PVE_3}}
+            icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
             widget:
-                type: komodo
-                url:  {{HOMEPAGE_VAR_KOMODO_API_URL}}
-                key: {{HOMEPAGE_VAR_KOMODO_KEY}}
-                secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
-                showSummary: true # optional, default: false
-                showStacks: true # optional, default: false
-        - Homeassistant:
-            icon: {{HOMEPAGE_VAR_HA_ICON}}
-            href: {{HOMEPAGE_VAR_HA_URL}}
-            sitemonitor: {{HOMEPAGE_VAR_HA_URL}}
-    - Domain:
-        - GoDoxy:
-            icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
-            href: {{HOMEPAGE_VAR_GODOXY_URL}} 
-            ping: {{HOMEPAGE_VAR_GODOXY_URL}}
-        - Technitium:
-            icon: {{HOMEPAGE_VAR_DNS_ICON}}
-            href: {{HOMEPAGE_VAR_DNS_URL}}
-            ping: {{HOMEPAGE_VAR_DNS_URL}}
+                type: beszel
+                url: http://10.10.10.9:8090
+                username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+                password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+                version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
+                systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13}}
+                fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
+        - PBS: 
+            icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+            href: {{HOMEPAGE_VAR_PBS_URL}}
+            ping: {{HOMEPAGE_VAR_PBS_URL}} 
             widget:
-                type: technitium
-                url: {{HOMEPAGE_VAR_DNS_URL}}
-                key: {{HOMEPAGE_VAR_DNS_KEY}}
-                range: {{HOMEPAGE_VAR_DNS_RANGE}}
-    - Network:
+                type: beszel
+                url: http://10.10.10.9:8090
+                username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+                password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+                version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
+                systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs}}
+                fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
+    - Local:        
+        - Opnsense:
+            icon: {{HOMEPAGE_VAR_OPNSENSE_ICON}} 
+            href: {{HOMEPAGE_VAR_OPNSENSE_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_OPNSENSE_URL}}
+        - Mikrotik:
+            icon: {{HOMEPAGE_VAR_MIKROTIK_ICON}} 
+            href: {{HOMEPAGE_VAR_MIKROTIK_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_MIKROTIK_URL}}
+        - Tplink:
+            icon: {{HOMEPAGE_VAR_TPLINK_ICON}} 
+            href: {{HOMEPAGE_VAR_TPLINK_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_TPLINK_URL}}
+    - DNS:
         - NetAlertX:
             icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
             href: {{HOMEPAGE_VAR_NETALERTX_URL}}
@@ -63,17 +83,29 @@
                 key: {{HOMEPAGE_VAR_NETALERTX_KEY}}
                 url: {{HOMEPAGE_VAR_NETALERTX_URL}}
                 fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
-        - Tplink:
-            icon: {{HOMEPAGE_VAR_TPLINK_ICON}} 
-            href: {{HOMEPAGE_VAR_TPLINK_URL}}
-            sitemonitor: {{HOMEPAGE_VAR_TPLINK_URL}}
-        - Uptime-Kuma:
-            icon: {{HOMEPAGE_VAR_KUMA_ICON}}
-            href: {{HOMEPAGE_VAR_KUMA_URL}}
-    - Monitor:
+        - Technitium:
+            icon: {{HOMEPAGE_VAR_DNS_ICON}}
+            href: {{HOMEPAGE_VAR_DNS_URL}}
+            ping: {{HOMEPAGE_VAR_DNS_URL}}
+            widget:
+                type: technitium
+                url: {{HOMEPAGE_VAR_DNS_URL}}
+                key: {{HOMEPAGE_VAR_DNS_KEY}}
+                range: {{HOMEPAGE_VAR_DNS_RANGE}}
         - Speedtest:
             icon: {{HOMEPAGE_VAR_SPEEDTEST_ICON}}
             href: {{HOMEPAGE_VAR_SPEEDTEST_URL}}
+     #   - CaddyProxy:
+      #      icon: {{HOMEPAGE_VAR_CADDYPROXY_ICON}} 
+      #      ping: {{HOMEPAGE_VAR_CADDYPROXY_URL}}
+       #     widget:
+        #        type: caddy
+         #       url: {{HOMEPAGE_VAR_CADDYPROXY_URL}}
+    - Internal Monitor:
+        - GoDoxy:
+            icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
+            href: {{HOMEPAGE_VAR_GODOXY_URL}} 
+            ping: {{HOMEPAGE_VAR_GODOXY_URL}}
         - Wazuh:
             icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
             href: {{HOMEPAGE_VAR_WAZUH_URL}}
@@ -98,18 +130,6 @@
             href: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
             sitemonitor: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
     - Backup: 
-        - PBS: 
-            icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
-            href: {{HOMEPAGE_VAR_PBS_URL}}
-            ping: {{HOMEPAGE_VAR_PBS_URL}} 
-            widget:
-                type: beszel
-                url: http://10.10.10.9:8090
-                username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
-                password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
-                version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
-                systemId: {{HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs}}
-                fields: {{HOMEPAGE_VAR_BESZEL_FIELDS}}
         - Backrest:
             icon: {{HOMEPAGE_VAR_BACKREST_ICON}}
             href: {{HOMEPAGE_VAR_BACKREST_URL}}
@@ -138,7 +158,7 @@
                 key: {{HOMEPAGE_VAR_IMMICH_KEY}}
                 version: {{HOMEPAGE_VAR_IMMICH_VERSION}}
                 fields:  {{HOMEPAGE_VAR_IMMICH_FIELDS}}  
-    - Apps: # remote
+    - Local Apps: # remote
         - Actual:
             icon: {{HOMEPAGE_VAR_ACTUAL_ICON}}
             href: {{HOMEPAGE_VAR_ACTUAL_URL}}
@@ -146,6 +166,10 @@
             icon: {{HOMEPAGE_VAR_SENSEI_ICON}}
             href: {{HOMEPAGE_VAR_SENSEI_URL}} 
             sitemonitor: {{HOMEPAGE_VAR_SENSEI_URL}}
+        - Homeassistant:
+            icon: {{HOMEPAGE_VAR_HA_ICON}}
+            href: {{HOMEPAGE_VAR_HA_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_HA_URL}}
         - Sh:
             icon: {{HOMEPAGE_VAR_STASH_ICON}}
             href: {{HOMEPAGE_VAR_STASH_URL}}
@@ -166,10 +190,38 @@
             icon: {{HOMEPAGE_VAR_NZBGET_ICON}}
             href: {{HOMEPAGE_VAR_NZBGET_URL}}
             ping: {{HOMEPAGE_VAR_NZBGET_URL}}
-    - Troubleshoot: 
+- External:
+    - Core: 
+        - Komodo:
+            icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
+            href: {{HOMEPAGE_VAR_KOMODO_URL}}
+            sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
+            widget:
+                type: komodo
+                url:  {{HOMEPAGE_VAR_KOMODO_API_URL}}
+                key: {{HOMEPAGE_VAR_KOMODO_KEY}}
+                secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
+                showSummary: true # optional, default: false
+                showStacks: true # optional, default: false
         - Dozzle:
             icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
             href: {{HOMEPAGE_VAR_DOZZLE_URL}}
+#        - Container Updates:
+#            icon: {{HOMEPAGE_VAR_KOMODO_ICON}}
+#            server: my-docker
+            #container: komodo-core-1 
+#            widget:
+#                type: customapi
+#                url: {{HOMEPAGE_VAR_KOMODO_CONTAINER_UPDATE_URL}}
+#                refreshInterval: 30000
+#                display: block
+#                mappings:
+#                  - field: total
+#                    label: Containers
+#                    format: number
+#                  - field: updates
+#                    label: With Updates
+#                    format: number
     - Identity: 
         - Authentik:
             icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
@@ -179,6 +231,7 @@
                 type: authentik
                 url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
                 key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}} 
+    - Zero Trust: 
         - Pangolin:
             icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
             href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
@@ -186,7 +239,7 @@
         - Twingate:
             icon: {{HOMEPAGE_VAR_TWINGATE_ICON}}
             href: {{HOMEPAGE_VAR_TWINGATE_URL}}
-    - Access:
+    - Remote:
         - Guacamole:
             icon: {{HOMEPAGE_VAR_GUACAMOLE_ICON}} 
             href: {{HOMEPAGE_VAR_GUACAMOLEEXT_URL}}
@@ -202,7 +255,10 @@
             icon: {{HOMEPAGE_VAR_TERMIX_ICON}}
             href: {{HOMEPAGE_VAR_TERMIX_URL}}
 
-    - Monitoring2:
+    - Monitoring:
+        - Uptime-Kuma:
+            icon: {{HOMEPAGE_VAR_KUMA_ICON}}
+            href: {{HOMEPAGE_VAR_KUMA_URL}}
         - Grafana on:
             icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
             href: {{HOMEPAGE_VAR_GRAFANAPANGOLIN_URL}}
@@ -262,6 +318,7 @@
         - Selfhst-icons:
             icon: {{HOMEPAGE_VAR_SELFHST_ICON}} 
             href: {{HOMEPAGE_VAR_SELFHST_URL}}
+- GL4:
     - PVE Dashboad:
         widget:
             type: iframe
@@ -275,6 +332,7 @@
             height: {{HOMEPAGE_VAR_PULSE_HEIGHT}}
 
 ### CORP TAB ###    
+- WorkLeft:    
     - Applications:
         - PVECORP:
             icon: {{HOMEPAGE_VAR_PROXMOX_ICON}} 
@@ -291,6 +349,7 @@
             href: https://ntn.com.sg/wp-login.php
 
 ### CLOUD TAB ###        
+- WorkRight:    
     - Network:
         - Fortigate:
             icon: fortinet 
@@ -314,6 +373,7 @@
             icon: rundeck 
             href: http://10.203.6.200
 ### CLOUD TAB ###        
+- M365:
     - Intune:
         icon: /icons/microsoft-365.png 
         href: https://intune.microsoft.com

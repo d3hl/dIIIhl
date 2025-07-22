@@ -1,0 +1,108 @@
+---
+title: "{{HOMEPAGE_VAR_TITLE}}"
+favicon: "{{HOMEPAGE_VAR_FAVICON}}"
+
+headerStyle: {{HOMEPAGE_VAR_HEADER_STYLE}}
+background:
+  image: "{{HOMEPAGE_VAR_IMG_URL}}"
+  blur: "{{HOMEPAGE_VAR_IMG_BLUR}"
+  saturate: "{{HOMEPAGE_VAR_IMG_SATURATE}}"
+  brightness: "{{HOMEPAGE_VAR_IMG_BRIGHTNESS}}"
+  opacity: "{{HOMEPAGE_VAR_IMG_OPACITY}}"
+theme: dark 
+color: zinc
+useEqualHeights: {{HOMEPAGE_VAR_USE_EQUAL_HEIGHTS}}
+statusStyle: "dot"
+showStats: {{HOMEPAGE_VAR_SHOW_STATS}}
+hideErrors: false
+disableCollapse: true
+
+layout:
+  
+  External:
+    tab: Homelab
+    style: column
+    columns: 1
+    header: true
+    Core:
+      style: row
+      columns: 2
+      header: false
+    Identity:
+      style: row
+      columns: 1
+      header: false
+    Zero TRust:
+      style: column
+      rows: 2
+    Remote:
+      style: row
+      columns: 4
+    Monitoring:
+      style: row
+      columns: 4
+      header: true
+    Apps:
+      style: row
+      columns: 4
+      header: true
+  Internal:
+    tab: Homelab
+    style: column
+    columns: 1 
+    header: true
+    Nas:
+      style: row
+      columns: 1 
+      header: false
+    Pve:
+      style: row
+      columns: 4 
+      header: false
+    Local:
+      style: row
+      columns: 4 
+      header: true
+    DNS:
+      style: row
+      columns: 3 
+      header: true
+    Internal Monitor:
+      style: row
+      columns: 3 
+      header: true
+    Backup:
+      style: row
+      columns: 2 
+      header: true
+    Media:
+      style: row
+      columns: 2
+      header: true
+    Local Apps:
+      style: row
+      columns: 4
+      header: true
+  M365:
+    tab: Cloud
+    style: row
+    columns: 4
+    Other Cloud:
+      tab: Cloud
+      style: column
+      columns: 4
+  WorkLeft:
+    tab: Corp
+    style: column
+    columns: 1
+    header: False
+  WorkRight:
+    tab: Corp
+    style: column
+    columns: 1
+    header: False
+
+  GL4:
+    tab: Monitoring
+    style: row
+    colums: 4
