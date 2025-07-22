@@ -9,14 +9,13 @@ background:
   saturate: "{{HOMEPAGE_VAR_IMG_SATURATE}}"
   brightness: "{{HOMEPAGE_VAR_IMG_BRIGHTNESS}}"
   opacity: "{{HOMEPAGE_VAR_IMG_OPACITY}}"
-theme: {{HOMEPAGE_VAR_THEME}}
-color: {{HOMEPAGE_VAR_COLOR}}
+theme: dark 
+color: zinc
 useEqualHeights: {{HOMEPAGE_VAR_USE_EQUAL_HEIGHTS}}
-statusStyle: {{HOMEPAGE_VAR_STATUS_STYLE}}
-fullWidth: {{HOMEPAGE_VAR_FULL_WIDTH}}
+statusStyle: "dot"
 showStats: {{HOMEPAGE_VAR_SHOW_STATS}}
-hideErrors: {{HOMEPAGE_VAR_HIDE_ERRORS}}
-disableCollapse: {{HOMEPAGE_VAR_DISABLE_COLLAPSE}}
+hideErrors: false
+disableCollapse: true
 
 layout:
   
