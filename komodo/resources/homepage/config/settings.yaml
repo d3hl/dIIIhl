@@ -18,7 +18,6 @@ hideErrors: false
 disableCollapse: true
 
 layout:
-  
   Infra:
     tab: Homelab
     style: column
