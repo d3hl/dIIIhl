@@ -19,53 +19,52 @@ disableCollapse: true
 
 layout:
   Infra:
-    tab: Homelab
-    style: column
+      tab: Home
+      style: column
   Domain:
-    tab: Homelab
-    style: column
+      tab: Home
+      style: column
   Network:
-    tab: Homelab
-    style: column
+      tab: Home
+      style: column
   Monitor:
-    tab: Homelab
-    style: column
+      tab: Home
+      style: column
   Backup:
-    tab: Homelab
-    style: column
+      tab: Home
+      style: column
   Media:
-    tab: Homelab
-    style: column
+      tab: Home
+      style: column
   Access:
-    tab: Homelab
-    style: column
+      tab: Home
+      style: column
   Troubleshoot:
-    tab: Homelab
-    style: column
+      tab: Home
+      style: column
   Identity:
-    tab: Homelab
-    style: column
-
+      tab: Home
+      style: column
   M365:
-    tab: Cloud
-    style: row
-    columns: 4
-    Other Cloud:
+      tab: Cloud
+      style: row
+      columns: 4
+  Other Cloud:
       tab: Cloud
       style: column
       columns: 4
   WorkLeft:
-    tab: Corp
-    style: column
-    columns: 1
-    header: False
+      tab: Corp
+      style: column
+      columns: 1
+      header: False
   WorkRight:
-    tab: Corp
-    style: column
-    columns: 1
-    header: False
+      tab: Corp
+      style: column
+      columns: 1
+      header: False
 
   GL4:
-    tab: Monitoring
-    style: row
-    colums: 4
+      tab: Monitoring
+      style: row
+      colums: 4
