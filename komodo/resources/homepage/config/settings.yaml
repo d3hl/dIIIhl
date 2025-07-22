@@ -16,50 +16,14 @@ showStats: {{HOMEPAGE_VAR_SHOW_STATS}}
 hideErrors: false
 disableCollapse: true
 
+# Layout Configuration
 layout:
-    Infra:
-        tab: Home
-        style: column
-    Domain:
-        tab: Home
-        style: column
-    Network:
-        tab: Home
-        style: column
-    Monitor:
-        tab: Home
-        style: column
-    Backup:
-        tab: Home
-        style: column
-    Media:
-        tab: Home
-        style: column
-    Access:
-        tab: Home
-        style: column
-    Troubleshoot:
-        tab: Home
-        style: column
-    Identity:
-        tab: Home
-        style: column
- # M365:
-  #    tab: Cloud
-   #   style: row
-    #  columns: 4
-  #Other Cloud:
-    #  tab: Cloud
-   #   style: column
-     # columns: 4
-  #WorkLeft:
-      #tab: Corp
-      #style: column
-      #columns: 1
-      #header: False
-
-
-#  GL4:
- #     tab: Monitoring
-  #    style: row
-   #   colums: 4
+  # HOME Tab Items
+  Infra:
+      style: column
+      tab: HOME
+      icon: mdi-file-multiple
+  Domain:
+      style: column
+      tab: HOME
+      icon: mdi-multimedia
