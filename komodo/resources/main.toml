@@ -682,6 +682,50 @@ services:
 ##
 
 [[stack]]
+name = "dumbpad"
+tags = ["external", "komodo-2"]
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  dumbpad:
+    image: dumbwareio/dumbpad:latest
+    container_name: dumbpad
+    restart: unless-stopped
+    ports:
+      - 3765:3000
+    volumes:
+      - ${DOCKER_DATA}/dumbpad/data:/app/data
+    environment:
+      # The title shown in the web interface
+      SITE_TITLE: ${DUMBPAD_SITE_TITLE:-DumbPad}
+      # Optional PIN protection (leave empty to disable)
+      DUMBPAD_PIN: ${DUMBPAD_PIN}
+      # The base URL for the application
+      BASE_URL: ${DUMBPAD_BASE_URL:-http://localhost:3000} # Use ALLOWED_ORIGINS below to restrict cors to specific origins
+      # (OPTIONAL)
+      # Usage: Comma-separated list of urls: http://localhost:port,http://internalip:port,https://base.proxy.tld,https://authprovider.domain.tld
+      # ALLOWED_ORIGINS: ${DUMBPAD_ALLOWED_ORIGINS:-http://localhost:3000} # Comment out to allow all origins (*)
+      # LOCKOUT_TIME: ${DUMBPAD_LOCK_TIME:-15} # Customize pin lockout time (if empty, defaults to 15 in minutes)
+      # MAX_ATTEMPTS: ${DUMBPAD_MAX_ATTEMPTS:-5} # Customize pin max attempts (if empty, defaults to 5)
+      # COOKIE_MAX_AGE: ${DUMBPAD_COOKIE_MAX_AGE:-24} # Customize maximum age of cookies primarily used for pin verification (default 24) in hours
+      # PAGE_HISTORY_COOKIE_AGE: ${DUMBPAD_PAGE_HISTORY_COOKIE_AGE:-365} # Customize age of cookie to show the last notepad opened (default 365 | max 400) in days - shows default notepad on load if expired
+      
+      # MARKDOWN CODE SYNTAX HIGHLIGHTING (only use below if you want to restrict to specific languages):
+      # By default, DumbPad includes support for all ~180 languages supported by highlight.js.
+      # view entire list and usage in /docs/MARKDOWN_SYNTAX_HIGHLIGHTING_USAGE.md
+      # HIGHLIGHT_LANGUAGES=c,csharp,css,dockerfile,go,html,java,javascript,json,kotlin,markdown,perl,php,python,ruby,sql,swift,typescript,xml,yaml
+"""
+environment = """
+DUMBPAD_PIN=210825
+"""
+
+##
+
+[[stack]]
 name = "dumbterm"
 tags = [
   "external",
@@ -1025,11 +1069,18 @@ PUID= [[PUID]]
 HOMEPAGE_VAR_TITLE= "d3 Homepage"
 HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
 HOMEPAGE_VAR_IMG_URL= "/images/extra-12.jpg"
+HOMEPAGE_VAR_HEADER_STYLE= boxed #boxedWidgets
 
 HOMEPAGE_VAR_IMG_BLUR= md
 HOMEPAGE_VAR_IMG_SATURATE= 50
 HOMEPAGE_VAR_IMG_BRIGHTNESS= 50
 HOMEPAGE_VAR_IMG_OPACITY=70
+HOMEPAGE_VAR_THEME= dark
+HOMEPAGE_VAR_COLOR= zinc
+HOMEPAGE_VAR_STATUS_STYLE= dot
+HOMEPAGE_VAR_IMG_FULLWIDTH= true
+HOMEPAGE_VAR_IMG_SHOWSTATS= true
+HOMEPAGE_VAR_IMG_HIDEERRORS= true
 HOMEPAGE_VAR_USE_EQUAL_HEIGHTS= true
 HOMEAGE_VAR_DISABLE_COLLAPSE= true
 
@@ -1086,8 +1137,8 @@ HOMEPAGE_VAR_OPNSENSE_ICON= "/icons/opnsense-light.png"
 HOMEPAGE_VAR_OPNSENSE_URL= "https://opn.d3adc3ii.site"
 # DNS
 HOMEPAGE_VAR_DNS_ICON= "/icons/technitium-light.png"
-HOMEPAGE_VAR_DNS_URL= "https://ns0.d3adc3ii.site"
-HOMEPAGE_VAR_DNS_KEY="664be7cf433c98c60e66d81cc782a9226cc8ba2e255933727285174f62980b1c"
+HOMEPAGE_VAR_DNS_URL= "https://ns.d3adc3ii.site"
+HOMEPAGE_VAR_DNS_KEY="4646abc150fb4277522a160965f64444d12d6417d32e594a73472e63e20c7ac1"
 HOMEPAGE_VAR_DNS_RANGE: LastDay # optional, defaults to LastHour
 # MIKROTIK
 HOMEPAGE_VAR_MIKROTIK_ICON= "/icons/mikrotik-light.png"
@@ -1655,6 +1706,15 @@ services:
     network_mode: "host"
     ports:
       - "5380:5380/tcp"
+      - "53:53/udp" #DNS service
+      - "53:53/tcp" #DNS service
+      # - "853:853/udp" #DNS-over-QUIC service
+      - "853:853/tcp" #DNS-over-TLS service
+      # - "443:443/udp" #DNS-over-HTTPS service (HTTP/3)
+      # - "443:443/tcp" #DNS-over-HTTPS service (HTTP/1.1, HTTP/2)
+      - "80:80/tcp" #DNS-over-HTTP service (use with reverse proxy or certbot certificate renewal)
+      - "8053:8053/tcp" #DNS-over-HTTP service (use with reverse proxy)
+      # - "67:67/udp" #DHCP service
     volumes:
       - ./technitium:/etc/dns
   keepalived:
@@ -1680,7 +1740,7 @@ environment = """
 # change to an unused IP in your LAN subnet -- will be the same value on both stacks
 VIRTUAL_IP=10.10.10.16
 # Host IP of the other machine
-CHECK_IP=10.10.10.18
+CHECK_IP=10.10.10.33
 CHECK_PORT=53
 """
 
@@ -1688,6 +1748,7 @@ CHECK_PORT=53
 
 [[stack]]
 name = "ns2"
+tags = ["internal", "komodo-3", "dns"]
 [stack.config]
 server = "komodo-3"
 poll_for_updates = true
@@ -1697,6 +1758,7 @@ file_contents = """
 services:
   technitium-secondary:
     image: "technitium/dns-server:latest"
+    container_name: ns2
     privileged: true
     restart: always
     environment:
@@ -1704,6 +1766,15 @@ services:
     network_mode: "host"
     ports:
       - "5380:5380/tcp"
+      - "53:53/udp" #DNS service
+      - "53:53/tcp" #DNS service
+      # - "853:853/udp" #DNS-over-QUIC service
+      - "853:853/tcp" #DNS-over-TLS service
+      # - "443:443/udp" #DNS-over-HTTPS service (HTTP/3)
+      # - "443:443/tcp" #DNS-over-HTTPS service (HTTP/1.1, HTTP/2)
+      - "80:80/tcp" #DNS-over-HTTP service (use with reverse proxy or certbot certificate renewal)
+      - "8053:8053/tcp" #DNS-over-HTTP service (use with reverse proxy)
+      # - "67:67/udp" #DHCP service
     volumes:
       - ./technitium:/etc/dns
   keepalived:
@@ -1729,7 +1800,7 @@ environment = """
 # change to an unused IP in your LAN subnet -- will be the same value on both stacks
 VIRTUAL_IP=10.10.10.16
 # Host IP of the other machine
-CHECK_IP=10.10.10.17
+CHECK_IP=10.10.10.31
 CHECK_PORT=53
 """
 
@@ -1868,6 +1939,72 @@ IPAM_DATABASE_WEBHOST=%
 IPAM_TRUST_X_FORWARDED=true
 SCAN_INTERVAL=1h
 MYSQL_ROOT_PASSWORD=16E@j4pWjtL$X3Gnxfy3KQB0U$
+"""
+
+##
+
+[[stack]]
+name = "piped"
+tags = ["komodo-2", "external"]
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+    frontend:
+        image: 1337kavin/piped-frontend:latest
+        restart: unless-stopped
+        depends_on:
+            - piped
+        environment:
+            BACKEND_HOSTNAME: pipedapi.d3adc3ii.cc
+            HTTP_MODE: https
+        ports:
+            - "8080:80"
+        container_name: piped-frontend
+
+    piped:
+        image: 1337kavin/piped:latest
+        restart: unless-stopped
+        environment:
+          - PUID=1000
+          - PGID=1000
+        volumes:
+          #  - ./config/config.properties:/app/config.properties:ro
+            - ${DOCKER_DATA}/piped/config/config.properties:/app/config.properties:ro
+        depends_on:
+            - postgres
+        ports:
+            - "8081:8080"
+        container_name: piped-backend
+
+    proxy:
+        image: 1337kavin/piped-proxy:latest
+        restart: unless-stopped
+        ports:
+            - "8082:8080"
+        container_name: piped-proxy
+
+    bg-helper:
+        image: 1337kavin/bg-helper-server:latest
+        restart: unless-stopped
+        container_name: piped-bg-helper
+
+    postgres:
+        image: pgautoupgrade/pgautoupgrade:16-alpine
+        restart: unless-stopped
+        volumes:
+            - ./data/db:/var/lib/postgresql/data
+        env_file:
+            - .env
+        container_name: piped-postgres
+"""
+environment = """
+POSTGRES_DB=piped
+POSTGRES_USER=piped
+POSTGRES_PASSWORD='F2dv9HNbOImHGxNO2lhD304XwRr7GMSl'
 """
 
 ##
