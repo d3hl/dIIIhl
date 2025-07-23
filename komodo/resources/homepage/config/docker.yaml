@@ -1,5 +1,5 @@
 my-docker:
-  host: dockerproxy
+  host: socket-proxy
   port: 2375
 dockerproxy-27:
   host: 10.10.10.27
