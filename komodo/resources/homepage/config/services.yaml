@@ -77,6 +77,15 @@
     - PHPIPAM:
         icon: {{HOMEPAGE_VAR_PHPIPAM_ICON}}
         href: {{HOMEPAGE_VAR_PHPIPAM_URL}}
+    - Netbox Cloud:
+        icon: {{HOMEPAGE_VAR_NETBOX_ICON}}
+        href: {{HOMEPAGE_VAR_NETBOXCL_URL}}
+    - Netbox Console:
+        icon: {{HOMEPAGE_VAR_NETBOX_ICON}}
+        href: {{HOMEPAGE_VAR_NETBOXCS_URL}}
+    - Nautobox:
+        icon: {{HOMEPAGE_VAR_NAUTOBOT_ICON}}
+        href: {{HOMEPAGE_VAR_NAUTOBOT_URL}}
 ########################################################################################################################################################################################################
 - Monitor:
     - Beszel:
@@ -95,13 +104,6 @@
         icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
         href: {{HOMEPAGE_VAR_WAZUH_URL}}
         ping: {{HOMEPAGE_VAR_WAZUH_URL}}
-    - Dozzle:
-        icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
-        href: {{HOMEPAGE_VAR_DOZZLE_URL}}
-    - Apprise-API:
-        icon: {{HOMEPAGE_VAR_APPRISE_ICON}}
-        href: {{HOMEPAGE_VAR_APPRISE_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_APPRISE_URL}}
     - Healthcheck:
         icon: {{HOMEPAGE_VAR_HEALTHCHECKS_ICON}}
         href: {{HOMEPAGE_VAR_HEALTHCHECKS_URL}}
@@ -180,10 +182,19 @@
         icon: {{HOMEPAGE_VAR_TERMIX_ICON}}
         href: {{HOMEPAGE_VAR_TERMIX_URL}}
 ########################################################################################################################################################################################################
-- Troubleshoot: 
+- Logging: 
     - Dozzle:
         icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
         href: {{HOMEPAGE_VAR_DOZZLE_URL}}
+    - Grafana Cloud:
+        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+        href: {{HOMEPAGE_VAR_GRAFANAPANGOLIN_URL}}
+    - Grafana:
+        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+        href: {{HOMEPAGE_VAR_GRAFANA_URL}}
+    - Scrutiny:
+        icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
+        href: {{HOMEPAGE_VAR_SCRUTINY_URL}}     
 ########################################################################################################################################################################################################
 - Appplications:
     - Actual:
@@ -219,15 +230,6 @@
         sitemonitor: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
 ########################################################################################################################################################################################################
 - Tools:
-    - Grafana on:
-        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
-        href: {{HOMEPAGE_VAR_GRAFANAPANGOLIN_URL}}
-    - Grafana:
-        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
-        href: {{HOMEPAGE_VAR_GRAFANA_URL}}
-    - Scrutiny:
-        icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
-        href: {{HOMEPAGE_VAR_SCRUTINY_URL}}
     - Pulse:
         icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
         href: {{HOMEPAGE_VAR_PULSEXT_URL}}
@@ -239,15 +241,11 @@
         icon: {{HOMEPAGE_VAR_CHECKMK_ICON}}
         href: {{HOMEPAGE_VAR_CHECKMK_URL}}
         sitemonitor: {{HOMEPAGE_VAR_CHECKMK_URL}}
-    - Netbox Cloud:
-        icon: {{HOMEPAGE_VAR_NETBOX_ICON}}
-        href: {{HOMEPAGE_VAR_NETBOXCL_URL}}
-    - Netbox Console:
-        icon: {{HOMEPAGE_VAR_NETBOX_ICON}}
-        href: {{HOMEPAGE_VAR_NETBOXCS_URL}}
-    - Nautobox:
-        icon: {{HOMEPAGE_VAR_NAUTOBOT_ICON}}
-        href: {{HOMEPAGE_VAR_NAUTOBOT_URL}}
+    - Apprise-API:
+        icon: {{HOMEPAGE_VAR_APPRISE_ICON}}
+        href: {{HOMEPAGE_VAR_APPRISE_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_APPRISE_URL}}
+
 ########################################################################################################################################################################################################
 - Extras:
     - Selfhst-icons:
