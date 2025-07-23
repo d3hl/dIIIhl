@@ -1274,13 +1274,10 @@ HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx-light.png"
 HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3adc3ii.site"
 HOMEPAGE_VAR_NETALERTX_KEY="t_pJ26L2qEeUcR6bz5RCGI"
 HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"] 
-# UPTIME KUMA
-HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma-light.png"
-HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
-HOMEPAGE_VAR_KUMA_KEY=uk1_CJtVJXDT8DFll97KXiPPXb6dEWHpOdBZXymKWLPn
+
 # PHPIPAM
 HOMEPAGE_VAR_PHPIPAM_URL= "https://phpipam.d3adc3ii.cc/"
-HOMEPAGE_VAR_PHPIPAM_ICON= "sh-phpMyAdmin-light"
+HOMEPAGE_VAR_PHPIPAM_ICON= "sh-phpmyadmin-light"
 # Nautobot
 HOMEPAGE_VAR_NAUTOBOT_URL= "https://nautobot.d3adc3ii.cc/"
 HOMEPAGE_VAR_NAUTOBOT_ICON= "/icons/netbox-light.png"
@@ -1292,6 +1289,10 @@ HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"# NETBOX CONSOLE
 HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
 
 #### MONITORING  ####################################################################################################################################################################################################
+# UPTIME KUMA
+HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma-light.png"
+HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
+HOMEPAGE_VAR_KUMA_KEY=uk1_CJtVJXDT8DFll97KXiPPXb6dEWHpOdBZXymKWLPn
 # Beszel
 HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel-light.png"
 HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
