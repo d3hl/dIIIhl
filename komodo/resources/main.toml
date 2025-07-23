@@ -1213,7 +1213,6 @@ HOMEPAGE_VAR_KOMODO_IPURL= "http://10.10.10.25:9120"
 HOMEPAGE_VAR_KOMODO_KEY=K-69zvNUYoxn5KREW5nVpLqeLa741U7NHmPXoEx4S1
 HOMEPAGE_VAR_KOMODO_SECRET=S-5hhHrLWPfLHPJCRGBMV2auU7QsqfUaGrTJYuOW9M
 
-
 # PULSE
 HOMEPAGE_VAR_PULSE_URL= "http://10.10.10.36:7655"
 HOMEPAGE_VAR_PULSE_ALLOWFULLSCREEN= true
@@ -1239,10 +1238,6 @@ HOMEPAGE_VAR_GODOXY_URL= "https://doxy.d3adc3ii.site"
 HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin-light.png"
 HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.d3adc3ii.cc"
 
-
-
-
-
 #### NETWORK ####################################################################################################################################################################################################
 # NetAlertX 
 HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx-light.png"
@@ -1255,7 +1250,15 @@ HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
 HOMEPAGE_VAR_KUMA_KEY=uk1_CJtVJXDT8DFll97KXiPPXb6dEWHpOdBZXymKWLPn
 # PHPIPAM
 HOMEPAGE_VAR_PHPIPAM_URL= "https://phpipam.d3adc3ii.cc/"
-HOMEPAGE_VAR_PHPIPAM_ICON= "/icons/phpipam-light.png"
+HOMEPAGE_VAR_PHPIPAM_ICON= "sh-phpMyAdmin-light.png"
+HOMEPAGE_VAR_NAUTOBOT_URL= "https://nautobot.d3adc3ii.cc/"
+HOMEPAGE_VAR_NAUTOBOT_ICON= "/icons/netbox-light.png"
+# NETBOX CLOUD
+HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox-light.png"
+HOMEPAGE_VAR_NETBOXCL_URL= "https://wmfk3018.cloud.netboxapp.com"
+# NETBOX CONSOLE
+HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"# NETBOX CONSOLE
+HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
 
 #### MONITORING  ####################################################################################################################################################################################################
 # SPEEDTEST
@@ -1305,38 +1308,13 @@ HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3adc3ii.site"
 HOMEPAGE_VAR_IMMICH_KEY=W7IJnjVEIhc7d72AAm4sxJ49YJI1kdtkiVvmCZipVqc
 HOMEPAGE_VAR_IMMICH_VERSION= 2
 HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"] 
-
-#### APPS ####################################################################################################################################################################################################
-# Actual Budget
-HOMEPAGE_VAR_ACTUAL_ICON= "sh-actual-budget-light"
-HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3adc3ii.site"
-# Sensei
-HOMEPAGE_VAR_SENSEI_ICON= "sh-sentry-light"
-HOMEPAGE_VAR_SENSEI_URL= "https://statement.d3adc3ii.site"
-# Homeassistant
-HOMEPAGE_VAR_HA_ICON= "/icons/home-assistant-light.png"
-HOMEPAGE_VAR_HA_URL= "https://ha.d3adc3ii.site"
-# Qbit
-HOMEPAGE_VAR_QBIT_ICON= "/icons/qbittorrent-light.png"
-HOMEPAGE_VAR_QBIT_URL= "https://qbit.d3adc3ii.site"
-HOMEPAGE_VAR_QBIT_USER= "d3adc3ii"
-HOMEPAGE_VAR_QBIT_PASSWORD= "WCxb2CcykoUmjiNAf3p8"
 # Stash
 HOMEPAGE_VAR_STASH_ICON= "/icons/stash-light.png"
 HOMEPAGE_VAR_STASH_URL= "https://stash.d3adc3ii.site"
 HOMEPAGE_VAR_STASH_USER= "d3adc3ii"
 HOMEPAGE_VAR_QBIT_API= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg"
-# Semaphore
-HOMEPAGE_VAR_SEMAPHORE_ICON= "/icons/semaphore-ui-light.png"
-HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3adc3ii.site"
-# Aria2
-HOMEPAGE_VAR_ARIA_ICON= "sh-aria2-light"
-HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
-# NZBGET
-HOMEPAGE_VAR_NZBGET_ICON= "sh-nzbget-light"
-HOMEPAGE_VAR_NZBGET_URL= "https://nzbget.d3adc3ii.site"
 
-#### REMOTE ####################################################################################################################################################################################################
+#### ACCESS ####################################################################################################################################################################################################
 # Guacamole
 HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/apache-guacamole-light.png"
 HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.d3adc3ii.site/guacamole"
@@ -1353,7 +1331,8 @@ HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
 HOMEPAGE_VAR_TERMIX_ICON= "sh-termix-light"
 HOMEPAGE_VAR_TERMIX_URL= "https://termix.d3adc3ii.cc"
 
-########################################################################################################################################################################################################
+
+#### LOGGING ####################################################################################################################################################################################################
 # Grafana
 HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana-light.png"
 HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
@@ -1386,19 +1365,22 @@ HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"
 HOMEPAGE_VAR_PULSEXT_ICON= "sh-proxmox-light"
 HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
 
-# NETBOX CLOUD
-HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox-light.png"
-HOMEPAGE_VAR_NETBOXCL_URL= "https://wmfk3018.cloud.netboxapp.com"
-# NETBOX CONSOLE
-HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"# NETBOX CONSOLE
-HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
-
-HOMEPAGE_VAR_NAUTOBOT_URL= "https://nautobot.d3adc3ii.cc/"
-HOMEPAGE_VAR_NAUTOBOT_ICON= "/icons/netbox-light.png"
-
-
-
-
+#### APPS ####################################################################################################################################################################################################
+# Actual Budget
+HOMEPAGE_VAR_ACTUAL_ICON= "sh-actual-budget-light"
+HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3adc3ii.site"
+# Sensei
+HOMEPAGE_VAR_SENSEI_ICON= "sh-sentry-light"
+HOMEPAGE_VAR_SENSEI_URL= "https://statement.d3adc3ii.site"
+# Semaphore
+HOMEPAGE_VAR_SEMAPHORE_ICON= "/icons/semaphore-ui-light.png"
+HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3adc3ii.site"
+# Aria2
+HOMEPAGE_VAR_ARIA_ICON= "sh-aria2-light"
+HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
+# NZBGET
+HOMEPAGE_VAR_NZBGET_ICON= "sh-nzbget-light"
+HOMEPAGE_VAR_NZBGET_URL= "https://nzbget.d3adc3ii.site"
 # Karakeep
 HOMEPAGE_VAR_KARAKEEP_ICON= "/icons/karakeep.png"
 HOMEPAGE_VAR_KARAKEEP_URL= "https://kara.d3adc3ii.cc"
@@ -1408,6 +1390,13 @@ HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
 # Ommni Tools
 HOMEPAGE_VAR_OMNITOOLS_ICON= "sh-omnitools-light"
 HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
+
+########################################################################################################################################################################################################
+
+
+
+
+
 # Selfhst-icons
 HOMEPAGE_VAR_SELFHST_ICON= "sh-selfh-st-light" 
 HOMEPAGE_VAR_SELFHST_URL= "https://selfhst-icons.d3adc3ii.cc"
