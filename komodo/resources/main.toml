@@ -1133,15 +1133,8 @@ HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
 # Komodo
 HOMEPAGE_VAR_KOMODO_ICON= "/icons/docker-light.png"
 HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
-HOMEPAGE_VAR_KOMODO_KEY=K-vtbPvxMmX1XWDnFN0QuTY2VVaaXNiHVWLilfv7IP
-HOMEPAGE_VAR_KOMODO_SECRET=S-MrzRNua1nyIKQNIJcpkOJCFqLx2oSJsM4g6pzVJz
-
-
-
-
-
-
-
+HOMEPAGE_VAR_KOMODO_KEY="K-vtbPvxMmX1XWDnFN0QuTY2VVaaXNiHVWLilfv7IP"
+HOMEPAGE_VAR_KOMODO_SECRET="S-MrzRNua1nyIKQNIJcpkOJCFqLx2oSJsM4g6pzVJz"
 
 
 # PULSE
@@ -1153,7 +1146,10 @@ HOMEPAGE_VAR_PULSE_CLASSES= h-60 sm:h-60 md:h-100 lg:h-200 xl:h-300 2xl:h-700
 #HOMEPAGE_VAR_PULSE_HEIGHT= 500
 
 #### DOMAIN ####################################################################################################################################################################################################
-
+# Authentik
+HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik-light.png"
+HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3adc3ii.cc"
+HOMEPAGE_VAR_AUTHENTIK_KEY= "d3f4c0b1"
 # DNS
 HOMEPAGE_VAR_DNS_ICON= "/icons/technitium-light.png"
 HOMEPAGE_VAR_DNS_URL= "https://ns.d3adc3ii.site"
@@ -1162,6 +1158,13 @@ HOMEPAGE_VAR_DNS_RANGE: LastDay # optional, defaults to LastHour
 # GoDoxy
 HOMEPAGE_VAR_GODOXY_ICON= "/icons/godoxy-light.png"
 HOMEPAGE_VAR_GODOXY_URL= "https://doxy.d3adc3ii.site"
+# PANGOLIN
+HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin-light.png"
+HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.d3adc3ii.cc"
+
+
+
+
 
 #### NETWORK ####################################################################################################################################################################################################
 # NetAlertX 
@@ -1176,7 +1179,7 @@ HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
 HOMEPAGE_VAR_PHPIPAM_URL= "https://phpipam.d3adc3ii.cc/"
 HOMEPAGE_VAR_PHPIPAM_ICON= "/icons/phpipam-light.png"
 
-#### MONITORING####################################################################################################################################################################################################
+#### MONITORING  ####################################################################################################################################################################################################
 # SPEEDTEST
 HOMEPAGE_VAR_SPEEDTEST_ICON= "sh-speedtest-tracker-light"
 HOMEPAGE_VAR_SPEEDTEST_URL= "https://speedtest.d3adc3ii.site"
@@ -1255,22 +1258,7 @@ HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
 HOMEPAGE_VAR_NZBGET_ICON= "sh-nzbget-light"
 HOMEPAGE_VAR_NZBGET_URL= "https://nzbget.d3adc3ii.site"
 
-
-
-
-# Pangolin
-HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin-light.png"
-HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.d3adc3ii.cc"
-# Authentik
-HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik-light.png"
-HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3adc3ii.cc"
-HOMEPAGE_VAR_AUTHENTIK_KEY="Boy9GZM04gnN8zn1RdTDSxgkeDr70a8XqFKmrp1HwVx7A3u4GA2pnVN2aZEO"
-
-# Twingate
-HOMEPAGE_VAR_TWINGATE_ICON= "/icons/twingate.png"
-HOMEPAGE_VAR_TWINGATE_URL= "https://d3net.twinget.com"
-
-### Remote ###
+#### REMOTE ####################################################################################################################################################################################################
 # Guacamole
 HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/apache-guacamole-light.png"
 HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.d3adc3ii.site/guacamole"
@@ -1287,8 +1275,7 @@ HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
 HOMEPAGE_VAR_TERMIX_ICON= "sh-termix-light"
 HOMEPAGE_VAR_TERMIX_URL= "https://termix.d3adc3ii.cc"
 
-### Monitoring ###
-
+########################################################################################################################################################################################################
 # Grafana
 HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana-light.png"
 HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
@@ -1334,7 +1321,6 @@ HOMEPAGE_VAR_NAUTOBOT_ICON= "/icons/netbox-light.png"
 
 
 
-### APPS ###
 # Karakeep
 HOMEPAGE_VAR_KARAKEEP_ICON= "/icons/karakeep.png"
 HOMEPAGE_VAR_KARAKEEP_URL= "https://kara.d3adc3ii.cc"
