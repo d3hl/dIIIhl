@@ -43,7 +43,7 @@ layout:
   Logging:
       tab: Home
       style: column
-  Appplications:
+  Applications:
       tab: Home
       style: column
   Tools:
