@@ -39,14 +39,6 @@
         sitemonitor: {{HOMEPAGE_VAR_HA_URL}}
 ########################################################################################################################################################################################################
 - Domain:
-    - Authentik:
-        icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
-        href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
-        widget:
-            type: authentik
-            url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
-            key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}} 
     - Technitium:
         icon: {{HOMEPAGE_VAR_DNS_ICON}}
         href: {{HOMEPAGE_VAR_DNS_URL}}
