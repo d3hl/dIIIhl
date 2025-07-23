@@ -40,7 +40,7 @@ layout:
   Access:
       tab: Home
       style: column
-  Troubleshoot:
+  Logging:
       tab: Home
       style: column
   Appplications:
