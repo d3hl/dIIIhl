@@ -840,10 +840,11 @@ tags = [
   "internal",
   "core",
   "proxy",
-  "komodo-3"
+  "komodo-1"
 ]
 [stack.config]
 server = "komodo-1"
+links = ["https://doxy.d3adc3ii.site/"]
 project_name = "godoxy"
 poll_for_updates = true
 auto_update = true
@@ -2223,92 +2224,6 @@ environment = """
 SB_USER=[[SILVERBULLET_USER]]
 PGID=1000
 PUID=1000
-"""
-
-##
-
-[[stack]]
-name = "speedtest-tracker"
-tags = ["internal", "testing"]
-[stack.config]
-server = "komodo-1"
-project_name = "speedtest-tracker"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-networks:
-  d3internal:
-    external: true
-services:
-  speedtest-tracker:
-    image: lscr.io/linuxserver/speedtest-tracker:latest
-    container_name: speedtest
-    networks:
-      - d3internal
-    env_file:
-      - .env
-    environment:
-      - DB_CONNECTION=mariadb
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_DATABASE=speedtest_tracker
-      - DB_USERNAME=speedtest_tracker
-      - DB_PASSWORD=password
-    volumes:
-      - ${DOCKER_DATA}/speedtest-tracker/data:/config
-    ports:
-      - 8785:80
-    restart: unless-stopped
-    depends_on:
-      - db
-    labels:
-      - homepage.group=Monitor
-      - homepage.name=Speedtest Tracker
-      - homepage.icon=sh-speedtest-tracker-light
-      - homepage.href=https://speedtest.d3adc3ii.site/
-      - homepage.widget.type=speedtest
-      - homepage.widget.url=https://speedtest.d3adc3ii.site/
-      - homepage.widget.key=yourembyapikeyhere
-  db:
-        image: mariadb:11
-        restart: always
-        env_file:
-          - .env
-        environment:
-            - MYSQL_RANDOM_ROOT_PASSWORD=true
-        volumes:
-            - speedtest-db:/var/lib/mysql
-        healthcheck:
-            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-            interval: 5s
-            retries: 3
-            timeout: 5s
-volumes:
-  speedtest-db:
-"""
-environment = """
-APP_DEBUG=true
-PUID=1000
-PGID=1000
-DISPLAY_TIMEZONE=Asia/Singapore #optional
-PRUNE_RESULTS_OLDER_THAN=10 #optional
-
-SPEEDTEST_SCHEDULE= @hourly
-SPEEDTEST_SERVERS= 5935
-
-APP_KEY="base64:KbesVaBvct5cPnyLQBmWgFdY6u7DAVmoo8YFO8EV3W8="
-DB_DATABASE=speedtest_tracker
-APP_URL= http://192.168.2.31:8785
-#DB_CONNECTION=mariadb
-#DB_HOST=db
-#DB_PORT=3306
-#DB_DATABASE=speedtest_tracker
-#DB_USERNAME=speedtest_tracker
-#DB_PASSWORD=sVaBvct5cPnyLQBmWgFdY6u7DA
-MYSQL_DATABASE=speedtest_tracker
-MYSQL_USER=speedtest_tracker
-MYSQL_PASSWORD=password
 """
 
 ##
