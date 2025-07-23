@@ -7,8 +7,7 @@
             type: proxmox
             url: {{HOMEPAGE_VAR_PROXMOX_IP_PVE11}}
             username: {{HOMEPAGE_VAR_PROXMOX_USER}}
-           # password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}
-            password: 8cc78ffc-dd21-438f-8787-e4ab2ca48a16 
+            password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}
             node: pve11
     -  Truenas:
         id: truenas 
