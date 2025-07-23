@@ -7,9 +7,9 @@
             type: proxmox
             url: https://10.10.10.11:8006
             #username: {{HOMEPAGE_VAR_PROXMOX_USER}}
-            username: homepage@pve!homepage   
+            username: homepage@pam!api
             #password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}
-            password: dde7d522-1e7f-4a5f-a9cf-081b351a3a1f
+            password: 9a14e6c8-ccb0-44f1-82ff-88ed1bc9df1c
             node: pve11
     -  Truenas:
         id: truenas 
