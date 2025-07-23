@@ -80,7 +80,7 @@
         href: {{HOMEPAGE_VAR_SPEEDTEST_URL}}
         widget:
             type: speedtest
-            url: {{HOMEPAGE_VAR_SPEEDTEST_URL}} 
+            url: http://10.10.10.31:8785
             version: 2
             key: {{HOMEPAGE_VAR_SPEEDTEST_KEY}}
             bitratePrecision: 3 # optional, default is 0        
