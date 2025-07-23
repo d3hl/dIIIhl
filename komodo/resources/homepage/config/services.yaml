@@ -5,9 +5,11 @@
         sitemonitor: {{HOMEPAGE_VAR_PROXMOX_URL_PVE11}}
         widget:
             type: proxmox
-            url: {{HOMEPAGE_VAR_PROXMOX_IP_PVE11}}
-            username: {{HOMEPAGE_VAR_PROXMOX_USER}}
-            password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}
+            url: https://10.10.10.11:8006
+            #username: {{HOMEPAGE_VAR_PROXMOX_USER}}
+            username: homepage@pve!homepage   
+            #password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}
+            password: dde7d522-1e7f-4a5f-a9cf-081b351a3a1f
             node: pve11
     -  Truenas:
         id: truenas 
