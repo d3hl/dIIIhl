@@ -789,11 +789,16 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  d3internal:
+    external: true
 services:
   dumbpad:
     image: dumbwareio/dumbpad:latest
     container_name: dumbpad
     restart: unless-stopped
+    networks:
+      - d3internal
     ports:
       - 3765:3000
     volumes:
@@ -817,6 +822,11 @@ services:
       # By default, DumbPad includes support for all ~180 languages supported by highlight.js.
       # view entire list and usage in /docs/MARKDOWN_SYNTAX_HIGHLIGHTING_USAGE.md
       # HIGHLIGHT_LANGUAGES=c,csharp,css,dockerfile,go,html,java,javascript,json,kotlin,markdown,perl,php,python,ruby,sql,swift,typescript,xml,yaml
+    labels:
+      - homepage.group=Tools
+      - homepage.name=Dumbpad
+      - homepage.icon=sh-dumbpad-light
+      - homepage.href=https://dumbpad.d3adc3ii.cc/
 """
 environment = """
 DUMBPAD_PIN=210825
@@ -1274,10 +1284,13 @@ HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx-light.png"
 HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3adc3ii.site"
 HOMEPAGE_VAR_NETALERTX_KEY="t_pJ26L2qEeUcR6bz5RCGI"
 HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"] 
-
+# UPTIME KUMA
+HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma-light.png"
+HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
+HOMEPAGE_VAR_KUMA_KEY=uk1_CJtVJXDT8DFll97KXiPPXb6dEWHpOdBZXymKWLPn
 # PHPIPAM
 HOMEPAGE_VAR_PHPIPAM_URL= "https://phpipam.d3adc3ii.cc/"
-HOMEPAGE_VAR_PHPIPAM_ICON= "sh-phpmyadmin-light"
+HOMEPAGE_VAR_PHPIPAM_ICON= "sh-phpMyAdmin-light"
 # Nautobot
 HOMEPAGE_VAR_NAUTOBOT_URL= "https://nautobot.d3adc3ii.cc/"
 HOMEPAGE_VAR_NAUTOBOT_ICON= "/icons/netbox-light.png"
@@ -1289,10 +1302,6 @@ HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"# NETBOX CONSOLE
 HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
 
 #### MONITORING  ####################################################################################################################################################################################################
-# UPTIME KUMA
-HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma-light.png"
-HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
-HOMEPAGE_VAR_KUMA_KEY=uk1_CJtVJXDT8DFll97KXiPPXb6dEWHpOdBZXymKWLPn
 # Beszel
 HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel-light.png"
 HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
@@ -2436,10 +2445,15 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  d3internal:
+    external: true
 services:
   uptime-kuma:
     image: louislam/uptime-kuma:1
     container_name: uptime-kuma
+    networks: 
+      - d3internal
     env_file:
       - .env
     volumes:
@@ -2449,7 +2463,13 @@ services:
       - 3111:3001
     restart: always
     labels:
-      proxy.exclude: true
+      - homepage.group=Monitor
+      - homepage.name=Uptime Kuma
+      - homepage.icon=sh-uptime-kuma-light
+      - homepage.href=https://uptime.d3adc3ii.cc/
+      - homepage.widget.type=uptimekuma
+      - homepage.widget.url=https://uptime.d3adc3ii.cc
+      - homepage.widget.slug=ping
 """
 environment = """
 PUID=1000
