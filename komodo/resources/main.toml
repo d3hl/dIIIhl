@@ -1213,7 +1213,7 @@ HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
 HOMEPAGE_VAR_KUMA_KEY=uk1_CJtVJXDT8DFll97KXiPPXb6dEWHpOdBZXymKWLPn
 # PHPIPAM
 HOMEPAGE_VAR_PHPIPAM_URL= "https://phpipam.d3adc3ii.cc/"
-HOMEPAGE_VAR_PHPIPAM_ICON= "sh-phpMyAdmin-light.png"
+HOMEPAGE_VAR_PHPIPAM_ICON= "sh-phpMyAdmin-light"
 # Nautobot
 HOMEPAGE_VAR_NAUTOBOT_URL= "https://nautobot.d3adc3ii.cc/"
 HOMEPAGE_VAR_NAUTOBOT_ICON= "/icons/netbox-light.png"

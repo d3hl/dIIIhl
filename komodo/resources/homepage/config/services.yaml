@@ -85,6 +85,33 @@
         icon: {{HOMEPAGE_VAR_NAUTOBOT_ICON}}
         href: {{HOMEPAGE_VAR_NAUTOBOT_URL}}        
 ########################################################################################################################################################################################################
+- Monitor:
+    - Beszel:
+        icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
+        href: {{HOMEPAGE_VAR_BESZEL_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_BESZEL_URL}}
+        widget:
+            type: beszel
+            url: https://beszel.d3adc3ii.cc
+            #url: http://10.10.10.9:8090
+            username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+            password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+            version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
+            bitratePrecision: 3 # optional, default is 0        
+    - Wazuh:
+        icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
+        href: {{HOMEPAGE_VAR_WAZUH_URL}}
+        ping: {{HOMEPAGE_VAR_WAZUH_URL}}
+    - Healthcheck:
+        icon: {{HOMEPAGE_VAR_HEALTHCHECKS_ICON}}
+        href: {{HOMEPAGE_VAR_HEALTHCHECKS_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_HEALTHCHECKS_URL}}
+    - Smokeping:
+        icon: {{HOMEPAGE_VAR_SMOKEPING_ICON}}
+        href: {{HOMEPAGE_VAR_SMOKEPING_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_SMOKEPING_URL}}
+
+########################################################################################################################################################################################################
 ### CORP TAB ###    
 - Office Core:
     - PVECORP:

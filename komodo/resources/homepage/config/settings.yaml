@@ -28,6 +28,9 @@ layout:
   Network:
       tab: Home
       style: column
+  Monitor:
+      tab: Home
+      style: column
   Office Core:
       tab: Corp
       style: column
