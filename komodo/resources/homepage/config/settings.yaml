@@ -21,7 +21,6 @@ layout:
       style: column
       tab: Home
       icon: mdi-file-multiple
-  
   Office Core:
       tab: Corp
       style: column
