@@ -1309,9 +1309,6 @@ HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
 HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana-light.png"
 HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
 HOMEPAGE_VAR_GRAFANAPANGOLIN_URL= "https://grafana.d3adc3ii.cc/d/n5bu_kv45/traefik-official-standalone-dashboard"
-# Checkmate
-HOMEPAGE_VAR_CHECKMATE_ICON= "/icons/checkmate-light.png"
-HOMEPAGE_VAR_CHECKMATE_URL= "https://checkmate.d3adc3ii.cc"
 # Scutiny
 HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny-light.png"
 HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 

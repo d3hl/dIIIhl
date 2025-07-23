@@ -177,6 +177,30 @@
         href: {{HOMEPAGE_VAR_SHELLHUB_URL}}
     #- Termix:
 ########################################################################################################################################################################################################
+- Logging: 
+    - Dozzle:
+        icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
+        href: {{HOMEPAGE_VAR_DOZZLE_URL}}
+    - Grafana Cloud:
+        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+        href: {{HOMEPAGE_VAR_GRAFANAPANGOLIN_URL}}
+    - Grafana:
+        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+        href: {{HOMEPAGE_VAR_GRAFANA_URL}}
+    - Scrutiny:
+        icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
+        href: {{HOMEPAGE_VAR_SCRUTINY_URL}}     
+    - Pulse:
+        icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
+        href: {{HOMEPAGE_VAR_PULSEXT_URL}} 
+    - Zabbix:
+        icon: {{HOMEPAGE_VAR_ZABBIX_ICON}} 
+        href: {{HOMEPAGE_VAR_ZABBIX_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_ZABBIX_URL}}   
+
+########################################################################################################################################################################################################
+
+
 ### CORP TAB ###    
 - Office Core:
     - PVECORP:

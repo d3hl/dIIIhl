@@ -37,6 +37,12 @@ layout:
   Media:
       tab: Home
       style: column
+  Access:
+      tab: Home
+      style: column
+  Logging:
+      tab: Home
+      style: column
   Office Core:
       tab: Corp
       style: column
