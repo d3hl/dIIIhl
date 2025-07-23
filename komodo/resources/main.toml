@@ -91,6 +91,9 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  d3internal:
+    external: true
 services:
   postgresql:
     image: docker.io/library/postgres:16-alpine
@@ -109,6 +112,8 @@ services:
       POSTGRES_DB: ${PG_DB}
     env_file:
       - .env
+    labels:
+      proxy.exclude: true
   redis:
     image: docker.io/library/redis:alpine
     command: --save 60 1 --loglevel warning
@@ -126,6 +131,8 @@ services:
     restart: unless-stopped
     command: server
     container_name: authentik
+    networks:
+      - d3internal
     environment:
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
       AUTHENTIK_REDIS__HOST: redis
@@ -147,8 +154,13 @@ services:
       redis:
         condition: service_healthy
     labels:
-       proxy.aliases: auth
-       proxy.auth.port: 9000
+      - homepage.group=Domain
+      - homepage.name=Authentik
+      - homepage.icon=sh-authentik-light
+      - homepage.widget.type=authentik
+      - homepage.widget.url="https://auth.d3adc3ii.cc"
+      - homepage.href="https://auth.d3adc3ii.cc"
+      - homepage.widget.key="ZnhLrOvUoWZfHcQpFrteQVekOjpGQh48lXEVFn34HvGtT8eJoyhgaNYWb2mI"
   worker:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.2}
     restart: unless-stopped
@@ -179,7 +191,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-
+    labels:
+       proxy.exclude: true
 volumes:
   database:
     driver: local
@@ -1689,6 +1702,39 @@ services:
 """
 environment = """
 
+"""
+
+##
+
+[[stack]]
+name = "myspeed"
+tags = ["komodo-1"]
+[stack.config]
+server = "komodo-1"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+networks:
+  d3internal:
+    external: true
+services:
+  myspeed:
+    image: germannewsmaker/myspeed
+    container_name: myspeed
+    networks:
+      - default
+      - d3internal
+    ports:
+      - 5216:5216
+    volumes:
+      - ${DOCKER_DATA}/myspeed/data:/data
+    restart: unless-stopped
+    labels:
+      - homepage.group=Monitor
+      - homepage.name=Myspeed
+      - homepage.icon=myspeed.png
+      - homepage.href=https://myspeed.d3adc3ii.site/
 """
 
 ##
