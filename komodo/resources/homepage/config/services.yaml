@@ -65,13 +65,6 @@
             key: {{HOMEPAGE_VAR_NETALERTX_KEY}}
             url: {{HOMEPAGE_VAR_NETALERTX_URL}}
             fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
-    - Uptime-Kuma:
-        icon: {{HOMEPAGE_VAR_KUMA_ICON}}
-        href: {{HOMEPAGE_VAR_KUMA_URL}}
-        widget:
-            type: uptimekuma
-            url: {{HOMEPAGE_VAR_KUMA_URL}}
-            slug: ping
     - PHPIPAM:
         icon: {{HOMEPAGE_VAR_PHPIPAM_ICON}}
         href: {{HOMEPAGE_VAR_PHPIPAM_URL}}
@@ -97,6 +90,7 @@
             password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
             version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
             bitratePrecision: 3 
+    # - Uptime Kuma:
     - Wazuh:
         icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
         href: {{HOMEPAGE_VAR_WAZUH_URL}}
