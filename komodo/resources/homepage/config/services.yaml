@@ -27,7 +27,7 @@
         sitemonitor: {{HOMEPAGE_VAR_KOMODO_URL}}
         widget:
             type: komodo
-            url:  {{HOMEPAGE_VAR_KOMODO_API_URL}}
+            url: http://10.10.10.31:9120 
             key: K-69zvNUYoxn5KREW5nVpLqeLa741U7NHmPXoEx4S1
             secret: S-5hhHrLWPfLHPJCRGBMV2auU7QsqfUaGrTJYuOW9M 
             showSummary: true # optional, default: false
