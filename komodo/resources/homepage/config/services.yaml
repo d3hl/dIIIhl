@@ -87,14 +87,6 @@
         href: {{HOMEPAGE_VAR_PHPIPAM_URL}}
 ########################################################################################################################################################################################################
 - Monitor:
-    - Speedtest:
-        icon: {{HOMEPAGE_VAR_SPEEDTEST_ICON}}
-        href: {{HOMEPAGE_VAR_SPEEDTEST_URL}}
-        widget:
-            type: speedtest
-            url: {{HOMEPAGE_VAR_SPEEDTEST_URL}}
-            version: 2
-            key: {{HOMEPAGE_VAR_SPEEDTEST_KEY}}
     - Beszel:
         icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
         href: {{HOMEPAGE_VAR_BESZEL_URL}}
