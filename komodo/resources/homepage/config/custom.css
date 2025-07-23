@@ -208,7 +208,9 @@ button[id$='-tab']:hover {
   --gap: var(--spacing-md);
   --cols-4: calc(25% - (var(--gap) * 3 / 4));
   --cols-5: calc(20% - (var(--gap) * 4 / 5));
+  --cols-6: calc(16.667% - (var(--gap) * 5 / 6));
  
+  --cols-5: calc(20% - (var(--gap) * 4 / 5));
   display: flex;
   flex-wrap: wrap;
   gap: var(--gap) !important;
@@ -225,8 +227,8 @@ button[id$='-tab']:hover {
 }
 /* Services 10-12 - 20% width each */
 :is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="Home-tab"])) #layout-groups > .services-group:nth-child(n+10):nth-child(-n+11) {
-  flex: 1 1 var(--cols-2) !important;
-  max-width: var(--cols-2) !important;
+  flex: 1 1 var(--cols-6) !important;
+  max-width: var(--cols-6) !important;
 }
 /* Hide services after the 12th one */
 :is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="Home-tab"])) #layout-groups > .services-group:nth-child(n+12) {
