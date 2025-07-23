@@ -204,7 +204,7 @@ button[id$='-tab']:hover {
   LAYOUT GROUP STYLES - HOMEPAGE
 ==================================*/
 /* Homepage layout container with calculations */
-:is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="HOME-tab"])) #layout-groups {
+:is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="Home-tab"])) #layout-groups {
   --gap: var(--spacing-md);
   --cols-4: calc(25% - (var(--gap) * 3 / 4));
   --cols-5: calc(20% - (var(--gap) * 4 / 5));
