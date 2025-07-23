@@ -31,6 +31,12 @@ layout:
   Monitor:
       tab: Home
       style: column
+  Backup:
+      tab: Home
+      style: column
+  Media:
+      tab: Home
+      style: column
   Office Core:
       tab: Corp
       style: column
