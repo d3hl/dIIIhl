@@ -29,7 +29,7 @@
             type: komodo
             url:  {{HOMEPAGE_VAR_KOMODO_API_URL}}
             key: K-vtbPvxMmX1XWDnFN0QuTY2VVaaXNiHVWLilfv7IP
-            secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
+            secret: S-MrzRNua1nyIKQNIJcpkOJCFqLx2oSJsM4g6pzVJz
             showSummary: true # optional, default: false
             showStacks: true # optional, default: false
     - Homeassistant:
