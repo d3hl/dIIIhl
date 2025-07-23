@@ -196,11 +196,47 @@
     - Zabbix:
         icon: {{HOMEPAGE_VAR_ZABBIX_ICON}} 
         href: {{HOMEPAGE_VAR_ZABBIX_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_ZABBIX_URL}}   
+        sitemonitor: {{HOMEPAGE_VAR_ZABBIX_URL}}
+    - Checkmk:
+        icon: {{HOMEPAGE_VAR_CHECKMK_ICON}}
+        href: {{HOMEPAGE_VAR_CHECKMK_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_CHECKMK_URL}}   
 
 ########################################################################################################################################################################################################
+- Appplications:
+    #- Karakeep:
+    - Actual:
+        icon: {{HOMEPAGE_VAR_ACTUAL_ICON}}
+        href: {{HOMEPAGE_VAR_ACTUAL_URL}}
+    - SteamentSensei:
+        icon: {{HOMEPAGE_VAR_SENSEI_ICON}}
+        href: {{HOMEPAGE_VAR_SENSEI_URL}} 
+        sitemonitor: {{HOMEPAGE_VAR_SENSEI_URL}}
 
+    - aria2:
+        icon: {{HOMEPAGE_VAR_ARIA_ICON}}
+        href: {{HOMEPAGE_VAR_ARIA_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_ARIA_URL}}
+    - nzbget:
+        icon: {{HOMEPAGE_VAR_NZBGET_ICON}}
+        href: {{HOMEPAGE_VAR_NZBGET_URL}}
+        ping: {{HOMEPAGE_VAR_NZBGET_URL}}
+    - wallos:
+        icon: {{HOMEPAGE_VAR_WALLOS_ICON}} 
+        href: {{HOMEPAGE_VAR_WALLOS_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_WALLOS_URL}}
+    - Omni-tools:
+        icon: {{HOMEPAGE_VAR_OMNITOOLS_ICON}} 
+        href: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
 
+########################################################################################################################################################################################################
+- Tools:
+    - Semaphore:
+        icon: {{HOMEPAGE_VAR_SEMAPHORE_ICON}}
+        href: {{HOMEPAGE_VAR_SEMAPHORE_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_SEMAPHORE_URL}}
+########################################################################################################################################################################################################
 ### CORP TAB ###    
 - Office Core:
     - PVECORP:

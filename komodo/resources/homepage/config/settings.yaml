@@ -43,6 +43,12 @@ layout:
   Logging:
       tab: Home
       style: column
+  Appplications:
+      tab: Home
+      style: column
+  Tools:
+      tab: Home
+      style: column
   Office Core:
       tab: Corp
       style: column
