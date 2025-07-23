@@ -34,7 +34,56 @@
             showSummary: true # optional, default: false
             showStacks: true # optional, default: false
 ########################################################################################################################################################################################################
+- Domain:
+    # - Authentik
+    - Technitium:
+        icon: {{HOMEPAGE_VAR_DNS_ICON}}
+        href: {{HOMEPAGE_VAR_DNS_URL}}
+        ping: {{HOMEPAGE_VAR_DNS_URL}}
+        widget:
+            type: technitium
+            url: {{HOMEPAGE_VAR_DNS_URL}}
+            key: {{HOMEPAGE_VAR_DNS_KEY}}
+            range: {{HOMEPAGE_VAR_DNS_RANGE}}
+    - GoDoxy:
+        icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
+        href: {{HOMEPAGE_VAR_GODOXY_URL}} 
+        ping: {{HOMEPAGE_VAR_GODOXY_URL}}
+    - Pangolin:
+        icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
+        href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
 
+########################################################################################################################################################################################################
+- Network:
+    - NetAlertX:
+        icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
+        href: {{HOMEPAGE_VAR_NETALERTX_URL}}
+        ping: {{HOMEPAGE_VAR_NETALERTX_URL}}
+        widget:
+            type: netalertx
+            key: {{HOMEPAGE_VAR_NETALERTX_KEY}}
+            url: {{HOMEPAGE_VAR_NETALERTX_URL}}
+            fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
+    - Uptime-Kuma:
+        icon: {{HOMEPAGE_VAR_KUMA_ICON}}
+        href: {{HOMEPAGE_VAR_KUMA_URL}}
+        widget:
+            type: uptimekuma
+            url: {{HOMEPAGE_VAR_KUMA_URL}}
+            slug: ping
+    - PHPIPAM:
+        icon: {{HOMEPAGE_VAR_PHPIPAM_ICON}}
+        href: {{HOMEPAGE_VAR_PHPIPAM_URL}}
+    - Netbox Cloud:
+        icon: {{HOMEPAGE_VAR_NETBOX_ICON}}
+        href: {{HOMEPAGE_VAR_NETBOXCL_URL}}
+    - Netbox Console:
+        icon: {{HOMEPAGE_VAR_NETBOX_ICON}}
+        href: {{HOMEPAGE_VAR_NETBOXCS_URL}}
+    - Nautobox:
+        icon: {{HOMEPAGE_VAR_NAUTOBOT_ICON}}
+        href: {{HOMEPAGE_VAR_NAUTOBOT_URL}}        
 ########################################################################################################################################################################################################
 ### CORP TAB ###    
 - Office Core:
