@@ -21,37 +21,7 @@ layout:
       style: column
       tab: Home
       icon: mdi-file-multiple
-  Domain:
-      style: column
-      tab: Home
-      icon: mdi-multimedia
-  Network:
-      tab: Home
-      style: column
-  Monitor:
-      tab: Home
-      style: column
-  Backup:
-      tab: Home
-      style: column
-  Media:
-      tab: Home
-      style: column
-  Access:
-      tab: Home
-      style: column
-  Logging:
-      tab: Home
-      style: column
-  Appplications:
-      tab: Home
-      style: column
-  Tools:
-      tab: Home
-      style: column
-  Extras:
-      tab: Home
-      style: column
+  
   Office Core:
       tab: Corp
       style: column
