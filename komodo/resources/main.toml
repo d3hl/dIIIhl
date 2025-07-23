@@ -840,10 +840,11 @@ tags = [
   "internal",
   "core",
   "proxy",
-  "komodo-3"
+  "komodo-1"
 ]
 [stack.config]
 server = "komodo-1"
+links = ["https://doxy.d3adc3ii.site/"]
 project_name = "godoxy"
 poll_for_updates = true
 auto_update = true
@@ -2240,6 +2241,8 @@ file_contents = """
 networks:
   d3internal:
     external: true
+volumes:
+  speedtest-db:
 services:
   speedtest-tracker:
     image: lscr.io/linuxserver/speedtest-tracker:latest
@@ -2271,21 +2274,19 @@ services:
       - homepage.widget.url=https://speedtest.d3adc3ii.site/
       - homepage.widget.key=yourembyapikeyhere
   db:
-        image: mariadb:11
-        restart: always
-        env_file:
-          - .env
-        environment:
-            - MYSQL_RANDOM_ROOT_PASSWORD=true
-        volumes:
-            - speedtest-db:/var/lib/mysql
-        healthcheck:
-            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-            interval: 5s
-            retries: 3
-            timeout: 5s
-volumes:
-  speedtest-db:
+    image: mariadb:11
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+    volumes:
+      - speedtest-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 3
+      timeout: 5s
 """
 environment = """
 APP_DEBUG=true
@@ -2299,7 +2300,7 @@ SPEEDTEST_SERVERS= 5935
 
 APP_KEY="base64:KbesVaBvct5cPnyLQBmWgFdY6u7DAVmoo8YFO8EV3W8="
 DB_DATABASE=speedtest_tracker
-APP_URL= http://192.168.2.31:8785
+APP_URL= http://10.10.10.25:8785
 #DB_CONNECTION=mariadb
 #DB_HOST=db
 #DB_PORT=3306
