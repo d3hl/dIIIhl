@@ -4,6 +4,9 @@ my-docker:
 komodo-3:
   host: 10.10.10.27
   port: 2375
+dockerproxy-26:
+  host: 10.10.10.26
+  port: 2375
   #tls:
   #  keyFile: tls/server-key.pem
   #  caFile: tls/ca.pem

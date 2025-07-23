@@ -1332,9 +1332,7 @@ HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3adc3ii.site"
 # Sensei
 HOMEPAGE_VAR_SENSEI_ICON= "sh-sentry-light"
 HOMEPAGE_VAR_SENSEI_URL= "https://statement.d3adc3ii.site"
-# Semaphore
-HOMEPAGE_VAR_SEMAPHORE_ICON= "/icons/semaphore-ui-light.png"
-HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3adc3ii.site"
+
 # Aria2
 HOMEPAGE_VAR_ARIA_ICON= "sh-aria2-light"
 HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
@@ -1352,7 +1350,9 @@ HOMEPAGE_VAR_OMNITOOLS_ICON= "sh-omnitools-light"
 HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
 
 #### TOOLS ####################################################################################################################################################################################################
-
+# Semaphore
+HOMEPAGE_VAR_SEMAPHORE_ICON= "/icons/semaphore-ui-light.png"
+HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3adc3ii.site"
 #### EXTRAS ####################################################################################################################################################################################################
 # Selfhst-icons
 HOMEPAGE_VAR_SELFHST_ICON= "sh-selfh-st-light" 

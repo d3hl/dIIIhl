@@ -49,6 +49,9 @@ layout:
   Tools:
       tab: Home
       style: column
+  Extras:
+      tab: Home
+      style: column
   Office Core:
       tab: Corp
       style: column
