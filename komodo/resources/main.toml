@@ -1176,6 +1176,7 @@ HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"]
 # UPTIME KUMA
 HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma-light.png"
 HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
+HOMEPAGE_VAR_KUMA_KEY=uk1_CJtVJXDT8DFll97KXiPPXb6dEWHpOdBZXymKWLPn
 # PHPIPAM
 HOMEPAGE_VAR_PHPIPAM_URL= "https://phpipam.d3adc3ii.cc/"
 HOMEPAGE_VAR_PHPIPAM_ICON= "/icons/phpipam-light.png"
