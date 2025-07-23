@@ -1150,7 +1150,7 @@ HOMEPAGE_VAR_PULSE_CLASSES= h-60 sm:h-60 md:h-100 lg:h-200 xl:h-300 2xl:h-700
 # Authentik
 HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik-light.png"
 HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3adc3ii.cc"
-HOMEPAGE_VAR_AUTHENTIK_KEY= "d3f4c0b1"
+HOMEPAGE_VAR_AUTHENTIK_KEY= "ZnhLrOvUoWZfHcQpFrteQVekOjpGQh48lXEVFn34HvGtT8eJoyhgaNYWb2mI"
 # DNS
 HOMEPAGE_VAR_DNS_ICON= "/icons/technitium-light.png"
 HOMEPAGE_VAR_DNS_URL= "https://ns.d3adc3ii.site"
