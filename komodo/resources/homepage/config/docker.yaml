@@ -4,9 +4,9 @@ my-docker:
 komodo-3:
   host: 10.10.10.27
   port: 2375
-  tls:
-    keyFile: tls/server-key.pem
-    caFile: tls/ca.pem
-    certFile: tls/server-cert.pem
+  #tls:
+  #  keyFile: tls/server-key.pem
+  #  caFile: tls/ca.pem
+  #  certFile: tls/server-cert.pem
   #port: 443
   #protocol: https
