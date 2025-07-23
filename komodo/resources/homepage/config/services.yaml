@@ -28,7 +28,7 @@
         widget:
             type: komodo
             url:  {{HOMEPAGE_VAR_KOMODO_API_URL}}
-            key: {{HOMEPAGE_VAR_KOMODO_KEY}}
+            key: K-vtbPvxMmX1XWDnFN0QuTY2VVaaXNiHVWLilfv7IP
             secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
             showSummary: true # optional, default: false
             showStacks: true # optional, default: false
