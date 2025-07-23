@@ -1,5 +1,8 @@
 my-docker:
   host: dockerproxy
   port: 2375
+my-docker2:
+  host: socket-proxy
+  port: 2375  
 #  port: 443
   #protocol: https
