@@ -201,7 +201,7 @@ button[id$='-tab']:hover {
 }
 
 /*==================================
-  LAYOUT GROUP STYLES - HOMEPAGE
+  LAYOUT GROUP STYLES - HOME
 ==================================*/
 /* Homepage layout container with calculations */
 :is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="Home-tab"])) #layout-groups {
@@ -209,8 +209,6 @@ button[id$='-tab']:hover {
   --cols-4: calc(25% - (var(--gap) * 3 / 4));
   --cols-5: calc(20% - (var(--gap) * 4 / 5));
   --cols-6: calc(16.667% - (var(--gap) * 5 / 6));
- 
-  --cols-5: calc(20% - (var(--gap) * 4 / 5));
   display: flex;
   flex-wrap: wrap;
   gap: var(--gap) !important;
@@ -225,7 +223,7 @@ button[id$='-tab']:hover {
   flex: 1 1 var(--cols-5) !important;
   max-width: var(--cols-5) !important;
 }
-/* Services 10-12 - 20% width each */
+/* Services 10-12 - 16.667% width each */
 :is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="Home-tab"])) #layout-groups > .services-group:nth-child(n+10):nth-child(-n+11) {
   flex: 1 1 var(--cols-6) !important;
   max-width: var(--cols-6) !important;
@@ -234,6 +232,41 @@ button[id$='-tab']:hover {
 :is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="Home-tab"])) #layout-groups > .services-group:nth-child(n+12) {
   display: none !important;
 }
+/*==================================
+  LAYOUT GROUP STYLES - CORP
+==================================*/
+/* Homepage layout container with calculations */
+:is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="Home-tab"])) #layout-groups {
+  --gap: var(--spacing-md);
+  --cols-4: calc(25% - (var(--gap) * 3 / 4));
+  --cols-5: calc(20% - (var(--gap) * 4 / 5));
+  --cols-6: calc(16.667% - (var(--gap) * 5 / 6));
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap) !important;
+}
+/* First four services - 25% width each */
+:is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="Corp-tab"])) #layout-groups > .services-group:nth-child(-n+4) {
+  flex: 1 1 var(--cols-4) !important;
+  max-width: var(--cols-4) !important;
+}
+/* Services 5-9 - 20% width each */
+:is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="Corp-tab"])) #layout-groups > .services-group:nth-child(n+5):nth-child(-n+9) {
+  flex: 1 1 var(--cols-5) !important;
+  max-width: var(--cols-5) !important;
+}
+/* Services 10-12 - 16.667% width each */
+:is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="Corp-tab"])) #layout-groups > .services-group:nth-child(n+10):nth-child(-n+11) {
+  flex: 1 1 var(--cols-6) !important;
+  max-width: var(--cols-6) !important;
+}
+/* Hide services after the 12th one */
+:is([id="inner_wrapper"]:has(#tabs [aria-selected="true"][id="Corp-tab"])) #layout-groups > .services-group:nth-child(n+12) {
+  display: none !important;
+}
+
+
+
 
 /*==================================
   LAYOUT GROUP STYLES - STAT
