@@ -3,7 +3,7 @@ my-docker:
   port: 2375
 komodo-3:
   host: 10.10.10.27
-  port: 2376
+  port: 2375
   tls:
     keyFile: tls/server-key.pem
     caFile: tls/ca.pem
