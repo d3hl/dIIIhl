@@ -162,6 +162,21 @@
             stashapikey: {{HOMEPAGE_VAR_STASH_API}}
 
 ########################################################################################################################################################################################################
+- Access:
+    - Guacamole (External):
+        icon: {{HOMEPAGE_VAR_GUACAMOLE_ICON}} 
+        href: {{HOMEPAGE_VAR_GUACAMOLEEXT_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_GUACAMOLEEXT_URL}}
+    - Guacamole:
+        icon: {{HOMEPAGE_VAR_GUACAMOLE_ICON}} 
+        href: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
+    #- Dumbterm:
+    - Shellhub:
+        icon: {{HOMEPAGE_VAR_SHELLHUB_ICON}}
+        href: {{HOMEPAGE_VAR_SHELLHUB_URL}}
+    #- Termix:
+########################################################################################################################################################################################################
 ### CORP TAB ###    
 - Office Core:
     - PVECORP:

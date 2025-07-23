@@ -1291,18 +1291,9 @@ HOMEPAGE_VAR_QBIT_API= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN
 HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/apache-guacamole-light.png"
 HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.d3adc3ii.site/guacamole"
 HOMEPAGE_VAR_GUACAMOLEEXT_URL= "https://guaca.d3adc3ii.cc/guacamole"
-# Dumbterm
-HOMEPAGE_VAR_DUMBTERM_ICON= "/icons/dumbterm-light.png"
-HOMEPAGE_VAR_DUMBTERM_URL= "https://dumbterm.d3adc3ii.cc"
-
 # SHELLHUB
 HOMEPAGE_VAR_SHELLHUB_ICON= "sh-shellhub-light"
 HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
-
-# Termix
-HOMEPAGE_VAR_TERMIX_ICON= "sh-termix-light"
-HOMEPAGE_VAR_TERMIX_URL= "https://termix.d3adc3ii.cc"
-
 
 #### LOGGING ####################################################################################################################################################################################################
 # Grafana
