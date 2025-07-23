@@ -559,9 +559,9 @@ networks:
   d3internal:
     external: true
 services:
-  socket-proxy:
+  dockerproxy-27:
     image: lscr.io/linuxserver/socket-proxy:latest
-    container_name: socket-proxy
+    container_name: dockerproxy-27
     networks:
       - d3internal
     environment:
@@ -1133,7 +1133,7 @@ services:
 """
 environment = """
 HOMEPAGE_DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/
-HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,10.10.10.31:3000"
+HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,10.10.10.25:3000"
 PGID= [[PGID]] 
 PUID= [[PUID]] 
 # Site Config
