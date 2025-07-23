@@ -708,7 +708,7 @@ environment = """
 DOZZLE_ENABLE_ACTIONS=true
 DOZZLE_ENABLE_SHELL=true
 #DOZZLE_AUTH_PROVIDER: forward-proxy
-DOZZLE_REMOTE_AGENT=10.10.10.31:7007,10.10.10.32:7007
+DOZZLE_REMOTE_AGENT=10.10.10.25:7007,10.10.10.26:7007
 """
 
 ##
@@ -1191,7 +1191,7 @@ HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
 # Komodo
 HOMEPAGE_VAR_KOMODO_ICON= "/icons/docker-light.png"
 HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
-HOMEPAGE_VAR_KOMODO_IPURL= "http://10.10.10.31:9120"
+HOMEPAGE_VAR_KOMODO_IPURL= "http://10.10.10.25:9120"
 HOMEPAGE_VAR_KOMODO_KEY=K-69zvNUYoxn5KREW5nVpLqeLa741U7NHmPXoEx4S1
 HOMEPAGE_VAR_KOMODO_SECRET=S-5hhHrLWPfLHPJCRGBMV2auU7QsqfUaGrTJYuOW9M
 
@@ -1276,7 +1276,7 @@ HOMEPAGE_VAR_REMOTEBACKUP_URL= "https://dashboard.remote-backups.com"
 # Jellyfin
 HOMEPAGE_VAR_JELLY_ICON= "/icons/jellyfin-light.png"
 HOMEPAGE_VAR_JELLY_URL= "https://jelly.d3adc3ii.site"
-HOMEAGE_VAR_JELLY_WIDGETURL= "http://10.10.10.33:8096"
+HOMEAGE_VAR_JELLY_WIDGETURL= "http://10.10.10.27:8096"
 HOMEPAGE_VAR_JELLY_KEY=a6a45c61dd1d4f059b02fa22ad8c0ef3
 HOMEPAGE_VAR_JELLY_ENABLEBLOCK=true
 HOMEPAGE_VAR_JELLY_NOWPLAY=false
@@ -1782,7 +1782,7 @@ environment = """
 # change to an unused IP in your LAN subnet -- will be the same value on both stacks
 VIRTUAL_IP=10.10.10.16
 # Host IP of the other machine
-CHECK_IP=10.10.10.33
+CHECK_IP=10.10.10.27
 CHECK_PORT=53
 """
 
@@ -1842,7 +1842,7 @@ environment = """
 # change to an unused IP in your LAN subnet -- will be the same value on both stacks
 VIRTUAL_IP=10.10.10.16
 # Host IP of the other machine
-CHECK_IP=10.10.10.31
+CHECK_IP=10.10.10.25
 CHECK_PORT=53
 """
 
@@ -2578,7 +2578,7 @@ name = "discord-webhook"
 [alerter.config]
 enabled = true
 endpoint.type = "Custom"
-endpoint.params.url = "http://10.10.10.32:7000"
+endpoint.params.url = "http://10.10.10.26:7000"
 alert_types = [
   "ServerUnreachable",
   "ServerMem",
