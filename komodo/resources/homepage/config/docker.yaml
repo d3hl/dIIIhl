@@ -3,6 +3,6 @@ my-docker:
   port: 2375
 dockerproxy-27:
   host: 10.10.10.27
-  #port: 2375  
-  port: 443
-  protocol: https
+  port: 2375  
+  #port: 443
+  #protocol: https
