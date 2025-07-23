@@ -775,15 +775,21 @@ tags = [
 ]
 [stack.config]
 server = "komodo-2"
+links = ["https://dumbterm.d3adc3ii.cc"]
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  d3internal: 
+    external: true
 services:
   dumbterm:
     image: dumbwareio/dumbterm:latest
     container_name: dumbterm
     restart: unless-stopped
+    networks:
+      - d3internal
     ports:
       - ${DUMBTERM_PORT}:3000
     volumes:
@@ -805,7 +811,10 @@ services:
       # (OPTIONAL) - List of allowed origins for CORS
       # ALLOWED_ORIGINS: ${DUMBTERM_ALLOWED_ORIGINS:-http://localhost:3000}
     labels:
-      proxy.idle_timeout: 30m
+      - homepage.group=Access
+      - homepage.name=Dumbterm
+      - homepage.icon=sh-dumbterm-light
+      - homepage.href=https://dumbterm.d3adc3ii.cc
 """
 environment = """
 DUMBTERM_CONFIG="/mnt/zApps/dumbterm/config"
@@ -2290,21 +2299,32 @@ VAULT=/mnt/zFiles
 name = "termix"
 [stack.config]
 server = "komodo-1"
+links = ["https://termix.d3adc3ii.cc"]
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  d3internal:
+    external: true
 services:
   termix:
     image: ghcr.io/lukegus/termix:latest
     container_name: termix
     restart: unless-stopped
+    networks:
+      - d3internal
     ports:
       - "8282:8080"
     volumes:
       - ${DOCKER_DATA}/termix/data:/app/data
     env_file:
       - .env
+    labels:
+      - homepage.group=Access
+      - homepage.name=Termix
+      - homepage.icon=sh-termix-light
+      - homepage.href=https://termix.d3adc3ii.cc
 """
 environment = """
 SALT: "tJ,V_^12phQ=66k'<v*7G?-Qw:/o)dom"
