@@ -1184,14 +1184,6 @@ HOMEPAGE_VAR_KOMODO_IPURL= "http://10.10.10.25:9120"
 HOMEPAGE_VAR_KOMODO_KEY=K-69zvNUYoxn5KREW5nVpLqeLa741U7NHmPXoEx4S1
 HOMEPAGE_VAR_KOMODO_SECRET=S-5hhHrLWPfLHPJCRGBMV2auU7QsqfUaGrTJYuOW9M
 
-# PULSE
-HOMEPAGE_VAR_PULSE_URL= "http://10.10.10.36:7655"
-HOMEPAGE_VAR_PULSE_ALLOWFULLSCREEN= true
-HOMEPAGE_VAR_PULSE_LOADING_STRATEGY=eager
-HOMEPAGE_VAR_PULSE_ALLOW_SCROLLING=false
-HOMEPAGE_VAR_PULSE_CLASSES= h-60 sm:h-60 md:h-100 lg:h-200 xl:h-300 2xl:h-700
-#HOMEPAGE_VAR_PULSE_HEIGHT= 500
-
 #### DOMAIN ####################################################################################################################################################################################################
 # Authentik
 HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik-light.png"
@@ -1222,6 +1214,7 @@ HOMEPAGE_VAR_KUMA_KEY=uk1_CJtVJXDT8DFll97KXiPPXb6dEWHpOdBZXymKWLPn
 # PHPIPAM
 HOMEPAGE_VAR_PHPIPAM_URL= "https://phpipam.d3adc3ii.cc/"
 HOMEPAGE_VAR_PHPIPAM_ICON= "sh-phpMyAdmin-light.png"
+# Nautobot
 HOMEPAGE_VAR_NAUTOBOT_URL= "https://nautobot.d3adc3ii.cc/"
 HOMEPAGE_VAR_NAUTOBOT_ICON= "/icons/netbox-light.png"
 # NETBOX CLOUD
@@ -1232,12 +1225,20 @@ HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"# NETBOX CONSOLE
 HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
 
 #### MONITORING  ####################################################################################################################################################################################################
+# Beszel
+HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel-light.png"
+HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
+HOMEPAGE_VAR_BESZEL_USERNAME= "d3social@pm.me"
+HOMEPAGE_VAR_BESZEL_PASSWORD= "LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re"
+HOMEPAGE_VAR_BESZEL_VERSION= "2"
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11= pve11
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12= pve12
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13= pve13
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs= pbs
+HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"]
 # SPEEDTEST
 HOMEPAGE_VAR_SPEEDTEST_ICON= "sh-speedtest-tracker-light"
 HOMEPAGE_VAR_SPEEDTEST_URL= "https://speedtest.d3adc3ii.site"
-# Dozzle
-HOMEPAGE_VAR_DOZZLE_ICON= "sh-dozzle-light"
-HOMEPAGE_VAR_DOZZLE_URL= "https://dozzle.d3adc3ii.site"
 # Wazuh
 HOMEPAGE_VAR_WAZUH_ICON= "/icons/wazuh-light.png"
 HOMEPAGE_VAR_WAZUH_URL= "https://wazuh.d3adc3ii.site"
@@ -1311,17 +1312,6 @@ HOMEPAGE_VAR_GRAFANAPANGOLIN_URL= "https://grafana.d3adc3ii.cc/d/n5bu_kv45/traef
 # Checkmate
 HOMEPAGE_VAR_CHECKMATE_ICON= "/icons/checkmate-light.png"
 HOMEPAGE_VAR_CHECKMATE_URL= "https://checkmate.d3adc3ii.cc"
-# Beszel
-HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel-light.png"
-HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
-HOMEPAGE_VAR_BESZEL_USERNAME= "d3social@pm.me"
-HOMEPAGE_VAR_BESZEL_PASSWORD= "LWHAmofkUAagBb8Zx4onH3EiraK8ZCpauKZiGbr5Re"
-HOMEPAGE_VAR_BESZEL_VERSION= "2"
-HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11= pve11
-HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12= pve12
-HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13= pve13
-HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs= pbs
-HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"]
 # Scutiny
 HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny-light.png"
 HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
@@ -1331,7 +1321,9 @@ HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.d3adc3ii.cc/zabbix"
 # Checkmk
 HOMEPAGE_VAR_CHECKMK_ICON= "/icons/checkmk-light.png"
 HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"
-
+# Dozzle
+HOMEPAGE_VAR_DOZZLE_ICON= "sh-dozzle-light"
+HOMEPAGE_VAR_DOZZLE_URL= "https://dozzle.d3adc3ii.site"
 # Pulse
 HOMEPAGE_VAR_PULSEXT_ICON= "sh-proxmox-light"
 HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
@@ -1362,12 +1354,9 @@ HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
 HOMEPAGE_VAR_OMNITOOLS_ICON= "sh-omnitools-light"
 HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
 
-########################################################################################################################################################################################################
+#### TOOLS ####################################################################################################################################################################################################
 
-
-
-
-
+#### EXTRAS ####################################################################################################################################################################################################
 # Selfhst-icons
 HOMEPAGE_VAR_SELFHST_ICON= "sh-selfh-st-light" 
 HOMEPAGE_VAR_SELFHST_URL= "https://selfhst-icons.d3adc3ii.cc"

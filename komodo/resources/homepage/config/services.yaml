@@ -112,6 +112,7 @@
         icon: {{HOMEPAGE_VAR_SMOKEPING_ICON}}
         href: {{HOMEPAGE_VAR_SMOKEPING_URL}}
         sitemonitor: {{HOMEPAGE_VAR_SMOKEPING_URL}}
+  
 ########################################################################################################################################################################################################
 - Backup: 
     - PBS: 
@@ -195,6 +196,9 @@
     - Scrutiny:
         icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
         href: {{HOMEPAGE_VAR_SCRUTINY_URL}}     
+    - Pulse:
+        icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
+        href: {{HOMEPAGE_VAR_PULSEXT_URL}}              
 ########################################################################################################################################################################################################
 - Appplications:
     - Actual:
@@ -230,9 +234,7 @@
         sitemonitor: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
 ########################################################################################################################################################################################################
 - Tools:
-    - Pulse:
-        icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
-        href: {{HOMEPAGE_VAR_PULSEXT_URL}}
+
     - zabbix:
         icon: {{HOMEPAGE_VAR_ZABBIX_ICON}} 
         href: {{HOMEPAGE_VAR_ZABBIX_URL}}
