@@ -1500,7 +1500,6 @@ services:
       - 1900:1900/udp #optional
     restart: unless-stopped
     labels:
-      proxy.idle_timeout: 30m
       proxy.jelly.port: 8096
 """
 environment = """
