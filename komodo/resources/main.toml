@@ -1,7 +1,7 @@
 [[server]]
 name = "komodo-1"
 [server.config]
-address = "https://10.10.10.31:8120"
+address = "https://10.10.10.25:8120"
 region = "Singapore"
 enabled = true
 
@@ -10,7 +10,7 @@ enabled = true
 [[server]]
 name = "komodo-2"
 [server.config]
-address = "https://10.10.10.32:8120"
+address = "https://10.10.10.26:8120"
 region = "Singapore"
 enabled = true
 
@@ -19,7 +19,7 @@ enabled = true
 [[server]]
 name = "komodo-3"
 [server.config]
-address = "https://10.10.10.33:8120"
+address = "https://10.10.10.27:8120"
 region = "Singapore"
 enabled = true
 
