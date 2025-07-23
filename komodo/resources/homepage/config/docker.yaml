@@ -1,7 +1,7 @@
 my-docker:
   host: socket-proxy
   port: 2375
-dockerproxy-27:
+komodo-3:
   host: 10.10.10.27
   port: 2376
   tls:
