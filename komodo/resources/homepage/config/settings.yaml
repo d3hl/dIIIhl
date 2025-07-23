@@ -43,9 +43,6 @@ layout:
   Troubleshoot:
       tab: Home
       style: column
-  Identity:
-      tab: Home
-      style: column
   Appplications:
       tab: Home
       style: column

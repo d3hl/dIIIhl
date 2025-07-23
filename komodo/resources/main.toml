@@ -1133,8 +1133,8 @@ HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
 # Komodo
 HOMEPAGE_VAR_KOMODO_ICON= "/icons/docker-light.png"
 HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
-HOMEPAGE_VAR_KOMODO_KEY="K-vtbPvxMmX1XWDnFN0QuTY2VVaaXNiHVWLilfv7IP"
-HOMEPAGE_VAR_KOMODO_SECRET="S-MrzRNua1nyIKQNIJcpkOJCFqLx2oSJsM4g6pzVJz"
+HOMEPAGE_VAR_KOMODO_KEY=K-vtbPvxMmX1XWDnFN0QuTY2VVaaXNiHVWLilfv7IP
+HOMEPAGE_VAR_KOMODO_SECRET=S-MrzRNua1nyIKQNIJcpkOJCFqLx2oSJsM4g6pzVJz
 
 
 
@@ -1169,10 +1169,12 @@ HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx-light.png"
 HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3adc3ii.site"
 HOMEPAGE_VAR_NETALERTX_KEY="t_pJ26L2qEeUcR6bz5RCGI"
 HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"] 
-
-# TPLINK
-HOMEPAGE_VAR_TPLINK_ICON= "/icons/tp-link-light.png"
-HOMEPAGE_VAR_TPLINK_URL= "http://tpl252.d3adc3ii.cite"
+# UPTIME KUMA
+HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma-light.png"
+HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
+# PHPIPAM
+HOMEPAGE_VAR_PHPIPAM_URL= "https://phpipam.d3adc3ii.cc/"
+HOMEPAGE_VAR_PHPIPAM_ICON= "/icons/phpipam-light.png"
 
 #### MONITORING####################################################################################################################################################################################################
 # SPEEDTEST
@@ -1286,9 +1288,7 @@ HOMEPAGE_VAR_TERMIX_ICON= "sh-termix-light"
 HOMEPAGE_VAR_TERMIX_URL= "https://termix.d3adc3ii.cc"
 
 ### Monitoring ###
-# UPTIME KUMA
-HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma-light.png"
-HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
+
 # Grafana
 HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana-light.png"
 HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
@@ -1332,9 +1332,7 @@ HOMEPAGE_VAR_NAUTOBOT_URL= "https://nautobot.d3adc3ii.cc/"
 HOMEPAGE_VAR_NAUTOBOT_ICON= "/icons/netbox-light.png"
 
 
-# PHPIPAM
-HOMEPAGE_VAR_PHPIPAM_URL= "https://phpipam.d3adc3ii.cc/"
-HOMEPAGE_VAR_PHPIPAM_ICON= "/icons/phpipam-light.png"
+
 
 ### APPS ###
 # Karakeep

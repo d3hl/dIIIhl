@@ -38,6 +38,14 @@
         sitemonitor: {{HOMEPAGE_VAR_HA_URL}}
 ########################################################################################################################################################################################################
 - Domain:
+    - Authentik:
+        icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
+        href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+        widget:
+            type: authentik
+            url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+            key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}} 
     - Technitium:
         icon: {{HOMEPAGE_VAR_DNS_ICON}}
         href: {{HOMEPAGE_VAR_DNS_URL}}
@@ -51,6 +59,10 @@
         icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
         href: {{HOMEPAGE_VAR_GODOXY_URL}} 
         ping: {{HOMEPAGE_VAR_GODOXY_URL}}
+    - Pangolin:
+        icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
+        href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
 ########################################################################################################################################################################################################
 - Network:
     - NetAlertX:
@@ -68,11 +80,10 @@
         widget:
             type: uptimekuma
             url: {{HOMEPAGE_VAR_KUMA_URL}}
-            slug: statuspageslug
-    - Tplink:
-        icon: {{HOMEPAGE_VAR_TPLINK_ICON}} 
-        href: {{HOMEPAGE_VAR_TPLINK_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_TPLINK_URL}}
+            slug: ping
+    - PHPIPAM:
+        icon: {{HOMEPAGE_VAR_PHPIPAM_ICON}}
+        href: {{HOMEPAGE_VAR_PHPIPAM_URL}}
 ########################################################################################################################################################################################################
 - Monitor:
     - Speedtest:
@@ -81,8 +92,19 @@
         widget:
             type: speedtest
             url: {{HOMEPAGE_VAR_SPEEDTEST_URL}}
-            version: 1
+            version: 2
             key: {{HOMEPAGE_VAR_SPEEDTEST_KEY}}
+    - Beszel:
+        icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
+        href: {{HOMEPAGE_VAR_BESZEL_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_BESZEL_URL}}
+        widget:
+            type: beszel
+            #url: https://beszel.d3hl.cc
+            url: http://10.10.10.9:8090
+            username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+            password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+            version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
             bitratePrecision: 3 # optional, default is 0        
     - Wazuh:
         icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
@@ -103,10 +125,6 @@
         icon: {{HOMEPAGE_VAR_SMOKEPING_ICON}}
         href: {{HOMEPAGE_VAR_SMOKEPING_URL}}
         sitemonitor: {{HOMEPAGE_VAR_SMOKEPING_URL}}
-    - Guacamole:
-        icon: {{HOMEPAGE_VAR_GUACAMOLE_ICON}} 
-        href: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
 ########################################################################################################################################################################################################
 - Backup: 
     - PBS: 
@@ -148,12 +166,24 @@
             key: {{HOMEPAGE_VAR_IMMICH_KEY}}
             version: {{HOMEPAGE_VAR_IMMICH_VERSION}}
             fields:  {{HOMEPAGE_VAR_IMMICH_FIELDS}}  
+    - Sh:
+        icon: {{HOMEPAGE_VAR_STASH_ICON}}
+        href: {{HOMEPAGE_VAR_STASH_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_STASH_URL}}
+        widget:
+            type: stash
+            url: {{HOMEPAGE_VAR_STASH_URL}}
+            stashapikey: {{HOMEPAGE_VAR_STASH_API}}
 ########################################################################################################################################################################################################
 - Access:
-    - Guacamole:
+    - Guacamole (External):
         icon: {{HOMEPAGE_VAR_GUACAMOLE_ICON}} 
         href: {{HOMEPAGE_VAR_GUACAMOLEEXT_URL}}
         sitemonitor: {{HOMEPAGE_VAR_GUACAMOLEEXT_URL}}
+    - Guacamole:
+        icon: {{HOMEPAGE_VAR_GUACAMOLE_ICON}} 
+        href: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_GUACAMOLE_URL}}
     - Dumbterm:
         icon: {{HOMEPAGE_VAR_DUMBTERM_ICON}}
         href: {{HOMEPAGE_VAR_DUMBTERM_URL}}
@@ -170,23 +200,6 @@
         icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
         href: {{HOMEPAGE_VAR_DOZZLE_URL}}
 ########################################################################################################################################################################################################
-- Identity: 
-    - Authentik:
-        icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
-        href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
-        widget:
-            type: authentik
-            url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
-            key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}} 
-    - Pangolin:
-        icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
-        href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
-    - Twingate:
-        icon: {{HOMEPAGE_VAR_TWINGATE_ICON}}
-        href: {{HOMEPAGE_VAR_TWINGATE_URL}}
-########################################################################################################################################################################################################
 - Appplications:
     - Actual:
         icon: {{HOMEPAGE_VAR_ACTUAL_ICON}}
@@ -195,14 +208,6 @@
         icon: {{HOMEPAGE_VAR_SENSEI_ICON}}
         href: {{HOMEPAGE_VAR_SENSEI_URL}} 
         sitemonitor: {{HOMEPAGE_VAR_SENSEI_URL}}
-    - Sh:
-        icon: {{HOMEPAGE_VAR_STASH_ICON}}
-        href: {{HOMEPAGE_VAR_STASH_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_STASH_URL}}
-        widget:
-            type: stash
-            url: {{HOMEPAGE_VAR_STASH_URL}}
-            stashapikey: {{HOMEPAGE_VAR_STASH_API}}
     - Semaphore:
         icon: {{HOMEPAGE_VAR_SEMAPHORE_ICON}}
         href: {{HOMEPAGE_VAR_SEMAPHORE_URL}}
@@ -215,6 +220,18 @@
         icon: {{HOMEPAGE_VAR_NZBGET_ICON}}
         href: {{HOMEPAGE_VAR_NZBGET_URL}}
         ping: {{HOMEPAGE_VAR_NZBGET_URL}}
+    - Karakeep:
+        icon: {{HOMEPAGE_VAR_KARAKEEP_ICON}}
+        href: {{HOMEPAGE_VAR_KARAKEEP_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_KARAKEEP_URL}}
+    - wallos:
+        icon: {{HOMEPAGE_VAR_WALLOS_ICON}} 
+        href: {{HOMEPAGE_VAR_WALLOS_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_WALLOS_URL}}
+    - Omni-tools:
+        icon: {{HOMEPAGE_VAR_OMNITOOLS_ICON}} 
+        href: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
 ########################################################################################################################################################################################################
 - Tools:
     - Grafana on:
@@ -229,17 +246,6 @@
     - Pulse:
         icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
         href: {{HOMEPAGE_VAR_PULSEXT_URL}}
-    - Beszel:
-        icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
-        href: {{HOMEPAGE_VAR_BESZEL_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_BESZEL_URL}}
-        widget:
-            type: beszel
-            #url: https://beszel.d3hl.cc
-            url: http://10.10.10.9:8090
-            username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
-            password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
-            version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
     - zabbix:
         icon: {{HOMEPAGE_VAR_ZABBIX_ICON}} 
         href: {{HOMEPAGE_VAR_ZABBIX_URL}}
@@ -257,37 +263,11 @@
     - Nautobox:
         icon: {{HOMEPAGE_VAR_NAUTOBOT_ICON}}
         href: {{HOMEPAGE_VAR_NAUTOBOT_URL}}
-    - phpipam:
-        icon: {{HOMEPAGE_VAR_PHPIPAM_ICON}}
-        href: {{HOMEPAGE_VAR_PHPIPAM_URL}}
 ########################################################################################################################################################################################################
 - Extras:
-    - Karakeep:
-        icon: {{HOMEPAGE_VAR_KARAKEEP_ICON}}
-        href: {{HOMEPAGE_VAR_KARAKEEP_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_KARAKEEP_URL}}
-    - wallos:
-        icon: {{HOMEPAGE_VAR_WALLOS_ICON}} 
-        href: {{HOMEPAGE_VAR_WALLOS_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_WALLOS_URL}}
-    - Omni-tools:
-        icon: {{HOMEPAGE_VAR_OMNITOOLS_ICON}} 
-        href: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
     - Selfhst-icons:
         icon: {{HOMEPAGE_VAR_SELFHST_ICON}} 
         href: {{HOMEPAGE_VAR_SELFHST_URL}}
-    - PVE Dashboad:
-        widget:
-            type: iframe
-            name: pveDashboard
-            src: {{HOMEPAGE_VAR_PULSE_URL}}
-            #classes: {{HOMEPAGE_VAR_PULSE_CLASSES}}
-            allowfullscreen: {{HOMEPAGE_VAR_PULSE_ALLOWFULLSCREEN}}
-            loadingStraegy: {{HOMEPAGE_VAR_PULSE_LOADING_STRATEGY}}
-            allowScrolling: {{HOMEPAGE_VAR_PULSE_ALLOW_SCROLLING}}
-            referrerPolicy: same-origin # optional, no default
-            height: {{HOMEPAGE_VAR_PULSE_HEIGHT}}
 
 ########################################################################################################################################################################################################
 ### CORP TAB ###    
