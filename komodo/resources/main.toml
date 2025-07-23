@@ -86,6 +86,7 @@ tags = [
 ]
 [stack.config]
 server = "komodo-1"
+links = ["https://auth.d3adc3ii.cc/"]
 project_name = "authentik"
 poll_for_updates = true
 auto_update = true
@@ -127,11 +128,12 @@ services:
     volumes:
       - redis:/data
   server:
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.2}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.4}
     restart: unless-stopped
     command: server
     container_name: authentik
     networks:
+      - default
       - d3internal
     environment:
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
@@ -155,11 +157,11 @@ services:
         condition: service_healthy
     labels:
       - homepage.group=Domain
-      - homepage.name=Authentik
+      - homepage.name=Authentik Admin
       - homepage.icon=sh-authentik-light
+      - homepage.href=https://auth.d3adc3ii.cc
       - homepage.widget.type=authentik
-  #    - homepage.widget.url="https://auth.d3adc3ii.cc"
-      - homepage.href="https://auth.d3adc3ii.cc"
+      - homepage.widget.url=https://auth.d3adc3ii.cc
       - homepage.widget.key="ZnhLrOvUoWZfHcQpFrteQVekOjpGQh48lXEVFn34HvGtT8eJoyhgaNYWb2mI"
   worker:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.2}
@@ -216,37 +218,6 @@ AUTHENTIK_EMAIL__TIMEOUT=10
 AUTHENTIK_EMAIL__FROM=authentik@localhost
 COMPOSE_PORT_HTTP=9111
 COMPOSE_PORT_HTTPS=9444
-"""
-
-##
-
-[[stack]]
-name = "authentik-outpost-33"
-[stack.config]
-server = "komodo-3"
-project_name = "authentik"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-    authentik_proxy:
-        image: ghcr.io/goauthentik/proxy:2025.6.2
-        restart: unless-stopped
-        # Optionally specify which networks the container should be
-        # might be needed to reach the core authentik server
-        # networks:
-        #   - foo
-        ports:
-            - 9001:9001
-            - 9444:9444
-        environment:
-            AUTHENTIK_HOST: https://auth.d3adc3ii.cc
-            AUTHENTIK_INSECURE: "false"
-            AUTHENTIK_TOKEN: 5rw0z0liBvwUBPlLeCLwULg2gZbzLPCiGItYcL8oT3JI9RH86KUl4xQkrSDX
-            # Starting with 2021.9, you can optionally set this too
-            # when authentik_host for internal communication doesn't match the public URL
-            # AUTHENTIK_HOST_BROWSER: https://external-domain.tld
 """
 
 ##
@@ -2110,7 +2081,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
+      - TZ=Asia/Singapore
     volumes:
       - ${DOCKER_DATA}/prowlarr/data:/config
     ports:
@@ -2264,6 +2235,78 @@ PUID=1000
 ##
 
 [[stack]]
+name = "stashapp"
+tags = ["komodo-2"]
+[stack.config]
+server = "komodo-2"
+links = ["https://stash.d3adc3ii.site"]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+# APPNICENAME=Stash
+# APPDESCRIPTION=An organizer for your porn, written in Go
+services:
+  stash:
+    image: stashapp/stash:latest
+    container_name: stash
+    restart: unless-stopped
+    ## the container's port must be the same with the STASH_PORT in the environment section
+    ports:
+      - "9999:9999"
+    ## If you intend to use stash's DLNA functionality uncomment the below network mode and comment out the above ports section
+    # network_mode: host
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - STASH_STASH=/data/
+      - STASH_GENERATED=/generated/
+      - STASH_METADATA=/metadata/
+      - STASH_CACHE=/cache/
+      ## Adjust below to change default port (9999)
+      - STASH_PORT=9999
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      ## Adjust below paths (the left part) to your liking.
+      ## E.g. you can change ./config:/root/.stash to ./stash:/root/.stash
+      ## The left part is the path on your host, the right part is the path in the stash container.
+
+      ## Keep configs, scrapers, and plugins here.
+      - ${DOCKER_DATA}/stashapp/config:/root/.stash
+      ## Point this at your collection.
+      ## The left side is where your collection is on your host, the right side is where it will be in stash.
+      - ${VAULT}/vault:/data
+      ## This is where your stash's metadata lives
+      - ${DOCKER_DATA}/stashapp/metadata:/metadata
+      ## Any other cache content.
+      - ${DOCKER_DATA}stashapp/cache:/cache
+      ## Where to store binary blob data (scene covers, images)
+      - ${DOCKER_DATA}/stashapp/blobs:/blobs
+      ## Where to store generated content (screenshots,previews,transcodes,sprites)
+      -  ${DOCKER_DATA}stashapp/generated:/generated
+    labels:
+      - homepage.group=Media
+      - homepage.name=Stash
+      - homepage.icon=sh-stashapp-light
+      - homepage.href=https://stash.d3adc3ii.site
+      #- homepage.widget.type=
+      #- homepage.widget.widget.url=
+      #- homepage.widget.stashapikey=
+"""
+environment = """
+VAULT=/mnt/zFiles
+"""
+
+##
+
+[[stack]]
 name = "termix"
 [stack.config]
 server = "komodo-1"
@@ -2380,9 +2423,9 @@ services:
       - ${DATA_DIR}/logos:/var/www/html/images/uploads/logos'
     restart: unless-stopped
     labels:
-      - homepage.group=Test
+      - homepage.group=Applications
       - homepage.name=Wallos
-      - homepage.icon=wallos.png
+      - homepage.icon=sh-wallos-light
       - homepage.href=https://wallos.d3adc3ii.cc
 """
 environment = """
