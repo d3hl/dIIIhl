@@ -1538,13 +1538,18 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
-version: '3.8'
+networks:
+  d3internal:
+    external: true
 services:
   web:
     image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
     restart: unless-stopped
     volumes:
       - ${DOCKER_DATA}/karakeep/data:/data
+    networks:
+      - default
+      - d3internal
     ports:
       - 3333:3000
     env_file:
@@ -1553,6 +1558,11 @@ services:
       MEILI_ADDR: http://meilisearch:7700
       BROWSER_WEB_URL: http://chrome:9222
       DATA_DIR: /data
+    labels:
+      - homepage.group=Applications
+      - homepage.name=Karakeep
+      - homepage.icon=sh-karakeep-light
+      - homepage.href=https://kara.d3adc3ii.cc/
   chrome:
     image: gcr.io/zenika-hub/alpine-chrome:123
     restart: unless-stopped
