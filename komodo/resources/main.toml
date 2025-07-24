@@ -1702,6 +1702,7 @@ services:
       - ${DOCKER_DATA}/myspeed/data:/data
     restart: unless-stopped
     labels:
+      - proxy.network: default
       - homepage.group=Monitor
       - homepage.name=Myspeed
       - homepage.icon=myspeed.png
@@ -1739,6 +1740,8 @@ services:
       - .env
     labels:
       proxy.port: 20184
+    dns:           
+      - 10.10.10.16
 """
 environment = """
 DATA_DIR=/mnt/zApps/netalertx
