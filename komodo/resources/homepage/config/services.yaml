@@ -223,9 +223,9 @@
         icon: {{HOMEPAGE_VAR_OMNITOOLS_ICON}} 
         href: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
         sitemonitor: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
-
-########################################################################################################################################################################################################
-- Tools:
+    - Selfhst-icons:
+        icon: {{HOMEPAGE_VAR_SELFHST_ICON}} 
+        href: {{HOMEPAGE_VAR_SELFHST_URL}}
     - Apprise-API:
         icon: {{HOMEPAGE_VAR_APPRISE_ICON}}
         href: {{HOMEPAGE_VAR_APPRISE_URL}}
@@ -234,11 +234,7 @@
         icon: {{HOMEPAGE_VAR_SEMAPHORE_ICON}}
         href: {{HOMEPAGE_VAR_SEMAPHORE_URL}}
         sitemonitor: {{HOMEPAGE_VAR_SEMAPHORE_URL}}
-########################################################################################################################################################################################################
-- Extras:
-    - Selfhst-icons:
-        icon: {{HOMEPAGE_VAR_SELFHST_ICON}} 
-        href: {{HOMEPAGE_VAR_SELFHST_URL}}
+
 ########################################################################################################################################################################################################
 ### CORP TAB ###    
 - Office Core:
