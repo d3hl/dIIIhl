@@ -1754,38 +1754,32 @@ PORT=20184
 ##
 
 [[stack]]
-name = "ns1"
-tags = ["internal", "komodo-1", "dns"]
+name = "ns0"
+tags = ["internal", "komodo-3", "dns"]
 [stack.config]
-server = "komodo-1"
+server = "komodo-3"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
 services:
-  technitium-primary:
+  ns0:
     image: "technitium/dns-server:latest"
-    container_name: ns1
+    container_name: ns0
     privileged: true
     restart: always
     environment:
+      - PUID=1000
+      - PGID=1000
       - DNS_SERVER_LOG_USING_LOCAL_TIME=true
+      - DNS_SERVER_DOMAIN=ns2.d3adc3ii.site
     network_mode: "host"
     ports:
       - "5380:5380/tcp"
-      - "53:53/udp" #DNS service
-      - "53:53/tcp" #DNS service
-      # - "853:853/udp" #DNS-over-QUIC service
-      - "853:853/tcp" #DNS-over-TLS service
-      # - "443:443/udp" #DNS-over-HTTPS service (HTTP/3)
-      # - "443:443/tcp" #DNS-over-HTTPS service (HTTP/1.1, HTTP/2)
-      - "80:80/tcp" #DNS-over-HTTP service (use with reverse proxy or certbot certificate renewal)
-      - "8053:8053/tcp" #DNS-over-HTTP service (use with reverse proxy)
-      # - "67:67/udp" #DHCP service
     volumes:
-      - ./technitium:/etc/dns
+      - ${DOCKER_DATA}/technitium-27:/etc/dns
   keepalived:
-    image: shawly/keepalived:edge-7f210c3
+    image: shawly/keepalived:latest
     restart: always
     environment:
       TZ: Asia/Singapore
@@ -1794,7 +1788,6 @@ services:
       KEEPALIVED_CHECK_IP: ${CHECK_IP}
       KEEPALIVED_CHECK_PORT: ${CHECK_PORT}
       KEEPALIVED_VRID: 150
-      # change to primary LAN interface used by the host
       KEEPALIVED_INTERFACE: eth0
       KEEPALIVED_PRIORITY: 255
       KEEPALIVED_STATE: MASTER
@@ -1807,25 +1800,25 @@ environment = """
 # change to an unused IP in your LAN subnet -- will be the same value on both stacks
 VIRTUAL_IP=10.10.10.16
 # Host IP of the other machine
-CHECK_IP=10.10.10.27
+CHECK_IP=10.10.10.25
 CHECK_PORT=53
 """
 
 ##
 
 [[stack]]
-name = "ns2"
-tags = ["internal", "komodo-3", "dns"]
+name = "ns1"
+tags = ["internal", "komodo-1", "dns"]
 [stack.config]
-server = "komodo-3"
+server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
 services:
-  technitium-secondary:
+  ns1:
     image: "technitium/dns-server:latest"
-    container_name: ns2
+    container_name: ns1
     privileged: true
     restart: always
     environment:
@@ -1833,19 +1826,19 @@ services:
     network_mode: "host"
     ports:
       - "5380:5380/tcp"
-      - "53:53/udp" #DNS service
-      - "53:53/tcp" #DNS service
+    #  - "53:53/udp" #DNS service
+    #  - "53:53/tcp" #DNS service
       # - "853:853/udp" #DNS-over-QUIC service
-      - "853:853/tcp" #DNS-over-TLS service
+    #  - "853:853/tcp" #DNS-over-TLS service
       # - "443:443/udp" #DNS-over-HTTPS service (HTTP/3)
       # - "443:443/tcp" #DNS-over-HTTPS service (HTTP/1.1, HTTP/2)
-      - "80:80/tcp" #DNS-over-HTTP service (use with reverse proxy or certbot certificate renewal)
-      - "8053:8053/tcp" #DNS-over-HTTP service (use with reverse proxy)
+    #  - "80:80/tcp" #DNS-over-HTTP service (use with reverse proxy or certbot certificate renewal)
+    #  - "8053:8053/tcp" #DNS-over-HTTP service (use with reverse proxy)
       # - "67:67/udp" #DHCP service
     volumes:
       - ./technitium:/etc/dns
   keepalived:
-    image: shawly/keepalived:edge-7f210c3
+    image: shawly/keepalived:latest
     restart: always
     environment:
       TZ: Asia/Singapore
@@ -1867,7 +1860,7 @@ environment = """
 # change to an unused IP in your LAN subnet -- will be the same value on both stacks
 VIRTUAL_IP=10.10.10.16
 # Host IP of the other machine
-CHECK_IP=10.10.10.25
+CHECK_IP=10.10.10.27
 CHECK_PORT=53
 """
 
@@ -1946,6 +1939,88 @@ NZBGET_PASS= [[NZBGET_PASS]]
 PUID= [[PUID]]
 PGID= [[PGID]]
 TZ= [[TZ]]
+"""
+
+##
+
+[[stack]]
+name = "passbolt"
+tags = ["komodo-1", "identity", "external"]
+[stack.config]
+server = "komodo-1"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+networks:
+  d3internal:
+    external: true
+services:
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+    volumes:
+      - database_volume:/var/lib/mysql
+
+  passbolt:
+    image: passbolt/passbolt:latest-ce
+    #Alternatively you can use rootless:
+    #image: passbolt/passbolt:latest-ce-non-root
+    restart: unless-stopped
+    networks:
+      - default
+      - d3internal
+    depends_on:
+      - db
+    env_file:
+      - .env
+    volumes:
+      - gpg_volume:/etc/passbolt/gpg
+      - jwt_volume:/etc/passbolt/jwt
+    command:
+      [
+        "/usr/bin/wait-for.sh",
+        "-t",
+        "0",
+        "db:3306",
+        "--",
+        "/docker-entrypoint.sh",
+      ]
+    ports:
+      - 8783:80
+      - 444:443
+    #Alternatively for non-root images:
+    # - 80:8080
+    # - 443:4433
+
+volumes:
+  database_volume:
+  gpg_volume:
+  jwt_volume:
+"""
+environment = """
+APP_FULL_BASE_URL: https://passbolt.d3adc3ii.cc
+MYSQL_DATABASE: "d3passbolt"
+MYSQL_USER: "d3bolt"
+MYSQL_PASSWORD: ";05SX|EXiXPf$r^crV46bIIBGe;4*DcWB^ZHvULYODlsjpoiisf_EUHQ3}X^1-x"
+DATASOURCES_DEFAULT_HOST: "db"
+DATASOURCES_DEFAULT_USERNAME: "d3bolt"
+DATASOURCES_DEFAULT_PASSWORD: ";05SX|EXiXPf$r^crV46bIIBGe;4*DcWB^ZHvULYODlsjpoiisf_EUHQ3}X^1-x"
+DATASOURCES_DEFAULT_DATABASE: "d3passbolt"
+
+EMAIL_DEFAULT_FROM_NAME='Passbolt'
+EMAIL_DEFAULT_FROM='no-reply@d3adc3ii.cc'
+EMAIL_TRANSPORT_DEFAULT_HOST='mail.smtp2go.com'
+EMAIL_TRANSPORT_DEFAULT_USERNAME='d3adc3ii.cc'
+EMAIL_TRANSPORT_DEFAULT_PASSWORD='taolavodich1234'
+EMAIL_TRANSPORT_DEFAULT_PORT=2525
+EMAIL_TRANSPORT_DEFAULT_TLS=yes
+
+
 """
 
 ##
