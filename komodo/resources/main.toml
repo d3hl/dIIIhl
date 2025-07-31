@@ -2781,6 +2781,30 @@ VAULT=/mnt/zFiles
 ##
 
 [[stack]]
+name = "template"
+template = true
+[stack.config]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  dozzle:
+    image: 
+    restart: unless-stopped
+    env_file:
+      - .env
+    labels:
+"""
+environment = """
+TZ=Asia/Singapore
+PGID=1000
+PUID=1000
+"""
+
+##
+
+[[stack]]
 name = "termix"
 [stack.config]
 server = "komodo-1"
