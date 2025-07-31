@@ -98,6 +98,234 @@ PGID=1000
 ##
 
 [[stack]]
+name = "aliasvault"
+[stack.config]
+server = "komodo-1"
+file_contents = """
+services:
+    postgres:
+        image: ghcr.io/lanedirt/aliasvault-postgres:latest
+        volumes:
+            - ./database/postgres:/var/lib/postgresql/data:rw
+        env_file:
+            - .env
+        restart: always
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U aliasvault"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
+            start_period: 10s
+
+    client:
+        image: ghcr.io/lanedirt/aliasvault-client:latest
+        volumes:
+            - ${DOCKER_DATA}/aliasvault/logs/msbuild:/apps/server/msbuild-logs:rw
+        expose:
+            - "3000"
+        restart: always
+        env_file:
+            - .env
+
+    api:
+        image: ghcr.io/lanedirt/aliasvault-api:latest
+        expose:
+            - "3001"
+        volumes:
+            -  ./database:/database:rw
+            -  ${DOCKER_DATA}/aliasvault/certificates/app:/certificates/app:rw
+            -  ${DOCKER_DATA}/aliasvault/logs:/logs:rw
+        restart: always
+        env_file:
+            - .env
+        depends_on:
+            postgres:
+                condition: service_healthy
+        environment:
+            ConnectionStrings__AliasServerDbContext: "Host=postgres;Database=aliasvault;Username=aliasvault;Password=${POSTGRES_PASSWORD}"
+
+    admin:
+        image: ghcr.io/lanedirt/aliasvault-admin:latest
+        expose:
+            - "3002"
+        volumes:
+            - ./database:/database:rw
+            - ${DOCKER_DATA}aliasvault/certificates/app:/certificates/app:rw
+            - ${DOCKER_DATA}/aliasvault/logs:/logs:rw
+        restart: always
+        env_file:
+            - .env
+        depends_on:
+            postgres:
+                condition: service_healthy
+        environment:
+            ConnectionStrings__AliasServerDbContext: "Host=postgres;Database=aliasvault;Username=aliasvault;Password=${POSTGRES_PASSWORD}"
+
+    reverse-proxy:
+        image: ghcr.io/lanedirt/aliasvault-reverse-proxy:latest
+        ports:
+            #- "${HTTP_PORT:-884}:80"
+            #- "${HTTPS_PORT:-8443}:443"
+            - 884:80
+            - 8443:443
+        volumes:
+            - ${DOCKER_DATA}/aliasvault/certificates/ssl:/etc/nginx/ssl:rw
+            - ${DOCKER_DATA}/aliasvault/certificates/letsencrypt:/etc/nginx/ssl-letsencrypt:rw
+            - ${DOCKER_DATA}/aliasvault/letsencrypt/www:/var/www/certbot:rw
+        depends_on:
+            - admin
+            - client
+            - api
+            - smtp
+        restart: always
+        env_file:
+            - .env
+
+    smtp:
+        image: ghcr.io/lanedirt/aliasvault-smtp:latest
+        ports:
+            - "${SMTP_PORT:-25}:25"
+            - "${SMTP_TLS_PORT:-587}:587"
+        volumes:
+            - ./database:/database:rw
+            - ${DOCKER_DATA}/aliasvault/logs:/logs:rw
+        restart: always
+        env_file:
+            - .env
+        depends_on:
+            postgres:
+                condition: service_healthy
+        environment:
+            ConnectionStrings__AliasServerDbContext: "Host=postgres;Database=aliasvault;Username=aliasvault;Password=${POSTGRES_PASSWORD}"
+
+    task-runner:
+        image: ghcr.io/lanedirt/aliasvault-task-runner:latest
+        volumes:
+            - ./database:/database:rw
+            - ${DOCKER_DATA}/aliasvault/logs:/logs:rw
+        restart: always
+        env_file:
+            - .env
+        depends_on:
+            postgres:
+                condition: service_healthy
+        environment:
+            ConnectionStrings__AliasServerDbContext: "Host=postgres;Database=aliasvault;Username=aliasvault;Password=${POSTGRES_PASSWORD}"
+"""
+environment = """
+PUID=1000
+PGID=1000
+# ----------------------------------------------------------------------------
+# AliasVault configuration file.
+#
+# Note: we recommend using the provided install.sh script to install and
+# configure AliasVault, as this will automatically set all of the following
+# variables for you and allow you to easily change them later via the CLI.
+# It also allows for easily updating AliasVault to a newer version in the
+# future.
+#
+# However if you still wish to manually install or configure AliasVault,
+# you can do so below.
+#
+# After changing settings here, make sure to restart all AliasVault
+# Docker containers to apply the changes.
+# ----------------------------------------------------------------------------
+
+# Configure the network ports used by AliasVault by the `reverse-proxy` and `smtp` containers.
+# You can change these if the defaults are in use on your system.
+# After making changes, re-run the install script to apply them.
+HTTP_PORT=884
+HTTPS_PORT=8443
+SMTP_PORT=25
+SMTP_TLS_PORT=587
+
+# Set the hostname that your AliasVault will be accessible at.
+# E.g. `aliasvault.mydomain.com` or if you're running it on your local machine, choose `localhost`.
+HOSTNAME=aliasvault.d3adc3ii.cc
+
+# Set a random 32 character string for the JWT key.
+# This can be generated using the following command:
+# $ openssl rand -base64 32
+JWT_KEY='01/j438bwcxyP8sYMOtfgtlM0okTo9lEtXqk/nhXsn8='
+
+# Set the password for the data protection certificate.
+# This can be generated using the following command:
+# $ openssl rand -base64 32
+DATA_PROTECTION_CERT_PASS='+zywuoSii3bKEcLukzaMEtkWuycBKzJ42Py7jVBIm+c='
+
+# ----------------------------------------------------------------------------
+# Database configuration
+# ----------------------------------------------------------------------------
+# These are the credentials that are used by the PostgreSQL container
+# on startup to create the database and user, and for the application to
+# connect to the database.
+POSTGRES_DB=aliasvault
+POSTGRES_USER=aliasvault
+
+# Set the password for the database user.
+# This can be generated using the following command:
+# $ openssl rand -base64 32
+POSTGRES_PASSWORD='qC74kRLoTYZP1VAoUOg6/0h781j7ctARrahIXfRk5MI='
+
+# Note: in order to change the password for an existing installation
+# refer to https://docs.aliasvault.net/misc/dev/database-operations.html
+
+# ----------------------------------------------------------------------------
+# Admin user configuration
+# ----------------------------------------------------------------------------
+# Set the password for the admin user. This is an encrypted hash that needs
+# to be generated using the `aliasvault-cli` tool. This allows you to login
+# to the admin panel at https://your-hostname/admin.
+#
+# For example:
+# docker run --rm ghcr.io/lanedirt/aliasvault-installcli:latest hash-password "my-password"
+#
+# Then copy the output and paste it into the ADMIN_PASSWORD_HASH variable below.
+# When changing the hash, update the ADMIN_PASSWORD_GENERATED variable to the current date and time
+# and then restart the AliasVault docker containers to apply the changes.
+ADMIN_PASSWORD_HASH='$2y$14$quDUZES5rDSRgcTNQOZTaey2JumKWDwywIgSydp2VGz9EH0LHVSQm'
+
+# Set the date and time the admin password was last generated. When changing the
+# admin password hash manually, make sure to increase this value so the system
+# knows that the password has been changed and should be overwritten with the new hash.
+ADMIN_PASSWORD_GENERATED=2025-07-29T00:01:00Z
+
+# ----------------------------------------------------------------------------
+# Email server configuration for email aliases
+# ----------------------------------------------------------------------------
+# In order to use AliasVault's private email domains feature, you need to configure
+# your DNS. Please refer to the full documentation for more instructions on DNS:
+# https://docs.aliasvault.net/installation/install.html#3-email-server-setup
+#
+# Set the private email domains below that are allowed to be used (comma separated values).
+# Example: PRIVATE_EMAIL_DOMAINS=example.com,example2.org
+# To disable the private email domains feature, set this to "DISABLED.TLD"
+PRIVATE_EMAIL_DOMAINS=d3adc3ii.cc
+
+# Set whether TLS is enabled for SMTP.
+SMTP_TLS_ENABLED=true
+
+# ----------------------------------------------------------------------------
+# Let's Encrypt configuration
+# ----------------------------------------------------------------------------
+# Set whether Let's Encrypt is enabled. This is only supported through
+# the install.sh script.
+LETSENCRYPT_ENABLED=false
+
+# ----------------------------------------------------------------------------
+# Optional configuration settings
+# ----------------------------------------------------------------------------
+PUBLIC_REGISTRATION_ENABLED=true
+IP_LOGGING_ENABLED=true
+
+# Set the support email address which is shown to users in the main web app.
+# Keep this blank if you don't want to show a support email.
+SUPPORT_EMAIL=
+"""
+
+##
+
+[[stack]]
 name = "authentik"
 tags = [
   "external",
@@ -238,6 +466,28 @@ AUTHENTIK_EMAIL__TIMEOUT=10
 AUTHENTIK_EMAIL__FROM=authentik@localhost
 COMPOSE_PORT_HTTP=9111
 COMPOSE_PORT_HTTPS=9444
+"""
+
+##
+
+[[stack]]
+name = "autopve"
+[stack.config]
+server = "komodo-2"
+file_contents = """
+services:
+  autopve:
+    image: ghcr.io/natankeddem/autopve:latest
+    ports:
+      - 8787:8080
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKER_DATA}/autopve/data:/app/data
+      - ${DOCKER_DATA}/autopve/logs:/app/logs
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERBOSE_LOGGING=TRUE # Optional
 """
 
 ##
