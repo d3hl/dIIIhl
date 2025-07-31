@@ -809,6 +809,23 @@ CADDY_EMAIL= d3tech@pm.me
 ##
 
 [[stack]]
+name = "cloudflare"
+[stack.config]
+server = "komodo-1"
+file_contents = """
+services:
+  tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=eyJhIjoiMGUxMDhkNDViZWZmMzhjMTdjMjZhOWEyZmNmZWUyNjQiLCJ0IjoiMTdkMzg4ZjAtZWEzOS00NzE2LWJlNWMtNjA5MGNkMjk5ZjBlIiwicyI6Ik1EQTVZalpoWkdNdE1UZzROaTAwTkRoaExUaGtOV010TnpNNFpEZGhZakJoWkRFMyJ9
+"""
+
+##
+
+[[stack]]
 name = "discord-alerter"
 [stack.config]
 server = "komodo-2"
