@@ -3,24 +3,6 @@
       - icon: /icons/services/unraid.png
         href: http://example.local:8090/Dashboard
 
-<<<<<<< Updated upstream
     - Proton:
       - icon: sh-proton
         href: https://mail.proton.me/u/4/inbox
-=======
-    - Proton Mail:
-      - icon: sh-proton-light
-        href: https://mail.proton.me/u/1/inbox
-        description: ⠀
-
-- _hidden1:
-    - Cloudflare:
-      - icon: cloudflare.png
-        href: https://dash.cloudflare.com/[REDACTED-ZONE-ID]/example.com/dns/records
-        description: ⠀
-
-    - Flareddns:
-      - icon: /icons/services/flareddns.png
-        href: http://example.local:8090/Docker/UpdateContainer?xmlTemplate=edit:/path/to/config/template.xml
-        description: ⠀
->>>>>>> Stashed changes
