@@ -2400,60 +2400,6 @@ services:
 ##
 
 [[stack]]
-name = "ns0"
-[stack.config]
-server = "komodo-24"
-run_build = true
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-destroy_before_deploy = true
-file_contents = """
-services:
-  ns0:
-    image: "technitium/dns-server:latest"
-    container_name: ns0
-    privileged: true
-    restart: always
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - DNS_SERVER_LOG_USING_LOCAL_TIME=true
-      - DNS_SERVER_DOMAIN=ns2.d3adc3ii.site
-    network_mode: "host"
-    ports:
-      - "5380:5380/tcp"
-    volumes:
-      - ${DOCKER_DATA}/technitium-27:/etc/dns
-  keepalived:
-    image: shawly/keepalived:latest
-    restart: always
-    environment:
-      TZ: Asia/Singapore
-      KEEPALIVED_VIRTUAL_IP: ${VIRTUAL_IP}
-      KEEPALIVED_VIRTUAL_MASK: 24
-      KEEPALIVED_CHECK_IP: ${CHECK_IP}
-      KEEPALIVED_CHECK_PORT: ${CHECK_PORT}
-      KEEPALIVED_VRID: 150
-      KEEPALIVED_INTERFACE: eth0
-      KEEPALIVED_PRIORITY: 255
-      KEEPALIVED_STATE: MASTER
-    network_mode: host
-    cap_add:
-      - NET_ADMIN
-      - NET_BROADCAST
-"""
-environment = """
-# change to an unused IP in your LAN subnet -- will be the same value on both stacks
-VIRTUAL_IP=10.10.10.16
-# Host IP of the other machine
-CHECK_IP=10.10.10.25
-CHECK_PORT=53
-"""
-
-##
-
-[[stack]]
 name = "ns1"
 tags = ["internal", "komodo-1", "dns"]
 [stack.config]
@@ -2508,59 +2454,6 @@ environment = """
 VIRTUAL_IP=10.10.10.16
 # Host IP of the other machine
 CHECK_IP=10.10.10.24
-CHECK_PORT=53
-"""
-
-##
-
-[[stack]]
-name = "ns3"
-tags = ["internal", "dns", "komodo-28"]
-[stack.config]
-server = "komodo-28"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  ns3:
-    image: "technitium/dns-server:latest"
-    container_name: ns3
-    privileged: true
-    restart: always
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - DNS_SERVER_LOG_USING_LOCAL_TIME=true
-      - DNS_SERVER_DOMAIN=ns2.d3adc3ii.site
-    network_mode: "host"
-    ports:
-      - "5380:5380/tcp"
-    volumes:
-      - ${DOCKER_DATA}/technitium-27:/etc/dns
-  keepalived:
-    image: shawly/keepalived:latest
-    restart: always
-    environment:
-      TZ: Asia/Singapore
-      KEEPALIVED_VIRTUAL_IP: ${VIRTUAL_IP}
-      KEEPALIVED_VIRTUAL_MASK: 24
-      KEEPALIVED_CHECK_IP: ${CHECK_IP}
-      KEEPALIVED_CHECK_PORT: ${CHECK_PORT}
-      KEEPALIVED_VRID: 150
-      KEEPALIVED_INTERFACE: eth0
-      KEEPALIVED_PRIORITY: 255
-      KEEPALIVED_STATE: MASTER
-    network_mode: host
-    cap_add:
-      - NET_ADMIN
-      - NET_BROADCAST
-"""
-environment = """
-# change to an unused IP in your LAN subnet -- will be the same value on both stacks
-VIRTUAL_IP=10.10.10.16
-# Host IP of the other machine
-CHECK_IP=10.10.10.25
 CHECK_PORT=53
 """
 
