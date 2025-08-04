@@ -19,6 +19,14 @@ enabled = true
 ##
 
 [[server]]
+name = "komodo-24"
+[server.config]
+address = "https://10.10.10.24:8120"
+enabled = true
+
+##
+
+[[server]]
 name = "komodo-28"
 [server.config]
 address = "https://10.10.10.28:8120"
@@ -2386,57 +2394,6 @@ services:
     restart: unless-stopped
     labels:
       proxy.netbootxyz.port: 3000
-"""
-
-##
-
-[[stack]]
-name = "ns0"
-tags = ["dns"]
-[stack.config]
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  ns0:
-    image: "technitium/dns-server:latest"
-    container_name: ns0
-    privileged: true
-    restart: always
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - DNS_SERVER_LOG_USING_LOCAL_TIME=true
-    network_mode: "host"
-    ports:
-      - "5380:5380/tcp"
-    volumes:
-      - ${DOCKER_DATA}/technitium-27:/etc/dns
-  keepalived:
-    image: shawly/keepalived:latest
-    restart: always
-    environment:
-      TZ: Asia/Singapore
-      KEEPALIVED_VIRTUAL_IP: ${VIRTUAL_IP}
-      KEEPALIVED_VIRTUAL_MASK: 24
-      KEEPALIVED_CHECK_IP: ${CHECK_IP}
-      KEEPALIVED_CHECK_PORT: ${CHECK_PORT}
-      KEEPALIVED_VRID: 150
-      KEEPALIVED_INTERFACE: eth0
-      KEEPALIVED_PRIORITY: 255
-      KEEPALIVED_STATE: MASTER
-    network_mode: host
-    cap_add:
-      - NET_ADMIN
-      - NET_BROADCAST
-"""
-environment = """
-# change to an unused IP in your LAN subnet -- will be the same value on both stacks
-VIRTUAL_IP=10.10.10.16
-# Host IP of the other machine
-CHECK_IP=10.10.10.25
-CHECK_PORT=53
 """
 
 ##
