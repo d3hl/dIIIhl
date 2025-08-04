@@ -19,14 +19,6 @@ enabled = true
 ##
 
 [[server]]
-name = "komodo-24"
-[server.config]
-address = "https://10.10.10.24:8120"
-enabled = true
-
-##
-
-[[server]]
 name = "komodo-28"
 [server.config]
 address = "https://10.10.10.28:8120"
@@ -1720,7 +1712,6 @@ HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
 [[stack]]
 name = "homepage-24"
 [stack.config]
-server = "komodo-24"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
