@@ -19,6 +19,14 @@ enabled = true
 ##
 
 [[server]]
+name = "komodo-24"
+[server.config]
+address = "https://10.10.10.25:8120"
+enabled = true
+
+##
+
+[[server]]
 name = "komodo-28"
 [server.config]
 address = "https://10.10.10.28:8120"
@@ -2098,36 +2106,42 @@ PORT=20184
 ##
 
 [[stack]]
-name = "newt-orange"
-tags = ["komodo-1"]
+name = "netboot"
 [stack.config]
-server = "komodo-1"
+server = "komodo-2"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
 services:
-  newt:
-    image: fosrl/newt
-    container_name: newt
-    restart: unless-stopped
+  netbootxyz:
+    image: ghcr.io/netbootxyz/netbootxyz
+    container_name: netbootxyz
     environment:
-      - PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
-      - NEWT_ID=ectuq5jqe3v33dm
-      - NEWT_SECRET=1q1omrd5fi4qdf6pll1ag6swbnabxmsyn0n47tf2d1rpr9n9
-      - DOCKER_SOCKET=/var/run/docker.sock
-"""
-environment = """
-DOCKER_SOCKET=/var/run/docker.sock
+      - MENU_VERSION=2.0.84 # optional
+     # - PGID=1000
+     # - PUID=1000
+      - NGINX_PORT=80 # optional
+      - WEB_APP_PORT=3000 # optional
+    #volumes:
+      #- ${DOCKER_DATA}/netboot/config:/config # optional
+      #- ${DOCKER_DATA}/netboot/assets:/assets # optional
+    ports:
+      - 3000:3000  # optional, destination should match ${WEB_APP_PORT} variable above.
+      - 69:69/udp
+      - 8080:80  # optional, destination should match ${NGINX_PORT} variable above.
+    restart: unless-stopped
+    labels:
+      proxy.netbootxyz.port: 3000
 """
 
 ##
 
 [[stack]]
 name = "ns0"
-tags = ["internal", "dns", "komodo-28"]
+tags = ["dns"]
 [stack.config]
-server = "komodo-28"
+server = "komodo-24"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2142,7 +2156,6 @@ services:
       - PUID=1000
       - PGID=1000
       - DNS_SERVER_LOG_USING_LOCAL_TIME=true
-      - DNS_SERVER_DOMAIN=ns2.d3adc3ii.site
     network_mode: "host"
     ports:
       - "5380:5380/tcp"
@@ -2230,7 +2243,60 @@ environment = """
 # change to an unused IP in your LAN subnet -- will be the same value on both stacks
 VIRTUAL_IP=10.10.10.16
 # Host IP of the other machine
-CHECK_IP=10.10.10.28
+CHECK_IP=10.10.10.24
+CHECK_PORT=53
+"""
+
+##
+
+[[stack]]
+name = "ns3"
+tags = ["internal", "dns", "komodo-28"]
+[stack.config]
+server = "komodo-28"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  ns0:
+    image: "technitium/dns-server:latest"
+    container_name: ns0
+    privileged: true
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - DNS_SERVER_LOG_USING_LOCAL_TIME=true
+      - DNS_SERVER_DOMAIN=ns2.d3adc3ii.site
+    network_mode: "host"
+    ports:
+      - "5380:5380/tcp"
+    volumes:
+      - ${DOCKER_DATA}/technitium-27:/etc/dns
+  keepalived:
+    image: shawly/keepalived:latest
+    restart: always
+    environment:
+      TZ: Asia/Singapore
+      KEEPALIVED_VIRTUAL_IP: ${VIRTUAL_IP}
+      KEEPALIVED_VIRTUAL_MASK: 24
+      KEEPALIVED_CHECK_IP: ${CHECK_IP}
+      KEEPALIVED_CHECK_PORT: ${CHECK_PORT}
+      KEEPALIVED_VRID: 150
+      KEEPALIVED_INTERFACE: eth0
+      KEEPALIVED_PRIORITY: 255
+      KEEPALIVED_STATE: MASTER
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_BROADCAST
+"""
+environment = """
+# change to an unused IP in your LAN subnet -- will be the same value on both stacks
+VIRTUAL_IP=10.10.10.16
+# Host IP of the other machine
+CHECK_IP=10.10.10.25
 CHECK_PORT=53
 """
 
@@ -2868,6 +2934,31 @@ services:
 ##
 
 [[stack]]
+name = "tw-headless"
+[stack.config]
+server = "komodo-28"
+file_contents = """
+# Usage: SERVICE_KEY_PATH=<path> docker compose up -d
+
+services:
+  twingate-client:
+    image: twingate/client:latest
+    devices:
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ${SERVICE_KEY_PATH}:/etc/twingate/service_key.json
+    restart: unless-stopped
+    tty: true
+"""
+environment = """
+ SERVICE_KEY_PATH=/home/d3/service_key.json
+"""
+
+##
+
+[[stack]]
 name = "uptime-kuma"
 tags = [
   "external",
@@ -3034,6 +3125,13 @@ labels = """
 caddy: statement.d3adc3ii.site
 caddy.reverse_proxy: "{{upstreams 8501}}"
 """
+
+##
+
+[[deployment]]
+name = "twin"
+[deployment.config]
+
 
 ##
 
