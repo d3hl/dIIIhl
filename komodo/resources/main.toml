@@ -2,6 +2,7 @@
 name = "Public-70"
 [server.config]
 address = "https://10.10.10.70:8120"
+enabled = true
 
 ##
 
@@ -21,6 +22,14 @@ tags = ["10.10.10.26"]
 [server.config]
 address = "https://10.10.10.26:8120"
 region = "Singapore"
+enabled = true
+
+##
+
+[[server]]
+name = "komodo-24"
+[server.config]
+address = "https://10.10.10.24:8120"
 enabled = true
 
 ##
@@ -473,28 +482,6 @@ AUTHENTIK_EMAIL__TIMEOUT=10
 AUTHENTIK_EMAIL__FROM=authentik@localhost
 COMPOSE_PORT_HTTP=9111
 COMPOSE_PORT_HTTPS=9444
-"""
-
-##
-
-[[stack]]
-name = "autopve"
-[stack.config]
-server = "komodo-2"
-file_contents = """
-services:
-  autopve:
-    image: ghcr.io/natankeddem/autopve:latest
-    ports:
-      - 8787:8080
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ${DOCKER_DATA}/autopve/data:/app/data
-      - ${DOCKER_DATA}/autopve/logs:/app/logs
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - VERBOSE_LOGGING=TRUE # Optional
 """
 
 ##
@@ -2366,40 +2353,9 @@ PORT=20184
 ##
 
 [[stack]]
-name = "netboot"
-[stack.config]
-server = "komodo-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  netbootxyz:
-    image: ghcr.io/netbootxyz/netbootxyz
-    container_name: netbootxyz
-    environment:
-      - MENU_VERSION=2.0.84 # optional
-     # - PGID=1000
-     # - PUID=1000
-      - NGINX_PORT=80 # optional
-      - WEB_APP_PORT=3000 # optional
-    #volumes:
-      #- ${DOCKER_DATA}/netboot/config:/config # optional
-      #- ${DOCKER_DATA}/netboot/assets:/assets # optional
-    ports:
-      - 3000:3000  # optional, destination should match ${WEB_APP_PORT} variable above.
-      - 69:69/udp
-      - 8080:80  # optional, destination should match ${NGINX_PORT} variable above.
-    restart: unless-stopped
-    labels:
-      proxy.netbootxyz.port: 3000
-"""
-
-##
-
-[[stack]]
 name = "ns0"
 [stack.config]
+server = "Public-70"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2510,7 +2466,7 @@ environment = """
 # change to an unused IP in your LAN subnet -- will be the same value on both stacks
 VIRTUAL_IP=10.10.10.16
 # Host IP of the other machine
-CHECK_IP=10.10.10.24
+CHECK_IP=10.10.10.70
 CHECK_PORT=53
 """
 
