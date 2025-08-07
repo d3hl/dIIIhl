@@ -1,4 +1,11 @@
 [[server]]
+name = "Public-70"
+[server.config]
+address = "https://10.10.10.70:8120"
+
+##
+
+[[server]]
 name = "komodo-1"
 tags = ["10.10.10.25"]
 [server.config]
@@ -2386,6 +2393,65 @@ services:
     restart: unless-stopped
     labels:
       proxy.netbootxyz.port: 3000
+"""
+
+##
+
+[[stack]]
+name = "ns0"
+[stack.config]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  ns1:
+    image: "technitium/dns-server:latest"
+    container_name: ns0
+    privileged: true
+    restart: always
+    environment:
+      - DNS_SERVER_LOG_USING_LOCAL_TIME=true
+    network_mode: "host"
+    ports:
+      - "5380:5380/tcp"
+    #  - "53:53/udp" #DNS service
+    #  - "53:53/tcp" #DNS service
+      # - "853:853/udp" #DNS-over-QUIC service
+    #  - "853:853/tcp" #DNS-over-TLS service
+      # - "443:443/udp" #DNS-over-HTTPS service (HTTP/3)
+      # - "443:443/tcp" #DNS-over-HTTPS service (HTTP/1.1, HTTP/2)
+    #  - "80:80/tcp" #DNS-over-HTTP service (use with reverse proxy or certbot certificate renewal)
+    #  - "8053:8053/tcp" #DNS-over-HTTP service (use with reverse proxy)
+      # - "67:67/udp" #DHCP service
+    volumes:
+      - ./technitium:/etc/dns
+  keepalived:
+    image: shawly/keepalived:latest
+    restart: always
+    environment:
+      TZ: Asia/Singapore
+      KEEPALIVED_VIRTUAL_IP: ${VIRTUAL_IP}
+      KEEPALIVED_VIRTUAL_MASK: 24
+      KEEPALIVED_CHECK_IP: ${CHECK_IP}
+      KEEPALIVED_CHECK_PORT: ${CHECK_PORT}
+      KEEPALIVED_VRID: 150
+      # change to primary LAN interface used by the host
+      KEEPALIVED_INTERFACE: eth0
+      KEEPALIVED_PRIORITY: 100
+      KEEPALIVED_STATE: BACKUP
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_BROADCAST
+"""
+environment = """
+# change to an unused IP in your LAN subnet -- will be the same value on both stacks
+VIRTUAL_IP=10.10.10.16
+# Host IP of the other machine
+CHECK_IP=10.10.10.25
+CHECK_PORT=53
+
 """
 
 ##
