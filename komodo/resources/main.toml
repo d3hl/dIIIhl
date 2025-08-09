@@ -362,7 +362,7 @@ networks:
 services:
   postgresql:
     image: docker.io/library/postgres:16-alpine
-    restart: unless-stopped
+    restart: always
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       start_period: 20s
@@ -382,7 +382,7 @@ services:
   redis:
     image: docker.io/library/redis:alpine
     command: --save 60 1 --loglevel warning
-    restart: unless-stopped
+    restart: always
     healthcheck:
       test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
       start_period: 20s
@@ -393,7 +393,7 @@ services:
       - redis:/data
   server:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.4}
-    restart: unless-stopped
+    restart: always
     command: server
     container_name: authentik
     networks:
@@ -429,7 +429,7 @@ services:
       - homepage.widget.key="ZnhLrOvUoWZfHcQpFrteQVekOjpGQh48lXEVFn34HvGtT8eJoyhgaNYWb2mI"
   worker:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.2}
-    restart: unless-stopped
+    restart: always
     command: worker
     environment:
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
@@ -951,6 +951,62 @@ services:
 ##
 
 [[stack]]
+name = "doxy-agent-k1"
+[stack.config]
+server = "komodo-1"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  agent:
+    image: "ghcr.io/yusing/godoxy-agent:latest"
+    container_name: godoxy-agent
+    restart: always
+    network_mode: host # do not change this
+    environment:
+      AGENT_NAME: "komodo-1"
+      AGENT_PORT: "8890"
+      AGENT_CA_CERT: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJsekNDQVR5Z0F3SUJBZ0lSQUlyRktsbytwbTZkdjlMNzJTOEhUUG93Q2dZSUtvWkl6ajBFQXdJd0tERVAKTUEwR0ExVUVDaE1HUjI5RWIzaDVNUlV3RXdZRFZRUURFd3huYjJSdmVIa3VZV2RsYm5Rd0lCY05NalV3T0RBNQpNVFV3TmpJMVdoZ1BNekF5TlRBNE1Ea3hOVEEyTWpWYU1DZ3hEekFOQmdOVkJBb1RCa2R2Ukc5NGVURVZNQk1HCkExVUVBeE1NWjI5a2IzaDVMbUZuWlc1ME1Ga3dFd1lIS29aSXpqMENBUVlJS29aSXpqMERBUWNEUWdBRXNtUHkKZm1EZWJsYm9DM1NxZlE4UnFmMlRPd281eUJBRXlvNDhac2NWUFVLYTQwbEhMRytwYVBzaXVPRjM2VUEyUFBOaQpjUTVlcG4wckZ6L2NnVDgyVzZORk1FTXdEZ1lEVlIwUEFRSC9CQVFEQWdFR01CSUdBMVVkRXdFQi93UUlNQVlCCkFmOENBUUF3SFFZRFZSME9CQllFRklyblJwK2V1VjhBOHE4VFgxQk1oQjk1aGJaZU1Bb0dDQ3FHU000OUJBTUMKQTBrQU1FWUNJUUMxZ1prZWRZODBMd3NVQSt0RFo2Y3ZWL1J5OTZFZTQ2OWl2QWMxV08wamd3SWhBSnJOdmt1QwpMT1hONktmT2VxWDF1dFR3MXc3blNpU3Y0SjFXUllSSXlFaTcKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=;LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUU3SnRPc0FGUEJqU2w4UW5RN3R3YklVWEFaSmdCRVBQVkxDeVIvTFNJdlFvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFc21QeWZtRGVibGJvQzNTcWZROFJxZjJUT3dvNXlCQUV5bzQ4WnNjVlBVS2E0MGxITEcrcAphUHNpdU9GMzZVQTJQUE5pY1E1ZXBuMHJGei9jZ1Q4Mld3PT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo="
+      AGENT_SSL_CERT: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJvakNDQVVpZ0F3SUJBZ0lSQUlEbHlZeVlEZHVsQ3NNQldldGRpS2d3Q2dZSUtvWkl6ajBFQXdJd0tERVAKTUEwR0ExVUVDaE1HUjI5RWIzaDVNUlV3RXdZRFZRUURFd3huYjJSdmVIa3VZV2RsYm5Rd0lCY05NalV3T0RBNQpNVFV3TmpJMVdoZ1BNekF5TlRBNE1Ea3hOVEEyTWpWYU1Ea3hEekFOQmdOVkJBb1RCa2R2Ukc5NGVURVBNQTBHCkExVUVDeE1HVTJWeWRtVnlNUlV3RXdZRFZRUURFd3huYjJSdmVIa3VZV2RsYm5Rd1dUQVRCZ2NxaGtqT1BRSUIKQmdncWhrak9QUU1CQndOQ0FBUUU5VXVwTTdhNTMvSHhuYXk2Y053dW55Z3RDbzlRdUZQM1FVaWIyTVMwdnFGaQpURjFiNkYwSE80NGs3RktxV0lONTFqMndKOUtyTmIxd2MzL29ESTdXbzBBd1BqQU9CZ05WSFE4QkFmOEVCQU1DCkI0QXdFd1lEVlIwbEJBd3dDZ1lJS3dZQkJRVUhBd0V3RndZRFZSMFJCQkF3RG9JTVoyOWtiM2g1TG1GblpXNTAKTUFvR0NDcUdTTTQ5QkFNQ0EwZ0FNRVVDSVFDM1o1V1k4dTBWRCtPODJJK0phTnVxRzByd0xTaXE2elBPTWFMUgoxSGMzekFJZ0gvRnd1cjVnWWNPcDRSVnhEY3hGaXpvRFVtaGRTYzE1Y0N4TkxDMHhXZUU9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K;LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUMzNlFJYlB2MWFvUnFOUkVZM2dEVmVqdFBpT1c4Tk1QMzB6aTJsbkdVYVBvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFQlBWTHFUTzJ1ZC94OFoyc3VuRGNMcDhvTFFxUFVMaFQ5MEZJbTlqRXRMNmhZa3hkVytoZApCenVPSk94U3FsaURlZFk5c0NmU3F6VzljSE4vNkF5TzFnPT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo="
+      # use agent as a docker socket proxy: [host]:port
+      # set LISTEN_ADDR to enable (e.g. 127.0.0.1:2375)
+      LISTEN_ADDR:
+      POST: false
+      ALLOW_RESTARTS: false
+      ALLOW_START: false
+      ALLOW_STOP: false
+      AUTH: false
+      BUILD: false
+      COMMIT: false
+      CONFIGS: false
+      CONTAINERS: false
+      DISTRIBUTION: false
+      EVENTS: true
+      EXEC: false
+      GRPC: false
+      IMAGES: false
+      INFO: false
+      NETWORKS: false
+      NODES: false
+      PING: true
+      PLUGINS: false
+      SECRETS: false
+      SERVICES: false
+      SESSION: false
+      SWARM: false
+      SYSTEM: false
+      TASKS: false
+      VERSION: true
+      VOLUMES: false
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/app/data
+"""
+
+##
+
+[[stack]]
 name = "dozzel-agent-1"
 [stack.config]
 server = "komodo-1"
@@ -1156,7 +1212,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "komodo-1"
+server = "Public-70"
 links = ["https://doxy.d3adc3ii.site/"]
 project_name = "godoxy"
 poll_for_updates = true
@@ -1261,7 +1317,7 @@ TZ=Asia/Singapore
 PUID=1000
 PGID=1000
 GODOXY_EMAIL= d3tech@pm.me
-CONFIG_DIR=/etc/komodo/repos/diiihl-3/komodo/resources/godoxy/config
+CONFIG_DIR=/etc/komodo/repos/Public-70/komodo/resources/godoxy/config
 CF_API_TOKEN= [[CF_API_TOKEN]]
 CF_EMAIL= d3tech@pm.me
 # API JWT Configuration (common)
@@ -2189,6 +2245,56 @@ OAUTH_PROVIDER_NAME= authentik
 ##
 
 [[stack]]
+name = "kener"
+tags = [
+  "monitoring",
+  "public-70",
+  "testing",
+  "3173"
+]
+[stack.config]
+server = "Public-70"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+networks:
+  default:
+  d3internal:
+    external: true
+services:
+  app:
+    image: rajnandan1/kener:latest   
+    container_name: kener
+    networks:
+      - d3internal
+    ports:
+      - '3173:3000/tcp'
+    volumes:
+      - ${DOCKER_DATA}/kener/database:/app/database
+      - ${DOCKER_DATA}/kener/uploads:/app/uploads              
+    restart: unless-stopped
+    env_file:
+      - .env
+"""
+environment = """
+TZ=Asia/Singapore
+PGID=1000
+PUID=1000
+KENER_SECRET_KEY=qhDyycpTOv3gIhqLA0qermzMyaTyj30N
+
+# For SQLite database...
+DATABASE_URL=sqlite://./database/kener.sqlite.db
+KENER_BASE_PATH=""
+ORIGIN=http://localhost:3000
+
+RESEND_API_KEY=""
+RESEND_SENDER_EMAIL=d3tech@pm.me
+"""
+
+##
+
+[[stack]]
 name = "loggifly"
 tags = ["internal", "monitoring"]
 [stack.config]
@@ -2301,7 +2407,6 @@ services:
       - ${DOCKER_DATA}/myspeed/data:/data
     restart: unless-stopped
     labels:
-      - proxy.network: default
       - homepage.group=Monitor
       - homepage.name=Myspeed
       - homepage.icon=myspeed.png
@@ -2383,7 +2488,7 @@ services:
     volumes:
       - ./technitium:/etc/dns
   keepalived:
-    image: shawly/keepalived:latest
+    image: shawly/keepalived:edge-7f210c3
     restart: always
     environment:
       TZ: Asia/Singapore
@@ -2393,9 +2498,7 @@ services:
       KEEPALIVED_CHECK_PORT: ${CHECK_PORT}
       KEEPALIVED_VRID: 150
       # change to primary LAN interface used by the host
-      KEEPALIVED_INTERFACE: eth0
-      KEEPALIVED_PRIORITY: 100
-      KEEPALIVED_STATE: BACKUP
+      KEEPALIVED_STATE: MASTER
     network_mode: host
     cap_add:
       - NET_ADMIN
@@ -2407,6 +2510,9 @@ VIRTUAL_IP=10.10.10.16
 # Host IP of the other machine
 CHECK_IP=10.10.10.25
 CHECK_PORT=53
+KEEPALIVED_INTERFACE= eth0
+KEEPALIVED_PRIORITY= 255
+#KEEPALIVED_ROUTER_ID Keepalived virtual router ID. Defaults to 51
 
 """
 
@@ -2444,7 +2550,7 @@ services:
     volumes:
       - ./technitium:/etc/dns
   keepalived:
-    image: shawly/keepalived:latest
+    image: shawly/keepalived:edge-7f210c3
     restart: always
     environment:
       TZ: Asia/Singapore
@@ -2454,8 +2560,6 @@ services:
       KEEPALIVED_CHECK_PORT: ${CHECK_PORT}
       KEEPALIVED_VRID: 150
       # change to primary LAN interface used by the host
-      KEEPALIVED_INTERFACE: eth0
-      KEEPALIVED_PRIORITY: 100
       KEEPALIVED_STATE: BACKUP
     network_mode: host
     cap_add:
@@ -2468,6 +2572,8 @@ VIRTUAL_IP=10.10.10.16
 # Host IP of the other machine
 CHECK_IP=10.10.10.70
 CHECK_PORT=53
+KEEPALIVED_INTERFACE= eth0
+KEEPALIVED_PRIORITY= 100
 """
 
 ##
@@ -2550,6 +2656,27 @@ TZ= [[TZ]]
 ##
 
 [[stack]]
+name = "outpost-70-rac"
+[stack.config]
+server = "Public-70"
+file_contents = """
+networks:
+  d3internal:
+    external: true
+services:
+    rac_outpost:
+        image: ghcr.io/goauthentik/rac
+        # Optionally specify the container's network, which must be able to reach the core authentik server.
+        networks:
+           - d3internal
+        environment:
+            AUTHENTIK_HOST: https://auth.d3adc3ii.cc
+            AUTHENTIK_TOKEN: ockrLJLt3Tfa8eUNqL7FrBOjrSGIIPxc1u3LSnOl7rOQZ6jgQ1qtngfs2VhX
+"""
+
+##
+
+[[stack]]
 name = "pangolin"
 tags = ["external"]
 [stack.config]
@@ -2563,88 +2690,6 @@ run_directory = "/home/d3"
 file_paths = ["docker-compose.yml"]
 environment = """
 CLOUDFLARE_DNS_API_TOKEN= [[CF_API_TOKEN_PANGOLIN]]
-"""
-
-##
-
-[[stack]]
-name = "passbolt"
-tags = ["komodo-1", "identity", "external"]
-[stack.config]
-server = "komodo-1"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-networks:
-  d3internal:
-    external: true
-services:
-  db:
-    image: mariadb:10.11
-    restart: unless-stopped
-    env_file:
-      - .env
-    environment:
-      MYSQL_RANDOM_ROOT_PASSWORD: "true"
-    volumes:
-      - database_volume:/var/lib/mysql
-
-  passbolt:
-    image: passbolt/passbolt:latest-ce
-    #Alternatively you can use rootless:
-    #image: passbolt/passbolt:latest-ce-non-root
-    restart: unless-stopped
-    networks:
-      - default
-      - d3internal
-    depends_on:
-      - db
-    env_file:
-      - .env
-    volumes:
-      - gpg_volume:/etc/passbolt/gpg
-      - jwt_volume:/etc/passbolt/jwt
-    command:
-      [
-        "/usr/bin/wait-for.sh",
-        "-t",
-        "0",
-        "db:3306",
-        "--",
-        "/docker-entrypoint.sh",
-      ]
-    ports:
-      - 8783:80
-      - 444:443
-    #Alternatively for non-root images:
-    # - 80:8080
-    # - 443:4433
-
-volumes:
-  database_volume:
-  gpg_volume:
-  jwt_volume:
-"""
-environment = """
-APP_FULL_BASE_URL: https://passbolt.d3adc3ii.cc
-MYSQL_DATABASE: "d3passbolt"
-MYSQL_USER: "d3bolt"
-MYSQL_PASSWORD: ";05SX|EXiXPf$r^crV46bIIBGe;4*DcWB^ZHvULYODlsjpoiisf_EUHQ3}X^1-x"
-DATASOURCES_DEFAULT_HOST: "db"
-DATASOURCES_DEFAULT_USERNAME: "d3bolt"
-DATASOURCES_DEFAULT_PASSWORD: ";05SX|EXiXPf$r^crV46bIIBGe;4*DcWB^ZHvULYODlsjpoiisf_EUHQ3}X^1-x"
-DATASOURCES_DEFAULT_DATABASE: "d3passbolt"
-
-EMAIL_DEFAULT_FROM_NAME='Passbolt'
-EMAIL_DEFAULT_FROM='no-reply@d3adc3ii.cc'
-EMAIL_TRANSPORT_DEFAULT_HOST='mail.smtp2go.com'
-EMAIL_TRANSPORT_DEFAULT_USERNAME='d3adc3ii.cc'
-EMAIL_TRANSPORT_DEFAULT_PASSWORD='taolavodich1234'
-EMAIL_TRANSPORT_DEFAULT_PORT=2525
-EMAIL_TRANSPORT_DEFAULT_TLS=yes
-
-
 """
 
 ##
@@ -2705,72 +2750,6 @@ IPAM_DATABASE_WEBHOST=%
 IPAM_TRUST_X_FORWARDED=true
 SCAN_INTERVAL=1h
 MYSQL_ROOT_PASSWORD=16E@j4pWjtL$X3Gnxfy3KQB0U$
-"""
-
-##
-
-[[stack]]
-name = "piped"
-tags = ["komodo-2", "external"]
-[stack.config]
-server = "komodo-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-    frontend:
-        image: 1337kavin/piped-frontend:latest
-        restart: unless-stopped
-        depends_on:
-            - piped
-        environment:
-            BACKEND_HOSTNAME: pipedapi.d3adc3ii.cc
-            HTTP_MODE: https
-        ports:
-            - "8080:80"
-        container_name: piped-frontend
-
-    piped:
-        image: 1337kavin/piped:latest
-        restart: unless-stopped
-        environment:
-          - PUID=1000
-          - PGID=1000
-        volumes:
-          #  - ./config/config.properties:/app/config.properties:ro
-            - ${DOCKER_DATA}/piped/config/config.properties:/app/config.properties:ro
-        depends_on:
-            - postgres
-        ports:
-            - "8081:8080"
-        container_name: piped-backend
-
-    proxy:
-        image: 1337kavin/piped-proxy:latest
-        restart: unless-stopped
-        ports:
-            - "8082:8080"
-        container_name: piped-proxy
-
-    bg-helper:
-        image: 1337kavin/bg-helper-server:latest
-        restart: unless-stopped
-        container_name: piped-bg-helper
-
-    postgres:
-        image: pgautoupgrade/pgautoupgrade:16-alpine
-        restart: unless-stopped
-        volumes:
-            - ./data/db:/var/lib/postgresql/data
-        env_file:
-            - .env
-        container_name: piped-postgres
-"""
-environment = """
-POSTGRES_DB=piped
-POSTGRES_USER=piped
-POSTGRES_PASSWORD='F2dv9HNbOImHGxNO2lhD304XwRr7GMSl'
 """
 
 ##
@@ -3027,18 +3006,42 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+networks:
+  default:
+  d3internal:
+    external: true
 services:
-  dozzle:
-    image: 
+  app:
+    image:
+    container_name: 
+    networks:
+      - d3internal
+    ports:
+      - :
+    volumes:
+      - ${DOCKER_DATA}/           
     restart: unless-stopped
     env_file:
       - .env
+    
     labels:
+#### Database if any ####################################
+  postgres:
+    image: postgres:alpine
+    container_name: postgres
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: some_super_random_secure_password    
+      POSTGRES_DB: postgres
+    restart: unless-stopped
 """
 environment = """
 TZ=Asia/Singapore
 PGID=1000
 PUID=1000
+SECRET=
 """
 
 ##
@@ -3221,6 +3224,115 @@ PGID=1000
 
 ##
 
+[[stack]]
+name = "zitadel"
+[stack.config]
+server = "Public-70"
+destroy_before_deploy = true
+additional_env_files = ["db.env"]
+file_contents = """
+services:
+  zitadel:
+    user: "${UID:-1000}"
+    restart: 'always'
+    networks:
+      - 'zitadel'
+    command: 'start-from-init --masterkey "MasterkeyNeedsToHave32Characters" --tlsMode disabled'
+    depends_on:
+      db:
+        condition: 'service_healthy'
+    image: ghcr.io/zitadel/zitadel:latest
+    env_file:
+      - .env 
+    healthcheck:
+      test:
+      - CMD
+      - /app/zitadel
+      - ready
+      interval: 10s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - .:/current-dir:delegated
+    ports:
+      - 8080:8080
+      - 3000:3000
+
+
+  login:
+    restart: unless-stopped
+    image: ghcr.io/zitadel/zitadel-login:latest
+    # If you can't use the network_mode service:zitadel, you can pass the environment variable CUSTOM_REQUEST_HEADERS=Host:localhost instead.
+    environment:
+      - ZITADEL_API_URL=http://localhost:8080
+      - NEXT_PUBLIC_BASE_PATH=/ui/v2/login
+      - ZITADEL_SERVICE_USER_TOKEN_FILE=/current-dir/login-client.pat
+    user: "${UID:-1000}"
+    network_mode: service:zitadel
+    volumes:
+      - .:/current-dir:ro
+    depends_on:
+      zitadel:
+        condition: service_healthy
+        restart: false
+  db:
+    restart: 'always'
+    image: postgres:16-alpine
+    env_file:
+      - ./db.env
+    networks:
+      - 'zitadel'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "zitadel", "-U", "postgres", "-c", "log_statement=all"]
+      interval: '10s'
+      timeout: '30s'
+      retries: 5
+      start_period: '20s'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+networks:
+  zitadel:
+volumes:
+  db-data:
+"""
+environment = """
+      ZITADEL_EXTERNALSECURE: false
+      ZITADEL_TLS_ENABLED: false
+      ZITADEL_DATABASE_POSTGRES_HOST: db
+      ZITADEL_DATABASE_POSTGRES_PORT: 5432
+      ZITADEL_DATABASE_POSTGRES_DATABASE: zitadel
+      ZITADEL_DATABASE_POSTGRES_USER_USERNAME: zitadeluser
+      ZITADEL_DATABASE_POSTGRES_USER_PASSWORD: zitadel123
+      ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE: disable
+      ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME: postgres
+      ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: postgres
+      ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE: disable
+      # By configuring a login client, the setup job creates a user of type machine with the role IAM_LOGIN_CLIENT.
+      # It writes a PAT to the path specified in ZITADEL_FIRSTINSTANCE_LOGINCLIENTPATPATH.
+      # The PAT is passed to the login container via the environment variable ZITADEL_SERVICE_USER_TOKEN_FILE.
+      ZITADEL_FIRSTINSTANCE_LOGINCLIENTPATPATH: /current-dir/login-client.pat
+      ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED: false
+      ZITADEL_FIRSTINSTANCE_ORG_LOGINCLIENT_MACHINE_USERNAME: login-client
+      ZITADEL_FIRSTINSTANCE_ORG_LOGINCLIENT_MACHINE_NAME: Automatically Initialized IAM_LOGIN_CLIENT
+      ZITADEL_FIRSTINSTANCE_ORG_LOGINCLIENT_PAT_EXPIRATIONDATE: '2029-01-01T00:00:00Z'
+      ZITADEL_DEFAULTINSTANCE_FEATURES_LOGINV2_REQUIRED: true
+      ZITADEL_DEFAULTINSTANCE_FEATURES_LOGINV2_BASEURI: http://localhost:3000/ui/v2/login
+      ZITADEL_OIDC_DEFAULTLOGINURLV2: http://localhost:3000/ui/v2/login/login?authRequest=
+      ZITADEL_OIDC_DEFAULTLOGOUTURLV2: http://localhost:3000/ui/v2/login/logout?post_logout_redirect=
+      ZITADEL_SAML_DEFAULTLOGINURLV2: http://localhost:3000/ui/v2/login/login?samlRequest=
+      # By configuring a machine, the setup job creates a user of type machine with the role IAM_OWNER.
+      # It writes a personal access token (PAT) to the path specified in ZITADEL_FIRSTINSTANCE_PATPATH.
+      # The PAT can be used to provision resources with [Terraform](/docs/guides/manage/terraform-provider), for example.
+      ZITADEL_FIRSTINSTANCE_PATPATH: /current-dir/admin.pat
+      ZITADEL_FIRSTINSTANCE_ORG_MACHINE_MACHINE_USERNAME: admin
+      ZITADEL_FIRSTINSTANCE_ORG_MACHINE_MACHINE_NAME: Automatically Initialized IAM_OWNER
+      ZITADEL_FIRSTINSTANCE_ORG_MACHINE_MACHINEKEY_TYPE: 1
+"""
+
+##
+
 [[deployment]]
 name = "apprise"
 [deployment.config]
@@ -3306,10 +3418,10 @@ name = "twin"
 ##
 
 [[deployment]]
-name = "twingate"
+name = "twingate-25"
 tags = ["external", "production"]
 [deployment.config]
-server = "komodo-2"
+server = "komodo-1"
 image.type = "Image"
 image.params.image = "twingate/connector:latest"
 poll_for_updates = true
@@ -3317,10 +3429,19 @@ auto_update = true
 restart = "unless-stopped"
 environment = """
   TWINGATE_NETWORK=d3net
-  TWINGATE_ACCESS_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6Inp3dkU1dHpJZzV4X2pSVEU4RTFWQll6MW0tX2g1dXlMZlhTV1VSS1BEVE0iLCJ0eXAiOiJEQVQifQ.eyJudCI6IkFOIiwiYWlkIjoiNTExMjE5IiwiZGlkIjoiMjE5MTEwMCIsImp0aSI6ImIxZjU3N2FkLTZmNDItNDYyYS05ZGIzLTY1NTE5ZmQyMTJlNCIsImlzcyI6InR3aW5nYXRlIiwiYXVkIjoiZDNuZXQiLCJleHAiOjE3NDYxNDQ5MDAsImlhdCI6MTc0NjE0MTMwMCwidmVyIjoiNCIsInRpZCI6IjEwMzU2NCIsInJudyI6MTc0NjE0MTU3OCwicm5ldGlkIjoiMTM1OTMxIn0.OxT4qXnqonLPGb1GwJTRcYoSwZG16x2JGA_Xu2pOo0dZH3jpqfd1SkjWy8JjcVePboTum2e0WEdNu4SFcJUy_A
-  TWINGATE_REFRESH_TOKEN=mrNJNc7hirY3gO3-q9l6dnN_YjYl-8q79XRXg1ffZstYm8EYyH6xNXMIVviMaQ-2-GAa4wuSMv1J5ebEf9KvzIK94jmq7j9QGPH2Tr7ZnjlYADuKrEpKUkrmnbrROkgQy6nzWg
+  TWINGATE_ACCESS_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6Illmc0pjM0RERVhQMi1jYkg4SzZWVGNEX051YlkzOFZDUldZc1FBQ2VQYm8iLCJ0eXAiOiJEQVQifQ.eyJudCI6IkFOIiwiYWlkIjoiNTc0MjEzIiwiZGlkIjoiMjQyMjQzNSIsInJudyI6MTc1NDYwODQ4NSwianRpIjoiOGRhNzEzMmItZGE3Yi00ZWNhLThkYmUtYWM5MTZmMDI0NDQzIiwiaXNzIjoidHdpbmdhdGUiLCJhdWQiOiJkM25ldCIsImV4cCI6MTc1NDYxMTgzNiwiaWF0IjoxNzU0NjA4MjM2LCJ2ZXIiOiI0IiwidGlkIjoiMTAzNTY0Iiwicm5ldGlkIjoiMTM1OTMxIn0.xMKevaUbCA85VjL8Kc8KBdkpBjUU8eKY4JL-HJLeRcmX6jnWAu_LO2zYT_W7x1Ol9vR_uIOabcjqcZ20ElWmrQ
+  TWINGATE_REFRESH_TOKEN=n29VqKpslYHBPX2QeGK1Q9RDGkX7RcWQ_SRqG-iigIaHa5IFpW25kcfJD_wY-WAnz3a8hFijVZiRrkPBr3KqDkhwdsv7fb1joTz9kYl9nhtF9BbmZa_JBWrCYs6qutgCuomBxQ
   TWINGATE_LOG_ANALYTICS=v2
 """
+
+##
+
+[[repo]]
+name = "Public-70"
+[repo.config]
+server = "Public-70"
+git_account = "d3hl"
+repo = "d3hl/dIIIhl"
 
 ##
 
