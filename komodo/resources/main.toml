@@ -3438,6 +3438,23 @@ repo = "d3hl/dIIIhl"
 ##
 
 [[procedure]]
+name = "auto sync"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = []
+
+[[procedure.config.stage]]
+name = "Stage 2"
+enabled = true
+executions = [
+  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
+]
+
+##
+
+[[procedure]]
 name = "pull repo and deploy homepage"
 
 [[procedure.config.stage]]
