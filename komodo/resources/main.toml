@@ -2286,7 +2286,7 @@ KENER_SECRET_KEY=qhDyycpTOv3gIhqLA0qermzMyaTyj30N
 # For SQLite database...
 DATABASE_URL=sqlite://./database/kener.sqlite.db
 KENER_BASE_PATH=""
-ORIGIN=http://localhost:3000
+ORIGIN=https://kener.d3adc3ii.cc
 
 RESEND_API_KEY=""
 RESEND_SENDER_EMAIL=d3tech@pm.me
