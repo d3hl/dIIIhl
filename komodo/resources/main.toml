@@ -428,7 +428,7 @@ services:
       - homepage.widget.url=https://auth.d3adc3ii.cc
       - homepage.widget.key="ZnhLrOvUoWZfHcQpFrteQVekOjpGQh48lXEVFn34HvGtT8eJoyhgaNYWb2mI"
   worker:
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.2}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.4}
     restart: always
     command: worker
     environment:
@@ -2656,27 +2656,6 @@ TZ= [[TZ]]
 ##
 
 [[stack]]
-name = "outpost-70-rac"
-[stack.config]
-server = "Public-70"
-file_contents = """
-networks:
-  d3internal:
-    external: true
-services:
-    rac_outpost:
-        image: ghcr.io/goauthentik/rac
-        # Optionally specify the container's network, which must be able to reach the core authentik server.
-        networks:
-           - d3internal
-        environment:
-            AUTHENTIK_HOST: https://auth.d3adc3ii.cc
-            AUTHENTIK_TOKEN: ockrLJLt3Tfa8eUNqL7FrBOjrSGIIPxc1u3LSnOl7rOQZ6jgQ1qtngfs2VhX
-"""
-
-##
-
-[[stack]]
 name = "pangolin"
 tags = ["external"]
 [stack.config]
@@ -3411,14 +3390,7 @@ caddy.reverse_proxy: "{{upstreams 8501}}"
 ##
 
 [[deployment]]
-name = "twin"
-[deployment.config]
-
-
-##
-
-[[deployment]]
-name = "twingate-25"
+name = "twingate-70"
 tags = ["external", "production"]
 [deployment.config]
 server = "komodo-1"
@@ -3429,8 +3401,8 @@ auto_update = true
 restart = "unless-stopped"
 environment = """
   TWINGATE_NETWORK=d3net
-  TWINGATE_ACCESS_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6Illmc0pjM0RERVhQMi1jYkg4SzZWVGNEX051YlkzOFZDUldZc1FBQ2VQYm8iLCJ0eXAiOiJEQVQifQ.eyJudCI6IkFOIiwiYWlkIjoiNTc0MjEzIiwiZGlkIjoiMjQyMjQzNSIsInJudyI6MTc1NDYwODQ4NSwianRpIjoiOGRhNzEzMmItZGE3Yi00ZWNhLThkYmUtYWM5MTZmMDI0NDQzIiwiaXNzIjoidHdpbmdhdGUiLCJhdWQiOiJkM25ldCIsImV4cCI6MTc1NDYxMTgzNiwiaWF0IjoxNzU0NjA4MjM2LCJ2ZXIiOiI0IiwidGlkIjoiMTAzNTY0Iiwicm5ldGlkIjoiMTM1OTMxIn0.xMKevaUbCA85VjL8Kc8KBdkpBjUU8eKY4JL-HJLeRcmX6jnWAu_LO2zYT_W7x1Ol9vR_uIOabcjqcZ20ElWmrQ
-  TWINGATE_REFRESH_TOKEN=n29VqKpslYHBPX2QeGK1Q9RDGkX7RcWQ_SRqG-iigIaHa5IFpW25kcfJD_wY-WAnz3a8hFijVZiRrkPBr3KqDkhwdsv7fb1joTz9kYl9nhtF9BbmZa_JBWrCYs6qutgCuomBxQ
+  TWINGATE_ACCESS_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6Ik5RejJ2eDFHR2hQeXR6OHlxS1ZWbDUwMUNTSzlOQUpMcUV2ZWpyQ0d5N0UiLCJ0eXAiOiJEQVQifQ.eyJudCI6IkFOIiwiYWlkIjoiNTc1NDc4IiwiZGlkIjoiMjQyNjc0NSIsInJudyI6MTc1NDc5Njk0NCwianRpIjoiNzM3NWU3NTUtODAwMS00NzZjLWE0ZTItNDg3YmMzMDZkOTFiIiwiaXNzIjoidHdpbmdhdGUiLCJhdWQiOiJkM25ldCIsImV4cCI6MTc1NDgwMDIwNiwiaWF0IjoxNzU0Nzk2NjA2LCJ2ZXIiOiI0IiwidGlkIjoiMTAzNTY0Iiwicm5ldGlkIjoiMTM1OTMxIn0.-F9bRC-CrpQIzYcn58m2owGzTI70XX4s_6yUMu8Lm7bgAcYJC7WZgcCgoxHxEttiQPQPZ6ixaHBdwIw2rdwRrg
+  TWINGATE_REFRESH_TOKEN=kuIJdK232YHEXtPvru4WzvMgK6cCi4ZcUe5ohTTq6dRQkQnAbizlhxIpQvX1bKOTRvPARXMcKhnqLFfLxUIKaoXNNHfRe9SdJioFgPEZQU3geYafa4CO9Isn5HiATd1QwFJn1w
   TWINGATE_LOG_ANALYTICS=v2
 """
 
