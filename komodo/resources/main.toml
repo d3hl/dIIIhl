@@ -2978,6 +2978,47 @@ VAULT=/mnt/zFiles
 ##
 
 [[stack]]
+name = "syncthing"
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+#networks:
+#  d3internal:
+#    external: true
+services:
+  app:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+ #   networks:
+  #    - d3internal
+    ports:
+      - 8384:8384
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
+    volumes:
+      - ${DOCKER_DATA}/syncthing/config:/config
+      - /mnt/zFiles:/zFiles
+      - /mnt/zXXX:/zXXX           
+    restart: unless-stopped
+    env_file:
+      - .env   
+    labels:
+      proxy.syncthing.port: 8384
+"""
+environment = """
+TZ=Asia/Singapore
+PGID=1000
+PUID=1000
+SECRET=
+"""
+
+##
+
+[[stack]]
 name = "template"
 template = true
 [stack.config]
@@ -3439,11 +3480,6 @@ repo = "d3hl/dIIIhl"
 
 [[procedure]]
 name = "auto sync"
-
-[[procedure.config.stage]]
-name = "Stage 1"
-enabled = true
-executions = []
 
 [[procedure.config.stage]]
 name = "Stage 2"
