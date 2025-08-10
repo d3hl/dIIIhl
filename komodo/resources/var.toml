@@ -1,11 +1,4 @@
 [[variable]]
-name = "CF_API_TOKEN"
-value = "s4gzKuatLjzAMkjXm6qvrvRTZYVVCRQzl-V9FU0S"
-is_secret = true
-
-##
-
-[[variable]]
 name = "AUTHENTIK_SECRET_KEY"
 value = "_7WB2IB9GR612BYM9A9VTRS4OHFNOA0DVp?{Y=,St,C-%FK)mbpF`yIf}lm&Q]oWLpc;<y?%>xXU=rq71PWqLC4yYFno9OJG"
 is_secret = true
@@ -48,30 +41,8 @@ is_secret = true
 ##
 
 [[variable]]
-name = "NEWT_ID2"
-description = "for newt 2"
-value = "n04e204hc6rp5yk"
-is_secret = true
-
-##
-
-[[variable]]
 name = "NEWT_SECRET2"
 value = "fynufrzgj21byeusity9xojmox07l1fr6yoe2fpsg0dg7kwd"
-is_secret = true
-
-##
-
-[[variable]]
-name = "NEWT_ID1"
-value = "sc90bcxcbkg0smq"
-is_secret = true
-
-##
-
-[[variable]]
-name = "NEWT_SECRET1"
-value = "v5mkixs9kuz5oydxut39c17tody3ksttjk5b9utld02b8lwd"
 is_secret = true
 
 ##
@@ -213,3 +184,46 @@ is_secret = true
 name = "DISCORD_WEBHOOK"
 value = "https://discord.com/api/webhooks/1393861630898602024/w0oa-BDkHE3K7BaisBqhrL1gtbm9LYtPug5h_ZluzpVSVIg_bvuq10DQESNsXl7D2kyh"
 is_secret = false
+
+##
+
+[[variable]]
+name = "CF_API_TOKEN_PANGOLIN"
+value = "WVG8pBrcnDkPYT1H5oAQZa4GiJtL9sn1q6tpvNjg"
+is_secret = true
+
+##
+
+[[variable]]
+name = "CF_API_TOKEN"
+value = "s4gzKuatLjzAMkjXm6qvrvRTZYVVCRQzl-V9FU0S"
+is_secret = true
+
+##
+
+[[variable]]
+name = "HOMEPAGE_VAR_DNS_KEY"
+value = "10eaa5d8bbe74558473d6b7dcb1afe68b4ad9ed71c9b5216476f915b5a2316fc"
+is_secret = true
+
+##
+
+[[variable]]
+name = "NEWT_SECRET1"
+value = "tps1zdfa0664kvam9rd940nk04ibtpoqtx7hmui1v3jeqjvv"
+is_secret = true
+
+##
+
+[[variable]]
+name = "NEWT_ID2"
+description = "for newt 2"
+value = "n04e204hc6rp5yk"
+is_secret = true
+
+##
+
+[[variable]]
+name = "NEWT_ID1"
+value = "jeiz7v90fx9n2ua"
+is_secret = true
