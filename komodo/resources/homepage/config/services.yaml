@@ -62,10 +62,10 @@
         ping: {{HOMEPAGE_VAR_GODOXY_URL}}
 ########################################################################################################################################################################################################
 - Network:
-    - Fortinet:
-        icon: {{HOMEPAGE_VAR_FORTINET_ICON}}
-        href: {{HOMEPAGE_VAR_FORTINET_URL}}
-        ping: {{HOMEPAGE_VAR_FORTINET_URL}}
+  #  - Fortinet:
+   #     icon: {{HOMEPAGE_VAR_FORTINET_ICON}}
+    #    href: {{HOMEPAGE_VAR_FORTINET_URL}}
+     #   ping: {{HOMEPAGE_VAR_FORTINET_URL}}
     - NetAlertX:
         icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
         href: {{HOMEPAGE_VAR_NETALERTX_URL}}
