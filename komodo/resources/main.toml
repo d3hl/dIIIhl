@@ -1,7 +1,27 @@
 [[server]]
 name = "Public-70"
+tags = ["10.10.10.70"]
 [server.config]
 address = "https://10.10.10.70:8120"
+region = "Cantonment"
+enabled = true
+
+##
+
+[[server]]
+name = "k-120"
+[server.config]
+address = "https://10.203.1.120:8120"
+region = "Clementi"
+enabled = true
+
+##
+
+[[server]]
+name = "k-121"
+[server.config]
+address = "https://10.203.1.121:8120"
+region = "Clementi"
 enabled = true
 
 ##
@@ -11,7 +31,7 @@ name = "komodo-1"
 tags = ["10.10.10.25"]
 [server.config]
 address = "https://10.10.10.25:8120"
-region = "Singapore"
+region = "Cantonment"
 enabled = true
 
 ##
@@ -21,8 +41,7 @@ name = "komodo-2"
 tags = ["10.10.10.26"]
 [server.config]
 address = "https://10.10.10.26:8120"
-region = "Singapore"
-enabled = true
+region = "Cantonment"
 
 ##
 
@@ -1183,7 +1202,7 @@ tags = [
   "internal",
   "core",
   "proxy",
-  "komodo-1"
+  "10.10.10.70"
 ]
 [stack.config]
 server = "Public-70"
@@ -1193,15 +1212,10 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
-networks:
-  d3internal:
-    external: true
 services:
   socket-proxy:
     container_name: socket-proxy
     image: ghcr.io/yusing/socket-proxy:latest
-    networks:
-      - d3internal
     environment:
       - ALLOW_START=1
       - ALLOW_STOP=1
@@ -1332,7 +1346,7 @@ GODOXY_API_PASSWORD=qyp.kmr2ktf5vcj3CYM
 # GODOXY_OIDC_ALLOWED_GROUPS=group1,group2
 
 # Proxy listening address
-GODOXY_HTTP_ADDR=:80
+GODOXY_HTTP_ADDR=10.10.10.70:80
 GODOXY_HTTPS_ADDR=:443
 
 # Enable HTTP3
@@ -2432,6 +2446,52 @@ PORT=20184
 ##
 
 [[stack]]
+name = "newt-120"
+tags = ["k-120"]
+[stack.config]
+server = "k-120"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
+      - NEWT_ID=r8kglxwqxrph1s2
+      - NEWT_SECRET=0rcrulypca8o98gy7f6qs3y0vudhxl41n0ns2pyqvih9wu77
+"""
+
+##
+
+[[stack]]
+name = "newt-pangolin-cloud"
+[stack.config]
+server = "komodo-2"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    env_file:
+      - .env
+"""
+environment = """
+PANGOLIN_ENDPOINT=https://pangolin.fossorial.io
+NEWT_ID=1m9s5lj8p9tktns
+NEWT_SECRET=ldt517vm81d34hotlycyy9bxzjfhxhwzivtdkbf2v0elrnso
+"""
+
+##
+
+[[stack]]
 name = "ns0"
 [stack.config]
 server = "Public-70"
@@ -3004,7 +3064,7 @@ services:
     volumes:
       - ${DOCKER_DATA}/syncthing/config:/config
       - /mnt/zFiles:/zFiles
-      - /mnt/zXXX:/zXXX           
+      - /mnt/pbsbackup:/pbsbackup       
     restart: unless-stopped
     env_file:
       - .env   
@@ -3044,7 +3104,8 @@ services:
       - 21027:21027/udp
     volumes:
       - ${DOCKER_DATA}/syncthing2/config:/config
-      - /mnt/zFiles:/zFiles        
+      - /mnt/zMedia:/zMedia
+      - /mnt/pbsbackup:/pbsbackup        
     restart: unless-stopped
     env_file:
       - .env   
@@ -3429,6 +3490,13 @@ tags = ["internal", "testing"]
 server = "komodo-2"
 image.type = "Image"
 image.params.image = "tenable/nessus:latest-ubuntu"
+
+##
+
+[[deployment]]
+name = "newt-cloud"
+[deployment.config]
+
 
 ##
 
