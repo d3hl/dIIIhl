@@ -1627,6 +1627,7 @@ HOMEPAGE_VAR_SMOKEPING_URL= "http://192.168.2.21/smokeping"
 
 #### BACKUP ####################################################################################################################################################################################################
 # PBS
+HOMEPAGE_VAR_PBS_URL="https://pbs.d3adc3ii.cc"
 HOMEPAGE_VAR_PBS_USER=homepage@pbs!homepage
 HOMEPAGE_VAR_PBS_SECRET=56ff3a13-0620-432b-b173-d048b1298a50
 # Backrest
