@@ -35,7 +35,14 @@
             showStacks: true # optional, default: false
 ########################################################################################################################################################################################################
 - Domain:
-    # - Authentik
+    - Authentik:
+        icon: HOMEPAGE_VAR_AUTHENTIK_ICON
+        href: HOMEPAGE_VAR_AUTHENTIK_URL
+        ping: HOMEPAGE_VAR_AUTHENTIK_URL
+        widget:
+            type: authentik
+            url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+            key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}}
     - Technitium:
         icon: {{HOMEPAGE_VAR_DNS_ICON}}
         href: {{HOMEPAGE_VAR_DNS_URL}}
@@ -45,15 +52,14 @@
             url: {{HOMEPAGE_VAR_DNS_URL}}
             key: {{HOMEPAGE_VAR_DNS_KEY}}
             range: {{HOMEPAGE_VAR_DNS_RANGE}}
-    - GoDoxy:
-        icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
-        href: {{HOMEPAGE_VAR_GODOXY_URL}} 
-        ping: {{HOMEPAGE_VAR_GODOXY_URL}}
     - Pangolin:
         icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
         href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
         sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
-
+    - GoDoxy:
+        icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
+        href: {{HOMEPAGE_VAR_GODOXY_URL}} 
+        ping: {{HOMEPAGE_VAR_GODOXY_URL}}
 ########################################################################################################################################################################################################
 - Network:
     - NetAlertX:
