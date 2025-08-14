@@ -41,10 +41,10 @@
         ping: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
         widget:
             type: authentik
-            url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+            url: http://10.10.10.25:9111
             key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}}
     - Technitium:
-        icon: {{HOMEPAGE_VAR_DNS_ICON}}
+        icon: {{HOMEPAGE_VAR_DNS_ICON}} 
         href: {{HOMEPAGE_VAR_DNS_URL}}
         ping: {{HOMEPAGE_VAR_DNS_URL}}
         widget:
