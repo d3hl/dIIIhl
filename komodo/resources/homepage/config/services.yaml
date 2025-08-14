@@ -60,9 +60,6 @@
         ping: {{HOMEPAGE_VAR_GODOXY_URL}}
 ########################################################################################################################################################################################################
 - Network:
-    - Fortinate-100F:
-        icon: {{HOMEPAGE_VAR_D3NET_ICON}}
-        href: {{HOMEPAGE_VAR_D3NET_URL}}
     - NetAlertX:
         icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
         href: {{HOMEPAGE_VAR_NETALERTX_URL}}
@@ -264,9 +261,12 @@
 ########################################################################################################################################################################################################
 ### CLOUD TAB ###        
 - Corp Network:
-    - Fortigate:
+    - Fortigate1:
         icon: fortinet 
         href: http://fw.ntn.com.sg:7443 
+    - Fortinate-100F:
+        icon: /icons/fortinet-light.png
+        href: {{HOMEPAGE_VAR_D3NET_URL}}        
     - FortiAnalyzer:
         icon: fortinet 
         href: http://faz.ntn.com.sg
