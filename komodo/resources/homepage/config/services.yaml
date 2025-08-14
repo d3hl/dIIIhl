@@ -6,10 +6,8 @@
         widget:
             type: proxmox
             url: https://10.10.10.10:8006
-            #username: {{HOMEPAGE_VAR_PROXMOX_USER}}
-            username: homepage@pam!api
-            #password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}
-            password: 9a14e6c8-ccb0-44f1-82ff-88ed1bc9df1c
+            username: {{HOMEPAGE_VAR_PROXMOX_USER}}
+            password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}       
             node: pve11
     -  Truenas:
         id: truenas 
@@ -62,10 +60,10 @@
         ping: {{HOMEPAGE_VAR_GODOXY_URL}}
 ########################################################################################################################################################################################################
 - Network:
-  #  - Fortinet:
-   #     icon: {{HOMEPAGE_VAR_FORTINET_ICON}}
-    #    href: {{HOMEPAGE_VAR_FORTINET_URL}}
-     #   ping: {{HOMEPAGE_VAR_FORTINET_URL}}
+    - Firewall:
+        icon: {{HOMEPAGE_VAR_FORTINET_ICON}}
+        href: {{HOMEPAGE_VAR_FORTINET_URL}}
+        ping: {{HOMEPAGE_VAR_FORTINET_URL}}
     - NetAlertX:
         icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
         href: {{HOMEPAGE_VAR_NETALERTX_URL}}
