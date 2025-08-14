@@ -36,9 +36,9 @@
 ########################################################################################################################################################################################################
 - Domain:
     - Authentik:
-        icon: HOMEPAGE_VAR_AUTHENTIK_ICON
-        href: HOMEPAGE_VAR_AUTHENTIK_URL
-        ping: HOMEPAGE_VAR_AUTHENTIK_URL
+        icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
+        href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+        ping: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
         widget:
             type: authentik
             url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
