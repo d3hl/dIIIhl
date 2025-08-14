@@ -1,11 +1,11 @@
 - Infra Core:
     - PVE:
         icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
-        href: {{HOMEPAGE_VAR_PROXMOX_URL_PVE11}}
-        sitemonitor: {{HOMEPAGE_VAR_PROXMOX_URL_PVE11}}
+        href: {{HOMEPAGE_VAR_PROXMOX_URL_PVE10}}
+        sitemonitor: {{HOMEPAGE_VAR_PROXMOX_URL_PVE10}}
         widget:
             type: proxmox
-            url: https://10.10.10.11:8006
+            url: https://10.10.10.10:8006
             #username: {{HOMEPAGE_VAR_PROXMOX_USER}}
             username: homepage@pam!api
             #password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}
@@ -62,6 +62,10 @@
         ping: {{HOMEPAGE_VAR_GODOXY_URL}}
 ########################################################################################################################################################################################################
 - Network:
+    - Fortinet:
+        icon: {{HOMEPAGE_VAR_FORTINET_ICON}}
+        href: {{HOMEPAGE_VAR_FORTINET_URL}}
+        ping: {{HOMEPAGE_VAR_FORTINET_URL}}
     - NetAlertX:
         icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
         href: {{HOMEPAGE_VAR_NETALERTX_URL}}
