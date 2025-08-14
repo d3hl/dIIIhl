@@ -61,7 +61,7 @@
 ########################################################################################################################################################################################################
 - Network:
     - Fortinate-100F:
-        icon: fortinet 
+        icon: {{HOMEPAGE_VAR_FORTINET_ICON}}
         href: {{HOMEPAGE_VAR_FORTINET_URL}}
     - NetAlertX:
         icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
