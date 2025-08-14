@@ -1841,7 +1841,7 @@ HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.d3adc3ii.cc"
 
 #### NETWORK ####################################################################################################################################################################################################
 # Fortigate
-HOMEPAGE_VAR_FORTINET_ICON= "/icons/fortigate-light.png"
+HOMEPAGE_VAR_FORTINET_ICON= "sh-fortinet-light.png"
 HOMEPAGE_VAR_FORTINET_URL= "https://fw.d3adc3ii.cc"
 # NetAlertX 
 HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx-light.png"
