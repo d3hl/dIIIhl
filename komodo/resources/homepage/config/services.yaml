@@ -61,8 +61,8 @@
 ########################################################################################################################################################################################################
 - Network:
     - Fortinate-100F:
-        icon: {{HOMEPAGE_VAR_FORTINET_ICON}}
-        href: {{HOMEPAGE_VAR_FORTINET_URL}}
+        #icon: {{HOMEPAGE_VAR_FORTINET_ICON}}
+        href: https://fw.d3adc3ii.cc
     - NetAlertX:
         icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
         href: {{HOMEPAGE_VAR_NETALERTX_URL}}
