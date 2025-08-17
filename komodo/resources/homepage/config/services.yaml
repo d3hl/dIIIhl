@@ -1,12 +1,12 @@
 - Infra Core:
     - PVE:
         icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
-        href: {{HOMEPAGE_VAR_PROXMOX_URL_PVE10}}
-        ping: {{HOMEPAGE_VAR_PROXMOX_IP_PVE10}}
+        href: https://pve.d3adc3ii.cc 
+        ping: 10.10.10.10
         widget:
             type: proxmox
-            url: {{HOMEPAGE_VAR_PROXMOX_URL_PVE10}} 
-            username: {{HOMEPAGE_VAR_PROXMOX_USER}}
+            url:  https://pve.d3adc3ii.cc
+            username: homepage@pve!homepage 
             password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}       
             node: pve10
     -  Truenas:
