@@ -2020,7 +2020,7 @@ tags = [
   "internal"
 ]
 [stack.config]
-server = "komodo-28"
+server = "Public-70"
 file_contents = """
 #
 # WARNING: To install Immich, follow our guide: https://immich.app/docs/install/docker-compose
@@ -2105,7 +2105,7 @@ environment = """
 IMMICH_IGNORE_MOUNT_CHECK_ERRORS=true
 PGID=1000
 PUID=1000
-UPLOAD_LOCATION=/mnt/zApps/immich-new/upload
+UPLOAD_LOCATION=/mnt/zApps/immich-70/upload
 DB_DATA_LOCATION=./postgres
 IMMICH_VERSION=release
 DB_PASSWORD=[[IMMICH_DB_PASSWORD]]
