@@ -1805,15 +1805,15 @@ HOMEPAGE_VAR_GL13_LABEL= pve13
 #### INFRA ####################################################################################################################################################################################################
 # Proxmox
 HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox-light.png"
-HOMEPAGE_VAR_PROXMOX_URL_PVE11= "https://pve.d3adc3ii.site"
-HOMEPAGE_VAR_PROXMOX_IP_PVE11="https://10.10.10.11:8006"
+HOMEPAGE_VAR_PROXMOX_URL_PVE10= "https://pve.d3adc3ii.site"
+HOMEPAGE_VAR_PROXMOX_IP_PVE10="https://10.10.10.11:8006"
 #HOMEPAGE_VAR_PROXMOX_USER=homepage@pve!homepage 
 HOMEPAGE_VAR_PROXMOX_SECRET=dde7d522-1e7f-4a5f-a9cf-081b351a3a1f
 HOMEPAGE_VAR_PBS_URL= "https://pbs.d3adc3ii.site"
 # Truenas
 HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas-scale-light.png"
-HOMEPAGE_VAR_TRUENAS_URL= "https://truenas.d3adc3ii.site"
-HOMEPAGE_VAR_TRUENAS_KEY="1-zM5Mm8l4VdRa4WNybTWjVdHVM89TR7fkGj40DkYEPgFdkt83DYBea95J3SHe3uCe"
+HOMEPAGE_VAR_TRUENAS_URL= "https://truenas.d3adc3ii.cc"
+HOMEPAGE_VAR_TRUENAS_KEY="5-54haHnBcqddYaP5FvNgiQsi9POUM5ycnsmZULgFVHcMdwJKZWNzOIKWL3GKa28Bl"
 HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
 # Komodo
 HOMEPAGE_VAR_KOMODO_ICON= "/icons/docker-light.png"

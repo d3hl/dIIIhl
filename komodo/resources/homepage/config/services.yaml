@@ -2,13 +2,13 @@
     - PVE:
         icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
         href: {{HOMEPAGE_VAR_PROXMOX_URL_PVE10}}
-        sitemonitor: {{HOMEPAGE_VAR_PROXMOX_URL_PVE10}}
+        ping: {{HOMEPAGE_VAR_PROXMOX_IP_PVE10}}
         widget:
             type: proxmox
-            url: https://10.10.10.10:8006
+            url: {{HOMEPAGE_VAR_PROXMOX_URL_PVE10}} 
             username: {{HOMEPAGE_VAR_PROXMOX_USER}}
             password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}       
-            node: pve11
+            node: pve10
     -  Truenas:
         id: truenas 
         icon: {{HOMEPAGE_VAR_TRUENAS_ICON}}
