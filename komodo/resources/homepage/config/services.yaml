@@ -5,7 +5,7 @@
         ping: 10.10.10.10
         widget:
             type: proxmox
-            url:  https://pve.d3adc3ii.cc
+            url:  https://10.10.10.10:8006
             username: homepage@pve!homepage 
             password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}       
             node: pve10
