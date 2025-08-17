@@ -16,7 +16,7 @@
         sitemonitor: {{HOMEPAGE_VAR_TRUENAS_URL}}
         widget:
             type: truenas
-            url: {{HOMEPAGE_VAR_TRUENAS_URL}}
+            url: https://10.20.20.9
             key: {{HOMEPAGE_VAR_TRUENAS_KEY}}
             enablePools: {{HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL}}
             nasType: scale
