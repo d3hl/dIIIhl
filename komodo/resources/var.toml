@@ -209,13 +209,6 @@ is_secret = true
 ##
 
 [[variable]]
-name = "NEWT_SECRET1"
-value = "tps1zdfa0664kvam9rd940nk04ibtpoqtx7hmui1v3jeqjvv"
-is_secret = true
-
-##
-
-[[variable]]
 name = "NEWT_ID2"
 description = "for newt 2"
 value = "n04e204hc6rp5yk"
@@ -224,6 +217,13 @@ is_secret = true
 ##
 
 [[variable]]
+name = "NEWT_SECRET1"
+value = "7rj5k77r65pgf9yv7kymb5bitoknew6u7w4m384uiquyh1q5"
+is_secret = false
+
+##
+
+[[variable]]
 name = "NEWT_ID1"
-value = "jeiz7v90fx9n2ua"
-is_secret = true
+value = "4hcfjgb243i90vu"
+is_secret = false
