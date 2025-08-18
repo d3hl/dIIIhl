@@ -28,10 +28,8 @@ enabled = true
 
 [[server]]
 name = "komodo-1"
-tags = ["10.10.10.25"]
 [server.config]
 address = "https://10.10.10.25:8120"
-region = "Cantonment"
 enabled = true
 
 ##
@@ -66,7 +64,7 @@ name = "komodo-3"
 tags = ["10.10.10.27"]
 [server.config]
 address = "https://10.10.10.27:8120"
-region = "Singapore"
+region = "Cantonment"
 enabled = true
 
 ##
@@ -623,7 +621,6 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -946,7 +943,6 @@ services:
 [[stack]]
 name = "doxy-agent-k1"
 [stack.config]
-server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -1002,7 +998,6 @@ services:
 [[stack]]
 name = "dozzel-agent-1"
 [stack.config]
-server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -1028,7 +1023,7 @@ tags = [
   "docker"
 ]
 [stack.config]
-server = "komodo-28"
+server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -1387,7 +1382,6 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2375,7 +2369,6 @@ file_paths = [
 name = "myspeed"
 tags = ["komodo-1"]
 [stack.config]
-server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2412,7 +2405,6 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
-server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2557,7 +2549,6 @@ KEEPALIVED_PRIORITY= 255
 name = "ns1"
 tags = ["internal", "komodo-1", "dns"]
 [stack.config]
-server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2874,7 +2865,6 @@ SCRUTINY_WEB_INFLUXDB_BUCKET=scrutiny
 [[stack]]
 name = "shellhub"
 [stack.config]
-server = "komodo-1"
 project_name = "shellhub"
 files_on_host = true
 run_directory = "/home/d3/shellhub"
@@ -3174,7 +3164,6 @@ SECRET=
 [[stack]]
 name = "termix"
 [stack.config]
-server = "komodo-1"
 links = ["https://termix.d3adc3ii.cc"]
 poll_for_updates = true
 auto_update = true
@@ -3505,7 +3494,6 @@ name = "newt-cloud"
 name = "newt1"
 tags = ["external", "production"]
 [deployment.config]
-server = "komodo-1"
 image.type = "Image"
 image.params.image = "fosrl/newt"
 poll_for_updates = true
@@ -3546,7 +3534,6 @@ caddy.reverse_proxy: "{{upstreams 8501}}"
 name = "twingate-70"
 tags = ["external", "production"]
 [deployment.config]
-server = "komodo-1"
 image.type = "Image"
 image.params.image = "twingate/connector:latest"
 poll_for_updates = true
@@ -3573,7 +3560,6 @@ repo = "d3hl/dIIIhl"
 [[repo]]
 name = "diiihl"
 [repo.config]
-server = "komodo-1"
 builder = "local"
 git_account = "d3hl"
 repo = "d3hl/dIIIhl"
@@ -3658,7 +3644,7 @@ alert_types = [
 name = "local"
 [builder.config]
 type = "Server"
-params.server_id = "komodo-1"
+params = {}
 
 ##
 
