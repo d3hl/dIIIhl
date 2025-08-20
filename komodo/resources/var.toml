@@ -1,18 +1,4 @@
 [[variable]]
-name = "AUTHENTIK_SECRET_KEY"
-value = "_7WB2IB9GR612BYM9A9VTRS4OHFNOA0DVp?{Y=,St,C-%FK)mbpF`yIf}lm&Q]oWLpc;<y?%>xXU=rq71PWqLC4yYFno9OJG"
-is_secret = true
-
-##
-
-[[variable]]
-name = "AUTHENTIK_PG_PASS"
-value = "RAMKPLQF6F5FGKBZ6IH4UP4UPFPO6W2M"
-is_secret = true
-
-##
-
-[[variable]]
 name = "KARA_NEXTAUTH_SECRET"
 value = "4obmXxlcc8M7RIi95R4gGcqvH2mD29LLLx4C+sXAd7rLvNpM"
 is_secret = true
@@ -226,4 +212,18 @@ is_secret = false
 [[variable]]
 name = "NEWT_ID1"
 value = "4hcfjgb243i90vu"
+is_secret = false
+
+##
+
+[[variable]]
+name = "AUTHENTIK_PG_PASS"
+value = "i5ZWFwZe0cmGKbg7NPeTyG0QG/OLYt7p1WODbOrE9oln4ILs"
+is_secret = false
+
+##
+
+[[variable]]
+name = "AUTHENTIK_SECRET_KEY"
+value = "z0FcFAka63fFcsfsVmV7mTy2zckf7TCtp/x96kL9OhLzI5mFUXH8+I/QBBEbEp3NoX1mjRHdpbhwAPa5"
 is_secret = false
