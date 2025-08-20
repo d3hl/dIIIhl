@@ -2351,6 +2351,21 @@ environment = """
 ##
 
 [[stack]]
+name = "mazanoke"
+[stack.config]
+server = "k-121"
+file_contents = """
+services:
+  mazanoke:
+    container_name: mazanoke
+    image: ghcr.io/civilblur/mazanoke:latest
+    ports:
+      - "3474:80"
+"""
+
+##
+
+[[stack]]
 name = "mktxp-stack"
 [stack.config]
 server = "komodo-3"
@@ -2514,22 +2529,22 @@ services:
       # - "67:67/udp" #DHCP service
     volumes:
       - ./technitium:/etc/dns
-  keepalived:
-    image: shawly/keepalived:edge-7f210c3
-    restart: always
-    environment:
-      TZ: Asia/Singapore
-      KEEPALIVED_VIRTUAL_IP: ${VIRTUAL_IP}
-      KEEPALIVED_VIRTUAL_MASK: 24
-      KEEPALIVED_CHECK_IP: ${CHECK_IP}
-      KEEPALIVED_CHECK_PORT: ${CHECK_PORT}
-      KEEPALIVED_VRID: 150
+  #keepalived:
+   # image: shawly/keepalived:edge-7f210c3
+    #restart: always
+    #environment:
+     # TZ: Asia/Singapore
+      #KEEPALIVED_VIRTUAL_IP: ${VIRTUAL_IP}
+#      KEEPALIVED_VIRTUAL_MASK: 24
+ #     KEEPALIVED_CHECK_IP: ${CHECK_IP}
+  #    KEEPALIVED_CHECK_PORT: ${CHECK_PORT}
+   #   KEEPALIVED_VRID: 150
       # change to primary LAN interface used by the host
-      KEEPALIVED_STATE: MASTER
-    network_mode: host
-    cap_add:
-      - NET_ADMIN
-      - NET_BROADCAST
+    #  KEEPALIVED_STATE: MASTER
+    #network_mode: host
+    #cap_add:
+     # - NET_ADMIN
+      #- NET_BROADCAST
 """
 environment = """
 # change to an unused IP in your LAN subnet -- will be the same value on both stacks
@@ -3480,30 +3495,6 @@ tags = ["internal", "testing"]
 server = "komodo-2"
 image.type = "Image"
 image.params.image = "tenable/nessus:latest-ubuntu"
-
-##
-
-[[deployment]]
-name = "newt-cloud"
-[deployment.config]
-
-
-##
-
-[[deployment]]
-name = "newt1"
-tags = ["external", "production"]
-[deployment.config]
-image.type = "Image"
-image.params.image = "fosrl/newt"
-poll_for_updates = true
-auto_update = true
-restart = "unless-stopped"
-environment = """
-  PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
-  NEWT_ID=[[NEWT_ID1]]
-  NEWT_SECRET=[[NEWT_SECRET1]]
-"""
 
 ##
 
