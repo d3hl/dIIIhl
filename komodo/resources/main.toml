@@ -30,6 +30,8 @@ enabled = true
 name = "komodo-1"
 [server.config]
 address = "https://10.10.10.25:8120"
+external_address = "https://komodo.d3adc3ii.cc"
+region = "Cantonment"
 enabled = true
 
 ##
@@ -55,7 +57,6 @@ enabled = true
 name = "komodo-28"
 [server.config]
 address = "https://10.10.10.28:8120"
-enabled = true
 
 ##
 
@@ -65,7 +66,6 @@ tags = ["10.10.10.27"]
 [server.config]
 address = "https://10.10.10.27:8120"
 region = "Cantonment"
-enabled = true
 
 ##
 
@@ -359,123 +359,96 @@ SUPPORT_EMAIL=
 ##
 
 [[stack]]
-name = "authentik"
-tags = [
-  "external",
-  "production",
-  "komodo-1"
-]
+name = "authentik-70"
+tags = ["public-70", "core", "external"]
 [stack.config]
-server = "komodo-1"
-links = ["https://auth.d3adc3ii.cc/"]
-project_name = "authentik"
+server = "Public-70"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
-networks:
-  d3internal:
-    external: true
 services:
   postgresql:
-    image: docker.io/library/postgres:16-alpine
-    restart: always
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
-      start_period: 20s
-      interval: 30s
-      retries: 5
-      timeout: 5s
-    volumes:
-      - database:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: ${PG_PASS}
-      POSTGRES_USER: ${PG_USER}
-      POSTGRES_DB: ${PG_DB}
     env_file:
-      - .env
-    labels:
-      proxy.exclude: true
-  redis:
-    image: docker.io/library/redis:alpine
-    command: --save 60 1 --loglevel warning
-    restart: always
+    - .env
+    environment:
+      POSTGRES_DB: ${PG_DB:-authentik}
+      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
+      POSTGRES_USER: ${PG_USER:-authentik}
     healthcheck:
-      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
-      start_period: 20s
       interval: 30s
       retries: 5
-      timeout: 3s
+      start_period: 20s
+      test:
+      - CMD-SHELL
+      - pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
+      timeout: 5s
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
     volumes:
-      - redis:/data
+    - database:/var/lib/postgresql/data
+  redis:
+    command: --save 60 1 --loglevel warning
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_period: 20s
+      test:
+      - CMD-SHELL
+      - redis-cli ping | grep PONG
+      timeout: 3s
+    image: docker.io/library/redis:alpine
+    restart: unless-stopped
+    volumes:
+    - redis:/data
   server:
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.4}
-    restart: always
     command: server
-    container_name: authentik
-    networks:
-      - default
-      - d3internal
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+    - .env
     environment:
-      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
-      AUTHENTIK_REDIS__HOST: redis
       AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
-    volumes:
-      - ${DOCKER_DATA}/authentik/media:/media
-      - ${DOCKER_DATA}/authentik/custom-templates:/templates
-    env_file:
-      - .env
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.0}
     ports:
-      - "${COMPOSE_PORT_HTTP:-9000}:9000"
-      - "${COMPOSE_PORT_HTTPS:-9443}:9443"
+    - ${COMPOSE_PORT_HTTP:-9000}:9000
+    - ${COMPOSE_PORT_HTTPS:-9443}:9443
+    restart: unless-stopped
+    volumes:
+    - ./media:/media
+    - ./custom-templates:/templates
+  worker:
+    command: worker
     depends_on:
       postgresql:
         condition: service_healthy
       redis:
         condition: service_healthy
-    labels:
-      - homepage.group=Domain
-      - homepage.name=Authentik Admin
-      - homepage.icon=sh-authentik-light
-      - homepage.href=https://auth.d3adc3ii.cc
-      - homepage.widget.type=authentik
-      - homepage.widget.url=https://auth.d3adc3ii.cc
-      - homepage.widget.key="ZnhLrOvUoWZfHcQpFrteQVekOjpGQh48lXEVFn34HvGtT8eJoyhgaNYWb2mI"
-  worker:
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.6.4}
-    restart: always
-    command: worker
+    env_file:
+    - .env
     environment:
-      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
-      AUTHENTIK_REDIS__HOST: redis
       AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER}
-      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
-    # `user: root` and the docker socket volume are optional.
-    # See more for the docker socket integration here:
-    # https://goauthentik.io/docs/outposts/integrations/docker
-    # Removing `user: root` also prevents the worker from fixing the permissions
-    # on the mounted folders, so when removing this make sure the folders have the correct UID/GID
-    # (1000:1000 by default)
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.0}
+    restart: unless-stopped
     user: root
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${AUTHENTIK_DATA_DIR}/media:/media
-      - ./certs:/certs
-      - ${AUTHENTIK_DATA_DIR}/custom-templates:/templates
-    env_file:
-      - .env
-    depends_on:
-      postgresql:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    labels:
-       proxy.exclude: true
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./media:/media
+    - ./certs:/certs
+    - ./custom-templates:/templates
 volumes:
   database:
     driver: local
@@ -483,22 +456,24 @@ volumes:
     driver: local
 """
 environment = """
-PG_USER= authentik
-PG_DB= authentik
+PG_PASS=[[AUTHENTIK_PG_PASS]]
 AUTHENTIK_SECRET_KEY= [[AUTHENTIK_SECRET_KEY]]
-PG_PASS= [[AUTHENTIK_PG_PASS]]
 # SMTP Host Emails are sent to
-AUTHENTIK_EMAIL__HOST=localhost
-AUTHENTIK_EMAIL__PORT=25
+AUTHENTIK_EMAIL__HOST= mail.smtp2go.com
+AUTHENTIK_EMAIL__PORT=8025 
+# Optionally authenticate (don't add quotation marks to your password)
+AUTHENTIK_EMAIL__USERNAME=d3adc3ii.cc
+AUTHENTIK_EMAIL__PASSWORD=taolavodich1234
 # Use StartTLS
-AUTHENTIK_EMAIL__USE_TLS=false
+AUTHENTIK_EMAIL__USE_TLS=true
 # Use SSL
 AUTHENTIK_EMAIL__USE_SSL=false
 AUTHENTIK_EMAIL__TIMEOUT=10
 # Email address authentik will send from, should have a correct @domain
-AUTHENTIK_EMAIL__FROM=authentik@localhost
-COMPOSE_PORT_HTTP=9111
-COMPOSE_PORT_HTTPS=9444
+AUTHENTIK_EMAIL__FROM=d3tech@pm.me
+
+COMPOSE_PORT_HTTP=8175
+COMPOSE_PORT_HTTPS=6443
 """
 
 ##
