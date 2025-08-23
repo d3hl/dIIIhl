@@ -1384,6 +1384,10 @@ HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12= pve12
 HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13= pve13
 HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs= pbs
 HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"]
+# Zabbix
+HOMEPAGE_VAR_ZABBIX_ICON= "sh-zabbix-light"
+HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.d3adc3ii.site/zabbix"
+HOMEPAGE_VAR_ZABBIX_PING= "10.10.10.8"
 # SPEEDTEST
 HOMEPAGE_VAR_SPEEDTEST_ICON= "sh-speedtest-tracker-light"
 HOMEPAGE_VAR_SPEEDTEST_URL= "https://speedtest.d3adc3ii.site"

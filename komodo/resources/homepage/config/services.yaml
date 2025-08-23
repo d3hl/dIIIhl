@@ -97,6 +97,10 @@
             fields: [ "systems", "up" ]
 
     # - Uptime Kuma:
+    - Zabbix:
+        icon: {{HOMEPAGE_VAR_ZABBIX_ICON}}
+        href: {{HOMEPAGE_VAR_ZABBIX_URL}}
+        ping: {{HOMEPAGE_VAR_ZABBIX_PING}}
     - Wazuh:
         icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
         href: {{HOMEPAGE_VAR_WAZUH_URL}}
