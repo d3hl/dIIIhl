@@ -10,6 +10,7 @@ enabled = true
 
 [[server]]
 name = "k-120"
+tags = ["10.203.1.120"]
 [server.config]
 address = "https://10.203.1.120:8120"
 region = "Clementi"
@@ -19,6 +20,7 @@ enabled = true
 
 [[server]]
 name = "k-121"
+tags = ["10.203.1.121"]
 [server.config]
 address = "https://10.203.1.121:8120"
 region = "Clementi"
@@ -28,6 +30,7 @@ enabled = true
 
 [[server]]
 name = "komodo-1"
+tags = ["10.10.10.25"]
 [server.config]
 address = "https://10.10.10.25:8120"
 external_address = "https://komodo.d3adc3ii.cc"
