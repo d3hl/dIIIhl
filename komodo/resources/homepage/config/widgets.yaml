@@ -2,7 +2,7 @@
     icon: /icons/d3logo.svg
 - greeting:
     text_size: 4xl
-    text: d3 Dashboard
+    text: d3Homelab
 
 - glances:
     url: {{HOMEPAGE_VAR_GL11_URL}}
