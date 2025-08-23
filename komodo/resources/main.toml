@@ -42,30 +42,7 @@ tags = ["10.10.10.26"]
 [server.config]
 address = "https://10.10.10.26:8120"
 region = "Cantonment"
-
-##
-
-[[server]]
-name = "komodo-24"
-[server.config]
-address = "https://10.10.10.24:8120"
 enabled = true
-
-##
-
-[[server]]
-name = "komodo-28"
-[server.config]
-address = "https://10.10.10.28:8120"
-
-##
-
-[[server]]
-name = "komodo-3"
-tags = ["10.10.10.27"]
-[server.config]
-address = "https://10.10.10.27:8120"
-region = "Cantonment"
 
 ##
 
@@ -449,6 +426,20 @@ services:
     - ./media:/media
     - ./certs:/certs
     - ./custom-templates:/templates
+  authentik_proxy:
+    image: ghcr.io/goauthentik/proxy:2025.8.0
+        # Optionally specify the container's network, which must be able to reach the core authentik server.
+        # networks:
+        #   - foo
+    ports:
+      - 9000:9000
+      - 9443:9443
+    environment:
+      AUTHENTIK_HOST: http://10.10.10.70:8175
+      AUTHENTIK_INSECURE: "true"
+      AUTHENTIK_TOKEN: QAk1Uxn4iwSd1tiAEmDAVMTvgu46hyy3er847Rksh5yjUY1kZN4cigNyG1mn
+            # Optional setting to be used when `authentik_host` for internal communication doesn't match the public URL.
+      AUTHENTIK_HOST_BROWSER: https://auth.d3adc3ii.cc
 volumes:
   database:
     driver: local
@@ -488,6 +479,7 @@ tags = [
 ]
 [stack.config]
 server = "komodo-1"
+links = ["https://beszel.d3adc3ii.cc"]
 file_contents = """
 services:
   beszel:
@@ -519,6 +511,7 @@ services:
 environment = """
 PGID=1000
 PUID=1000
+USER_CREATION=true
 """
 
 ##
@@ -527,7 +520,7 @@ PUID=1000
 name = "bookstack"
 tags = ["komodo-3", "external"]
 [stack.config]
-server = "komodo-28"
+server = "komodo-2"
 links = [
   "https://bookstack.d3adc3ii.cc"
 ]
@@ -596,6 +589,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
+server = "Public-70"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -859,137 +853,6 @@ services:
 ##
 
 [[stack]]
-name = "dockerproxy-27"
-tags = ["komodo-3"]
-[stack.config]
-server = "komodo-3"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-networks:
-  d3internal:
-    external: true
-services:
-  dockerproxy-27:
-    image: lscr.io/linuxserver/socket-proxy:latest
-    container_name: dockerproxy-27
-    networks:
-      - d3internal
-    environment:
-      - ALLOW_START=0 #optional
-      - ALLOW_STOP=0 #optional
-      - ALLOW_RESTARTS=0 #optional
-      - AUTH=0 #optional
-      - BUILD=0 #optional
-      - COMMIT=0 #optional
-      - CONFIGS=0 #optional
-      - CONTAINERS=0 #optional
-      - DISABLE_IPV6=0 #optional
-      - DISTRIBUTION=0 #optional
-      - EVENTS=1 #optional
-      - EXEC=0 #optional
-      - IMAGES=0 #optional
-      - INFO=0 #optional
-      - LOG_LEVEL=info #optional
-      - NETWORKS=0 #optional
-      - NODES=0 #optional
-      - PING=1 #optional
-      - PLUGINS=0 #optional
-      - POST=0 #optional
-      - SECRETS=0 #optional
-      - SERVICES=0 #optional
-      - SESSION=0 #optional
-      - SWARM=0 #optional
-      - SYSTEM=0 #optional
-      - TASKS=0 #optional
-      - VERSION=1 #optional
-      - VOLUMES=0 #optional
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    restart: unless-stopped
-    read_only: true
-    tmpfs:
-      - /run
-"""
-
-##
-
-[[stack]]
-name = "doxy-agent-k1"
-[stack.config]
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  agent:
-    image: "ghcr.io/yusing/godoxy-agent:latest"
-    container_name: godoxy-agent
-    restart: always
-    network_mode: host # do not change this
-    environment:
-      AGENT_NAME: "komodo-1"
-      AGENT_PORT: "8890"
-      AGENT_CA_CERT: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJsekNDQVR5Z0F3SUJBZ0lSQUlyRktsbytwbTZkdjlMNzJTOEhUUG93Q2dZSUtvWkl6ajBFQXdJd0tERVAKTUEwR0ExVUVDaE1HUjI5RWIzaDVNUlV3RXdZRFZRUURFd3huYjJSdmVIa3VZV2RsYm5Rd0lCY05NalV3T0RBNQpNVFV3TmpJMVdoZ1BNekF5TlRBNE1Ea3hOVEEyTWpWYU1DZ3hEekFOQmdOVkJBb1RCa2R2Ukc5NGVURVZNQk1HCkExVUVBeE1NWjI5a2IzaDVMbUZuWlc1ME1Ga3dFd1lIS29aSXpqMENBUVlJS29aSXpqMERBUWNEUWdBRXNtUHkKZm1EZWJsYm9DM1NxZlE4UnFmMlRPd281eUJBRXlvNDhac2NWUFVLYTQwbEhMRytwYVBzaXVPRjM2VUEyUFBOaQpjUTVlcG4wckZ6L2NnVDgyVzZORk1FTXdEZ1lEVlIwUEFRSC9CQVFEQWdFR01CSUdBMVVkRXdFQi93UUlNQVlCCkFmOENBUUF3SFFZRFZSME9CQllFRklyblJwK2V1VjhBOHE4VFgxQk1oQjk1aGJaZU1Bb0dDQ3FHU000OUJBTUMKQTBrQU1FWUNJUUMxZ1prZWRZODBMd3NVQSt0RFo2Y3ZWL1J5OTZFZTQ2OWl2QWMxV08wamd3SWhBSnJOdmt1QwpMT1hONktmT2VxWDF1dFR3MXc3blNpU3Y0SjFXUllSSXlFaTcKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=;LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUU3SnRPc0FGUEJqU2w4UW5RN3R3YklVWEFaSmdCRVBQVkxDeVIvTFNJdlFvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFc21QeWZtRGVibGJvQzNTcWZROFJxZjJUT3dvNXlCQUV5bzQ4WnNjVlBVS2E0MGxITEcrcAphUHNpdU9GMzZVQTJQUE5pY1E1ZXBuMHJGei9jZ1Q4Mld3PT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo="
-      AGENT_SSL_CERT: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJvakNDQVVpZ0F3SUJBZ0lSQUlEbHlZeVlEZHVsQ3NNQldldGRpS2d3Q2dZSUtvWkl6ajBFQXdJd0tERVAKTUEwR0ExVUVDaE1HUjI5RWIzaDVNUlV3RXdZRFZRUURFd3huYjJSdmVIa3VZV2RsYm5Rd0lCY05NalV3T0RBNQpNVFV3TmpJMVdoZ1BNekF5TlRBNE1Ea3hOVEEyTWpWYU1Ea3hEekFOQmdOVkJBb1RCa2R2Ukc5NGVURVBNQTBHCkExVUVDeE1HVTJWeWRtVnlNUlV3RXdZRFZRUURFd3huYjJSdmVIa3VZV2RsYm5Rd1dUQVRCZ2NxaGtqT1BRSUIKQmdncWhrak9QUU1CQndOQ0FBUUU5VXVwTTdhNTMvSHhuYXk2Y053dW55Z3RDbzlRdUZQM1FVaWIyTVMwdnFGaQpURjFiNkYwSE80NGs3RktxV0lONTFqMndKOUtyTmIxd2MzL29ESTdXbzBBd1BqQU9CZ05WSFE4QkFmOEVCQU1DCkI0QXdFd1lEVlIwbEJBd3dDZ1lJS3dZQkJRVUhBd0V3RndZRFZSMFJCQkF3RG9JTVoyOWtiM2g1TG1GblpXNTAKTUFvR0NDcUdTTTQ5QkFNQ0EwZ0FNRVVDSVFDM1o1V1k4dTBWRCtPODJJK0phTnVxRzByd0xTaXE2elBPTWFMUgoxSGMzekFJZ0gvRnd1cjVnWWNPcDRSVnhEY3hGaXpvRFVtaGRTYzE1Y0N4TkxDMHhXZUU9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K;LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUMzNlFJYlB2MWFvUnFOUkVZM2dEVmVqdFBpT1c4Tk1QMzB6aTJsbkdVYVBvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFQlBWTHFUTzJ1ZC94OFoyc3VuRGNMcDhvTFFxUFVMaFQ5MEZJbTlqRXRMNmhZa3hkVytoZApCenVPSk94U3FsaURlZFk5c0NmU3F6VzljSE4vNkF5TzFnPT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo="
-      # use agent as a docker socket proxy: [host]:port
-      # set LISTEN_ADDR to enable (e.g. 127.0.0.1:2375)
-      LISTEN_ADDR:
-      POST: false
-      ALLOW_RESTARTS: false
-      ALLOW_START: false
-      ALLOW_STOP: false
-      AUTH: false
-      BUILD: false
-      COMMIT: false
-      CONFIGS: false
-      CONTAINERS: false
-      DISTRIBUTION: false
-      EVENTS: true
-      EXEC: false
-      GRPC: false
-      IMAGES: false
-      INFO: false
-      NETWORKS: false
-      NODES: false
-      PING: true
-      PLUGINS: false
-      SECRETS: false
-      SERVICES: false
-      SESSION: false
-      SWARM: false
-      SYSTEM: false
-      TASKS: false
-      VERSION: true
-      VOLUMES: false
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./data:/app/data
-"""
-
-##
-
-[[stack]]
-name = "dozzel-agent-1"
-[stack.config]
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  dozzle-agent:
-    image: amir20/dozzle:latest
-    command: agent
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    ports:
-      - 7007:7007
-"""
-
-##
-
-[[stack]]
 name = "dozzle"
 tags = [
   "internal",
@@ -1128,6 +991,7 @@ services:
     container_name: dumbterm
     restart: unless-stopped
     networks:
+      - default
       - d3internal
     ports:
       - ${DUMBTERM_PORT}:3000
@@ -1150,6 +1014,7 @@ services:
       # (OPTIONAL) - List of allowed origins for CORS
       # ALLOWED_ORIGINS: ${DUMBTERM_ALLOWED_ORIGINS:-http://localhost:3000}
     labels:
+      proxy.exclude: trure
       - homepage.group=Access
       - homepage.name=Dumbterm
       - homepage.icon=sh-dumbterm-light
@@ -1295,9 +1160,10 @@ GODOXY_API_PASSWORD=qyp.kmr2ktf5vcj3CYM
 # Uncomment and configure these values to enable OIDC authentication.
 #
 
-#GODOXY_OIDC_ISSUER_URL= https://auth.d3adc3ii.cc/application/o/godoxy/                       
-#GODOXY_OIDC_CLIENT_ID=LLYuk9x6gWycwkdfiAsjVQtANvtuQyqH4iVHQmMK
-#GODOXY_OIDC_CLIENT_SECRET=FKnuEPQQRq5ZTu2hBhd2uTeCjWg1CT6PtjgD1d2AcBZK2L0BYomunCWhkO7vcuNdAHfD0MbZEeqiFGBTAfjjWyU3FRdgLyqh3bsoGTM7zCf7O7wdPrZW4SIQeLRLfqCm
+#GODOXY_OIDC_ISSUER_URL=https://auth.d3adc3ii.cc/application/o/godoxy/    
+#GODOXY_OIDC_ISSUER_URL=http://10.10.10.7:8175/application/o/godoxy/                       
+#GODOXY_OIDC_CLIENT_ID=xk2q92Kot1vBSHe4m6vDvNJBE23qSVhRtFytnmGU
+#GODOXY_OIDC_CLIENT_SECRET=Cb4wJ4InYSh3MyDkEqpFcHVHfyupQnDkmOkpBxN5oDh3EakcPq42MMkSWI1N6i0mD6snMs9Pw0YIRHlXYeVwUsCrhuVNzYz3Avj7IfqtFCFIZupCgXa2iSlfOLRd84bQ
 #GODOXY_OIDC_SCOPES=openid, profile, email, groups
 #GODOXY_OIDC_ALLOWED_USERS=d3
 # User definitions: Uncomment and configure these values to restrict access to specific users or groups.
@@ -1345,69 +1211,6 @@ SOCKET_PROXY_LISTEN_ADDR=127.0.0.1:2375
 
 # Debug mode
 GODOXY_DEBUG=true
-"""
-
-##
-
-[[stack]]
-name = "healthcheck"
-tags = [
-  "internal",
-  "monitoring",
-  "komodo-1"
-]
-[stack.config]
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-#networks:
-#  caddy:
-#    external: true
-
-services:
-  healthchecks:
-    image: lscr.io/linuxserver/healthchecks:latest
-    container_name: healthchecks
-    #networks:
-    #  - caddy
-    env_file:
-      - .env
-    #environment:
-      #- CSRF_TRUSTED_ORIGINS= #optional
-      #- DEBUG=True #optional
-      #- DEFAULT_FROM_EMAIL= #optional
-      #- EMAIL_HOST= #optional
-      #- EMAIL_PORT= #optional
-      #- EMAIL_HOST_USER= #optional
-      #- EMAIL_HOST_PASSWORD= #optional
-      #- EMAIL_USE_TLS= #optional
-      #- INTEGRATIONS_ALLOW_PRIVATE_IPS= #optional
-      #- PING_EMAIL_DOMAIN= #optional
-      #- RP_ID= #optional
-      #- SITE_LOGO_URL= #optional
-    volumes:
-      - ${DATA_DIR}/config:/config
-    ports:
-      - 8898:8000
-      - 2525:2525 #optional
-    restart: unless-stopped
-    labels:
-       proxy.idle_timeout: 1h
-       proxy.port: 8898
-"""
-environment = """
-PUID=1000
-PGID=1000
-DATA_DIR=/mnt/zApps/healthcheck
-SITE_ROOT= "https://health.d3adc3ii.site"
-ALLOWED_HOSTS=health.d3adc3ii.site
-SITE_NAME= Healthcheck
-SUPERUSER_EMAIL= d3tech@pm.me
-SUPERUSER_PASSWORD= [[HEALTHCHECK_SUPERADMIN_PASSWORD]]
-SECRET_KEY= [[HEALTHCHECK_SECRET]]
-APPRISE_ENABLED=True
-TZ=Asia/Singapore
 """
 
 ##
@@ -1596,9 +1399,9 @@ HOMEPAGE_VAR_SMOKEPING_URL= "http://192.168.2.21/smokeping"
 
 #### BACKUP ####################################################################################################################################################################################################
 # PBS
-HOMEPAGE_VAR_PBS_URL="https://pbs.d3adc3ii.site"
+HOMEPAGE_VAR_PBS_URL="https://pbs.d3adc3ii.cc"
 HOMEPAGE_VAR_PBS_USER=homepage@pbs!homepage
-HOMEPAGE_VAR_PBS_SECRET=8071cb08-06ec-4f7e-a7f5-79a245c84804
+HOMEPAGE_VAR_PBS_SECRET=56ff3a13-0620-432b-b173-d048b1298a50
 # Backrest
 HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest-light.png"
 HOMEPAGE_VAR_BACKREST_URL= "https://backrest.d3adc3ii.site"
@@ -1720,6 +1523,7 @@ HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
 [[stack]]
 name = "homepage-24"
 [stack.config]
+server = "Public-70"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2090,7 +1894,7 @@ tags = [
   "komodo-3"
 ]
 [stack.config]
-server = "komodo-3"
+server = "komodo-2"
 project_name = "jellyfin"
 poll_for_updates = true
 auto_update = true
@@ -2253,14 +2057,6 @@ RESEND_SENDER_EMAIL=d3tech@pm.me
 ##
 
 [[stack]]
-name = "loggifly"
-tags = ["internal", "monitoring"]
-[stack.config]
-
-
-##
-
-[[stack]]
 name = "lunalytics"
 tags = [
   "komodo-3",
@@ -2268,7 +2064,7 @@ tags = [
   "monitoring"
 ]
 [stack.config]
-server = "komodo-3"
+server = "Public-70"
 links = [
   "https://lunalytics.d3adc3ii.site"
 ]
@@ -2307,7 +2103,7 @@ PUID=1000
 name = "mailrise"
 tags = ["komodo-3"]
 [stack.config]
-server = "komodo-3"
+server = "Public-70"
 file_contents = """
 services:
   mailrise:
@@ -2343,7 +2139,7 @@ services:
 [[stack]]
 name = "mktxp-stack"
 [stack.config]
-server = "komodo-3"
+server = "Public-70"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2356,38 +2152,6 @@ file_paths = [
 ##
 
 [[stack]]
-name = "myspeed"
-tags = ["komodo-1"]
-[stack.config]
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-networks:
-  d3internal:
-    external: true
-services:
-  myspeed:
-    image: germannewsmaker/myspeed
-    container_name: myspeed
-    networks:
-      - default
-      - d3internal
-    ports:
-      - 5216:5216
-    volumes:
-      - ${DOCKER_DATA}/myspeed/data:/data
-    restart: unless-stopped
-    labels:
-      - homepage.group=Monitor
-      - homepage.name=Myspeed
-      - homepage.icon=myspeed.png
-      - homepage.href=https://myspeed.d3adc3ii.site/
-"""
-
-##
-
-[[stack]]
 name = "netalertx"
 tags = [
   "internal",
@@ -2395,6 +2159,7 @@ tags = [
   "komodo-1"
 ]
 [stack.config]
+server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2539,6 +2304,7 @@ KEEPALIVED_PRIORITY= 255
 name = "ns1"
 tags = ["internal", "komodo-1", "dns"]
 [stack.config]
+server = "Public-70"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2641,7 +2407,7 @@ NTFY_DATA_DIR=/mnt/zApps/ntfy
 name = "nzbget"
 tags = ["internal", "komodo-3"]
 [stack.config]
-server = "komodo-28"
+server = "Public-70"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2693,7 +2459,7 @@ CLOUDFLARE_DNS_API_TOKEN= [[CF_API_TOKEN_PANGOLIN]]
 name = "phpipam"
 tags = ["internal", "komodo-3"]
 [stack.config]
-server = "komodo-3"
+server = "komodo-1"
 project_name = "phpipam"
 poll_for_updates = true
 auto_update = true
@@ -2784,7 +2550,7 @@ services:
 name = "scrutiny"
 tags = ["komodo-3"]
 [stack.config]
-server = "komodo-3"
+server = "komodo-2"
 links = [
   "https://scrutiny.d3adc3ii.cc/web/dashboard"
 ]
@@ -2849,23 +2615,6 @@ SCRUTINY_WEB_INFLUXDB_TOKEN= '6-zG/W<%eE-)rG6Gh9@WY^v#+y3KN()tf2}UNkXN=j{lDnu+P7
 SCRUTINY_WEB_INFLUXDB_ORG=homelab
 SCRUTINY_WEB_INFLUXDB_BUCKET=scrutiny
 """
-
-##
-
-[[stack]]
-name = "shellhub"
-[stack.config]
-project_name = "shellhub"
-files_on_host = true
-run_directory = "/home/d3/shellhub"
-file_paths = [
-  "docker-compose.agent.yml",
-  "docker-compose.autossl.yml",
-  "docker-compose.dev.yml",
-  "docker-compose.enterprise.yml",
-  "docker-compose.test.yml",
-  "docker-compose.yml"
-]
 
 ##
 
@@ -3019,91 +2768,6 @@ VAULT=/mnt/zFiles
 ##
 
 [[stack]]
-name = "syncthing"
-[stack.config]
-server = "komodo-2"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-networks:
-  default:
-  d3internal:
-    external: true
-services:
-  app:
-    image: lscr.io/linuxserver/syncthing:latest
-    container_name: syncthing
-    networks:
-      - default
-      - d3internal
-    ports:
-      - 8384:8384
-      - 22000:22000/tcp
-      - 22000:22000/udp
-      - 21027:21027/udp
-    volumes:
-      - ${DOCKER_DATA}/syncthing/config:/config
-      - /mnt/zFiles:/zFiles
-      - /mnt/pbsbackup:/pbsbackup       
-    restart: unless-stopped
-    env_file:
-      - .env   
-    labels:
-      proxy.syncthing.port: 8384
-      proxy.network: default
-"""
-environment = """
-TZ=Asia/Singapore
-PGID=1000
-PUID=1000
-SECRET=
-"""
-
-##
-
-[[stack]]
-name = "syncthing2"
-[stack.config]
-server = "Public-70"
-file_contents = """
-networks:
-  default:
-  d3internal:
-    external: true
-services:
-  app:
-    image: lscr.io/linuxserver/syncthing:latest
-    container_name: syncthing2
-    networks:
-      - default
-      - d3internal
-    ports:
-      - 8384:8384
-      - 22000:22000/tcp
-      - 22000:22000/udp
-      - 21027:21027/udp
-    volumes:
-      - ${DOCKER_DATA}/syncthing2/config:/config
-      - /mnt/zMedia:/zMedia
-      - /mnt/pbsbackup:/pbsbackup        
-    restart: unless-stopped
-    env_file:
-      - .env   
-    labels:
-      proxy.syncthing.port: 8384
-      proxy.network: default
-"""
-environment = """
-TZ=Asia/Singapore
-PGID=1000
-PUID=1000
-SECRET=
-"""
-
-##
-
-[[stack]]
 name = "template"
 template = true
 [stack.config]
@@ -3154,6 +2818,7 @@ SECRET=
 [[stack]]
 name = "termix"
 [stack.config]
+server = "Public-70"
 links = ["https://termix.d3adc3ii.cc"]
 poll_for_updates = true
 auto_update = true
@@ -3189,53 +2854,6 @@ PORT: "8080"
 ##
 
 [[stack]]
-name = "true-command"
-tags = ["komodo-28"]
-[stack.config]
-server = "komodo-28"
-file_contents = """
-services:
-  true-command:
-    container_name: true-command
-    image: ixsystems/truecommand:latest
-    restart: unless-stopped
-    volumes:
-      - ${DOCKER_DATA}/truecommand:/data
-    ports:
-      - 8880:80
-      - 4443:443
-    labels:  
-      proxy.idle_timeout: 15m
-"""
-
-##
-
-[[stack]]
-name = "tw-headless"
-[stack.config]
-server = "komodo-28"
-file_contents = """
-# Usage: SERVICE_KEY_PATH=<path> docker compose up -d
-
-services:
-  twingate-client:
-    image: twingate/client:latest
-    devices:
-      - /dev/net/tun
-    cap_add:
-      - NET_ADMIN
-    volumes:
-      - ${SERVICE_KEY_PATH}:/etc/twingate/service_key.json
-    restart: unless-stopped
-    tty: true
-"""
-environment = """
- SERVICE_KEY_PATH=/home/d3/service_key.json
-"""
-
-##
-
-[[stack]]
 name = "uptime-kuma"
 tags = [
   "external",
@@ -3243,7 +2861,7 @@ tags = [
   "komodo-3"
 ]
 [stack.config]
-server = "komodo-28"
+server = "Public-70"
 links = ["https://uptime.d3adc3ii.cc/"]
 project_name = "uptime-kuma"
 poll_for_updates = true
@@ -3291,7 +2909,7 @@ tags = [
   "komodo-3"
 ]
 [stack.config]
-server = "komodo-28"
+server = "komodo-1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -3440,7 +3058,6 @@ environment = """
 [[deployment]]
 name = "apprise"
 [deployment.config]
-server = "komodo-3"
 image.type = "Image"
 image.params.image = "caronc/apprise:latest"
 poll_for_updates = true
@@ -3535,10 +3152,24 @@ repo = "d3hl/dIIIhl"
 [[repo]]
 name = "diiihl-3"
 [repo.config]
-server = "komodo-3"
 builder = "local"
 git_account = "d3hl"
 repo = "d3hl/dIIIhl"
+
+##
+
+[[procedure]]
+name = "Backup Core Database"
+description = "Triggers the Core database backup at the scheduled time."
+tags = ["system"]
+config.schedule = "Every day at 01:00"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
+]
 
 ##
 
@@ -3577,19 +3208,6 @@ name = "Stage 4"
 enabled = false
 executions = [
   { execution.type = "CommitSync", execution.params.sync = "sync", enabled = false }
-]
-
-[[procedure]]
-name = "Backup Core Database"
-description = "Triggers the Core database backup at the scheduled time."
-tags = ["system"]
-config.schedule = "Every day at 01:00"
-
-[[procedure.config.stage]]
-name = "Stage 1"
-enabled = true
-executions = [
-  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
 ]
 
 ##
