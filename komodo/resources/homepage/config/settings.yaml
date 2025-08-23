@@ -1,4 +1,5 @@
-title: "{{HOMEPAGE_VAR_TITLE}}"
+#title: "{{HOMEPAGE_VAR_TITLE}}"
+title: d3Homelab
 favicon: "{{HOMEPAGE_VAR_FAVICON}}"
 
 headerStyle: {{HOMEPAGE_VAR_HEADER_STYLE}}
