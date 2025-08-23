@@ -3175,19 +3175,15 @@ executions = [
 ##
 
 [[procedure]]
-name = "commit sync ( UI > Repo)"
+name = "Sync from Git, pull repo and deploy Homepage"
+tags = ["homepage"]
 
 [[procedure.config.stage]]
-name = "Stage 2"
+name = "Stage 4"
 enabled = true
 executions = [
   { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
 ]
-
-##
-
-[[procedure]]
-name = "pull repo and deploy homepage"
 
 [[procedure.config.stage]]
 name = "pull repo and destroy stack"
@@ -3204,11 +3200,16 @@ executions = [
   { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
 ]
 
+##
+
+[[procedure]]
+name = "commit sync ( UI > Repo)"
+
 [[procedure.config.stage]]
-name = "Stage 4"
-enabled = false
+name = "Stage 2"
+enabled = true
 executions = [
-  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = false }
+  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
 ]
 
 ##
