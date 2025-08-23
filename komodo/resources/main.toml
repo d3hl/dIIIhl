@@ -42,30 +42,7 @@ tags = ["10.10.10.26"]
 [server.config]
 address = "https://10.10.10.26:8120"
 region = "Cantonment"
-
-##
-
-[[server]]
-name = "komodo-24"
-[server.config]
-address = "https://10.10.10.24:8120"
 enabled = true
-
-##
-
-[[server]]
-name = "komodo-28"
-[server.config]
-address = "https://10.10.10.28:8120"
-
-##
-
-[[server]]
-name = "komodo-3"
-tags = ["10.10.10.27"]
-[server.config]
-address = "https://10.10.10.27:8120"
-region = "Cantonment"
 
 ##
 
@@ -449,6 +426,20 @@ services:
     - ./media:/media
     - ./certs:/certs
     - ./custom-templates:/templates
+  authentik_proxy:
+    image: ghcr.io/goauthentik/proxy:2025.8.0
+        # Optionally specify the container's network, which must be able to reach the core authentik server.
+        # networks:
+        #   - foo
+    ports:
+      - 9000:9000
+      - 9443:9443
+    environment:
+      AUTHENTIK_HOST: http://10.10.10.70:8175
+      AUTHENTIK_INSECURE: "true"
+      AUTHENTIK_TOKEN: QAk1Uxn4iwSd1tiAEmDAVMTvgu46hyy3er847Rksh5yjUY1kZN4cigNyG1mn
+            # Optional setting to be used when `authentik_host` for internal communication doesn't match the public URL.
+      AUTHENTIK_HOST_BROWSER: https://auth.d3adc3ii.cc
 volumes:
   database:
     driver: local
@@ -488,6 +479,7 @@ tags = [
 ]
 [stack.config]
 server = "komodo-1"
+links = ["https://beszel.d3adc3ii.cc"]
 file_contents = """
 services:
   beszel:
@@ -519,6 +511,7 @@ services:
 environment = """
 PGID=1000
 PUID=1000
+USER_CREATION=true
 """
 
 ##
@@ -527,7 +520,6 @@ PUID=1000
 name = "bookstack"
 tags = ["komodo-3", "external"]
 [stack.config]
-server = "komodo-28"
 links = [
   "https://bookstack.d3adc3ii.cc"
 ]
@@ -862,7 +854,6 @@ services:
 name = "dockerproxy-27"
 tags = ["komodo-3"]
 [stack.config]
-server = "komodo-3"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -1295,9 +1286,10 @@ GODOXY_API_PASSWORD=qyp.kmr2ktf5vcj3CYM
 # Uncomment and configure these values to enable OIDC authentication.
 #
 
-#GODOXY_OIDC_ISSUER_URL= https://auth.d3adc3ii.cc/application/o/godoxy/                       
-#GODOXY_OIDC_CLIENT_ID=LLYuk9x6gWycwkdfiAsjVQtANvtuQyqH4iVHQmMK
-#GODOXY_OIDC_CLIENT_SECRET=FKnuEPQQRq5ZTu2hBhd2uTeCjWg1CT6PtjgD1d2AcBZK2L0BYomunCWhkO7vcuNdAHfD0MbZEeqiFGBTAfjjWyU3FRdgLyqh3bsoGTM7zCf7O7wdPrZW4SIQeLRLfqCm
+#GODOXY_OIDC_ISSUER_URL=https://auth.d3adc3ii.cc/application/o/godoxy/    
+#GODOXY_OIDC_ISSUER_URL=http://10.10.10.7:8175/application/o/godoxy/                       
+#GODOXY_OIDC_CLIENT_ID=xk2q92Kot1vBSHe4m6vDvNJBE23qSVhRtFytnmGU
+#GODOXY_OIDC_CLIENT_SECRET=Cb4wJ4InYSh3MyDkEqpFcHVHfyupQnDkmOkpBxN5oDh3EakcPq42MMkSWI1N6i0mD6snMs9Pw0YIRHlXYeVwUsCrhuVNzYz3Avj7IfqtFCFIZupCgXa2iSlfOLRd84bQ
 #GODOXY_OIDC_SCOPES=openid, profile, email, groups
 #GODOXY_OIDC_ALLOWED_USERS=d3
 # User definitions: Uncomment and configure these values to restrict access to specific users or groups.
@@ -1596,9 +1588,9 @@ HOMEPAGE_VAR_SMOKEPING_URL= "http://192.168.2.21/smokeping"
 
 #### BACKUP ####################################################################################################################################################################################################
 # PBS
-HOMEPAGE_VAR_PBS_URL="https://pbs.d3adc3ii.site"
+HOMEPAGE_VAR_PBS_URL="https://pbs.d3adc3ii.cc"
 HOMEPAGE_VAR_PBS_USER=homepage@pbs!homepage
-HOMEPAGE_VAR_PBS_SECRET=8071cb08-06ec-4f7e-a7f5-79a245c84804
+HOMEPAGE_VAR_PBS_SECRET=56ff3a13-0620-432b-b173-d048b1298a50
 # Backrest
 HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest-light.png"
 HOMEPAGE_VAR_BACKREST_URL= "https://backrest.d3adc3ii.site"
@@ -2090,7 +2082,6 @@ tags = [
   "komodo-3"
 ]
 [stack.config]
-server = "komodo-3"
 project_name = "jellyfin"
 poll_for_updates = true
 auto_update = true
@@ -2268,7 +2259,6 @@ tags = [
   "monitoring"
 ]
 [stack.config]
-server = "komodo-3"
 links = [
   "https://lunalytics.d3adc3ii.site"
 ]
@@ -2307,7 +2297,6 @@ PUID=1000
 name = "mailrise"
 tags = ["komodo-3"]
 [stack.config]
-server = "komodo-3"
 file_contents = """
 services:
   mailrise:
@@ -2343,7 +2332,6 @@ services:
 [[stack]]
 name = "mktxp-stack"
 [stack.config]
-server = "komodo-3"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2641,7 +2629,6 @@ NTFY_DATA_DIR=/mnt/zApps/ntfy
 name = "nzbget"
 tags = ["internal", "komodo-3"]
 [stack.config]
-server = "komodo-28"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2693,7 +2680,6 @@ CLOUDFLARE_DNS_API_TOKEN= [[CF_API_TOKEN_PANGOLIN]]
 name = "phpipam"
 tags = ["internal", "komodo-3"]
 [stack.config]
-server = "komodo-3"
 project_name = "phpipam"
 poll_for_updates = true
 auto_update = true
@@ -2784,7 +2770,6 @@ services:
 name = "scrutiny"
 tags = ["komodo-3"]
 [stack.config]
-server = "komodo-3"
 links = [
   "https://scrutiny.d3adc3ii.cc/web/dashboard"
 ]
@@ -3192,7 +3177,6 @@ PORT: "8080"
 name = "true-command"
 tags = ["komodo-28"]
 [stack.config]
-server = "komodo-28"
 file_contents = """
 services:
   true-command:
@@ -3213,7 +3197,6 @@ services:
 [[stack]]
 name = "tw-headless"
 [stack.config]
-server = "komodo-28"
 file_contents = """
 # Usage: SERVICE_KEY_PATH=<path> docker compose up -d
 
@@ -3243,7 +3226,6 @@ tags = [
   "komodo-3"
 ]
 [stack.config]
-server = "komodo-28"
 links = ["https://uptime.d3adc3ii.cc/"]
 project_name = "uptime-kuma"
 poll_for_updates = true
@@ -3291,7 +3273,6 @@ tags = [
   "komodo-3"
 ]
 [stack.config]
-server = "komodo-28"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -3440,7 +3421,6 @@ environment = """
 [[deployment]]
 name = "apprise"
 [deployment.config]
-server = "komodo-3"
 image.type = "Image"
 image.params.image = "caronc/apprise:latest"
 poll_for_updates = true
@@ -3535,10 +3515,24 @@ repo = "d3hl/dIIIhl"
 [[repo]]
 name = "diiihl-3"
 [repo.config]
-server = "komodo-3"
 builder = "local"
 git_account = "d3hl"
 repo = "d3hl/dIIIhl"
+
+##
+
+[[procedure]]
+name = "Backup Core Database"
+description = "Triggers the Core database backup at the scheduled time."
+tags = ["system"]
+config.schedule = "Every day at 01:00"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
+]
 
 ##
 
@@ -3577,19 +3571,6 @@ name = "Stage 4"
 enabled = false
 executions = [
   { execution.type = "CommitSync", execution.params.sync = "sync", enabled = false }
-]
-
-[[procedure]]
-name = "Backup Core Database"
-description = "Triggers the Core database backup at the scheduled time."
-tags = ["system"]
-config.schedule = "Every day at 01:00"
-
-[[procedure.config.stage]]
-name = "Stage 1"
-enabled = true
-executions = [
-  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
 ]
 
 ##
