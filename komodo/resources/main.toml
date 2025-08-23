@@ -1517,14 +1517,14 @@ HOMEPAGE_VAR_PBS_URL= "https://pbs.d3adc3ii.site"
 # Truenas
 HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas-scale-light.png"
 HOMEPAGE_VAR_TRUENAS_URL= "https://truenas.d3adc3ii.cc"
-HOMEPAGE_VAR_TRUENAS_KEY=4-wEIiKMeFJpOJPyS2Y2658EQGbxZkBJUcQyBQvQoRzjggfnOIXNN7z8w7OvKpgK6C
+HOMEPAGE_VAR_TRUENAS_KEY="4-wEIiKMeFJpOJPyS2Y2658EQGbxZkBJUcQyBQvQoRzjggfnOIXNN7z8w7OvKpgK6C"
 HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
 # Komodo
 HOMEPAGE_VAR_KOMODO_ICON= "/icons/docker-light.png"
 HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
-HOMEPAGE_VAR_KOMODO_IPURL= "http://10.10.10.25:9120"
-HOMEPAGE_VAR_KOMODO_KEY=K-69zvNUYoxn5KREW5nVpLqeLa741U7NHmPXoEx4S1
-HOMEPAGE_VAR_KOMODO_SECRET=S-5hhHrLWPfLHPJCRGBMV2auU7QsqfUaGrTJYuOW9M
+HOMEPAGE_VAR_KOMODO_IPURL="http://10.10.10.25:9120"
+HOMEPAGE_VAR_KOMODO_KEY=K-vW7PCQ3fkWSwxgVkyPXwNYaFBmb19v3lNdFp8LTI
+HOMEPAGE_VAR_KOMODO_SECRET=S-tEScF16iq3zEVZbgB14i0lEey52mQ9EOCBPswWxq
 
 #### DOMAIN ####################################################################################################################################################################################################
 # Authentik
