@@ -1396,9 +1396,6 @@ HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
 # Healthchecks
 HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks-light.png"
 HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
-# Smokeping
-HOMEPAGE_VAR_SMOKEPING_ICON= "/icons/smokeping.png"
-HOMEPAGE_VAR_SMOKEPING_URL= "http://192.168.2.21/smokeping"
 
 #### BACKUP ####################################################################################################################################################################################################
 # PBS
