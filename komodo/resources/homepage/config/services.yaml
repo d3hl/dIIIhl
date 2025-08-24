@@ -102,7 +102,7 @@
     - Zabbix:
         icon: {{HOMEPAGE_VAR_ZABBIX_ICON}}
         href: {{HOMEPAGE_VAR_ZABBIX_URL}}
-        ping: {{HOMEPAGE_VAR_ZABBIX_PING}}
+        sitemonitor: {{HOMEPAGE_VAR_ZABBIX_URL}}
     - Wazuh:
         icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
         href: {{HOMEPAGE_VAR_WAZUH_URL}}
