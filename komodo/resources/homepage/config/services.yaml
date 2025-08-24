@@ -42,7 +42,7 @@
         sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
         widget:
             type: authentik
-            url: https://10.10.10.70:8175
+            url: http://10.10.10.70:8175
             key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}}
     - Technitium:
         icon: {{HOMEPAGE_VAR_DNS_ICON}} 
