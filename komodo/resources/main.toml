@@ -1411,11 +1411,9 @@ HOMEPAGE_VAR_PBS_SECRET=56ff3a13-0620-432b-b173-d048b1298a50
 # Backrest
 HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest-light.png"
 HOMEPAGE_VAR_BACKREST_URL= "https://backrest.d3adc3ii.site"
-
 # Remote-Backups
 HOMEPAGE_VAR_REMOTEBACKUP_ICON= "/icons/proxmox-light.png"
 HOMEPAGE_VAR_REMOTEBACKUP_URL= "https://dashboard.remote-backups.com"
-
 
 #### MEDIA ####################################################################################################################################################################################################
 # Jellyfin
@@ -1449,9 +1447,8 @@ HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
 
 #### LOGGING ####################################################################################################################################################################################################
 # Grafana
-HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana-light.png"
-HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
-HOMEPAGE_VAR_GRAFANAPANGOLIN_URL= "https://grafana.d3adc3ii.cc/d/n5bu_kv45/traefik-official-standalone-dashboard"
+HOMEPAGE_VAR_GRAFANA_ICON= "sh-grafana-light"
+HOMEPAGE_VAR_GRAFANA_URL= "https://grafana.d3adc3ii.cc"
 # Scutiny
 HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny-light.png"
 HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
@@ -1716,10 +1713,6 @@ HOMEPAGE_VAR_SHELLHUB_ICON= "sh-shellhub-light"
 HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
 
 #### LOGGING ####################################################################################################################################################################################################
-# Grafana
-HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana-light.png"
-HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
-HOMEPAGE_VAR_GRAFANAPANGOLIN_URL= "https://grafana.d3adc3ii.cc/d/n5bu_kv45/traefik-official-standalone-dashboard"
 # Scutiny
 HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny-light.png"
 HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
