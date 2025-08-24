@@ -100,7 +100,7 @@
             fields: [ "systems", "up" ]
     # - Uptime Kuma:
     - Zabbix:
-        icon: {{HOMEPAGE_VAR_ZABBIX_ICON}}
+        icon: sh-zabbix-light 
         href: https://zabbix.d3adc3ii.site/zabbix
         sitemonitor: https://zabbix.d3adc3ii.site/zabbix 
     - Wazuh:
