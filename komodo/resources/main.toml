@@ -1332,9 +1332,6 @@ HOMEPAGE_VAR_KOMODO_IPURL= "http://10.10.10.25:9120"
 HOMEPAGE_VAR_KOMODO_KEY=K-69zvNUYoxn5KREW5nVpLqeLa741U7NHmPXoEx4S1
 HOMEPAGE_VAR_KOMODO_SECRET=S-5hhHrLWPfLHPJCRGBMV2auU7QsqfUaGrTJYuOW9M
 
-# Ceph
-HOMEPAGE_VAR_CEPH_ICON= "sh-ceph-light"
-HOMEPAGE_VAR_CEPH_URL= "https://ceph.d3adc3ii.cc"
 #### DOMAIN ####################################################################################################################################################################################################
 # Authentik
 HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik-light.png"
@@ -1467,9 +1464,6 @@ HOMEPAGE_VAR_DOZZLE_URL= "https://dozzle.d3adc3ii.site"
 # Pulse
 HOMEPAGE_VAR_PULSEXT_ICON= "sh-proxmox-light"
 HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
-# INFLUX
-HOMEPAGE_VAR_PULSEXT_ICON= "sh-influx-light"
-HOMEPAGE_VAR_PULSEXT_URL= "https://influx.d3adc3ii.site"
 
 #### APPS ####################################################################################################################################################################################################
 # Actual Budget
