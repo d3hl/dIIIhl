@@ -1646,7 +1646,7 @@ HOMEPAGE_VAR_SPEEDTEST_ICON= "sh-speedtest-tracker-light"
 HOMEPAGE_VAR_SPEEDTEST_URL= "https://speedtest.d3adc3ii.site"
 # ZABBIX
 HOMEPAGE_VAR_ZABBIX_ICON= "sh-zabbix-light"
-HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.d3adc3ii.site"
+HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.d3adc3ii.site/zabbix"
 # Wazuh
 HOMEPAGE_VAR_WAZUH_ICON= "/icons/wazuh-light.png"
 HOMEPAGE_VAR_WAZUH_URL= "https://wazuh.d3adc3ii.site"
