@@ -1454,7 +1454,7 @@ HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny-light.png"
 HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
 # ZABBIX
 HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix-light.png"
-HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.d3adc3ii.site/zabbix"
+HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.d3adc3ii.cc/zabbix"
 # Checkmk
 HOMEPAGE_VAR_CHECKMK_ICON= "/icons/checkmk-light.png"
 HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"
@@ -1941,6 +1941,7 @@ tags = [
 ]
 [stack.config]
 server = "komodo-2"
+links = ["https://kara.d3adc3ii.cc/"]
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -2460,9 +2461,9 @@ CLOUDFLARE_DNS_API_TOKEN= [[CF_API_TOKEN_PANGOLIN]]
 
 [[stack]]
 name = "phpipam"
-tags = ["internal", "komodo-3"]
+tags = ["internal", "komodo-2", "VoLM"]
 [stack.config]
-server = "komodo-1"
+server = "komodo-2"
 project_name = "phpipam"
 poll_for_updates = true
 auto_update = true
@@ -2471,6 +2472,7 @@ file_contents = """
 services:
   phpipam-web:
     image: phpipam/phpipam-www:latest
+    container_name: phpipam
     ports:
       - "8087:80"
     restart: always
@@ -2481,9 +2483,6 @@ services:
       - ${DOCKER_DATA}/phpipam/ca:/usr/local/share/ca-certificates:ro
     depends_on:
       - phpipam-mariadb
-    labels:
-      proxy.aliases: phpipam
-
   phpipam-cron:
     image: phpipam/phpipam-cron:latest
     env_file:
@@ -2493,7 +2492,6 @@ services:
       - ${DOCKER_DATA}/phpipam/ca:/usr/local/share/ca-certificates:ro
     depends_on:
       - phpipam-mariadb
-
   phpipam-mariadb:
     image: mariadb:latest
     env_file:
