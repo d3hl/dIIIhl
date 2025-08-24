@@ -1454,7 +1454,7 @@ HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny-light.png"
 HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
 # ZABBIX
 HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix-light.png"
-HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.d3adc3ii.cc/zabbix"
+HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.d3adc3ii.site/zabbix"
 # Checkmk
 HOMEPAGE_VAR_CHECKMK_ICON= "/icons/checkmk-light.png"
 HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"

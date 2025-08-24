@@ -107,10 +107,10 @@
         icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
         href: {{HOMEPAGE_VAR_WAZUH_URL}}
         ping: {{HOMEPAGE_VAR_WAZUH_URL}}
-    - Healthcheck:
-        icon: {{HOMEPAGE_VAR_HEALTHCHECKS_ICON}}
-        href: {{HOMEPAGE_VAR_HEALTHCHECKS_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_HEALTHCHECKS_URL}}
+   # - Healthcheck:
+    #    icon: {{HOMEPAGE_VAR_HEALTHCHECKS_ICON}}
+     #   href: {{HOMEPAGE_VAR_HEALTHCHECKS_URL}}
+      #  sitemonitor: {{HOMEPAGE_VAR_HEALTHCHECKS_URL}}
     - Smokeping:
         icon: {{HOMEPAGE_VAR_SMOKEPING_ICON}}
         href: {{HOMEPAGE_VAR_SMOKEPING_URL}}
