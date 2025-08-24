@@ -1447,7 +1447,6 @@ HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
 #### LOGGING ####################################################################################################################################################################################################
 # Grafana Cloud
 HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana-light.png"
-HOMEPAGE_VAR_GRAFANAC_URL= "https://d3adc3ii.grafana.net/dashboards"
 HOMEPAGE_VAR_GRAFANAC_URL= "https://grafana.d3adc3ii.cc/d/n5bu_kv45/traefik-official-standalone-dashboard"
 # Grafana
 HOMEPAGE_VAR_GRAFANA_URL= "https://grafana.d3adc3ii.cc"
