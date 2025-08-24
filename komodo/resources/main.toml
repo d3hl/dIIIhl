@@ -1384,12 +1384,6 @@ HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12= pve12
 HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13= pve13
 HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs= pbs
 HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"]
-<<<<<<< HEAD
-# Zabbix
-HOMEPAGE_VAR_ZABBIX_ICON= "sh-zabbix-light"
-HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.d3adc3ii.site"
-=======
->>>>>>> ae9a58d1667439c6bb5b05f369235dc02631331e
 # SPEEDTEST
 HOMEPAGE_VAR_SPEEDTEST_ICON= "sh-speedtest-tracker-light"
 HOMEPAGE_VAR_SPEEDTEST_URL= "https://speedtest.d3adc3ii.site"
@@ -2518,37 +2512,6 @@ IPAM_DATABASE_WEBHOST=%
 IPAM_TRUST_X_FORWARDED=true
 SCAN_INTERVAL=1h
 MYSQL_ROOT_PASSWORD=16E@j4pWjtL$X3Gnxfy3KQB0U$
-"""
-
-##
-
-[[stack]]
-name = "prowlarr"
-tags = ["internal", "komodo-2"]
-[stack.config]
-server = "komodo-2"
-links = [
-  "https://prowlarr.d3adc3ii.site/"
-]
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
-    container_name: prowlarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Singapore
-    volumes:
-      - ${DOCKER_DATA}/prowlarr/data:/config
-    ports:
-      - 9696:9696
-    restart: unless-stopped
-    labels:
-      proxy.idle_timeout: 1h
 """
 
 ##
