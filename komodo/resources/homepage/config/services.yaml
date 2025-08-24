@@ -176,10 +176,6 @@
     #- Termix:
 ########################################################################################################################################################################################################
 - Logging: 
-    - Grafana:
-        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
-        href: {{HOMEPAGE_VAR_GRAFANA_URL}}
-        ping: {{HOMEPAGE_VAR_GRAFANA_PING}}
     - Dozzle:
         icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
         href: {{HOMEPAGE_VAR_DOZZLE_URL}}
@@ -197,10 +193,6 @@
         icon: {{HOMEPAGE_VAR_CHECKMK_ICON}}
         href: {{HOMEPAGE_VAR_CHECKMK_URL}}
         sitemonitor: {{HOMEPAGE_VAR_CHECKMK_URL}}   
-    - InfluxDB:
-        icon: {{HOMEPAGE_VAR_INFLUX_ICON}}
-        href: {{HOMEPAGE_VAR_INFLUX_URL}}
-        ping: {{HOMEPAGE_VAR_INFLUX_IP}}   
 
 ########################################################################################################################################################################################################
 - Applications:
