@@ -1397,6 +1397,9 @@ HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
 HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks-light.png"
 HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
 
+# ZABBIX
+HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix-light.png"
+HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.d3adc3ii.site/zabbix"
 #### BACKUP ####################################################################################################################################################################################################
 # PBS
 HOMEPAGE_VAR_PBS_URL="https://pbs.d3adc3ii.cc"
@@ -1449,12 +1452,6 @@ HOMEPAGE_VAR_GRAFANAPANGOLIN_URL= "https://grafana.d3adc3ii.cc/d/n5bu_kv45/traef
 # Scutiny
 HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny-light.png"
 HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
-# ZABBIX
-HOMEPAGE_VAR_ZABBIX_ICON= "/icons/zabbix-light.png"
-HOMEPAGE_VAR_ZABBIX_URL= "https://zabbix.d3adc3ii.cc/zabbix"
-# Checkmk
-HOMEPAGE_VAR_CHECKMK_ICON= "/icons/checkmk-light.png"
-HOMEPAGE_VAR_CHECKMK_URL= "https://checkmk.d3adc3ii.cc/d3/check_mk"
 # Dozzle
 HOMEPAGE_VAR_DOZZLE_ICON= "sh-dozzle-light"
 HOMEPAGE_VAR_DOZZLE_URL= "https://dozzle.d3adc3ii.site"
