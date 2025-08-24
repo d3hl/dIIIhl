@@ -1320,9 +1320,6 @@ HOMEPAGE_VAR_PROXMOX_IP_PVE11="https://10.10.10.10:8006"
 #HOMEPAGE_VAR_PROXMOX_USER=homepage@pve!homepage 
 HOMEPAGE_VAR_PROXMOX_SECRET=bd9d76fb-00a6-4e4d-af8a-66f0606ba7fc
 HOMEPAGE_VAR_PBS_URL= "https://pbs.d3adc3ii.site"
-# Ceph
-HOMEPAGE_VAR_CEPH_ICON= "sh-ceph-light"
-HOMEPAGE_VAR_CEPH_URL= "https://ceph.d3adc3ii.cc"
 # Truenas
 HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas-scale-light.png"
 HOMEPAGE_VAR_TRUENAS_URL= "https://truenas.d3adc3ii.cc"
@@ -1399,6 +1396,9 @@ HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
 # Healthchecks
 HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks-light.png"
 HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
+# Smokeping
+HOMEPAGE_VAR_SMOKEPING_ICON= "/icons/smokeping.png"
+HOMEPAGE_VAR_SMOKEPING_URL= "http://192.168.2.21/smokeping"
 
 #### BACKUP ####################################################################################################################################################################################################
 # PBS
