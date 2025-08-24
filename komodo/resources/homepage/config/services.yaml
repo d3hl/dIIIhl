@@ -31,6 +31,9 @@
             secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
             showSummary: true # optional, default: false
             showStacks: true # optional, default: false
+    - Ceph:
+        icon: {{HOMEPAGE_VAR_CEPH_ICON}} 
+        href: {{HOMEPAGE_VAR_CEPH_URL}}
 ########################################################################################################################################################################################################
 - Domain:
     - Authentik:
@@ -177,9 +180,6 @@
         icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
         href: {{HOMEPAGE_VAR_GRAFANA_URL}}
         ping: {{HOMEPAGE_VAR_GRAFANA_PING}}
-    - Grafana Cloud:
-        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
-        href: {{HOMEPAGE_VAR_GRAFANAC_URL}}
     - Dozzle:
         icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
         href: {{HOMEPAGE_VAR_DOZZLE_URL}}
