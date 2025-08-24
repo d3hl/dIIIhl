@@ -10,8 +10,8 @@
             password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}       
             node: pve10
     - Ceph:
-        icon: {{HOMEPAGE_VAR_CEPH_ICON}} 
-        href: {{HOMEPAGE_VAR_CEPH_URL}}
+        icon: sh-ceph-light 
+        href: https://ceph.d3adc3ii.cc
     -  Truenas:
         id: truenas 
         icon: {{HOMEPAGE_VAR_TRUENAS_ICON}}
