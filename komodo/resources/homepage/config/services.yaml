@@ -95,7 +95,6 @@
             version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
             #bitratePrecision: 3 
             fields: [ "systems", "up" ]
-
     # - Uptime Kuma:
     - Zabbix:
         icon: {{HOMEPAGE_VAR_ZABBIX_ICON}}
@@ -182,15 +181,16 @@
     #- Termix:
 ########################################################################################################################################################################################################
 - Logging: 
-    - Dozzle:
-        icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
-        href: {{HOMEPAGE_VAR_DOZZLE_URL}}
-    - Grafana Cloud:
-        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
-        href: {{HOMEPAGE_VAR_GRAFANAPANGOLIN_URL}}
     - Grafana:
         icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
         href: {{HOMEPAGE_VAR_GRAFANA_URL}}
+        ping: {{HOMEPAGE_VAR_GRAFANA_PING}}
+    - Grafana Cloud:
+        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+        href: {{HOMEPAGE_VAR_GRAFANAPANGOLIN_URL}}
+    - Dozzle:
+        icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
+        href: {{HOMEPAGE_VAR_DOZZLE_URL}}
     - Scrutiny:
         icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
         href: {{HOMEPAGE_VAR_SCRUTINY_URL}}     
@@ -205,6 +205,10 @@
         icon: {{HOMEPAGE_VAR_CHECKMK_ICON}}
         href: {{HOMEPAGE_VAR_CHECKMK_URL}}
         sitemonitor: {{HOMEPAGE_VAR_CHECKMK_URL}}   
+    - InfluxDB:
+        icon: {{HOMEPAGE_VAR_INFLUX_ICON}}
+        href: {{HOMEPAGE_VAR_INFLUX_URL}}
+        ping: {{HOMEPAGE_VAR_INFLUX_IP}}   
 
 ########################################################################################################################################################################################################
 - Applications:
