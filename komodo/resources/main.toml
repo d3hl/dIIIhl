@@ -1445,12 +1445,16 @@ HOMEPAGE_VAR_SHELLHUB_ICON= "sh-shellhub-light"
 HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
 
 #### LOGGING ####################################################################################################################################################################################################
+<<<<<<< HEAD
 # Grafana Cloud
 HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana-light.png"
 HOMEPAGE_VAR_GRAFANAC_URL= "https://grafana.d3adc3ii.cc/d/n5bu_kv45/traefik-official-standalone-dashboard"
+=======
+>>>>>>> 07d4a4dd2ac5e743dda7811b223f2e22bd45f40a
 # Grafana
-HOMEPAGE_VAR_GRAFANA_URL= "https://grafana.d3adc3ii.cc"
-HOMEPAGE_VAR_GRAFANA_IP= "10.10.10.13"
+HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana-light.png"
+HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
+HOMEPAGE_VAR_GRAFANAPANGOLIN_URL= "https://grafana.d3adc3ii.cc/d/n5bu_kv45/traefik-official-standalone-dashboard"
 # Scutiny
 HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny-light.png"
 HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
@@ -1466,9 +1470,7 @@ HOMEPAGE_VAR_DOZZLE_URL= "https://dozzle.d3adc3ii.site"
 # Pulse
 HOMEPAGE_VAR_PULSEXT_ICON= "sh-proxmox-light"
 HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
-HOMEPAGE_VAR_INFLUX_ICON="sh-influxdb-light"
-HOMEPAGE_VAR_INFLUX_URL="https://influxdb.d3adc3ii.site"
-HOMEPAGE_VAR_INFLUX_IP="10.10.10.12:8086"
+
 #### APPS ####################################################################################################################################################################################################
 # Actual Budget
 HOMEPAGE_VAR_ACTUAL_ICON= "sh-actual-budget-light"
