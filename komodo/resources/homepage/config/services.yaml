@@ -101,16 +101,12 @@
     # - Uptime Kuma:
     - Zabbix:
         icon: {{HOMEPAGE_VAR_ZABBIX_ICON}}
-        href: {{HOMEPAGE_VAR_ZABBIX_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_ZABBIX_URL}}
+        href: https://zabbix.d3adc3ii.site/zabbix
+        sitemonitor: https://zabbix.d3adc3ii.site/zabbix 
     - Wazuh:
         icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
         href: {{HOMEPAGE_VAR_WAZUH_URL}}
         ping: {{HOMEPAGE_VAR_WAZUH_URL}}
-   # - Healthcheck:
-    #    icon: {{HOMEPAGE_VAR_HEALTHCHECKS_ICON}}
-     #   href: {{HOMEPAGE_VAR_HEALTHCHECKS_URL}}
-      #  sitemonitor: {{HOMEPAGE_VAR_HEALTHCHECKS_URL}}
 ########################################################################################################################################################################################################
 - Backup: 
     - PBS: 
