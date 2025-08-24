@@ -1372,7 +1372,7 @@ HOMEPAGE_VAR_NETBOXCL_URL= "https://wmfk3018.cloud.netboxapp.com"
 HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"# NETBOX CONSOLE
 HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
 
-#### MONITORING  ####################################################################################################################################################################################################
+#### MONITORING  #####################################################################################################################################################################################################
 # Beszel
 HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel-light.png"
 HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
