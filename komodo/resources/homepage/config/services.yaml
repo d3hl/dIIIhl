@@ -183,14 +183,6 @@
     - Pulse:
         icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
         href: {{HOMEPAGE_VAR_PULSEXT_URL}} 
-    - Zabbix:
-        icon: {{HOMEPAGE_VAR_ZABBIX_ICON}} 
-        href: {{HOMEPAGE_VAR_ZABBIX_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_ZABBIX_URL}}
-    - Checkmk:
-        icon: {{HOMEPAGE_VAR_CHECKMK_ICON}}
-        href: {{HOMEPAGE_VAR_CHECKMK_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_CHECKMK_URL}}   
 
 ########################################################################################################################################################################################################
 - Applications:
@@ -201,12 +193,7 @@
     - SteamentSensei:
         icon: {{HOMEPAGE_VAR_SENSEI_ICON}}
         href: {{HOMEPAGE_VAR_SENSEI_URL}} 
-        sitemonitor: {{HOMEPAGE_VAR_SENSEI_URL}}
 
-    - aria2:
-        icon: {{HOMEPAGE_VAR_ARIA_ICON}}
-        href: {{HOMEPAGE_VAR_ARIA_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_ARIA_URL}}
     - nzbget:
         icon: {{HOMEPAGE_VAR_NZBGET_ICON}}
         href: {{HOMEPAGE_VAR_NZBGET_URL}}
@@ -219,9 +206,6 @@
         icon: {{HOMEPAGE_VAR_OMNITOOLS_ICON}} 
         href: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
         sitemonitor: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
-    - Selfhst-icons:
-        icon: {{HOMEPAGE_VAR_SELFHST_ICON}} 
-        href: {{HOMEPAGE_VAR_SELFHST_URL}}
     - Apprise-API:
         icon: {{HOMEPAGE_VAR_APPRISE_ICON}}
         href: {{HOMEPAGE_VAR_APPRISE_URL}}
