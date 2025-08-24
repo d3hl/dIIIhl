@@ -179,7 +179,7 @@
         ping: {{HOMEPAGE_VAR_GRAFANA_PING}}
     - Grafana Cloud:
         icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
-        href: {{HOMEPAGE_VAR_GRAFANAPANGOLIN_URL}}
+        href: {{HOMEPAGE_VAR_GRAFANAC_URL}}
     - Dozzle:
         icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
         href: {{HOMEPAGE_VAR_DOZZLE_URL}}
