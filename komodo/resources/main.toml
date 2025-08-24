@@ -1393,6 +1393,9 @@ HOMEPAGE_VAR_WAZUH_URL= "https://wazuh.d3adc3ii.site"
 # APPRISE-API
 HOMEPAGE_VAR_APPRISE_ICON= "/icons/gotify-dark.png"
 HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
+# Healthchecks
+HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks-light.png"
+HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
 
 #### BACKUP ####################################################################################################################################################################################################
 # PBS
