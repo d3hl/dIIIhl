@@ -31,9 +31,9 @@
             secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
             showSummary: true # optional, default: false
             showStacks: true # optional, default: false
-    - Ceph:
-        icon: {{HOMEPAGE_VAR_CEPH_ICON}} 
-        href: {{HOMEPAGE_VAR_CEPH_URL}}
+#    - Ceph:
+#        icon: {{HOMEPAGE_VAR_CEPH_ICON}} 
+#        href: {{HOMEPAGE_VAR_CEPH_URL}}
 ########################################################################################################################################################################################################
 - Domain:
     - Authentik:
