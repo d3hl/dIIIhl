@@ -19,7 +19,7 @@
         sitemonitor: {{HOMEPAGE_VAR_TRUENAS_URL}}
         widget:
             type: truenas
-            url: https://10.20.20.9
+            url: https://truenas.d3adc3ii.cc
             key: {{HOMEPAGE_VAR_TRUENAS_KEY}}
             enablePools: {{HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL}}
             nasType: scale
@@ -39,10 +39,10 @@
     - Authentik:
         icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
         href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
-        ping: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
         widget:
             type: authentik
-            url: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+            url: https://10.10.10.70:8175
             key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}}
     - Technitium:
         icon: {{HOMEPAGE_VAR_DNS_ICON}} 
@@ -111,11 +111,6 @@
     #    icon: {{HOMEPAGE_VAR_HEALTHCHECKS_ICON}}
      #   href: {{HOMEPAGE_VAR_HEALTHCHECKS_URL}}
       #  sitemonitor: {{HOMEPAGE_VAR_HEALTHCHECKS_URL}}
-    - Smokeping:
-        icon: {{HOMEPAGE_VAR_SMOKEPING_ICON}}
-        href: {{HOMEPAGE_VAR_SMOKEPING_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_SMOKEPING_URL}}
-
 ########################################################################################################################################################################################################
 - Backup: 
     - PBS: 
