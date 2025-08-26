@@ -98,7 +98,6 @@
             version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
             #bitratePrecision: 3 
             fields: [ "systems", "up" ]
-    # - Uptime Kuma:
     - Zabbix:
         icon: sh-zabbix-light 
         href: https://zabbix.d3adc3ii.site/zabbix
@@ -167,9 +166,15 @@
     #- Termix:
 ########################################################################################################################################################################################################
 - Logging:
+    - Grafana Cloud:
+        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+        href: {{HOMEPAGE_VAR_GRAFANAC_URL}}
     - Grafana:
         icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
         href: {{HOMEPAGE_VAR_GRAFANA_URL}}
+    - InfluxDB:
+        icon: {{HOMEPAGE_VAR_INFLUX_ICON}}
+        href: {{HOMEPAGE_VAR_INFLUX_URL}}
     - Dozzle:
         icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
         href: {{HOMEPAGE_VAR_DOZZLE_URL}}
