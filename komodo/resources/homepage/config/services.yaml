@@ -98,6 +98,10 @@
             version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
             #bitratePrecision: 3 
             fields: [ "systems", "up" ]
+    - Lunalytics
+        icon: sh-lunalytics-light 
+        href: https://lunalytics.d3adc3ii.cc/ 
+        sitemonitor: https://lunalytics.d3adc3ii.cc/
     - Zabbix:
         icon: sh-zabbix-light 
         href: https://zabbix.d3adc3ii.site/zabbix
