@@ -242,12 +242,12 @@
 ########################################################################################################################################################################################################
 ### CLOUD TAB ###        
 - Corp Network:
-    - Fortigate1:
+    - Fortigate-100F:
         icon: fortinet 
-        href: http://fw.ntn.com.sg:7443 
-    - Fortinate-100F:
-        icon: /icons/fortinet-light.png
-        href: {{HOMEPAGE_VAR_D3NET_URL}}        
+        href: https://fw.ntn.com.sg:7443 
+    - Fortinate-100F-D3:
+        icon: fortinet 
+        href: https://fwd3.d3adc3ii.site:7443
     - FortiAnalyzer:
         icon: fortinet 
         href: http://faz.ntn.com.sg
