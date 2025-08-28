@@ -59,6 +59,9 @@ layout:
   Corp Systems:
       tab: Corp
       style: column
+  Fortigate:
+    tab: Corp
+    style: column
   Corp Network:
       tab: Corp
       style: column

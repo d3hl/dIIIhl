@@ -240,8 +240,11 @@
         icon: wordpress
         href: https://ntn.com.sg/wp-login.php
 ########################################################################################################################################################################################################
-### CLOUD TAB ###        
-- Corp Network:
+### CLOUD TAB ### 
+- Fortigate:
+    - FortiGate Cloud:
+        icon: fortinet 
+        href: https://portal.ca.fortigate.forticloud.com/ui/dashboard/319895 
     - Fortigate-100F:
         icon: fortinet 
         href: https://fw.ntn.com.sg:7443 
@@ -254,6 +257,7 @@
     - FortiEMS:
         icon: fortinet
         href: http://ems.ntn.com.sg
+- Corp Network:
     - Cisco:
         icon: cisco 
         href: https://10.203.1.254/webui/
