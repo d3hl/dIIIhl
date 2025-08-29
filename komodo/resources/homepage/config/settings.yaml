@@ -12,7 +12,7 @@ background:
 theme: dark 
 color: zinc
 statusStyle: "dot"
-hideErrors: false
+hideErrors: true
 disableCollapse: true
 
 # Layout Configuration
