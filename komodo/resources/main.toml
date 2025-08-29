@@ -3165,14 +3165,21 @@ name = "pull repo and destroy stack"
 enabled = true
 executions = [
   { execution.type = "PullRepo", execution.params.repo = "diiihl", enabled = true },
-  { execution.type = "DestroyStack", execution.params.stack = "homepage", execution.params.services = [], execution.params.remove_orphans = false, enabled = true }
+  { execution.type = "DestroyStack", execution.params.stack = "homepage", execution.params.services = [], execution.params.remove_orphans = false, enabled = false }
 ]
 
 [[procedure.config.stage]]
 name = "Stage 3"
 enabled = true
 executions = [
-  { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
+  { execution.type = "DeployStackIfChanged", execution.params.stack = "homepage", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Stage 4"
+enabled = true
+executions = [
+  { execution.type = "BatchDeploy", execution.params.pattern = """, # Match deployments by name, id, wildcard, or \regex\., rotiprata,rotijohn""", enabled = true }
 ]
 
 ##
