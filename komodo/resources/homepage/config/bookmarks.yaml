@@ -1,7 +1,7 @@
 - _hidden0:
     - TPlink:
       - icon: /icons/services/unraid.png
-        href: http://example.local:8090/Dashboard
+        href: http://10.10.10.26
 
     - Proton:
       - icon: sh-proton
