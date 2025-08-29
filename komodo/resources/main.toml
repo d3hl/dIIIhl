@@ -2207,6 +2207,24 @@ services:
 ##
 
 [[stack]]
+name = "newt-70"
+[stack.config]
+server = "Public-70"
+file_contents = """
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
+      - NEWT_ID=uyuo9c5gmuzvhp7
+      - NEWT_SECRET=t9gi8iprugz2wer4di52w8oahdw730z3cl4xvzcepyycd138
+"""
+
+##
+
+[[stack]]
 name = "newt-pangolin-cloud"
 [stack.config]
 server = "komodo-2"
