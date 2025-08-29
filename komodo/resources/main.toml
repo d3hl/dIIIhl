@@ -3175,13 +3175,6 @@ executions = [
   { execution.type = "DeployStackIfChanged", execution.params.stack = "homepage", enabled = true }
 ]
 
-[[procedure.config.stage]]
-name = "Stage 4"
-enabled = true
-executions = [
-  { execution.type = "BatchDeploy", execution.params.pattern = """, # Match deployments by name, id, wildcard, or \regex\., rotiprata,rotijohn""", enabled = true }
-]
-
 ##
 
 [[procedure]]
