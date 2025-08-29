@@ -914,6 +914,28 @@ services:
     ports:
       - 7007:7007
 """
+###
+
+
+[[stack]]
+name = "rotiprata"
+[stack.config]
+server = "komodo-1"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  roti:
+    image: jellydeck/moocup:latest
+    ports:
+      - 7117:80
+    labels:
+      - homepage.group= Media
+      - homepage.name=roti prata
+      - homepage.icon= sh-moocup-light
+      - homepage.href= https://rotiprata.d3adc3ii.site
+"""
 
 ##
 
