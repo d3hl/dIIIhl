@@ -914,7 +914,8 @@ services:
     ports:
       - 7007:7007
 """
-###
+
+##
 
 [[stack]]
 name = "dumbpad"
@@ -1251,21 +1252,21 @@ services:
       - ${HOMEPAGE_DATA_DIR}/homepage/images:/app/public/images
       #- /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
-  #dockerproxy:
-    #image: ghcr.io/tecnativa/docker-socket-proxy:latest
-    #container_name: dockerproxy
-    #networks:
-      #- d3internal
-    #environment:
-     # - CONTAINERS=1 # Allow access to viewing containers
-      #- SERVICES=1 # Allow access to viewing services (necessary when using Docker Swarm)
-      #- TASKS=1 # Allow access to viewing tasks (necessary when using Docker Swarm)
-      #- POST=0 # Disallow any POST operations (effectively read-only)
-    #ports:
-    #  - "2375:2375"
-    #volumes:
-      #- /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
-    #restart: unless-stopped
+  dockerproxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy:latest
+    container_name: dockerproxy
+    networks:
+      - d3internal
+    environment:
+      - CONTAINERS=1 # Allow access to viewing containers
+      - SERVICES=1 # Allow access to viewing services (necessary when using Docker Swarm)
+      - TASKS=1 # Allow access to viewing tasks (necessary when using Docker Swarm)
+      - POST=0 # Disallow any POST operations (effectively read-only)
+    ports:
+      - "2375:2375"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
+    restart: unless-stopped
 """
 environment = """
 HOMEPAGE_DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/
