@@ -917,7 +917,7 @@ services:
 ###
 
 [[stack]]
-name = "rotiprata"
+name = "meegoreng"
 [stack.config]
 server = "komodo-1"
 poll_for_updates = true
@@ -927,14 +927,14 @@ file_contents = """
 services:
   roti:
     image: jellydeck/moocup:latest
-    container_name: rotiprata 
+    container_name: meegoreng 
     ports:
       - 8811:80
     labels:
       - homepage.group= Media
-      - homepage.name= RotiPrata
+      - homepage.name= meegoreng
       - homepage.icon= sh-moocup-light
-      - homepage.href= https://rotiprata.d3adc3ii.site
+      - homepage.href= https://meegoreng.d3adc3ii.site
 """
 ##
 
