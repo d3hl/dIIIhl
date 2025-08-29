@@ -916,30 +916,6 @@ services:
 """
 ###
 
-
-[[stack]]
-name = "rotijohn"
-[stack.config]
-server = "komodo-1"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  roti:
-    image: jellydeck/moocup:latest
-    container_name: rotijohn
-    ports:
-      - 7117:80
-    labels:
-      - homepage.group= Media
-      - homepage.name=roti prata
-      - homepage.icon= sh-moocup-light
-      - homepage.href= https://rotijohn.d3adc3ii.site
-"""
-
-##
-
 [[stack]]
 name = "dumbpad"
 tags = ["external", "komodo-2"]
