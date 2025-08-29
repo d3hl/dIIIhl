@@ -926,7 +926,8 @@ auto_update_all_services = true
 file_contents = """
 services:
   roti:
-    image: jellydeck/moocup:latest 
+    image: jellydeck/moocup:latest
+    container_name: rotiprata 
     ports:
       - 8811:80
     labels:
