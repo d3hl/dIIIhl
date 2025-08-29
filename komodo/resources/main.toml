@@ -915,27 +915,6 @@ services:
       - 7007:7007
 """
 ###
-
-[[stack]]
-name = "meegoreng"
-[stack.config]
-server = "komodo-1"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  roti:
-    image: jellydeck/moocup:latest
-    container_name: meegoreng 
-    ports:
-      - 8811:80
-    labels:
-      - homepage.group= Media
-      - homepage.name= meegoreng
-      - homepage.icon= sh-moocup-light
-      - homepage.href= https://meegoreng.d3adc3ii.site
-"""
 ##
 
 [[stack]]
