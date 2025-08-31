@@ -1638,6 +1638,8 @@ HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx-light.png"
 HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3adc3ii.site"
 HOMEPAGE_VAR_NETALERTX_KEY="t_pJ26L2qEeUcR6bz5RCGI"
 HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"] 
+# NETBOX
+HOMEPAGE_VAR_NETBOXHL_URL="https://netbox21.d3adc3ii.cc"
 # UPTIME KUMA
 HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma-light.png"
 HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"

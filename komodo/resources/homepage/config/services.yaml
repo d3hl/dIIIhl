@@ -72,6 +72,9 @@
             key: {{HOMEPAGE_VAR_NETALERTX_KEY}}
             url: {{HOMEPAGE_VAR_NETALERTX_URL}}
             fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
+    - Netbox@HL:
+        icon: {{HOMEPAGE_VAR_NETBOX_ICON}}
+        href: {{HOMEPAGE_VAR_NETBOXHL_URL}}        
     - PHPIPAM:
         icon: {{HOMEPAGE_VAR_PHPIPAM_ICON}}
         href: {{HOMEPAGE_VAR_PHPIPAM_URL}}
