@@ -77,23 +77,10 @@ services:
 ##
 
 [[repo]]
-name = "d3hl-dIIIhl"
-[repo.config]
-server = "komodo1"
-git_account = "d3hl"
-repo = "d3hl/dIIIhl"
-path = "komodo"
-
-##
-
-[[repo]]
 name = "dIIIhl"
-template = true
 [repo.config]
-server = "komodo1"
 git_account = "d3hl"
 repo = "d3hl/dIIIhl"
-path = "komodo"
 
 ##
 
@@ -138,8 +125,6 @@ params = {}
 [[resource_sync]]
 name = "sync"
 [resource_sync.config]
-linked_repo = "d3hl-dIIIhl"
-resource_path = [
-  "komodo/resources/resources.toml"
-]
+linked_repo = "dIIIhl"
+resource_path = ["komodo/resources.toml"]
 managed = true
