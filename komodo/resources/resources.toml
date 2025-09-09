@@ -77,8 +77,303 @@ services:
 ##
 
 [[stack]]
-name = "test"
+name = "homepage"
+tags = [
+  "external",
+  "production",
+  "komodo-1"
+]
 [stack.config]
+server = "komodo-1"
+links = ["https://homepage.d3adc3ii.cc"]
+project_name = "homepage"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+networks:
+  d3internal:
+    external: true
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    networks:
+      - d3internal
+    env_file:
+      - .env
+    ports:
+      - 3731:3000
+    volumes:
+      - ${HOMEPAGE_DATA_DIR}/homepage/config:/app/config 
+      - ${HOMEPAGE_DATA_DIR}/homepage/icons:/app/public/icons
+      - ${HOMEPAGE_DATA_DIR}/homepage/images:/app/public/images
+      #- /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+  dockerproxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy:latest
+    container_name: dockerproxy
+    networks:
+      - d3internal
+    environment:
+      - CONTAINERS=1 # Allow access to viewing containers
+      - SERVICES=1 # Allow access to viewing services (necessary when using Docker Swarm)
+      - TASKS=1 # Allow access to viewing tasks (necessary when using Docker Swarm)
+      - POST=0 # Disallow any POST operations (effectively read-only)
+    ports:
+      - "2375:2375"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
+    restart: unless-stopped
+"""
+environment = """
+HOMEPAGE_DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/
+HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,10.10.10.25:3000"
+PGID= [[PGID]] 
+PUID= [[PUID]] 
+# Site Config
+HOMEPAGE_VAR_TITLE= "d3 Homepage"
+HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
+HOMEPAGE_VAR_IMG_URL= "/images/hack.jpg"
+HOMEPAGE_VAR_HEADER_STYLE= boxed #boxedWidgets
+
+HOMEPAGE_VAR_IMG_BLUR= md
+HOMEPAGE_VAR_IMG_SATURATE= 50
+HOMEPAGE_VAR_IMG_BRIGHTNESS= 50
+HOMEPAGE_VAR_IMG_OPACITY=70
+HOMEPAGE_VAR_USE_EQUAL_HEIGHTS= true
+HOMEAGE_VAR_DISABLE_COLLAPSE= true
+
+
+### GLANCES WIDGET SETTINGS
+HOMEPAGE_VAR_GL11_URL= http://10.10.10.11:61208
+HOMEPAGE_VAR_GL11_VERSION= 4 # required only if running glances v4 or higher, defaults to 3
+HOMEPAGE_VAR_GL11_CPU= false # optional, enabled by default, disable by setting to false
+HOMEPAGE_VAR_GL11_MEM= false # optional, enabled by default, disable by setting to false
+HOMEPAGE_VAR_GL11_CPUTEMP= true # disabled by default
+HOMEPAGE_VAR_GL11_UPTIME= true # disabled by default
+HOMEPAGE_VAR_GL11_LABEL= pve11 # optional
+
+HOMEPAGE_VAR_GL12_URL= http://10.10.10.12:61208
+HOMEPAGE_VAR_GL12_VERSION= 4 
+HOMEPAGE_VAR_GL12_CPU= false 
+HOMEPAGE_VAR_GL12_MEM= false 
+HOMEPAGE_VAR_GL12_CPUTEMP= true 
+HOMEPAGE_VAR_GL12_UPTIME= true 
+HOMEPAGE_VAR_GL12_LABEL= pve12 
+
+HOMEPAGE_VAR_GL13_URL= http://10.10.10.13:61208
+HOMEPAGE_VAR_GL13_VERSION= 4
+HOMEPAGE_VAR_GL13_CPU= false 
+HOMEPAGE_VAR_GL13_MEM= false 
+HOMEPAGE_VAR_GL13_CPUTEMP= true 
+HOMEPAGE_VAR_GL13_UPTIME= true 
+HOMEPAGE_VAR_GL13_LABEL= pve13 
+
+#### INFRA ####################################################################################################################################################################################################
+# Proxmox
+HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox-light.png"
+HOMEPAGE_VAR_PROXMOX_URL_PVE11= "https://pve.d3adc3ii.cc"
+HOMEPAGE_VAR_PROXMOX_IP_PVE11="https://10.10.10.10:8006"
+#HOMEPAGE_VAR_PROXMOX_USER=homepage@pve!homepage 
+HOMEPAGE_VAR_PROXMOX_SECRET=bd9d76fb-00a6-4e4d-af8a-66f0606ba7fc
+HOMEPAGE_VAR_PBS_URL= "https://pbs.d3adc3ii.site"
+# Truenas
+HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas-scale-light.png"
+HOMEPAGE_VAR_TRUENAS_URL= "https://truenas.d3adc3ii.cc"
+HOMEPAGE_VAR_TRUENAS_KEY=4-wEIiKMeFJpOJPyS2Y2658EQGbxZkBJUcQyBQvQoRzjggfnOIXNN7z8w7OvKpgK6C
+HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
+# Komodo
+HOMEPAGE_VAR_KOMODO_ICON= "/icons/docker-light.png"
+HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
+HOMEPAGE_VAR_KOMODO_IPURL= "http://10.10.10.25:9120"
+HOMEPAGE_VAR_KOMODO_KEY=K-69zvNUYoxn5KREW5nVpLqeLa741U7NHmPXoEx4S1
+HOMEPAGE_VAR_KOMODO_SECRET=S-5hhHrLWPfLHPJCRGBMV2auU7QsqfUaGrTJYuOW9M
+
+#### DOMAIN ####################################################################################################################################################################################################
+# Authentik
+HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik-light.png"
+HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3adc3ii.cc"
+HOMEPAGE_VAR_AUTHENTIK_KEY= "ZnhLrOvUoWZfHcQpFrteQVekOjpGQh48lXEVFn34HvGtT8eJoyhgaNYWb2mI"
+# DNS
+HOMEPAGE_VAR_DNS_ICON= "/icons/technitium-light.png"
+HOMEPAGE_VAR_DNS_URL= "https://ns.d3adc3ii.site"
+HOMEPAGE_VAR_DNS_KEY= [[HOMEPAGE_VAR_DNS_KEY]]
+HOMEPAGE_VAR_DNS_RANGE: LastDay # optional, defaults to LastHour
+# GoDoxy
+HOMEPAGE_VAR_GODOXY_ICON= "/icons/godoxy-light.png"
+HOMEPAGE_VAR_GODOXY_URL= "https://doxy.d3adc3ii.site"
+# PANGOLIN
+HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin-light.png"
+HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.d3adc3ii.cc"
+
+#### NETWORK ####################################################################################################################################################################################################
+# NetAlertX 
+HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx-light.png"
+HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3adc3ii.site"
+HOMEPAGE_VAR_NETALERTX_KEY="t_pJ26L2qEeUcR6bz5RCGI"
+HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"] 
+# UPTIME KUMA
+HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma-light.png"
+HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
+HOMEPAGE_VAR_KUMA_KEY=uk1_CJtVJXDT8DFll97KXiPPXb6dEWHpOdBZXymKWLPn
+# PHPIPAM
+HOMEPAGE_VAR_PHPIPAM_URL= "https://phpipam.d3adc3ii.cc/"
+HOMEPAGE_VAR_PHPIPAM_ICON= "sh-phpmyadmin-light"
+# Nautobot
+HOMEPAGE_VAR_NAUTOBOT_URL= "https://nautobot.d3adc3ii.cc/"
+HOMEPAGE_VAR_NAUTOBOT_ICON= "/icons/netbox-light.png"
+# NETBOX CLOUD
+HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox-light.png"
+HOMEPAGE_VAR_NETBOXCL_URL= "https://wmfk3018.cloud.netboxapp.com"
+# NETBOX CONSOLE
+HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"# NETBOX CONSOLE
+HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
+
+#### MONITORING  ####################################################################################################################################################################################################
+# Beszel
+HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel-light.png"
+HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
+HOMEPAGE_VAR_BESZEL_USERNAME= "d3tech@pm.me"
+HOMEPAGE_VAR_BESZEL_PASSWORD= "KVG6qpu0rnb-ybd9etn" 
+HOMEPAGE_VAR_BESZEL_VERSION= "2"
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11= pve11
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12= pve12
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13= pve13
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs= pbs
+HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"]
+# SPEEDTEST
+HOMEPAGE_VAR_SPEEDTEST_ICON= "sh-speedtest-tracker-light"
+HOMEPAGE_VAR_SPEEDTEST_URL= "https://speedtest.d3adc3ii.site"
+# Wazuh
+HOMEPAGE_VAR_WAZUH_ICON= "/icons/wazuh-light.png"
+HOMEPAGE_VAR_WAZUH_URL= "https://wazuh.d3adc3ii.site"
+# APPRISE-API
+HOMEPAGE_VAR_APPRISE_ICON= "/icons/gotify-dark.png"
+HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
+# Healthchecks
+HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks-light.png"
+HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
+
+#### BACKUP ####################################################################################################################################################################################################
+# PBS
+HOMEPAGE_VAR_PBS_URL="https://pbs.d3adc3ii.cc"
+HOMEPAGE_VAR_PBS_USER=homepage@pbs!homepage
+HOMEPAGE_VAR_PBS_SECRET=56ff3a13-0620-432b-b173-d048b1298a50
+# Backrest
+HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest-light.png"
+HOMEPAGE_VAR_BACKREST_URL= "https://backrest.d3adc3ii.site"
+
+# Remote-Backups
+HOMEPAGE_VAR_REMOTEBACKUP_ICON= "/icons/proxmox-light.png"
+HOMEPAGE_VAR_REMOTEBACKUP_URL= "https://dashboard.remote-backups.com"
+
+
+#### MEDIA ####################################################################################################################################################################################################
+# Jellyfin
+HOMEPAGE_VAR_JELLY_ICON= "/icons/jellyfin-light.png"
+HOMEPAGE_VAR_JELLY_URL= "https://jelly.d3adc3ii.site"
+HOMEAGE_VAR_JELLY_WIDGETURL= "http://10.10.10.27:8096"
+HOMEPAGE_VAR_JELLY_KEY=a6a45c61dd1d4f059b02fa22ad8c0ef3
+HOMEPAGE_VAR_JELLY_ENABLEBLOCK=true
+HOMEPAGE_VAR_JELLY_NOWPLAY=false
+
+# Immich
+HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich-light.png"
+HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3adc3ii.site"
+HOMEPAGE_VAR_IMMICH_KEY=W7IJnjVEIhc7d72AAm4sxJ49YJI1kdtkiVvmCZipVqc
+HOMEPAGE_VAR_IMMICH_VERSION= 2
+HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"] 
+# Stash
+HOMEPAGE_VAR_STASH_ICON= "/icons/stash-light.png"
+HOMEPAGE_VAR_STASH_URL= "https://stash.d3adc3ii.site"
+HOMEPAGE_VAR_STASH_USER= "d3adc3ii"
+HOMEPAGE_VAR_QBIT_API= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg"
+
+#### ACCESS ####################################################################################################################################################################################################
+# Guacamole
+HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/apache-guacamole-light.png"
+HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.d3adc3ii.site/guacamole"
+HOMEPAGE_VAR_GUACAMOLEEXT_URL= "https://guaca.d3adc3ii.cc/guacamole"
+# SHELLHUB
+HOMEPAGE_VAR_SHELLHUB_ICON= "sh-shellhub-light"
+HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
+
+#### LOGGING ####################################################################################################################################################################################################
+# Grafana
+HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana-light.png"
+HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
+HOMEPAGE_VAR_GRAFANA_URL= "https://grafana.d3adc3ii.cc"
+HOMEPAGE_VAR_GRAFANAC_URL= "https://grafana.d3adc3ii.cc/d/n5bu_kv45/traefik-official-standalone-dashboard"
+
+
+HOMEPAGE_VAR_INFLUX_ICON= "sh-influx-light"
+HOMEPAGE_VAR_INFLUX_URL= "https://influxdb.d3adc3ii.site"
+# Scutiny
+HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny-light.png"
+HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
+# Dozzle
+HOMEPAGE_VAR_DOZZLE_ICON= "sh-dozzle-light"
+HOMEPAGE_VAR_DOZZLE_URL= "https://dozzle.d3adc3ii.site"
+# Pulse
+HOMEPAGE_VAR_PULSEXT_ICON= "sh-proxmox-light"
+HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
+
+#### APPS ####################################################################################################################################################################################################
+# Actual Budget
+HOMEPAGE_VAR_ACTUAL_ICON= "sh-actual-budget-light"
+HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3adc3ii.site"
+# Sensei
+HOMEPAGE_VAR_SENSEI_ICON= "sh-sentry-light"
+HOMEPAGE_VAR_SENSEI_URL= "https://statement.d3adc3ii.site"
+# Semaphore
+HOMEPAGE_VAR_SEMAPHORE_ICON= "/icons/semaphore-ui-light.png"
+HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3adc3ii.site"
+# Aria2
+HOMEPAGE_VAR_ARIA_ICON= "sh-aria2-light"
+HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
+# NZBGET
+HOMEPAGE_VAR_NZBGET_ICON= "sh-nzbget-light"
+HOMEPAGE_VAR_NZBGET_URL= "https://nzbget.d3adc3ii.site"
+# Karakeep
+HOMEPAGE_VAR_KARAKEEP_ICON= "/icons/karakeep.png"
+HOMEPAGE_VAR_KARAKEEP_URL= "https://kara.d3adc3ii.cc"
+# Wallos
+HOMEPAGE_VAR_WALLOS_ICON= "/icons/wallos-light.png"
+HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
+# Ommni Tools
+HOMEPAGE_VAR_OMNITOOLS_ICON= "sh-omnitools-light"
+HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
+
+#### TOOLS ####################################################################################################################################################################################################
+
+#### EXTRAS ####################################################################################################################################################################################################
+# Selfhst-icons
+HOMEPAGE_VAR_SELFHST_ICON= "sh-selfh-st-light" 
+HOMEPAGE_VAR_SELFHST_URL= "https://selfhst-icons.d3adc3ii.cc"
+
+###################   CORP    ##################### 
+
+# Komodo
+HOMEPAGE_VAR_KOMODOCORP_URL="http://10.203.1.121:9120"
+# Fenrus
+HOMEPAGE_VAR_FENRUS_ICON="sh-fenrus"
+HOMEPAGE_VAR_FENRUS_URL="http://10.203.1.120:3222"
+# PVECORP
+HOMEPAGE_VAR_PVECORP_URL="https://10.203.1.113:8006"
+# UNIMUS  
+HOMEPAGE_VAR_UNIMUS_ICON="sh-unimus-light"
+HOMEPAGE_VAR_UNIMUS_URL="http://10.203.1.120:8085"
+
+### GL1 ###
+# PVE11
+HOMEPAGE_VAR_PVE11_URL= "https://pve11.d3adc3ii.cc"
+HOMEPAGE_VAR_PVE12_URL= "10.10.10.12"
+HOMEPAGE_VAR_PVE13_URL= "10.10.10.13"
+HOMEPAGE_VAR_GLANCES_PVE11= "http://10.10.10.11:61208"
+HOMEPAGE_VAR_GLANCES_PVE12= "http://10.10.10.12:61208"
+HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
+"""
 
 
 ##
