@@ -598,10 +598,9 @@ tags = [
   "internal",
   "core",
   "proxy",
-  "10.10.10.70"
 ]
 [stack.config]
-server = "Public-70"
+server = "komodo1"
 links = ["https://doxy.d3adc3ii.site/"]
 project_name = "godoxy"
 poll_for_updates = true
