@@ -472,51 +472,6 @@ COMPOSE_PORT_HTTPS=6443
 
 ##
 
-[[stack]]
-name = "beszel"
-tags = [
-  "komodo-1",
-  "external",
-  "monitoring",
-  "beszel"
-]
-[stack.config]
-server = "komodo-1"
-links = ["https://beszel.d3adc3ii.cc"]
-file_contents = """
-services:
-  beszel:
-    image: henrygd/beszel:latest
-    container_name: beszel
-    restart: unless-stopped
-    env_file:
-      - .env
-    ports:
-      - 8090:8090
-    volumes:
-      - ${DOCKER_DATA}/beszel/beszel_data:/beszel_data
-      - ${DOCKER_DATA}/beszel/beszel_socket:/beszel_socket
-  beszel-agent:
-    image: henrygd/beszel-agent:latest
-    container_name: beszel-agent
-    restart: unless-stopped
-    network_mode: host
-    volumes:
-      - ${DOCKER_DATA}/beszel/beszel_socket:/beszel_socket
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    env_file:
-      - .env
-    environment:
-      LISTEN: /beszel_socket/beszel.sock
-      # Do not remove quotes around the key
-      KEY: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+PtfmPHdKiaE+gbET/6wZeFSnsUEgOXpKM1qJ4gCPp'
-"""
-environment = """
-PGID=1000
-PUID=1000
-USER_CREATION=true
-"""
-
 ##
 
 [[stack]]
