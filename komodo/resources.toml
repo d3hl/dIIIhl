@@ -58,27 +58,20 @@ enabled = true
 name = "homepage"
 [stack.config]
 server = "komodo1"
-file_contents = """
-networks:
-  d3internal:
-    external: true
-services:
-  homepage:
-    image: ghcr.io/gethomepage/homepage:latest
-    container_name: homepage
-    networks:
-      - d3internal
-    env_file:
-      - .env
-    ports:
-      - 3731:3000
-    volumes:
-      - ${HOMEPAGE_DATA_DIR}/homepage/config:/app/config 
-      - ${HOMEPAGE_DATA_DIR}/homepage/icons:/app/public/icons
-      - ${HOMEPAGE_DATA_DIR}/homepage/images:/app/public/images
-      #- /var/run/docker.sock:/var/run/docker.sock:ro
-    restart: unless-stopped
-"""
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "dIIIhl"
+reclone = true
+run_directory = "komodo/homepage"
+config_files = [
+  { path = "config/services.yaml" },
+  { path = "config/settings.yaml" },
+  { path = "config/widgets.yaml" },
+  { path = "config/docker.yaml" },
+  { path = "config/custom.css" },
+  { path = "config/bookmarks.yaml" }
+]
 environment = """
 HOMEPAGE_DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/
 HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,10.10.10.25:3000"
@@ -327,23 +320,6 @@ HOMEPAGE_VAR_GLANCES_PVE11= "http://10.10.10.11:61208"
 HOMEPAGE_VAR_GLANCES_PVE12= "http://10.10.10.12:61208"
 HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
 """
-
-##
-
-[[stack]]
-name = "homepage_(_git)"
-[stack.config]
-server = "komodo1"
-linked_repo = "dIIIhl"
-run_directory = "komodo/homepage"
-config_files = [
-  { path = "config/services.yaml" },
-  { path = "config/settings.yaml" },
-  { path = "config/widgets.yaml" },
-  { path = "config/docker.yaml" },
-  { path = "config/custom.css" },
-  { path = "config/bookmarks.yaml" }
-]
 
 ##
 
