@@ -58,12 +58,16 @@ enabled = true
 name = "homepage"
 [stack.config]
 server = "komodo1"
+links = ["https://homepage.d3adc3ii.cc"]
+project_name = "homepage"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
+destroy_before_deploy = true
 linked_repo = "dIIIhl"
 reclone = true
 run_directory = "komodo/homepage"
+file_paths = ["compose.yaml"]
 config_files = [
   { path = "config/services.yaml" },
   { path = "config/settings.yaml" },
@@ -73,8 +77,8 @@ config_files = [
   { path = "config/bookmarks.yaml" }
 ]
 environment = """
-HOMEPAGE_DATA_DIR= /etc/komodo/repos/diiihl/komodo/resources/
-HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,10.10.10.25:3000"
+HOMEPAGE_DATA_DIR= /mnt/cephfs/komodo/repos/dIIIhl/komodo/resources/
+HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,10.10.10.30:3000"
 PGID= [[PGID]] 
 PUID= [[PUID]] 
 # Site Config
