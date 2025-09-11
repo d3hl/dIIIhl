@@ -524,6 +524,72 @@ USER_CREATION=true
 
 ##
 
+
+[[stack]]
+name = "bookstack"
+tags = ["komodo2", "external"]
+[stack.config]
+server = "komodo2"
+links = [
+  "https://bookstack.d3adc3ii.cc"
+]
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  bookstack:
+    image: lscr.io/linuxserver/bookstack:latest
+    container_name: bookstack
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - DB_PORT=3306
+      - APP_THEME=custom
+    volumes:
+      - ${DOCKER_DATA}/bookstack/config:/config
+    ports:
+      - 6875:80
+    restart: unless-stopped
+    labels:
+      - homepage.group=Applications
+      - homepage.name=bookstack
+      - homepage.icon=sh-bookstack-light
+      - homepage.href=https://bookstack.d3adc3ii.cc/
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: mariadb
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ${DOCKER_DATA}/bookstack/mariadb/config:/config
+    ports:
+      - 3306:3306
+    restart: unless-stopped
+"""
+environment = """
+TZ=Asia/Singapore
+QUEUE_CONNECTION=database
+DB_DATABASE=bookstackdb
+DB_HOST=mariadb
+DB_USERNAME=d3
+DB_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A
+MYSQL_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A
+APP_URL=https://bookstack.d3adc3ii.cc
+APP_KEY=base64:5hfLcDEkhQzRlsTu5xLg7+1xRH4PH9QKacJY65gDQpU=
+MYSQL_DATABASE=bookstackdb
+MYSQL_USER=d3
+MYSQL_ROOT_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A123
+MYSQL_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A
+"""
+
+
+##
+
 [[repo]]
 name = "dIIIhl"
 [repo.config]
