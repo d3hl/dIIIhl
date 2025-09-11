@@ -55,6 +55,256 @@ enabled = true
 ##
 
 [[stack]]
+name = "authentik"
+tags = ["core", "external"]
+[stack.config]
+server = "komodo1"
+links = ["https://auth.d3adc3ii.cc"]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  postgresql:
+    env_file:
+    - .env
+    environment:
+      POSTGRES_DB: ${PG_DB:-authentik}
+      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
+      POSTGRES_USER: ${PG_USER:-authentik}
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_period: 20s
+      test:
+      - CMD-SHELL
+      - pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
+      timeout: 5s
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
+    volumes:
+    - database:/var/lib/postgresql/data
+  redis:
+    command: --save 60 1 --loglevel warning
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_period: 20s
+      test:
+      - CMD-SHELL
+      - redis-cli ping | grep PONG
+      timeout: 3s
+    image: docker.io/library/redis:alpine
+    restart: unless-stopped
+    volumes:
+    - redis:/data
+  server:
+    command: server
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+    - .env
+    environment:
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.0}
+    ports:
+    - ${COMPOSE_PORT_HTTP:-9000}:9000
+    - ${COMPOSE_PORT_HTTPS:-9443}:9443
+    restart: unless-stopped
+    volumes:
+    - ./media:/media
+    - ./custom-templates:/templates
+  worker:
+    command: worker
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+    - .env
+    environment:
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.0}
+    restart: unless-stopped
+    user: root
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./media:/media
+    - ./certs:/certs
+    - ./custom-templates:/templates
+  authentik_proxy:
+    image: ghcr.io/goauthentik/proxy:2025.8.0
+        # Optionally specify the container's network, which must be able to reach the core authentik server.
+        # networks:
+        #   - foo
+    ports:
+      - 9000:9000
+      - 9443:9443
+    environment:
+      AUTHENTIK_HOST: http://10.10.10.70:8175
+      AUTHENTIK_INSECURE: "true"
+      AUTHENTIK_TOKEN: QAk1Uxn4iwSd1tiAEmDAVMTvgu46hyy3er847Rksh5yjUY1kZN4cigNyG1mn
+            # Optional setting to be used when `authentik_host` for internal communication doesn't match the public URL.
+      AUTHENTIK_HOST_BROWSER: https://auth.d3adc3ii.cc
+volumes:
+  database:
+    driver: local
+  redis:
+    driver: local
+"""
+environment = """
+PG_PASS=[[AUTHENTIK_PG_PASS]]
+AUTHENTIK_SECRET_KEY= [[AUTHENTIK_SECRET_KEY]]
+# SMTP Host Emails are sent to
+AUTHENTIK_EMAIL__HOST= mail.smtp2go.com
+AUTHENTIK_EMAIL__PORT=8025 
+# Optionally authenticate (don't add quotation marks to your password)
+AUTHENTIK_EMAIL__USERNAME=d3adc3ii.cc
+AUTHENTIK_EMAIL__PASSWORD=taolavodich1234
+# Use StartTLS
+AUTHENTIK_EMAIL__USE_TLS=true
+# Use SSL
+AUTHENTIK_EMAIL__USE_SSL=false
+AUTHENTIK_EMAIL__TIMEOUT=10
+# Email address authentik will send from, should have a correct @domain
+AUTHENTIK_EMAIL__FROM=d3tech@pm.me
+
+COMPOSE_PORT_HTTP=8175
+COMPOSE_PORT_HTTPS=6443
+"""
+
+##
+
+[[stack]]
+name = "beszel"
+tags = [
+  "komodo-1",
+  "external",
+  "monitoring",
+  "beszel"
+]
+[stack.config]
+server = "komodo2"
+links = ["https://beszel.d3adc3ii.cc"]
+project_name = "beszel"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  beszel:
+    image: henrygd/beszel:latest
+    container_name: beszel
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - 8090:8090
+    volumes:
+      - ${CDATA}/beszel/data:/beszel_data
+      - ${CDATA}/beszel/socket:/beszel_socket
+  beszel-agent:
+    image: henrygd/beszel-agent:latest
+    container_name: beszel-agent
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ${CDATA}/beszel/socket:/beszel_socket
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    env_file:
+      - .env
+    environment:
+      LISTEN: /beszel_socket/beszel.sock
+      # Do not remove quotes around the key
+"""
+environment = """
+PGID=1000
+PUID=1000
+USER_CREATION=true
+KEY: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+PtfmPHdKiaE+gbET/6wZeFSnsUEgOXpKM1qJ4gCPp'
+"""
+
+##
+
+[[stack]]
+name = "bookstack"
+tags = ["komodo2", "external"]
+[stack.config]
+server = "komodo2"
+links = [
+  "https://bookstack.d3adc3ii.cc"
+]
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  bookstack:
+    image: lscr.io/linuxserver/bookstack:latest
+    container_name: bookstack
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - DB_PORT=3306
+      - APP_THEME=custom
+    volumes:
+      - ${DOCKER_DATA}/bookstack/config:/config
+    ports:
+      - 6875:80
+    restart: unless-stopped
+    labels:
+      - homepage.group=Applications
+      - homepage.name=bookstack
+      - homepage.icon=sh-bookstack-light
+      - homepage.href=https://bookstack.d3adc3ii.cc/
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: mariadb
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ${DOCKER_DATA}/bookstack/mariadb/config:/config
+    ports:
+      - 3306:3306
+    restart: unless-stopped
+"""
+environment = """
+TZ=Asia/Singapore
+QUEUE_CONNECTION=database
+DB_DATABASE=bookstackdb
+DB_HOST=mariadb
+DB_USERNAME=d3
+DB_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A
+MYSQL_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A
+APP_URL=https://bookstack.d3adc3ii.cc
+APP_KEY=base64:5hfLcDEkhQzRlsTu5xLg7+1xRH4PH9QKacJY65gDQpU=
+MYSQL_DATABASE=bookstackdb
+MYSQL_USER=d3
+MYSQL_ROOT_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A123
+MYSQL_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A
+"""
+
+##
+
+[[stack]]
 name = "homepage"
 [stack.config]
 server = "komodo1"
@@ -339,254 +589,6 @@ services:
       - NEWT_ID=jazianb9pxf8f2k
       - NEWT_SECRET=vmfug29a5uhz7lm313x838k28rtu585xaf31y8jw7j70nejs
 """
-
-##
-
-
-[[stack]]
-name = "authentik-70"
-tags = ["core", "external"]
-[stack.config]
-server = "komodo1"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  postgresql:
-    env_file:
-    - .env
-    environment:
-      POSTGRES_DB: ${PG_DB:-authentik}
-      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
-      POSTGRES_USER: ${PG_USER:-authentik}
-    healthcheck:
-      interval: 30s
-      retries: 5
-      start_period: 20s
-      test:
-      - CMD-SHELL
-      - pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
-      timeout: 5s
-    image: docker.io/library/postgres:16-alpine
-    restart: unless-stopped
-    volumes:
-    - database:/var/lib/postgresql/data
-  redis:
-    command: --save 60 1 --loglevel warning
-    healthcheck:
-      interval: 30s
-      retries: 5
-      start_period: 20s
-      test:
-      - CMD-SHELL
-      - redis-cli ping | grep PONG
-      timeout: 3s
-    image: docker.io/library/redis:alpine
-    restart: unless-stopped
-    volumes:
-    - redis:/data
-  server:
-    command: server
-    depends_on:
-      postgresql:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    env_file:
-    - .env
-    environment:
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
-      AUTHENTIK_REDIS__HOST: redis
-      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.0}
-    ports:
-    - ${COMPOSE_PORT_HTTP:-9000}:9000
-    - ${COMPOSE_PORT_HTTPS:-9443}:9443
-    restart: unless-stopped
-    volumes:
-    - ./media:/media
-    - ./custom-templates:/templates
-  worker:
-    command: worker
-    depends_on:
-      postgresql:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    env_file:
-    - .env
-    environment:
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
-      AUTHENTIK_REDIS__HOST: redis
-      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.0}
-    restart: unless-stopped
-    user: root
-    volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - ./media:/media
-    - ./certs:/certs
-    - ./custom-templates:/templates
-  authentik_proxy:
-    image: ghcr.io/goauthentik/proxy:2025.8.0
-        # Optionally specify the container's network, which must be able to reach the core authentik server.
-        # networks:
-        #   - foo
-    ports:
-      - 9000:9000
-      - 9443:9443
-    environment:
-      AUTHENTIK_HOST: http://10.10.10.70:8175
-      AUTHENTIK_INSECURE: "true"
-      AUTHENTIK_TOKEN: QAk1Uxn4iwSd1tiAEmDAVMTvgu46hyy3er847Rksh5yjUY1kZN4cigNyG1mn
-            # Optional setting to be used when `authentik_host` for internal communication doesn't match the public URL.
-      AUTHENTIK_HOST_BROWSER: https://auth.d3adc3ii.cc
-volumes:
-  database:
-    driver: local
-  redis:
-    driver: local
-"""
-environment = """
-PG_PASS=[[AUTHENTIK_PG_PASS]]
-AUTHENTIK_SECRET_KEY= [[AUTHENTIK_SECRET_KEY]]
-# SMTP Host Emails are sent to
-AUTHENTIK_EMAIL__HOST= mail.smtp2go.com
-AUTHENTIK_EMAIL__PORT=8025 
-# Optionally authenticate (don't add quotation marks to your password)
-AUTHENTIK_EMAIL__USERNAME=d3adc3ii.cc
-AUTHENTIK_EMAIL__PASSWORD=taolavodich1234
-# Use StartTLS
-AUTHENTIK_EMAIL__USE_TLS=true
-# Use SSL
-AUTHENTIK_EMAIL__USE_SSL=false
-AUTHENTIK_EMAIL__TIMEOUT=10
-# Email address authentik will send from, should have a correct @domain
-AUTHENTIK_EMAIL__FROM=d3tech@pm.me
-
-COMPOSE_PORT_HTTP=8175
-COMPOSE_PORT_HTTPS=6443
-"""
-##
-
-[[stack]]
-name = "beszel"
-tags = [
-  "komodo-1",
-  "external",
-  "monitoring",
-  "beszel"
-]
-[stack.config]
-server = "komodo2"
-links = ["https://beszel.d3adc3ii.cc"]
-file_contents = """
-services:
-  beszel:
-    image: henrygd/beszel:latest
-    container_name: beszel
-    restart: unless-stopped
-    env_file:
-      - .env
-    ports:
-      - 8090:8090
-    volumes:
-      - ${DOCKER_DATA}/beszel/beszel_data:/beszel_data
-      - ${DOCKER_DATA}/beszel/beszel_socket:/beszel_socket
-  beszel-agent:
-    image: henrygd/beszel-agent:latest
-    container_name: beszel-agent
-    restart: unless-stopped
-    network_mode: host
-    volumes:
-      - ${DOCKER_DATA}/beszel/beszel_socket:/beszel_socket
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    env_file:
-      - .env
-    environment:
-      LISTEN: /beszel_socket/beszel.sock
-      # Do not remove quotes around the key
-      KEY: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+PtfmPHdKiaE+gbET/6wZeFSnsUEgOXpKM1qJ4gCPp'
-"""
-environment = """
-PGID=1000
-PUID=1000
-USER_CREATION=true
-"""
-
-
-##
-
-
-[[stack]]
-name = "bookstack"
-tags = ["komodo2", "external"]
-[stack.config]
-server = "komodo2"
-links = [
-  "https://bookstack.d3adc3ii.cc"
-]
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  bookstack:
-    image: lscr.io/linuxserver/bookstack:latest
-    container_name: bookstack
-    env_file:
-      - .env
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - DB_PORT=3306
-      - APP_THEME=custom
-    volumes:
-      - ${DOCKER_DATA}/bookstack/config:/config
-    ports:
-      - 6875:80
-    restart: unless-stopped
-    labels:
-      - homepage.group=Applications
-      - homepage.name=bookstack
-      - homepage.icon=sh-bookstack-light
-      - homepage.href=https://bookstack.d3adc3ii.cc/
-  mariadb:
-    image: lscr.io/linuxserver/mariadb:latest
-    container_name: mariadb
-    env_file:
-      - .env
-    environment:
-      - PUID=1000
-      - PGID=1000
-    volumes:
-      - ${DOCKER_DATA}/bookstack/mariadb/config:/config
-    ports:
-      - 3306:3306
-    restart: unless-stopped
-"""
-environment = """
-TZ=Asia/Singapore
-QUEUE_CONNECTION=database
-DB_DATABASE=bookstackdb
-DB_HOST=mariadb
-DB_USERNAME=d3
-DB_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A
-MYSQL_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A
-APP_URL=https://bookstack.d3adc3ii.cc
-APP_KEY=base64:5hfLcDEkhQzRlsTu5xLg7+1xRH4PH9QKacJY65gDQpU=
-MYSQL_DATABASE=bookstackdb
-MYSQL_USER=d3
-MYSQL_ROOT_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A123
-MYSQL_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A
-"""
-
 
 ##
 
