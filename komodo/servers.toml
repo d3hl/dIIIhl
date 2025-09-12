@@ -15,7 +15,7 @@ tags = ["servers"]
 [server.config]
 address = "https://10.203.1.120:8120"
 region = "CL"
-enabled = true
+enabled = true #test
 
 ##
 
