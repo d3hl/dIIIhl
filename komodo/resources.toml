@@ -241,6 +241,49 @@ KEY: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+PtfmPHdKiaE+gbET/6wZeFSnsUEgOXpKM1q
 ##
 
 [[stack]]
+name = "blocky"
+tags = ["komodo1"]
+[stack.config]
+server = "komodo1"
+project_name = "blocky"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  blocky:
+    image: ghcr.io/0xerr0r/blocky
+    container_name: blocky
+    restart: unless-stopped
+    # Optional the instance hostname for logging purpose
+    hostname: blocky-hostname
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "853:853/udp"
+      - "853:853/tcp"
+      - "4000:4000/tcp"
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=Asia/Singapore # Optional to synchronize the log timestamp with host
+      - CDATA=/mnt/cephfs/appdata
+    volumes:
+      # Optional to synchronize the log timestamp with host
+      - /etc/localtime:/etc/localtime:ro
+      # config file
+      - ${CDATA}/blocky/config.yml:/app/config.yml:ro
+      - ${ZDATA}/blocky/logs:/logs
+      - ${ZDATA}/blocky/denylists:/app/denylists/
+      - ${ZDATA}/blocky/allowlists:/app/allowlists/
+"""
+environment = """
+CDATA=/mnt/cephfs/appdata
+"""
+
+##
+
+[[stack]]
 name = "bookstack"
 tags = ["komodo2", "external"]
 [stack.config]
@@ -300,6 +343,185 @@ MYSQL_DATABASE=bookstackdb
 MYSQL_USER=d3
 MYSQL_ROOT_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A123
 MYSQL_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A
+"""
+
+##
+
+[[stack]]
+name = "godoxy"
+tags = ["internal", "core", "proxy"]
+[stack.config]
+server = "komodo1"
+links = ["https://doxy.d3adc3ii.site/"]
+project_name = "godoxy"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  socket-proxy:
+    container_name: socket-proxy
+    image: ghcr.io/yusing/socket-proxy:latest
+    environment:
+      - ALLOW_START=1
+      - ALLOW_STOP=1
+      - ALLOW_RESTARTS=1
+      - CONTAINERS=1
+      - EVENTS=1
+      - INFO=1
+      - PING=1
+      - POST=1
+      - VERSION=1
+    volumes:
+      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
+    restart: unless-stopped
+    tmpfs:
+      - /run
+    ports:
+      - ${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}:2375
+  frontend:
+    image: ghcr.io/yusing/godoxy-frontend:${TAG:-latest}
+    container_name: godoxy-frontend
+    restart: unless-stopped
+    network_mode: host
+    env_file: .env
+    user: 1000:1000
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - all
+    depends_on:
+      - app
+    environment:
+      HOSTNAME: 127.0.0.1
+      PORT: ${GODOXY_FRONTEND_PORT}
+    labels:
+      proxy.aliases: ${GODOXY_FRONTEND_ALIASES}
+      proxy.doxy.port: ${GODOXY_FRONTEND_PORT}
+     # proxy.doxy.middlewares.oidc:
+      # proxy.#1.middlewares.cidr_whitelist: |
+      #   status: 403
+      #   message: IP not allowed
+      #   allow:
+      #     - 127.0.0.1
+      #     - 10.0.0.0/8
+      #     - 192.168.0.0/16
+      #     - 172.16.0.0/12
+  app:
+    image: ghcr.io/yusing/godoxy:${TAG:-latest}
+    container_name: godoxy-proxy
+    restart: always
+    network_mode: host # do not change this
+    #extra_hosts:
+    #  - auth.d3adc3ii.cc:127.0.0.1
+    dns:
+      - 1.1.1.1
+      - 1.1.1.2
+    environment:
+      - CF_API_TOKEN= ${CF_API_TOKEN}
+      - CF_EMAIL= ${CF_EMAIL}
+      - DOCKER_HOST=tcp://${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}
+    env_file: .env
+    user: 1000:1000
+    depends_on:
+      socket-proxy:
+        condition: service_started
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - all
+    cap_add:
+      - NET_BIND_SERVICE
+    volumes:
+      - ${DOCKER_DATA}/godoxy/config:/app/config
+      - ${DOCKER_DATA}/godoxy/logs:/app/logs
+      - ${DOCKER_DATA}/godoxy/error_pages:/app/error_pages:ro
+      - ${DOCKER_DATA}/godoxy/data:/app/data
+      - ${DOCKER_DATA}/godoxy/certs:/app/certs
+
+      # remove "./certs:/app/certs" and uncomment below to use existing certificate
+      # - /path/to/certs/cert.crt:/app/certs/cert.crt
+      # - /path/to/certs/priv.key:/app/certs/priv.key
+"""
+environment = """
+COMPOSE_PROJECT_NAME= godoxy
+TAG=latest
+TZ=Asia/Singapore
+PUID=1000
+PGID=1000
+GODOXY_EMAIL= d3tech@pm.me
+CONFIG_DIR=/etc/komodo/repos/Public-70/komodo/resources/godoxy/config
+CF_API_TOKEN= [[CF_API_TOKEN]]
+CF_EMAIL= d3tech@pm.me
+# API JWT Configuration (common)
+# generate secret with `openssl rand -base64 32`
+GODOXY_API_JWT_SECRET=4m64Gth6C6VZeLHxGOQzVe3Myigx5gqHm4KqN5HxwM8=
+# the JWT token time-to-live
+# leave empty to use default (24 hours)
+# format: https://pkg.go.dev/time#Duration
+GODOXY_API_JWT_TOKEN_TTL=
+
+# API/WebUI user password login credentials (optional)
+# These fields are not required for OIDC authentication
+GODOXY_API_USER=d3
+GODOXY_API_PASSWORD=qyp.kmr2ktf5vcj3CYM
+
+# OIDC Configuration (optional)
+# Uncomment and configure these values to enable OIDC authentication.
+#
+
+#GODOXY_OIDC_ISSUER_URL=https://auth.d3adc3ii.cc/application/o/godoxy/    
+#GODOXY_OIDC_ISSUER_URL=http://10.10.10.7:8175/application/o/godoxy/                       
+#GODOXY_OIDC_CLIENT_ID=xk2q92Kot1vBSHe4m6vDvNJBE23qSVhRtFytnmGU
+#GODOXY_OIDC_CLIENT_SECRET=Cb4wJ4InYSh3MyDkEqpFcHVHfyupQnDkmOkpBxN5oDh3EakcPq42MMkSWI1N6i0mD6snMs9Pw0YIRHlXYeVwUsCrhuVNzYz3Avj7IfqtFCFIZupCgXa2iSlfOLRd84bQ
+#GODOXY_OIDC_SCOPES=openid, profile, email, groups
+#GODOXY_OIDC_ALLOWED_USERS=d3
+# User definitions: Uncomment and configure these values to restrict access to specific users or groups.
+# These two fields act as a logical AND operator. For example, given the following membership:
+#   user1, group1
+#   user2, group1
+#   user3, group2
+#   user1, group2
+# You can allow access to user3 AND all users of group1 by providing:
+#   # GODOXY_OIDC_ALLOWED_USERS=user3
+#GODOXY_OIDC_ALLOWED_GROUPS=	"authentik Admins"
+#
+# Comma-separated list of allowed users.
+# GODOXY_OIDC_ALLOWED_USERS=user1,user2
+# Optional: Comma-separated list of allowed groups.
+# GODOXY_OIDC_ALLOWED_GROUPS=group1,group2
+
+# Proxy listening address
+GODOXY_HTTP_ADDR=10.10.10.70:80
+GODOXY_HTTPS_ADDR=:443
+
+# Enable HTTP3
+GODOXY_HTTP3_ENABLED=true
+
+# API listening address
+GODOXY_API_ADDR=127.0.0.1:8888
+
+# Metrics
+GODOXY_METRICS_DISABLE_CPU=false
+GODOXY_METRICS_DISABLE_MEMORY=false
+GODOXY_METRICS_DISABLE_DISK=false
+GODOXY_METRICS_DISABLE_NETWORK=false
+GODOXY_METRICS_DISABLE_SENSORS=false
+
+# Frontend listening port
+GODOXY_FRONTEND_PORT=3716
+
+# Frontend aliases (subdomains / FQDNs, e.g. godoxy, godoxy.domain.com)
+GODOXY_FRONTEND_ALIASES=doxy
+
+# Docker socket
+# /var/run/podman/podman.sock for podman
+DOCKER_SOCKET=/var/run/docker.sock
+SOCKET_PROXY_LISTEN_ADDR=127.0.0.1:2375
+
+# Debug mode
+GODOXY_DEBUG=true
 """
 
 ##
@@ -588,189 +810,6 @@ services:
       - PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
       - NEWT_ID=jazianb9pxf8f2k
       - NEWT_SECRET=vmfug29a5uhz7lm313x838k28rtu585xaf31y8jw7j70nejs
-"""
-##
-
-
-[[stack]]
-name = "godoxy"
-tags = [
-  "internal",
-  "core",
-  "proxy",
-]
-[stack.config]
-server = "komodo1"
-links = ["https://doxy.d3adc3ii.site/"]
-project_name = "godoxy"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  socket-proxy:
-    container_name: socket-proxy
-    image: ghcr.io/yusing/socket-proxy:latest
-    environment:
-      - ALLOW_START=1
-      - ALLOW_STOP=1
-      - ALLOW_RESTARTS=1
-      - CONTAINERS=1
-      - EVENTS=1
-      - INFO=1
-      - PING=1
-      - POST=1
-      - VERSION=1
-    volumes:
-      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
-    restart: unless-stopped
-    tmpfs:
-      - /run
-    ports:
-      - ${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}:2375
-  frontend:
-    image: ghcr.io/yusing/godoxy-frontend:${TAG:-latest}
-    container_name: godoxy-frontend
-    restart: unless-stopped
-    network_mode: host
-    env_file: .env
-    user: 1000:1000
-    read_only: true
-    security_opt:
-      - no-new-privileges:true
-    cap_drop:
-      - all
-    depends_on:
-      - app
-    environment:
-      HOSTNAME: 127.0.0.1
-      PORT: ${GODOXY_FRONTEND_PORT}
-    labels:
-      proxy.aliases: ${GODOXY_FRONTEND_ALIASES}
-      proxy.doxy.port: ${GODOXY_FRONTEND_PORT}
-     # proxy.doxy.middlewares.oidc:
-      # proxy.#1.middlewares.cidr_whitelist: |
-      #   status: 403
-      #   message: IP not allowed
-      #   allow:
-      #     - 127.0.0.1
-      #     - 10.0.0.0/8
-      #     - 192.168.0.0/16
-      #     - 172.16.0.0/12
-  app:
-    image: ghcr.io/yusing/godoxy:${TAG:-latest}
-    container_name: godoxy-proxy
-    restart: always
-    network_mode: host # do not change this
-    #extra_hosts:
-    #  - auth.d3adc3ii.cc:127.0.0.1
-    dns:
-      - 1.1.1.1
-      - 1.1.1.2
-    environment:
-      - CF_API_TOKEN= ${CF_API_TOKEN}
-      - CF_EMAIL= ${CF_EMAIL}
-      - DOCKER_HOST=tcp://${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}
-    env_file: .env
-    user: 1000:1000
-    depends_on:
-      socket-proxy:
-        condition: service_started
-    security_opt:
-      - no-new-privileges:true
-    cap_drop:
-      - all
-    cap_add:
-      - NET_BIND_SERVICE
-    volumes:
-      - ${DOCKER_DATA}/godoxy/config:/app/config
-      - ${DOCKER_DATA}/godoxy/logs:/app/logs
-      - ${DOCKER_DATA}/godoxy/error_pages:/app/error_pages:ro
-      - ${DOCKER_DATA}/godoxy/data:/app/data
-      - ${DOCKER_DATA}/godoxy/certs:/app/certs
-
-      # remove "./certs:/app/certs" and uncomment below to use existing certificate
-      # - /path/to/certs/cert.crt:/app/certs/cert.crt
-      # - /path/to/certs/priv.key:/app/certs/priv.key
-"""
-environment = """
-COMPOSE_PROJECT_NAME= godoxy
-TAG=latest
-TZ=Asia/Singapore
-PUID=1000
-PGID=1000
-GODOXY_EMAIL= d3tech@pm.me
-CONFIG_DIR=/etc/komodo/repos/Public-70/komodo/resources/godoxy/config
-CF_API_TOKEN= [[CF_API_TOKEN]]
-CF_EMAIL= d3tech@pm.me
-# API JWT Configuration (common)
-# generate secret with `openssl rand -base64 32`
-GODOXY_API_JWT_SECRET=4m64Gth6C6VZeLHxGOQzVe3Myigx5gqHm4KqN5HxwM8=
-# the JWT token time-to-live
-# leave empty to use default (24 hours)
-# format: https://pkg.go.dev/time#Duration
-GODOXY_API_JWT_TOKEN_TTL=
-
-# API/WebUI user password login credentials (optional)
-# These fields are not required for OIDC authentication
-GODOXY_API_USER=d3
-GODOXY_API_PASSWORD=qyp.kmr2ktf5vcj3CYM
-
-# OIDC Configuration (optional)
-# Uncomment and configure these values to enable OIDC authentication.
-#
-
-#GODOXY_OIDC_ISSUER_URL=https://auth.d3adc3ii.cc/application/o/godoxy/    
-#GODOXY_OIDC_ISSUER_URL=http://10.10.10.7:8175/application/o/godoxy/                       
-#GODOXY_OIDC_CLIENT_ID=xk2q92Kot1vBSHe4m6vDvNJBE23qSVhRtFytnmGU
-#GODOXY_OIDC_CLIENT_SECRET=Cb4wJ4InYSh3MyDkEqpFcHVHfyupQnDkmOkpBxN5oDh3EakcPq42MMkSWI1N6i0mD6snMs9Pw0YIRHlXYeVwUsCrhuVNzYz3Avj7IfqtFCFIZupCgXa2iSlfOLRd84bQ
-#GODOXY_OIDC_SCOPES=openid, profile, email, groups
-#GODOXY_OIDC_ALLOWED_USERS=d3
-# User definitions: Uncomment and configure these values to restrict access to specific users or groups.
-# These two fields act as a logical AND operator. For example, given the following membership:
-#   user1, group1
-#   user2, group1
-#   user3, group2
-#   user1, group2
-# You can allow access to user3 AND all users of group1 by providing:
-#   # GODOXY_OIDC_ALLOWED_USERS=user3
-#GODOXY_OIDC_ALLOWED_GROUPS=	"authentik Admins"
-#
-# Comma-separated list of allowed users.
-# GODOXY_OIDC_ALLOWED_USERS=user1,user2
-# Optional: Comma-separated list of allowed groups.
-# GODOXY_OIDC_ALLOWED_GROUPS=group1,group2
-
-# Proxy listening address
-GODOXY_HTTP_ADDR=10.10.10.70:80
-GODOXY_HTTPS_ADDR=:443
-
-# Enable HTTP3
-GODOXY_HTTP3_ENABLED=true
-
-# API listening address
-GODOXY_API_ADDR=127.0.0.1:8888
-
-# Metrics
-GODOXY_METRICS_DISABLE_CPU=false
-GODOXY_METRICS_DISABLE_MEMORY=false
-GODOXY_METRICS_DISABLE_DISK=false
-GODOXY_METRICS_DISABLE_NETWORK=false
-GODOXY_METRICS_DISABLE_SENSORS=false
-
-# Frontend listening port
-GODOXY_FRONTEND_PORT=3716
-
-# Frontend aliases (subdomains / FQDNs, e.g. godoxy, godoxy.domain.com)
-GODOXY_FRONTEND_ALIASES=doxy
-
-# Docker socket
-# /var/run/podman/podman.sock for podman
-DOCKER_SOCKET=/var/run/docker.sock
-SOCKET_PROXY_LISTEN_ADDR=127.0.0.1:2375
-
-# Debug mode
-GODOXY_DEBUG=true
 """
 
 ##
