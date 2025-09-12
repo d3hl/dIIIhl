@@ -772,6 +772,43 @@ SOCKET_PROXY_LISTEN_ADDR=127.0.0.1:2375
 # Debug mode
 GODOXY_DEBUG=true
 """
+##
+
+
+[[stack]]
+name = "dozzle"
+tags = [
+  "internal",
+  "monitoring",
+  "komodo-3",
+  "docker"
+]
+[stack.config]
+server = "komodo-1"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  dozzle:
+    image: amir20/dozzle:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8787:8080
+    env_file:
+      - .env
+    labels:
+      proxy.dozzle.port: 8787
+      proxy.dozzle-backend.port: 8080
+"""
+environment = """
+DOZZLE_ENABLE_ACTIONS=true
+DOZZLE_ENABLE_SHELL=true
+#DOZZLE_AUTH_PROVIDER: forward-proxy
+DOZZLE_REMOTE_AGENT=10.10.10.25:7007,10.10.10.26:7007
+"""
 
 ##
 
