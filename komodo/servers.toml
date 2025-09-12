@@ -1,0 +1,59 @@
+[[server]]
+name = "k-120"
+tags = ["servers"]
+[server.config]
+address = "https://10.203.1.120:8120"
+region = "CL"
+enabled = true
+passkey = "yt0u6axd1rNY7EO13254WF9J38683gBe"
+
+##
+
+[[server]]
+name = "k-121"
+tags = ["servers"]
+[server.config]
+address = "https://10.203.1.120:8120"
+region = "CL"
+enabled = true
+
+##
+
+[[server]]
+name = "komodo1"
+tags = ["servers"]
+[server.config]
+address = "https://host.docker.internal:8120"
+region = "HL"
+enabled = true
+
+##
+
+[[server]]
+name = "komodo2"
+tags = ["servers"]
+[server.config]
+address = "https://10.10.10.31:8120"
+region = "HL"
+enabled = true
+passkey = "i4FnpPizwNFTpw7yc5HeAX8wFm5w9eXB"
+
+##
+
+[[server]]
+name = "komodo3"
+tags = ["servers"]
+[server.config]
+address = "https://10.10.10.32:8120"
+region = "HL"
+enabled = true
+passkey = "22ajbb6BApjQZFf04wAbGe55MwMl5dkL"
+
+##
+
+[[server]]
+name = "pangolin"
+tags = ["servers"]
+[server.config]
+address = "https://45.127.32.141:8120"
+enabled = true
