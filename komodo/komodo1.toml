@@ -178,15 +178,10 @@ CDATA=/mnt/cephfs/appdata
 
 [[stack]]
 name = "godoxy"
-tags = [
-  "internal",
-  "core",
-  "proxy",
-  "komodo1"
-]
+tags = ["internal", "proxy", "komodo1"]
 [stack.config]
 server = "komodo1"
-links = ["https://doxy.d3adc3ii.site/"]
+links = ["https://doxy.d3hl.site/"]
 project_name = "godoxy"
 poll_for_updates = true
 auto_update = true
@@ -338,7 +333,7 @@ GODOXY_METRICS_DISABLE_SENSORS=false
 GODOXY_FRONTEND_PORT=3716
 
 # Frontend aliases (subdomains / FQDNs, e.g. godoxy, godoxy.domain.com)
-GODOXY_FRONTEND_ALIASES=godoxy.ad.d3adc3ii.site
+GODOXY_FRONTEND_ALIASES=doxy.d3hl.site
 
 # Docker socket
 # /var/run/podman/podman.sock for podman
