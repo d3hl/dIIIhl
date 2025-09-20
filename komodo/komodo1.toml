@@ -493,7 +493,7 @@ HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
 
 #### BACKUP ####################################################################################################################################################################################################
 # PBS
-HOMEPAGE_VAR_PBS_URL="https://pbs.d3adc3ii.cc"
+HOMEPAGE_VAR_PBS_URL="https://pbs.d3hl.site"
 HOMEPAGE_VAR_PBS_USER=homepage@pbs!homepage
 HOMEPAGE_VAR_PBS_SECRET=56ff3a13-0620-432b-b173-d048b1298a50
 # Backrest
@@ -516,7 +516,7 @@ HOMEPAGE_VAR_JELLY_NOWPLAY=false
 
 # Immich
 HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich-light.png"
-HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3adc3ii.site"
+HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3hl.site"
 HOMEPAGE_VAR_IMMICH_KEY=W7IJnjVEIhc7d72AAm4sxJ49YJI1kdtkiVvmCZipVqc
 HOMEPAGE_VAR_IMMICH_VERSION= 2
 HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"] 

@@ -44,15 +44,15 @@
             type: authentik
             url: http://10.10.10.70:8175
             key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}}
-    - Technitium:
-        icon: {{HOMEPAGE_VAR_DNS_ICON}} 
-        href: {{HOMEPAGE_VAR_DNS_URL}}
-        ping: {{HOMEPAGE_VAR_DNS_URL}}
-        widget:
-            type: technitium
-            url: {{HOMEPAGE_VAR_DNS_URL}}
-            key: {{HOMEPAGE_VAR_DNS_KEY}}
-            range: {{HOMEPAGE_VAR_DNS_RANGE}}
+#    - Technitium:
+#        icon: {{HOMEPAGE_VAR_DNS_ICON}} 
+#        href: {{HOMEPAGE_VAR_DNS_URL}}
+#        ping: {{HOMEPAGE_VAR_DNS_URL}}
+#        widget:
+#            type: technitium
+#            url: {{HOMEPAGE_VAR_DNS_URL}}
+#            key: {{HOMEPAGE_VAR_DNS_KEY}}
+#            range: {{HOMEPAGE_VAR_DNS_RANGE}}
     - Pangolin:
         icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
         href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
