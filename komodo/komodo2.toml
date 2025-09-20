@@ -111,3 +111,64 @@ MYSQL_USER=d3
 MYSQL_ROOT_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A123
 MYSQL_PASSWORD=USCLZHFZZuT7NFAPVo84bdGTRsDB7v7A
 """
+
+###
+
+
+[[stack]]
+name = "phpipam"
+tags = ["internal", "komodo2",]
+[stack.config]
+server = "komodo2"
+project_name = "phpipam"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  phpipam-web:
+    image: phpipam/phpipam-www:latest
+    container_name: phpipam
+    ports:
+      - "8087:80"
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ${DOCKER_DATA}/phpipam/logo:/phpipam/css/images/logo
+      - ${DOCKER_DATA}/phpipam/ca:/usr/local/share/ca-certificates:ro
+    depends_on:
+      - phpipam-mariadb
+  phpipam-cron:
+    image: phpipam/phpipam-cron:latest
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - ${DOCKER_DATA}/phpipam/ca:/usr/local/share/ca-certificates:ro
+    depends_on:
+      - phpipam-mariadb
+  phpipam-mariadb:
+    image: mariadb:latest
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - /etc/komodo/stacks/phpipam/db:/var/lib/mysql
+"""
+environment = """
+PUID=1000
+PGID=1000
+TZ=Asia/Singapore
+IPAM_DATABASE_HOST=phpipam-mariadb
+#IPAM_DATABASE_PASS=GnH&dXUVth5LEeItTTGQvds
+IPAM_DATABASE_PASS=password
+IPAM_DATABASE_WEBHOST=%
+
+IPAM_TRUST_X_FORWARDED=true
+SCAN_INTERVAL=1h
+MYSQL_ROOT_PASSWORD=16E@j4pWjtL$X3Gnxfy3KQB0U$
+"""
+
+
+###
