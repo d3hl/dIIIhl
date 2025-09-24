@@ -243,9 +243,9 @@ services:
     network_mode: host # do not change this
     env_file: .env
     user: ${GODOXY_UID:-1000}:${GODOXY_GID:-1000}
-    dns:
-      - 1.1.1.1
-      - 1.1.1.2
+    #dns:
+    #  - 1.1.1.1
+    #  - 1.1.1.2
     depends_on:
       socket-proxy:
         condition: service_started
@@ -438,7 +438,7 @@ HOMEPAGE_VAR_DNS_KEY= [[HOMEPAGE_VAR_DNS_KEY]]
 HOMEPAGE_VAR_DNS_RANGE: LastDay # optional, defaults to LastHour
 # GoDoxy
 HOMEPAGE_VAR_GODOXY_ICON= "/icons/godoxy-light.png"
-HOMEPAGE_VAR_GODOXY_URL= "https://doxy.d3adc3ii.site"
+HOMEPAGE_VAR_GODOXY_URL= "https://doxy.d3hl.site"
 # PANGOLIN
 HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin-light.png"
 HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.d3adc3ii.cc"
