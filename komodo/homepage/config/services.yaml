@@ -282,7 +282,6 @@
     - nodeA:
         icon: /icons/microsoft-365.png 
         href: https://nodeA.d3adc3i.cc
-- SuperDocker
     - nodeC:
         icon: /icons/microsoft-365.png 
         href: https://10.10.10.19:8444
