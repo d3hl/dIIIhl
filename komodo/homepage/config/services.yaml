@@ -253,10 +253,10 @@
         href: https://fw.ntn.com.sg:7443 
     - Fortinate-100F-D3:
         icon: fortinet 
-        href: https://fwd3.d3adc3ii.site:7443
+        href: https://fw.d3hl.site:7443
     - FortiAnalyzer:
         icon: fortinet 
-        href: http://faz.ntn.com.sg
+        href: http://10.203.1.16
     - FortiEMS:
         icon: fortinet
         href: http://ems.ntn.com.sg
