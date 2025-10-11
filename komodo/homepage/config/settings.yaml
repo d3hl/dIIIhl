@@ -53,6 +53,9 @@ layout:
   Extras:
       tab: Home
       style: column
+  IPMI:
+      tab: BMC
+      style: column
   Office Core:
       tab: Corp
       style: column
