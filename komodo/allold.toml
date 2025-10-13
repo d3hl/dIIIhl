@@ -1,0 +1,1185 @@
+[[server]]
+name = "k-120"
+[server.config]
+address = "https://10.203.1.120:8120"
+enabled = true
+passkey = "OrevTt5iVfLXSB54xFOgrQRnakkSjdQW"
+
+##
+
+[[server]]
+name = "kmd1"
+[server.config]
+address = "https://host.docker.internal:8120"
+enabled = true
+passkey = "mE05uBXY20fDIqIjDZr8Navz9gR1T7lT"
+
+##
+
+[[server]]
+name = "kmd2"
+[server.config]
+address = "https://10.10.10.31:8120"
+enabled = true
+passkey = "mvRHRABKpkFsvJ5EIrEVEtz32Beh9qZv"
+
+##
+
+[[server]]
+name = "kmd3"
+[server.config]
+address = "https://10.10.10.32:8120"
+enabled = true
+passkey = "LLdn86urqWb0BhuRgjLkyKAKv9ffHTWy"
+
+##
+
+[[server]]
+name = "kmd4"
+[server.config]
+address = "https://10.10.10.33:8120"
+enabled = true
+passkey = "YjfU64nCuYZkvU3LoIIDjgTNwNA3X2Gp"
+
+##
+
+[[server]]
+name = "kmd5"
+[server.config]
+address = "https://10.10.10.34:8120"
+enabled = true
+passkey = "Vj76XXrFFSim66KDGZU0ZClVr0NpDfIV"
+
+##
+
+<<<<<<< HEAD
+
+[[stack]]
+name = "karakeep"
+tags = [
+  "external",
+  "production",
+  "komodo-2"
+]
+[stack.config]
+server = "komodo-2"
+links = ["https://kara.d3adc3ii.cc/"]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+networks:
+  d3internal:
+    external: true
+services:
+  web:
+    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_DATA}/karakeep/data:/data
+    networks:
+      - default
+      - d3internal
+    ports:
+      - 3333:3000
+    env_file:
+      - .env
+    environment:
+      MEILI_ADDR: http://meilisearch:7700
+      BROWSER_WEB_URL: http://chrome:9222
+      DATA_DIR: /data
+    labels:
+      - homepage.group=Applications
+      - homepage.name=Karakeep
+      - homepage.icon=sh-karakeep-light
+      - homepage.href=https://kara.d3adc3ii.cc/
+  chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:123
+    restart: unless-stopped
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+  meilisearch:
+    image: getmeili/meilisearch:v1.13.3
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - meilisearch:/meili_data
+
+volumes:
+  meilisearch:
+  data:
+"""
+environment = """
+KARAKEEP_VERSION=release
+NEXTAUTH_SECRET=[[KARA_NEXTAUTH_SECRET]]
+MEILI_MASTER_KEY=[[KARA_MEILI_MASTER_KEY]]
+NEXTAUTH_URL='https://kara.d3adc3ii.cc'
+OPENAI_API_KEY=[[OPENAI_API_KEY]]
+OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING= true
+OAUTH_WELLKNOWN_URL='https://auth.d3adc3ii.cc/application/o/karakeep/'
+OAUTH_CLIENT_SECRET=db64i7QZ2MHMVkjOvZfcOyWTh1y1ECG2XNamIkLXBZxi0UqLfcfvVxYcsQ7nWbZvFeRQBGnJB2vnVqGQgKkUopKGlGooRuGW2R8DnvxoORYAVWhW77x5PVhwlOB0Cr9s
+OAUTH_CLIENT_ID=D8rw3kVA932oWoPiLud8z5FgomI3sXT4oOTYMBIr
+OAUTH_PROVIDER_NAME= authentik
+"""
+
+
+##
+
+
+[[stack]]
+name = "karakeep"
+tags = [
+  "external",
+  "production",
+  "komodo-2"
+]
+[stack.config]
+server = "komodo-2"
+links = ["https://kara.d3adc3ii.cc/"]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+networks:
+  d3internal:
+    external: true
+services:
+  web:
+    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_DATA}/karakeep/data:/data
+    networks:
+      - default
+      - d3internal
+    ports:
+      - 3333:3000
+    env_file:
+      - .env
+    environment:
+      MEILI_ADDR: http://meilisearch:7700
+      BROWSER_WEB_URL: http://chrome:9222
+      DATA_DIR: /data
+    labels:
+      - homepage.group=Applications
+      - homepage.name=Karakeep
+      - homepage.icon=sh-karakeep-light
+      - homepage.href=https://kara.d3adc3ii.cc/
+  chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:123
+    restart: unless-stopped
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+  meilisearch:
+    image: getmeili/meilisearch:v1.13.3
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - meilisearch:/meili_data
+
+volumes:
+  meilisearch:
+  data:
+"""
+environment = """
+KARAKEEP_VERSION=release
+NEXTAUTH_SECRET=[[KARA_NEXTAUTH_SECRET]]
+MEILI_MASTER_KEY=[[KARA_MEILI_MASTER_KEY]]
+NEXTAUTH_URL='https://kara.d3adc3ii.cc'
+OPENAI_API_KEY=[[OPENAI_API_KEY]]
+OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING= true
+OAUTH_WELLKNOWN_URL='https://auth.d3adc3ii.cc/application/o/karakeep/'
+OAUTH_CLIENT_SECRET=db64i7QZ2MHMVkjOvZfcOyWTh1y1ECG2XNamIkLXBZxi0UqLfcfvVxYcsQ7nWbZvFeRQBGnJB2vnVqGQgKkUopKGlGooRuGW2R8DnvxoORYAVWhW77x5PVhwlOB0Cr9s
+OAUTH_CLIENT_ID=D8rw3kVA932oWoPiLud8z5FgomI3sXT4oOTYMBIr
+OAUTH_PROVIDER_NAME= authentik
+"""
+
+
+###
+
+=======
+>>>>>>> f5e835c159c5921a4b4e92fbcc8d24a4bda99004
+[[stack]]
+name = "authentik"
+[stack.config]
+server = "kmd4"
+links = ["https://auth.d3adc3ii.cc"]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  postgresql:
+    env_file:
+    - .env
+    environment:
+      POSTGRES_DB: ${PG_DB:-authentik}
+      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
+      POSTGRES_USER: ${PG_USER:-authentik}
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_period: 20s
+      test:
+      - CMD-SHELL
+      - pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
+      timeout: 5s
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
+    volumes:
+    - database:/var/lib/postgresql/data
+  redis:
+    command: --save 60 1 --loglevel warning
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_period: 20s
+      test:
+      - CMD-SHELL
+      - redis-cli ping | grep PONG
+      timeout: 3s
+    image: docker.io/library/redis:alpine
+    restart: unless-stopped
+    volumes:
+    - redis:/data
+  server:
+    command: server
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+    - .env
+    environment:
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.4}
+    ports:
+    - ${COMPOSE_PORT_HTTP:-9000}:9000
+    - ${COMPOSE_PORT_HTTPS:-9443}:9443
+    restart: unless-stopped
+    volumes:
+    - ${CAPP}/media:/media
+    - ${CAPP}/custom-templates:/templates
+  worker:
+    command: worker
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+    - .env
+    environment:
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.4}
+    restart: unless-stopped
+    user: root
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ${CAPP}/media:/media
+    - ${CAPP}/certs:/certs
+    - ${CAPP}/custom-templates:/templates
+volumes:
+  database:
+    driver: local
+  redis:
+    driver: local
+"""
+environment = """
+CAPP=/mnt/cFS/appdata/authentik
+PG_PASS=[[AUTHENTIK_PG_PASS]]
+AUTHENTIK_SECRET_KEY=[[AUTHENTIK_SECRET_KEY]]
+AUTHENTIK_ERROR_REPORTING__ENABLED=true
+"""
+
+##
+
+[[stack]]
+name = "beszel"
+tags = ["monitoring", "kmd2"]
+[stack.config]
+server = "kmd2"
+links = ["https://beszel.d3adc3ii.cc"]
+project_name = "beszel"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  beszel:
+    image: henrygd/beszel:latest
+    container_name: beszel
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - 8090:8090
+    volumes:
+      - ${CDATA}/beszel/data:/beszel_data
+      - ${CDATA}/beszel/socket:/beszel_socket
+  beszel-agent:
+    image: henrygd/beszel-agent:latest
+    container_name: beszel-agent
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ${CDATA}/beszel/socket:/beszel_socket
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    env_file:
+      - .env
+    environment:
+      LISTEN: /beszel_socket/beszel.sock
+      # Do not remove quotes around the key
+"""
+environment = """
+PGID=1000
+PUID=1000
+CDATA=/mnt/cFS/appdata/beszel
+USER_CREATION=true
+KEY: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+PtfmPHdKiaE+gbET/6wZeFSnsUEgOXpKM1qJ4gCPp'
+"""
+
+##
+
+[[stack]]
+name = "blocky"
+tags = ["kmd1"]
+[stack.config]
+server = "kmd1"
+project_name = "blocky"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+#services:
+#  blocky:
+    #image: ghcr.io/0xerr0r/blocky
+    #container_name: blocky
+    #restart: unless-stopped
+#    # Optional the instance hostname for logging purpose
+ #   hostname: blocky-hostname
+  #  ports:
+   #   - "53:53/tcp"
+    #  - "53:53/udp"
+      #- "853:853/udp"
+      #- "853:853/tcp"
+      #- "4000:4000/tcp"
+    #env_file:
+      #- .env
+    #volumes:
+      # Optional to synchronize the log timestamp with host
+     # - /etc/localtime:/etc/localtime:ro
+      # config file
+      #- ${CDATA}/blocky/config.yml:/app/config.yml:ro
+      #- ${CDATA}/blocky/logs:/logs
+      #- ${CDATA}/blocky/denylists:/app/denylists/
+      #- ${CDATA}/blocky/allowlists:/app/allowlists/
+
+      # write query logs in this volume
+      #- /mnt/zApps/blocky/logs:/logs
+      #- queryLogs:/logs
+      # put your custom allow/denylists in these directories
+     # - /mnt/zApps/blocky/denylists:/app/denylists/
+     # - /mnt/zApps/blocky/allowlists:/app/allowlists/
+  #  configs:
+   #   - source: blocky-config
+services:
+  dns:
+    image: ghcr.io/0xerr0r/blocky
+    container_name: dns-blocky
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "853:853/udp"
+      - "853:853/tcp"
+      - "4000:4000/tcp"
+    env_file:
+      - .env
+    configs:
+      - source: blocky-config
+        target: /app/config.yml
+configs:
+  blocky-config:
+    content: |
+        # Any query not handled by `customDNS` is queried through the upstreams:
+        upstreams:
+          groups:
+            default:
+              - 1.1.1.1
+              - tcp-tls:1.1.1.1
+              - https://1.1.1.1
+        customDNS:
+        # Avoid querying upstreams if record type is missing:
+          filterUnmappedTypes: true
+        # All queries to `example.com` (except top-level) are rewritten to `example.internal`:
+        # hello.world.example.com => hello.world.example.internal => 192.168.0.42
+        # All queries to `example.internal` (including top-level) will respond with this IP:
+          mapping:
+            doxy.d3hl.site: 10.10.10.32
+
+
+# Required when the host bind port is already in use such as systemd-resolved at `127.0.0.53:53`.
+# This is an alternative to changing the default host binding from `0.0.0.0` to `127.0.0.1`,
+# instead of publishing each port with the explicit IP prefix (like `127.0.0.1:53:53/tcp`)
+networks:
+  default:
+    name: example-net
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: 127.0.0.1
+
+#volumes:
+ # queryLogs:
+  #  driver: local
+   # driver_opts:
+    #  type: nfs
+     # o: "addr=10.10.10.9,nfsvers=4,nolock,rw" 
+      #device: ":/mnt/miniVault/zApps/blocky/logs"
+"""
+environment = """
+CDATA=/mnt/cFS/appdata
+PGID=1000
+PUID=1000
+TZ=Asia/Singapore # Optional to synchronize the log timestamp with host
+
+"""
+
+##
+
+[[stack]]
+name = "godoxy"
+tags = ["internal", "proxy", "kmd1"]
+[stack.config]
+server = "kmd3"
+links = ["https://doxy.d3hl.site/"]
+project_name = "godoxy"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  socket-proxy:
+    container_name: socket-proxy
+    image: ghcr.io/yusing/socket-proxy:latest
+    environment:
+      - ALLOW_START=1
+      - ALLOW_STOP=1
+      - ALLOW_RESTARTS=1
+      - CONTAINERS=1
+      - EVENTS=1
+      - INFO=1
+      - PING=1
+      - POST=1
+      - VERSION=1
+    volumes:
+      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
+    restart: unless-stopped
+    tmpfs:
+      - /run
+    ports:
+      - ${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}:2375
+  frontend:
+    image: ghcr.io/yusing/godoxy-frontend:${TAG:-latest}
+    container_name: godoxy-frontend
+    restart: unless-stopped
+    network_mode: host # do not change this
+    env_file: .env
+    user: ${GODOXY_UID:-1000}:${GODOXY_GID:-1000}
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - all
+    depends_on:
+      - app
+    environment:
+      HOSTNAME: 127.0.0.1
+      PORT: ${GODOXY_FRONTEND_PORT:-3000}
+    labels:
+      proxy.aliases: ${GODOXY_FRONTEND_ALIASES:-godoxy}
+      proxy.#1.port: ${GODOXY_FRONTEND_PORT:-3000}
+      # proxy.#1.middlewares.cidr_whitelist: |
+      #   status: 403
+      #   message: IP not allowed
+      #   allow:
+      #     - 127.0.0.1
+      #     - 10.0.0.0/8
+      #     - 192.168.0.0/16
+      #     - 172.16.0.0/12
+  app:
+    image: ghcr.io/yusing/godoxy:${TAG:-latest}
+    container_name: godoxy-proxy
+    restart: always
+    network_mode: host # do not change this
+    env_file: .env
+    user: ${GODOXY_UID:-1000}:${GODOXY_GID:-1000}
+    dns:
+      - 1.1.1.1
+      - 1.1.1.2
+    depends_on:
+      socket-proxy:
+        condition: service_started
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - all
+    cap_add:
+      - NET_BIND_SERVICE
+    environment:
+      - DOCKER_HOST=tcp://${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}
+    volumes:
+      - ${CDATA}/godoxy/config:/app/config
+      - ${CDATA}/godoxy/logs:/app/logs
+      - ${CDATA}/godoxy/error_pages:/app/error_pages:ro
+      - ${CDATA}/godoxy/data:/app/data
+      - ${CDATA}/godoxy/certs:/app/certs
+"""
+environment = """
+COMPOSE_PROJECT_NAME= godoxy
+TAG=latest
+TZ=Asia/Singapore
+PUID=1000
+PGID=1000
+GODOXY_EMAIL= d3tech@pm.me
+CDATA=/mnt/cFS/appdata
+CONFIG_DIR=/mnt/cephfs/appdata/godoxy/config
+CF_EMAIL= d3tech@pm.me
+# API JWT Configuration (common)
+# generate secret with `openssl rand -base64 32`
+GODOXY_API_JWT_SECRET=4m64Gth6C6VZeLHxGOQzVe3Myigx5gqHm4KqN5HxwM8=
+# the JWT token time-to-live
+# leave empty to use default (24 hours)
+# format: https://pkg.go.dev/time#Duration
+GODOXY_API_JWT_TOKEN_TTL=
+
+# API/WebUI user password login credentials (optional)
+# These fields are not required for OIDC authentication
+GODOXY_API_USER=d3
+GODOXY_API_PASSWORD=qyp.kmr2ktf5vcj3CYM
+
+# OIDC Configuration (optional)
+# Uncomment and configure these values to enable OIDC authentication.
+#
+
+#GODOXY_OIDC_ISSUER_URL=https://auth.d3adc3ii.cc/application/o/godoxy/    
+#GODOXY_OIDC_ISSUER_URL=http://10.10.10.7:8175/application/o/godoxy/                       
+#GODOXY_OIDC_CLIENT_ID=xk2q92Kot1vBSHe4m6vDvNJBE23qSVhRtFytnmGU
+#GODOXY_OIDC_CLIENT_SECRET=Cb4wJ4InYSh3MyDkEqpFcHVHfyupQnDkmOkpBxN5oDh3EakcPq42MMkSWI1N6i0mD6snMs9Pw0YIRHlXYeVwUsCrhuVNzYz3Avj7IfqtFCFIZupCgXa2iSlfOLRd84bQ
+#GODOXY_OIDC_SCOPES=openid, profile, email, groups
+#GODOXY_OIDC_ALLOWED_USERS=d3
+# User definitions: Uncomment and configure these values to restrict access to specific users or groups.
+# These two fields act as a logical AND operator. For example, given the following membership:
+#   user1, group1
+#   user2, group1
+#   user3, group2
+#   user1, group2
+# You can allow access to user3 AND all users of group1 by providing:
+#   # GODOXY_OIDC_ALLOWED_USERS=user3
+#GODOXY_OIDC_ALLOWED_GROUPS=	"authentik Admins"
+#
+# Comma-separated list of allowed users.
+# GODOXY_OIDC_ALLOWED_USERS=user1,user2
+# Optional: Comma-separated list of allowed groups.
+# GODOXY_OIDC_ALLOWED_GROUPS=group1,group2
+
+# Proxy listening address
+GODOXY_HTTP_ADDR=10.10.10.32:80
+GODOXY_HTTPS_ADDR=:443
+
+# Enable HTTP3
+GODOXY_HTTP3_ENABLED=true
+
+# API listening address
+GODOXY_API_ADDR=127.0.0.1:8888
+
+# Metrics
+GODOXY_METRICS_DISABLE_CPU=false
+GODOXY_METRICS_DISABLE_MEMORY=false
+GODOXY_METRICS_DISABLE_DISK=false
+GODOXY_METRICS_DISABLE_NETWORK=false
+GODOXY_METRICS_DISABLE_SENSORS=false
+
+# Frontend listening port
+GODOXY_FRONTEND_PORT=3716
+
+# Frontend aliases (subdomains / FQDNs, e.g. godoxy, godoxy.domain.com)
+GODOXY_FRONTEND_ALIASES=doxy.d3hl.site
+
+# Docker socket
+# /var/run/podman/podman.sock for podman
+DOCKER_SOCKET=/var/run/docker.sock
+SOCKET_PROXY_LISTEN_ADDR=127.0.0.1:2375
+
+# Debug mode
+GODOXY_DEBUG=true
+"""
+
+##
+
+[[stack]]
+name = "homepage"
+tags = ["kmd1"]
+[stack.config]
+server = "kmd1"
+links = ["https://homepage.d3adc3ii.cc"]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "dIIIhl"
+run_directory = "komodo/homepage"
+file_paths = ["compose.yaml"]
+config_files = [
+  { path = "config/services.yaml" },
+  { path = "config/settings.yaml" },
+  { path = "config/docker.yaml" },
+  { path = "config/bookmarks.yaml" }
+]
+environment = """
+HOMEPAGE_DATA_DIR= /mnt/cFS/appdata/komodo/repos/dIIIhl/komodo/homepage
+HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,10.10.10.30:3731"
+PGID= 1000
+PUID= 1000 
+# Site Config
+HOMEPAGE_VAR_TITLE= "d3 Homepage"
+HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
+HOMEPAGE_VAR_IMG_URL= "/images/hack.jpg"
+HOMEPAGE_VAR_HEADER_STYLE= boxed #boxedWidgets
+
+HOMEPAGE_VAR_IMG_BLUR= md
+HOMEPAGE_VAR_IMG_SATURATE= 50
+HOMEPAGE_VAR_IMG_BRIGHTNESS= 50
+HOMEPAGE_VAR_IMG_OPACITY=70
+HOMEPAGE_VAR_USE_EQUAL_HEIGHTS= true
+HOMEAGE_VAR_DISABLE_COLLAPSE= true
+
+
+### GLANCES WIDGET SETTINGS
+HOMEPAGE_VAR_GL11_URL= http://10.10.10.11:61208
+HOMEPAGE_VAR_GL11_VERSION= 4 # required only if running glances v4 or higher, defaults to 3
+HOMEPAGE_VAR_GL11_CPU= false # optional, enabled by default, disable by setting to false
+HOMEPAGE_VAR_GL11_MEM= false # optional, enabled by default, disable by setting to false
+HOMEPAGE_VAR_GL11_CPUTEMP= true # disabled by default
+HOMEPAGE_VAR_GL11_UPTIME= true # disabled by default
+HOMEPAGE_VAR_GL11_LABEL= pve11 # optional
+
+HOMEPAGE_VAR_GL12_URL= http://10.10.10.12:61208
+HOMEPAGE_VAR_GL12_VERSION= 4 
+HOMEPAGE_VAR_GL12_CPU= false 
+HOMEPAGE_VAR_GL12_MEM= false 
+HOMEPAGE_VAR_GL12_CPUTEMP= true 
+HOMEPAGE_VAR_GL12_UPTIME= true 
+HOMEPAGE_VAR_GL12_LABEL= pve12 
+
+HOMEPAGE_VAR_GL13_URL= http://10.10.10.13:61208
+HOMEPAGE_VAR_GL13_VERSION= 4
+HOMEPAGE_VAR_GL13_CPU= false 
+HOMEPAGE_VAR_GL13_MEM= false 
+HOMEPAGE_VAR_GL13_CPUTEMP= true 
+HOMEPAGE_VAR_GL13_UPTIME= true 
+HOMEPAGE_VAR_GL13_LABEL= pve13 
+
+#### INFRA ####################################################################################################################################################################################################
+# Proxmox
+HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox-light.png"
+HOMEPAGE_VAR_PROXMOX_URL_PVE11= "https://pve.d3adc3ii.cc"
+HOMEPAGE_VAR_PROXMOX_IP_PVE11="https://10.10.10.10:8006"
+#HOMEPAGE_VAR_PROXMOX_USER=homepage@pve!homepage 
+HOMEPAGE_VAR_PROXMOX_SECRET=bd9d76fb-00a6-4e4d-af8a-66f0606ba7fc
+HOMEPAGE_VAR_PBS_URL= "https://pbs.d3adc3ii.site"
+# Truenas
+HOMEPAGE_VAR_TRUENAS_ICON= "/icons/truenas-scale-light.png"
+HOMEPAGE_VAR_TRUENAS_URL= "https://truenas.d3adc3ii.cc"
+HOMEPAGE_VAR_TRUENAS_KEY=4-wEIiKMeFJpOJPyS2Y2658EQGbxZkBJUcQyBQvQoRzjggfnOIXNN7z8w7OvKpgK6C
+HOMEPAGE_VAR_TRUENAS_ENABLEDPOOL= true
+# Komodo
+HOMEPAGE_VAR_KOMODO_ICON= "/icons/docker-light.png"
+HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
+HOMEPAGE_VAR_KOMODO_IPURL= "http://10.10.10.25:9120"
+HOMEPAGE_VAR_KOMODO_KEY=K-69zvNUYoxn5KREW5nVpLqeLa741U7NHmPXoEx4S1
+HOMEPAGE_VAR_KOMODO_SECRET=S-5hhHrLWPfLHPJCRGBMV2auU7QsqfUaGrTJYuOW9M
+
+#### DOMAIN ####################################################################################################################################################################################################
+# Authentik
+HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik-light.png"
+HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3adc3ii.cc"
+HOMEPAGE_VAR_AUTHENTIK_KEY= "ZnhLrOvUoWZfHcQpFrteQVekOjpGQh48lXEVFn34HvGtT8eJoyhgaNYWb2mI"
+# DNS
+HOMEPAGE_VAR_DNS_ICON= "/icons/technitium-light.png"
+HOMEPAGE_VAR_DNS_URL= "https://ns.d3adc3ii.site"
+HOMEPAGE_VAR_DNS_KEY= [[HOMEPAGE_VAR_DNS_KEY]]
+HOMEPAGE_VAR_DNS_RANGE: LastDay # optional, defaults to LastHour
+# GoDoxy
+HOMEPAGE_VAR_GODOXY_ICON= "/icons/godoxy-light.png"
+HOMEPAGE_VAR_GODOXY_URL= "https://doxy.d3hl.site"
+# PANGOLIN
+HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin-light.png"
+HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.d3adc3ii.cc"
+
+#### NETWORK ####################################################################################################################################################################################################
+# NetAlertX 
+HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx-light.png"
+HOMEPAGE_VAR_NETALERTX_URL= "https://netalertx.d3adc3ii.site"
+HOMEPAGE_VAR_NETALERTX_KEY="t_pJ26L2qEeUcR6bz5RCGI"
+HOMEPAGE_VAR_NETALERTX_FIELDS= ["connected","down_alerts","new_devices"] 
+# UPTIME KUMA
+HOMEPAGE_VAR_KUMA_ICON= "/icons/uptime-kuma-light.png"
+HOMEPAGE_VAR_KUMA_URL= "https://uptime.d3adc3ii.cc"
+HOMEPAGE_VAR_KUMA_KEY=uk1_CJtVJXDT8DFll97KXiPPXb6dEWHpOdBZXymKWLPn
+# PHPIPAM
+HOMEPAGE_VAR_PHPIPAM_URL= "https://phpipam.d3adc3ii.cc/"
+HOMEPAGE_VAR_PHPIPAM_ICON= "sh-phpmyadmin-light"
+# Nautobot
+HOMEPAGE_VAR_NAUTOBOT_URL= "https://nautobot.d3adc3ii.cc/"
+HOMEPAGE_VAR_NAUTOBOT_ICON= "/icons/netbox-light.png"
+# NETBOX CLOUD
+HOMEPAGE_VAR_NETBOX_ICON= "/icons/netbox-light.png"
+HOMEPAGE_VAR_NETBOXCL_URL= "https://wmfk3018.cloud.netboxapp.com"
+# NETBOX CONSOLE
+HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"# NETBOX CONSOLE
+HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
+
+#### MONITORING  ####################################################################################################################################################################################################
+# Beszel
+HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel-light.png"
+HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
+HOMEPAGE_VAR_BESZEL_USERNAME= "d3tech@pm.me"
+HOMEPAGE_VAR_BESZEL_PASSWORD= "KVG6qpu0rnb-ybd9etn" 
+HOMEPAGE_VAR_BESZEL_VERSION= "2"
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11= pve11
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12= pve12
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13= pve13
+HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs= pbs
+HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"]
+# SPEEDTEST
+HOMEPAGE_VAR_SPEEDTEST_ICON= "sh-speedtest-tracker-light"
+HOMEPAGE_VAR_SPEEDTEST_URL= "https://speedtest.d3adc3ii.site"
+# Wazuh
+HOMEPAGE_VAR_WAZUH_ICON= "/icons/wazuh-light.png"
+HOMEPAGE_VAR_WAZUH_URL= "https://wazuh.d3adc3ii.site"
+# APPRISE-API
+HOMEPAGE_VAR_APPRISE_ICON= "/icons/gotify-dark.png"
+HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
+# Healthchecks
+HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks-light.png"
+HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
+
+#### BACKUP ####################################################################################################################################################################################################
+# PBS
+HOMEPAGE_VAR_PBS_URL="https://pbs.d3hl.site"
+HOMEPAGE_VAR_PBS_USER=homepage@pbs!homepage
+HOMEPAGE_VAR_PBS_SECRET=56ff3a13-0620-432b-b173-d048b1298a50
+# Backrest
+HOMEPAGE_VAR_BACKREST_ICON= "/icons/backrest-light.png"
+HOMEPAGE_VAR_BACKREST_URL= "https://backrest.d3adc3ii.site"
+
+# Remote-Backups
+HOMEPAGE_VAR_REMOTEBACKUP_ICON= "/icons/proxmox-light.png"
+HOMEPAGE_VAR_REMOTEBACKUP_URL= "https://dashboard.remote-backups.com"
+
+
+#### MEDIA ####################################################################################################################################################################################################
+# Jellyfin
+HOMEPAGE_VAR_JELLY_ICON= "/icons/jellyfin-light.png"
+HOMEPAGE_VAR_JELLY_URL= "https://jelly.d3adc3ii.site"
+HOMEAGE_VAR_JELLY_WIDGETURL= "http://10.10.10.27:8096"
+HOMEPAGE_VAR_JELLY_KEY=a6a45c61dd1d4f059b02fa22ad8c0ef3
+HOMEPAGE_VAR_JELLY_ENABLEBLOCK=true
+HOMEPAGE_VAR_JELLY_NOWPLAY=false
+
+# Immich
+HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich-light.png"
+HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3hl.site"
+HOMEPAGE_VAR_IMMICH_KEY=W7IJnjVEIhc7d72AAm4sxJ49YJI1kdtkiVvmCZipVqc
+HOMEPAGE_VAR_IMMICH_VERSION= 2
+HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"] 
+# Stash
+HOMEPAGE_VAR_STASH_ICON= "/icons/stash-light.png"
+HOMEPAGE_VAR_STASH_URL= "https://stash.d3adc3ii.site"
+HOMEPAGE_VAR_STASH_USER= "d3adc3ii"
+HOMEPAGE_VAR_QBIT_API= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg"
+
+#### ACCESS ####################################################################################################################################################################################################
+# Guacamole
+HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/apache-guacamole-light.png"
+HOMEPAGE_VAR_GUACAMOLE_URL= "https://guaca.d3adc3ii.site/guacamole"
+HOMEPAGE_VAR_GUACAMOLEEXT_URL= "https://guaca.d3adc3ii.cc/guacamole"
+# SHELLHUB
+HOMEPAGE_VAR_SHELLHUB_ICON= "sh-shellhub-light"
+HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
+
+#### LOGGING ####################################################################################################################################################################################################
+# Grafana
+HOMEPAGE_VAR_GRAFANA_ICON= "/icons/grafana-light.png"
+HOMEPAGE_VAR_GRAFANA_URL= "https://d3adc3ii.grafana.net/dashboards"
+HOMEPAGE_VAR_GRAFANA_URL= "https://grafana.d3adc3ii.cc"
+HOMEPAGE_VAR_GRAFANAC_URL= "https://grafana.d3adc3ii.cc/d/n5bu_kv45/traefik-official-standalone-dashboard"
+
+
+HOMEPAGE_VAR_INFLUX_ICON= "sh-influx-light"
+HOMEPAGE_VAR_INFLUX_URL= "https://influxdb.d3adc3ii.site"
+# Scutiny
+HOMEPAGE_VAR_SCRUTINY_ICON= "/icons/scrutiny-light.png"
+HOMEPAGE_VAR_SCRUTINY_URL= "https://scrutiny.d3adc3ii.cc" 
+# Dozzle
+HOMEPAGE_VAR_DOZZLE_ICON= "sh-dozzle-light"
+HOMEPAGE_VAR_DOZZLE_URL= "https://dozzle.d3adc3ii.site"
+# Pulse
+HOMEPAGE_VAR_PULSEXT_ICON= "sh-proxmox-light"
+HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
+
+#### APPS ####################################################################################################################################################################################################
+# Actual Budget
+HOMEPAGE_VAR_ACTUAL_ICON= "sh-actual-budget-light"
+HOMEPAGE_VAR_ACTUAL_URL= "https://actual.d3adc3ii.site"
+# Sensei
+HOMEPAGE_VAR_SENSEI_ICON= "sh-sentry-light"
+HOMEPAGE_VAR_SENSEI_URL= "https://statement.d3adc3ii.site"
+# Semaphore
+HOMEPAGE_VAR_SEMAPHORE_ICON= "/icons/semaphore-ui-light.png"
+HOMEPAGE_VAR_SEMAPHORE_URL= "https://semaphore.d3adc3ii.site"
+# Aria2
+HOMEPAGE_VAR_ARIA_ICON= "sh-aria2-light"
+HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
+# NZBGET
+HOMEPAGE_VAR_NZBGET_ICON= "sh-nzbget-light"
+HOMEPAGE_VAR_NZBGET_URL= "https://nzbget.d3adc3ii.site"
+# Karakeep
+HOMEPAGE_VAR_KARAKEEP_ICON= "/icons/karakeep.png"
+HOMEPAGE_VAR_KARAKEEP_URL= "https://kara.d3adc3ii.cc"
+# Wallos
+HOMEPAGE_VAR_WALLOS_ICON= "/icons/wallos-light.png"
+HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
+# Ommni Tools
+HOMEPAGE_VAR_OMNITOOLS_ICON= "sh-omnitools-light"
+HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
+
+#### TOOLS ####################################################################################################################################################################################################
+
+#### EXTRAS ####################################################################################################################################################################################################
+# Selfhst-icons
+HOMEPAGE_VAR_SELFHST_ICON= "sh-selfh-st-light" 
+HOMEPAGE_VAR_SELFHST_URL= "https://selfhst-icons.d3adc3ii.cc"
+
+###################   CORP    ##################### 
+
+# Komodo
+HOMEPAGE_VAR_KOMODOCORP_URL="http://10.203.1.121:9120"
+# Fenrus
+HOMEPAGE_VAR_FENRUS_ICON="sh-fenrus"
+HOMEPAGE_VAR_FENRUS_URL="http://10.203.1.120:3222"
+# PVECORP
+HOMEPAGE_VAR_PVECORP_URL="https://10.203.1.113:8006"
+# UNIMUS  
+HOMEPAGE_VAR_UNIMUS_ICON="sh-unimus-light"
+HOMEPAGE_VAR_UNIMUS_URL="http://10.203.1.120:8085"
+
+### GL1 ###
+# PVE11
+HOMEPAGE_VAR_PVE11_URL= "https://pve11.d3adc3ii.cc"
+HOMEPAGE_VAR_PVE12_URL= "10.10.10.12"
+HOMEPAGE_VAR_PVE13_URL= "10.10.10.13"
+HOMEPAGE_VAR_GLANCES_PVE11= "http://10.10.10.11:61208"
+HOMEPAGE_VAR_GLANCES_PVE12= "http://10.10.10.12:61208"
+HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
+"""
+
+##
+
+[[stack]]
+name = "immich"
+tags = ["internal", "kmd4"]
+[stack.config]
+server = "kmd4"
+links = ["https://immich.d3adc3ii.cc"]
+project_name = "immich"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+#
+# WARNING: To install Immich, follow our guide: https://docs.immich.app/install/docker-compose
+#
+# Make sure to use the docker-compose.yml of the current release:
+#
+# https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
+#
+# The compose file on main may not be compatible with the latest release.
+
+name: immich
+
+services:
+  immich-server:
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    # extends:
+    #   file: hwaccel.transcoding.yml
+    #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
+    volumes:
+      # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
+      - ${UPLOAD_LOCATION}:/data
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    ports:
+      - '2283:2283'
+    depends_on:
+      - redis
+      - database
+    restart: always
+    healthcheck:
+      disable: false
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    # For hardware acceleration, add one of -[armnn, cuda, rocm, openvino, rknn] to the image tag.
+    # Example tag: ${IMMICH_VERSION:-release}-cuda
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    # extends: # uncomment this section for hardware acceleration - see https://docs.immich.app/features/ml-hardware-acceleration
+    #   file: hwaccel.ml.yml
+    #   service: cpu # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
+    volumes:
+      - model-cache:/cache
+    env_file:
+      - .env
+    restart: always
+    healthcheck:
+      disable: false
+
+  redis:
+    container_name: immich_redis
+    image: docker.io/valkey/valkey:8-bookworm@sha256:fea8b3e67b15729d4bb70589eb03367bab9ad1ee89c876f54327fc7c6e618571
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+
+  database:
+    container_name: immich_postgres
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:41eacbe83eca995561fe43814fd4891e16e39632806253848efaf04d3c8a8b84
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE_NAME}
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+      # Uncomment the DB_STORAGE_TYPE: 'HDD' var if your database isn't stored on SSDs
+      # DB_STORAGE_TYPE: 'HDD'
+    volumes:
+      # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
+      - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
+    shm_size: 128mb
+    restart: always
+
+volumes:
+  model-cache:
+"""
+environment = """
+IMMICH_IGNORE_MOUNT_CHECK_ERRORS=true
+PGID=1000
+PUID=1000
+UPLOAD_LOCATION=/mnt/zApps/immich
+DB_DATA_LOCATION=/mnt/cFS/appdata/komodo/stacks/immich/pdata
+IMMICH_VERSION=release
+DB_PASSWORD=[[IMMICH_DB_PASSWORD]]
+POSTGRES_PASSWORD=[[IMMICH_DB_PASSWORD]]
+DB_USERNAME: postgres
+DB_DATABASE_NAME=immich
+"""
+
+##
+
+[[stack]]
+name = "learnhouse"
+[stack.config]
+server = "k-120"
+file_contents = """
+version: "3.9"
+services:
+  app:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/usr/learnhouse
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+  db:
+    image: postgres:16-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=learnhouse
+      - POSTGRES_PASSWORD=learnhouse
+      - POSTGRES_DB=learnhouse
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U learnhouse"]
+      interval: 5s
+      timeout: 4s
+      retries: 5
+  redis:
+    image: redis:7.2.3
+    restart: always
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 4s
+      retries: 5
+  chromadb:
+    image: chromadb/chroma:0.5.16
+    ports:
+      - "8000:8000"
+"""
+environment = """
+# Frontend
+NEXT_PUBLIC_LEARNHOUSE_MULTI_ORG=false
+NEXT_PUBLIC_LEARNHOUSE_DEFAULT_ORG=default
+NEXT_PUBLIC_LEARNHOUSE_TOP_DOMAIN=localhost
+NEXTAUTH_SECRET="MyUBh$M)'V$9+}Z0}{)%7}Fz-wH;Rb_T$9hkQK7/$mi/mHC~56<%_c[X0s}-V,s"
+NEXTAUTH_URL=http://localhost
+# Backend
+LEARNHOUSE_COOKIE_DOMAIN=.localhost
+LEARNHOUSE_SQL_CONNECTION_STRING=postgresql://learnhouse:learnhouse@db:5432/learnhouse
+LEARNHOUSE_REDIS_CONNECTION_STRING=redis://redis:6379/learnhouse
+LEARNHOUSE_CHROMADB_HOST=chromadb
+"""
+
+##
+
+[[stack]]
+name = "netbird"
+tags = ["kmd5"]
+[stack.config]
+server = "kmd5"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  netbird:
+      container_name: netbird
+      hostname: kmd5.nb1
+      cap_add:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE
+      network_mode: host
+      env_file:
+        - .env
+      volumes:
+          - netbird-client:/var/lib/netbird
+      image: netbirdio/netbird:latest
+volumes:
+  netbird-client:
+      name: netbird-client
+"""
+environment = """
+NB_SETUP_KEY=7201DE57-FDAD-4F8A-95BD-B4C4247DA804
+"""
+
+##
+
+[[stack]]
+name = "newt"
+[stack.config]
+server = "kmd2"
+file_contents = """
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
+      - NEWT_ID=ie2e2n59kgjtenj
+      - NEWT_SECRET=7758kt5q0t48mqc2tenvwt83z1x9czbcqth4pieqk4kravfy
+"""
+
+##
+
+[[repo]]
+name = "dIIIhl"
+[repo.config]
+server = "kmd1"
+git_account = "d3hl"
+repo = "d3hl/dIIIhl"
+
+##
+
+[[procedure]]
+name = "Backup Core Database"
+description = "Triggers the Core database backup at the scheduled time."
+tags = ["system"]
+config.schedule = "Every day at 01:00"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
+]
+
+##
+
+[[procedure]]
+name = "Global Auto Update"
+description = "Pulls and auto updates Stacks and Deployments using 'poll_for_updates' or 'auto_update'."
+tags = ["system"]
+config.schedule = "Every day at 03:00"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "GlobalAutoUpdate", execution.params = {}, enabled = true }
+]
+
+##
+
+[[builder]]
+name = "kmd1"
+[builder.config]
+type = "Server"
+params = {}
+
+##
+
+[[resource_sync]]
+name = "all"
+[resource_sync.config]
+repo = "d3hl/dIIIhl/"
+git_account = "d3hl"
+resource_path = ["komodo/all.toml"]
+managed = true
