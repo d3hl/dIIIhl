@@ -52,6 +52,7 @@ passkey = "Vj76XXrFFSim66KDGZU0ZClVr0NpDfIV"
 
 ##
 
+<<<<<<< HEAD
 
 [[stack]]
 name = "karakeep"
@@ -212,6 +213,8 @@ OAUTH_PROVIDER_NAME= authentik
 
 ###
 
+=======
+>>>>>>> f5e835c159c5921a4b4e92fbcc8d24a4bda99004
 [[stack]]
 name = "authentik"
 [stack.config]
