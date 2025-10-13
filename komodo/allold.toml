@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 [[server]]
 name = "k-120"
 [server.config]
@@ -54,13 +52,17 @@ passkey = "Vj76XXrFFSim66KDGZU0ZClVr0NpDfIV"
 
 ##
 
+<<<<<<< HEAD
+
 [[stack]]
 name = "karakeep"
 tags = [
-  "kmd1"
+  "external",
+  "production",
+  "komodo-2"
 ]
 [stack.config]
-server = "kmd1"
+server = "komodo-2"
 links = ["https://kara.d3adc3ii.cc/"]
 poll_for_updates = true
 auto_update = true
@@ -131,6 +133,88 @@ OAUTH_PROVIDER_NAME= authentik
 
 ##
 
+
+[[stack]]
+name = "karakeep"
+tags = [
+  "external",
+  "production",
+  "komodo-2"
+]
+[stack.config]
+server = "komodo-2"
+links = ["https://kara.d3adc3ii.cc/"]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+networks:
+  d3internal:
+    external: true
+services:
+  web:
+    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_DATA}/karakeep/data:/data
+    networks:
+      - default
+      - d3internal
+    ports:
+      - 3333:3000
+    env_file:
+      - .env
+    environment:
+      MEILI_ADDR: http://meilisearch:7700
+      BROWSER_WEB_URL: http://chrome:9222
+      DATA_DIR: /data
+    labels:
+      - homepage.group=Applications
+      - homepage.name=Karakeep
+      - homepage.icon=sh-karakeep-light
+      - homepage.href=https://kara.d3adc3ii.cc/
+  chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:123
+    restart: unless-stopped
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+  meilisearch:
+    image: getmeili/meilisearch:v1.13.3
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - meilisearch:/meili_data
+
+volumes:
+  meilisearch:
+  data:
+"""
+environment = """
+KARAKEEP_VERSION=release
+NEXTAUTH_SECRET=[[KARA_NEXTAUTH_SECRET]]
+MEILI_MASTER_KEY=[[KARA_MEILI_MASTER_KEY]]
+NEXTAUTH_URL='https://kara.d3adc3ii.cc'
+OPENAI_API_KEY=[[OPENAI_API_KEY]]
+OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING= true
+OAUTH_WELLKNOWN_URL='https://auth.d3adc3ii.cc/application/o/karakeep/'
+OAUTH_CLIENT_SECRET=db64i7QZ2MHMVkjOvZfcOyWTh1y1ECG2XNamIkLXBZxi0UqLfcfvVxYcsQ7nWbZvFeRQBGnJB2vnVqGQgKkUopKGlGooRuGW2R8DnvxoORYAVWhW77x5PVhwlOB0Cr9s
+OAUTH_CLIENT_ID=D8rw3kVA932oWoPiLud8z5FgomI3sXT4oOTYMBIr
+OAUTH_PROVIDER_NAME= authentik
+"""
+
+
+###
+
+=======
+>>>>>>> f5e835c159c5921a4b4e92fbcc8d24a4bda99004
 [[stack]]
 name = "authentik"
 [stack.config]
@@ -1093,11 +1177,9 @@ params = {}
 ##
 
 [[resource_sync]]
-name = "sync"
+name = "all"
 [resource_sync.config]
 repo = "d3hl/dIIIhl/"
-linked_repo = "dIIIhl"
 git_account = "d3hl"
 resource_path = ["komodo/all.toml"]
 managed = true
->>>>>>> 2013a610faeac85e930962dc2012c9c93aeaec6f
