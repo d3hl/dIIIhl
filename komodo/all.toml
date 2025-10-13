@@ -1090,6 +1090,8 @@ params = {}
 
 ##
 
+[[resource_sync]]
+name = "sync"
 [resource_sync.config]
 repo = "d3hl/dIIIhl/"
 git_account = "d3hl"
