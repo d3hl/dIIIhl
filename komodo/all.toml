@@ -215,35 +215,97 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
+#services:
+#  blocky:
+    #image: ghcr.io/0xerr0r/blocky
+    #container_name: blocky
+    #restart: unless-stopped
+#    # Optional the instance hostname for logging purpose
+ #   hostname: blocky-hostname
+  #  ports:
+   #   - "53:53/tcp"
+    #  - "53:53/udp"
+      #- "853:853/udp"
+      #- "853:853/tcp"
+      #- "4000:4000/tcp"
+    #env_file:
+      #- .env
+    #volumes:
+      # Optional to synchronize the log timestamp with host
+     # - /etc/localtime:/etc/localtime:ro
+      # config file
+      #- ${CDATA}/blocky/config.yml:/app/config.yml:ro
+      #- ${CDATA}/blocky/logs:/logs
+      #- ${CDATA}/blocky/denylists:/app/denylists/
+      #- ${CDATA}/blocky/allowlists:/app/allowlists/
+
+      # write query logs in this volume
+      #- /mnt/zApps/blocky/logs:/logs
+      #- queryLogs:/logs
+      # put your custom allow/denylists in these directories
+     # - /mnt/zApps/blocky/denylists:/app/denylists/
+     # - /mnt/zApps/blocky/allowlists:/app/allowlists/
+  #  configs:
+   #   - source: blocky-config
 services:
-  blocky:
+  dns:
     image: ghcr.io/0xerr0r/blocky
-    container_name: blocky
-    restart: unless-stopped
-    # Optional the instance hostname for logging purpose
-    hostname: blocky-hostname
+    container_name: dns-blocky
     ports:
       - "53:53/tcp"
       - "53:53/udp"
       - "853:853/udp"
       - "853:853/tcp"
       - "4000:4000/tcp"
-    environment:
-      - PGID=1000
-      - PUID=1000
-      - TZ=Asia/Singapore # Optional to synchronize the log timestamp with host
-      - CDATA=/mnt/cephfs/appdata
-    volumes:
-      # Optional to synchronize the log timestamp with host
-      - /etc/localtime:/etc/localtime:ro
-      # config file
-      - ${CDATA}/blocky/config.yml:/app/config.yml:ro
-      - ${ZDATA}/blocky/logs:/logs
-      - ${ZDATA}/blocky/denylists:/app/denylists/
-      - ${ZDATA}/blocky/allowlists:/app/allowlists/
+    env_file:
+      - .env
+    configs:
+      - source: blocky-config
+        target: /app/config.yml
+configs:
+  blocky-config:
+    content: |
+        # Any query not handled by `customDNS` is queried through the upstreams:
+        upstreams:
+          groups:
+            default:
+              - 1.1.1.1
+              - tcp-tls:1.1.1.1
+              - https://1.1.1.1
+        customDNS:
+        # Avoid querying upstreams if record type is missing:
+          filterUnmappedTypes: true
+        # All queries to `example.com` (except top-level) are rewritten to `example.internal`:
+        # hello.world.example.com => hello.world.example.internal => 192.168.0.42
+        # All queries to `example.internal` (including top-level) will respond with this IP:
+          mapping:
+            doxy.d3hl.site: 10.10.10.32
+
+
+# Required when the host bind port is already in use such as systemd-resolved at `127.0.0.53:53`.
+# This is an alternative to changing the default host binding from `0.0.0.0` to `127.0.0.1`,
+# instead of publishing each port with the explicit IP prefix (like `127.0.0.1:53:53/tcp`)
+networks:
+  default:
+    name: example-net
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: 127.0.0.1
+
+#volumes:
+ # queryLogs:
+  #  driver: local
+   # driver_opts:
+    #  type: nfs
+     # o: "addr=10.10.10.9,nfsvers=4,nolock,rw" 
+      #device: ":/mnt/miniVault/zApps/blocky/logs"
 """
 environment = """
 CDATA=/mnt/cFS/appdata
+PGID=1000
+PUID=1000
+TZ=Asia/Singapore # Optional to synchronize the log timestamp with host
+
 """
 
 ##
@@ -252,7 +314,7 @@ CDATA=/mnt/cFS/appdata
 name = "godoxy"
 tags = ["internal", "proxy", "kmd1"]
 [stack.config]
-server = "kmd1"
+server = "kmd3"
 links = ["https://doxy.d3hl.site/"]
 project_name = "godoxy"
 poll_for_updates = true
@@ -315,9 +377,9 @@ services:
     network_mode: host # do not change this
     env_file: .env
     user: ${GODOXY_UID:-1000}:${GODOXY_GID:-1000}
-    #dns:
-    #  - 1.1.1.1
-    #  - 1.1.1.2
+    dns:
+      - 1.1.1.1
+      - 1.1.1.2
     depends_on:
       socket-proxy:
         condition: service_started
@@ -385,7 +447,7 @@ GODOXY_API_PASSWORD=qyp.kmr2ktf5vcj3CYM
 # GODOXY_OIDC_ALLOWED_GROUPS=group1,group2
 
 # Proxy listening address
-GODOXY_HTTP_ADDR=10.10.10.18:80
+GODOXY_HTTP_ADDR=10.10.10.32:80
 GODOXY_HTTPS_ADDR=:443
 
 # Enable HTTP3
@@ -908,7 +970,6 @@ services:
 name = "dIIIhl"
 [repo.config]
 server = "kmd1"
-git_provider = "Github.com"
 git_account = "d3hl"
 repo = "d3hl/dIIIhl"
 
