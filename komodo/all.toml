@@ -1094,6 +1094,7 @@ params = {}
 name = "sync"
 [resource_sync.config]
 repo = "d3hl/dIIIhl/"
+linked_repo = "dIIIhl"
 git_account = "d3hl"
 resource_path = ["komodo/all.toml"]
 managed = true
