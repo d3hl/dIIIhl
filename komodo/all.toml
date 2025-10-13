@@ -61,7 +61,7 @@ tags = [
   "komodo-2"
 ]
 [stack.config]
-server = "kmd2"
+server = "komodo-2"
 links = ["https://kara.d3adc3ii.cc/"]
 poll_for_updates = true
 auto_update = true
