@@ -1,0 +1,120 @@
+[[server]]
+name = "k-120"
+[server.config]
+address = "https://10.203.1.120:8120"
+enabled = true
+passkey = "TFTAS1KQrqoSPPfimMzONAynOoqGQNPE"
+
+##
+
+[[server]]
+name = "kmd1"
+[server.config]
+address = "https://host.docker.internal:8120"
+enabled = true
+passkey = "BHxHRzaD0r4eRIyORKSgqwgt5TkDUm9U"
+
+##
+
+[[server]]
+name = "kmd2"
+[server.config]
+address = "https://10.10.10.31:8120"
+enabled = true
+passkey = "uvuRlvgYePqsyuQgIn7EQLoWx2JYStb7"
+
+##
+
+[[server]]
+name = "kmd3"
+[server.config]
+address = "https://10.10.10.32:8120"
+enabled = true
+passkey = "RPXSmKaMMseisrOFicIkh0qWEqk6YiUO"
+
+##
+
+[[server]]
+name = "kmd4"
+[server.config]
+address = "https://10.10.10.33:8120"
+enabled = true
+passkey = "1bWRlRK3xm9netqqcqG7wSpvjK14uWuN"
+
+##
+
+[[server]]
+name = "kmd5"
+[server.config]
+address = "https://10.10.10.34:8120"
+enabled = true
+passkey = "ycnRR8e7qptUc7psWuTmgVsF4wGAg3xe"
+
+##
+
+[[stack]]
+name = "newt"
+[stack.config]
+server = "kmd1"
+file_contents = """
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
+      - NEWT_ID=ie2e2n59kgjtenj
+      - NEWT_SECRET=7758kt5q0t48mqc2tenvwt83z1x9czbcqth4pieqk4kravfy
+"""
+environment = """
+  # VARIABLE = valu
+"""
+
+##
+
+[[procedure]]
+name = "Backup Core Database"
+description = "Triggers the Core database backup at the scheduled time."
+tags = ["system"]
+config.schedule = "Every day at 01:00"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
+]
+
+##
+
+[[procedure]]
+name = "Global Auto Update"
+description = "Pulls and auto updates Stacks and Deployments using 'poll_for_updates' or 'auto_update'."
+tags = ["system"]
+config.schedule = "Every day at 03:00"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "GlobalAutoUpdate", execution.params = {}, enabled = true }
+]
+
+##
+
+[[builder]]
+name = "kmd1"
+[builder.config]
+type = "Server"
+params.server_id = "kmd1"
+
+##
+
+[[resource_sync]]
+name = "sync"
+[resource_sync.config]
+repo = "d3hl/dIIIhl"
+git_account = "d3hl"
+resource_path = ["komodo/sync.toml"]
+managed = true
