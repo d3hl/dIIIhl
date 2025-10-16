@@ -101,6 +101,9 @@
             version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
             #bitratePrecision: 3 
             fields: [ "systems", "up" ]
+    - Pulse:
+        icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
+        href: {{HOMEPAGE_VAR_PULSEXT_URL}} 
     - Lunalytics:
         icon: sh-lunalytics-light 
         href: https://lunalytics.d3adc3ii.cc/ 
@@ -188,9 +191,6 @@
     - Scrutiny:
         icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
         href: {{HOMEPAGE_VAR_SCRUTINY_URL}}     
-    - Pulse:
-        icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
-        href: {{HOMEPAGE_VAR_PULSEXT_URL}} 
 
 ########################################################################################################################################################################################################
 - Applications:
