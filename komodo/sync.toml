@@ -1099,3 +1099,15 @@ repo = "d3hl/dIIIhl"
 git_account = "d3hl"
 resource_path = ["komodo/sync.toml"]
 managed = true
+
+##
+
+[[repo]]
+name = "dIIIhl"
+[repo.config]
+server = "kmd1"
+git_account = "d3hl"
+repo = "d3hl/dIIIhl"
+
+
+##
