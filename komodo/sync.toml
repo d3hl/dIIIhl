@@ -53,41 +53,110 @@ passkey = "ycnRR8e7qptUc7psWuTmgVsF4wGAg3xe"
 ##
 
 [[stack]]
-name = "newt"
+name = "authentik"
 [stack.config]
-server = "kmd1"
+server = "kmd2"
+links = ["https://auth.d3adc3ii.cc"]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 file_contents = """
 services:
-  newt:
-    image: fosrl/newt
-    container_name: newt
-    restart: unless-stopped
+  postgresql:
+    env_file:
+    - .env
     environment:
-      - PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
-      - NEWT_ID=ie2e2n59kgjtenj
-      - NEWT_SECRET=7758kt5q0t48mqc2tenvwt83z1x9czbcqth4pieqk4kravfy
+      POSTGRES_DB: ${PG_DB:-authentik}
+      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
+      POSTGRES_USER: ${PG_USER:-authentik}
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_period: 20s
+      test:
+      - CMD-SHELL
+      - pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
+      timeout: 5s
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
+    volumes:
+    - database:/var/lib/postgresql/data
+  redis:
+    command: --save 60 1 --loglevel warning
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_period: 20s
+      test:
+      - CMD-SHELL
+      - redis-cli ping | grep PONG
+      timeout: 3s
+    image: docker.io/library/redis:alpine
+    restart: unless-stopped
+    volumes:
+    - redis:/data
+  server:
+    command: server
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+    - .env
+    environment:
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.4}
+    ports:
+    - ${COMPOSE_PORT_HTTP:-9000}:9000
+    - ${COMPOSE_PORT_HTTPS:-9443}:9443
+    restart: unless-stopped
+    volumes:
+    - ${CAPP}/media:/media
+    - ${CAPP}/custom-templates:/templates
+  worker:
+    command: worker
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+    - .env
+    environment:
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.4}
+    restart: unless-stopped
+    user: root
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ${CAPP}/media:/media
+    - ${CAPP}/certs:/certs
+    - ${CAPP}/custom-templates:/templates
+volumes:
+  database:
+    driver: local
+  redis:
+    driver: local
 """
 environment = """
-  # VARIABLE = valu
+CAPP=/mnt/cFS/appdata/authentik
+PG_PASS=[[AUTHENTIK_PG_PASS]]
+AUTHENTIK_SECRET_KEY=[[AUTHENTIK_SECRET_KEY]]
+AUTHENTIK_ERROR_REPORTING__ENABLED=true
 """
 
 ##
-
-[[procedure]]
-name = "Backup Core Database"
-description = "Triggers the Core database backup at the scheduled time."
-tags = ["system"]
-config.schedule = "Every day at 01:00"
-
-[[procedure.config.stage]]
-name = "Stage 1"
-enabled = true
-executions = [
-  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
-]
-
-##
-
 
 [[stack]]
 name = "beszel"
@@ -135,7 +204,6 @@ KEY: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+PtfmPHdKiaE+gbET/6wZeFSnsUEgOXpKM1q
 """
 
 ##
-
 
 [[stack]]
 name = "blocky"
@@ -241,7 +309,6 @@ TZ=Asia/Singapore # Optional to synchronize the log timestamp with host
 """
 
 ##
-
 
 [[stack]]
 name = "godoxy"
@@ -410,8 +477,8 @@ SOCKET_PROXY_LISTEN_ADDR=127.0.0.1:2375
 # Debug mode
 GODOXY_DEBUG=true
 """
-##
 
+##
 
 [[stack]]
 name = "homepage"
@@ -682,7 +749,6 @@ HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
 
 ##
 
-
 [[stack]]
 name = "immich"
 tags = ["internal", "kmd4"]
@@ -781,105 +847,6 @@ POSTGRES_PASSWORD=[[IMMICH_DB_PASSWORD]]
 DB_USERNAME: postgres
 DB_DATABASE_NAME=immich
 """
-##
-
-
-[[stack]]
-name = "learnhouse"
-[stack.config]
-server = "k-120"
-file_contents = """
-version: "3.9"
-services:
-  app:
-    build: .
-    ports:
-      - "80:80"
-    volumes:
-      - .:/usr/learnhouse
-    env_file:
-      - .env
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-  db:
-    image: postgres:16-alpine
-    restart: always
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_USER=learnhouse
-      - POSTGRES_PASSWORD=learnhouse
-      - POSTGRES_DB=learnhouse
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U learnhouse"]
-      interval: 5s
-      timeout: 4s
-      retries: 5
-  redis:
-    image: redis:7.2.3
-    restart: always
-    ports:
-      - "6379:6379"
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 4s
-      retries: 5
-  chromadb:
-    image: chromadb/chroma:0.5.16
-    ports:
-      - "8000:8000"
-"""
-environment = """
-# Frontend
-NEXT_PUBLIC_LEARNHOUSE_MULTI_ORG=false
-NEXT_PUBLIC_LEARNHOUSE_DEFAULT_ORG=default
-NEXT_PUBLIC_LEARNHOUSE_TOP_DOMAIN=localhost
-NEXTAUTH_SECRET="MyUBh$M)'V$9+}Z0}{)%7}Fz-wH;Rb_T$9hkQK7/$mi/mHC~56<%_c[X0s}-V,s"
-NEXTAUTH_URL=http://localhost
-# Backend
-LEARNHOUSE_COOKIE_DOMAIN=.localhost
-LEARNHOUSE_SQL_CONNECTION_STRING=postgresql://learnhouse:learnhouse@db:5432/learnhouse
-LEARNHOUSE_REDIS_CONNECTION_STRING=redis://redis:6379/learnhouse
-LEARNHOUSE_CHROMADB_HOST=chromadb
-"""
-##
-
-
-[[stack]]
-name = "netbird"
-tags = ["kmd5"]
-[stack.config]
-server = "kmd5"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  netbird:
-      container_name: netbird
-      hostname: kmd5.nb1
-      cap_add:
-          - NET_ADMIN
-          - SYS_ADMIN
-          - SYS_RESOURCE
-      network_mode: host
-      env_file:
-        - .env
-      volumes:
-          - netbird-client:/var/lib/netbird
-      image: netbirdio/netbird:latest
-volumes:
-  netbird-client:
-      name: netbird-client
-"""
-environment = """
-NB_SETUP_KEY=7201DE57-FDAD-4F8A-95BD-B4C4247DA804
-"""
-
 
 ##
 
@@ -959,113 +926,148 @@ OAUTH_CLIENT_ID=D8rw3kVA932oWoPiLud8z5FgomI3sXT4oOTYMBIr
 OAUTH_PROVIDER_NAME= authentik
 """
 
+##
+
+[[stack]]
+name = "learnhouse"
+[stack.config]
+server = "k-120"
+file_contents = """
+version: "3.9"
+services:
+  app:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/usr/learnhouse
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+  db:
+    image: postgres:16-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=learnhouse
+      - POSTGRES_PASSWORD=learnhouse
+      - POSTGRES_DB=learnhouse
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U learnhouse"]
+      interval: 5s
+      timeout: 4s
+      retries: 5
+  redis:
+    image: redis:7.2.3
+    restart: always
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 4s
+      retries: 5
+  chromadb:
+    image: chromadb/chroma:0.5.16
+    ports:
+      - "8000:8000"
+"""
+environment = """
+# Frontend
+NEXT_PUBLIC_LEARNHOUSE_MULTI_ORG=false
+NEXT_PUBLIC_LEARNHOUSE_DEFAULT_ORG=default
+NEXT_PUBLIC_LEARNHOUSE_TOP_DOMAIN=localhost
+NEXTAUTH_SECRET="MyUBh$M)'V$9+}Z0}{)%7}Fz-wH;Rb_T$9hkQK7/$mi/mHC~56<%_c[X0s}-V,s"
+NEXTAUTH_URL=http://localhost
+# Backend
+LEARNHOUSE_COOKIE_DOMAIN=.localhost
+LEARNHOUSE_SQL_CONNECTION_STRING=postgresql://learnhouse:learnhouse@db:5432/learnhouse
+LEARNHOUSE_REDIS_CONNECTION_STRING=redis://redis:6379/learnhouse
+LEARNHOUSE_CHROMADB_HOST=chromadb
+"""
 
 ##
 
 [[stack]]
-name = "authentik"
+name = "netbird"
+tags = ["kmd5"]
 [stack.config]
-server = "kmd2"
-links = ["https://auth.d3adc3ii.cc"]
+server = "kmd5"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 file_contents = """
 services:
-  postgresql:
-    env_file:
-    - .env
-    environment:
-      POSTGRES_DB: ${PG_DB:-authentik}
-      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
-      POSTGRES_USER: ${PG_USER:-authentik}
-    healthcheck:
-      interval: 30s
-      retries: 5
-      start_period: 20s
-      test:
-      - CMD-SHELL
-      - pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
-      timeout: 5s
-    image: docker.io/library/postgres:16-alpine
-    restart: unless-stopped
-    volumes:
-    - database:/var/lib/postgresql/data
-  redis:
-    command: --save 60 1 --loglevel warning
-    healthcheck:
-      interval: 30s
-      retries: 5
-      start_period: 20s
-      test:
-      - CMD-SHELL
-      - redis-cli ping | grep PONG
-      timeout: 3s
-    image: docker.io/library/redis:alpine
-    restart: unless-stopped
-    volumes:
-    - redis:/data
-  server:
-    command: server
-    depends_on:
-      postgresql:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    env_file:
-    - .env
-    environment:
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
-      AUTHENTIK_REDIS__HOST: redis
-      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.4}
-    ports:
-    - ${COMPOSE_PORT_HTTP:-9000}:9000
-    - ${COMPOSE_PORT_HTTPS:-9443}:9443
-    restart: unless-stopped
-    volumes:
-    - ${CAPP}/media:/media
-    - ${CAPP}/custom-templates:/templates
-  worker:
-    command: worker
-    depends_on:
-      postgresql:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    env_file:
-    - .env
-    environment:
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
-      AUTHENTIK_REDIS__HOST: redis
-      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.4}
-    restart: unless-stopped
-    user: root
-    volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - ${CAPP}/media:/media
-    - ${CAPP}/certs:/certs
-    - ${CAPP}/custom-templates:/templates
+  netbird:
+      container_name: netbird
+      hostname: kmd5.nb1
+      cap_add:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE
+      network_mode: host
+      env_file:
+        - .env
+      volumes:
+          - netbird-client:/var/lib/netbird
+      image: netbirdio/netbird:latest
 volumes:
-  database:
-    driver: local
-  redis:
-    driver: local
+  netbird-client:
+      name: netbird-client
 """
 environment = """
-CAPP=/mnt/cFS/appdata/authentik
-PG_PASS=[[AUTHENTIK_PG_PASS]]
-AUTHENTIK_SECRET_KEY=[[AUTHENTIK_SECRET_KEY]]
-AUTHENTIK_ERROR_REPORTING__ENABLED=true
+NB_SETUP_KEY=7201DE57-FDAD-4F8A-95BD-B4C4247DA804
 """
 
+##
+
+[[stack]]
+name = "newt"
+[stack.config]
+server = "kmd1"
+file_contents = """
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
+      - NEWT_ID=ie2e2n59kgjtenj
+      - NEWT_SECRET=7758kt5q0t48mqc2tenvwt83z1x9czbcqth4pieqk4kravfy
+"""
+environment = """
+  # VARIABLE = valu
+"""
+
+##
+
+[[repo]]
+name = "dIIIhl"
+[repo.config]
+server = "kmd1"
+git_account = "d3hl"
+repo = "d3hl/dIIIhl"
+
+##
+
+[[procedure]]
+name = "Backup Core Database"
+description = "Triggers the Core database backup at the scheduled time."
+tags = ["system"]
+config.schedule = "Every day at 01:00"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
+]
 
 ##
 
@@ -1096,18 +1098,6 @@ params.server_id = "kmd1"
 name = "sync"
 [resource_sync.config]
 repo = "d3hl/dIIIhl"
-git_account = "d3hl"
+git_account = "d3adc3ii"
 resource_path = ["komodo/sync.toml"]
 managed = true
-
-##
-
-[[repo]]
-name = "dIIIhl"
-[repo.config]
-server = "kmd1"
-git_account = "d3hl"
-repo = "d3hl/dIIIhl"
-
-
-##
