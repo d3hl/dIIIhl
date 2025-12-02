@@ -1599,34 +1599,4 @@ alert_types = [
   "RepoBuildFailed"
 ]
 
-##
-
-[[builder]]
-name = "local"
-[builder.config]
-type = "Server"
-params = {}
-
-##
-
-[[resource_sync]]
-name = "sync"
-[resource_sync.config]
-repo = "d3hl/dIIIhl"
-git_account = "d3hl"
-webhook_secret = "ZDuIhK3CjhALwwkaZR8jiclMG8Z3xGbS"
-resource_path = ["komodo/resources/main.toml"]
-managed = true
-include_user_groups = true
-
-##
-
-[[resource_sync]]
-name = "var"
-[resource_sync.config]
-repo = "d3hl/dIIIhl"
-git_account = "d3hl"
-resource_path = ["komodo/resources/var.toml"]
-managed = true
-include_resources = false
-include_variables = true
+#
