@@ -289,7 +289,7 @@ HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
 [[stack]]
 name = "authentik"
 [stack.config]
-server = "kmd4"
+server = "kmd1"
 links = ["https://auth.d3adc3ii.cc"]
 poll_for_updates = true
 auto_update = true
