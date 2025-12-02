@@ -36,7 +36,7 @@ config_files = [
 ]
 environment = """
 HOMEPAGE_DATA_DIR= /mnt/cFS/appdata/komodo/repos/dIIIhl/komodo/homepage
-HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,10.10.10.30:3731"
+HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,10.10.10.36:3731"
 PGID= 1000
 PUID= 1000 
 # Site Config
