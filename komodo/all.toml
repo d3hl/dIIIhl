@@ -1,1 +1,480 @@
-#test
+[[server]]
+name = "kmd0"
+[server.config]
+address = "https://host.docker.internal:8120"
+enabled = true
+passkey = "g1ImlB3yyCCcLct6Lt2Ffx5969oVpCGR"
+
+##
+
+[[server]]
+name = "kmd1"
+[server.config]
+address = "https://10.10.10.36:8120"
+enabled = true
+passkey = "k9sFdHxaIyKy00rel7gyxDdGkN4C8Ft8"
+
+##
+
+[[stack]]
+name = "komodo-ee"
+[stack.config]
+server = "kmd0"
+file_contents = """
+---
+
+services:
+  ansible:
+    image: ghcr.io/bpbradley/ansible/komodo-ee:v1.3 # or latest
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - ./ansible:/ansible # Mount ansible files into container
+      - /mnt/cFS/appdata/komodo/komodo_ansible:/root/.ssh/id_ed25519:ro # Make sure the user you run the container has read access to the key
+    env_file:
+      - .env
+    environment:
+      ANSIBLE_HOST_KEY_CHECKING: ${ANSIBLE_HOST_KEY_CHECKING:-false} # Necessary for automation, unless you manage known_hosts and map it into container
+    command: "sleep 3600" # this keeps the container running by default, which will help with testing so you can exec into it temporarily
+"""
+environment = """
+PUID=1000
+PGID=1000
+"""
+
+##
+
+[[stack]]
+name = "newt"
+[stack.config]
+server = "kmd0"
+project_name = "pangolin"
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
+      - NEWT_ID=ixrel8im3yl6fgh
+      - NEWT_SECRET=zuad2oldb22s0oypic8y3y8hdj9tk52muf3r176pss0g1zgm
+      - ACCEPT_CLIENTS=true
+      - DOCKER_SOCKET=/var/run/docker.sock
+networks:
+  default:
+    name: pangolin_default
+"""
+environment = """
+  # VARIABLE = value
+"""
+
+##
+
+[[stack]]
+name = "omni-infra-provider-bare-metal"
+[stack.config]
+server = "kmd0"
+file_contents = """
+services:
+    omni-infra-provider-bare-metal:
+        container_name: omni-bare-metal-infra-provider
+        restart: always
+        network_mode: host
+        env_file:
+          - .env
+        image: ghcr.io/siderolabs/omni-infra-provider-bare-metal:v0.1.0
+        command: --api-advertise-address=10.10.10.211
+"""
+environment = """
+OMNI_ENDPOINT=https://omni.d3hl.site
+OMNI_SERVICE_ACCOUNT_KEY=eyJuYW1lIjoiYmFyZS1tZXRhbCIsInBncF9rZXkiOiItLS0tLUJFR0lOIFBHUCBQUklWQVRFIEtFWSBCTE9DSy0tLS0tXG5cbnhWZ0VhU3NFWVJZSkt3WUJCQUhhUnc4QkFRZEFlWHQ5N0pydlRBZWR6cGtSTGZXc1d0ekhwUld2QzNMbVxuOHV1RmdVL1BIUTBBQVFDZXlycXpsUTVvR1oveGwvbk1uTXBYcXIxMFpVdXR0RUlQZU9sd1dMMnZseElNXG56VG84WW1GeVpTMXRaWFJoYkVCcGJtWnlZUzF3Y205MmFXUmxjaTV6WlhKMmFXTmxZV05qYjNWdWRDNXZcbmJXNXBMbk5wWkdWeWJ5NWtaWFkrd3NBWkJCTVdDZ0NMQllKcEt3UmhCWWtCNFRPQUF3c0pCd2tRQThoMlxuenY3Um9oeEZGQUFBQUFBQUhBQWdjMkZzZEVCdWIzUmhkR2x2Ym5NdWIzQmxibkJuY0dwekxtOXlaN2M4XG5WYlF2dVAyclg5T0NlUk4xN1BPNS9KWkRYcW9rd1NnK05tT0c2UFFDQlJVSUNnNE1CQllDQUFFQ0dRRUNcbm13TUNIZ0VXSVFSaC80aDdsMnZVTjZxZXJ1RUR5SGJPL3RHaUhBQUFsYUFCQUtOTWJyV2tIY29tSzJQMVxuOXVpd1FzbWxzaVJhaGRhVk9JUk9UQ2xnNjYxakFRRHBlNno4YjU5RTVRTWo0L0ltWEw5UWJXTHdNRkliXG5WekdHWHNWblphOGFEc2RkQkdrckJHRVNDaXNHQVFRQmwxVUJCUUVCQjBEQjRFM3hMazNIWGtHL2M2UWtcblNvUEJlNEpqTkkrVTBLTVlqMHRoZEd6ZmZRTUJDQWNBQVA5bXRkTXZZMW54cWJwNGNJOVorRFRxcGZSRFxud3ZGbWMxYTBRTm5pTEIvajBCTjl3c0FFQkJnV0NnQjJCWUpwS3dSaEJZa0I0VE9BQ1JBRHlIYk8vdEdpXG5IRVVVQUFBQUFBQWNBQ0J6WVd4MFFHNXZkR0YwYVc5dWN5NXZjR1Z1Y0dkd2FuTXViM0pucERuTzNYVldcbnE1QkNhQjMveTgvZW82MUR2M3lqQ2lvVFB0bjBlVHhkK1IwQ213d1dJUVJoLzRoN2wydlVONnFlcnVFRFxueUhiTy90R2lIQUFBMjNzQS9qS3FpSlhTeGlCVU9vSkxhRTUvY05oNkNaQnl3aW8vQ1d0RDltaFJCUWdtXG5BUDBRTDVXa0gxRllyelZFN1pnNHdYanZkRUJvT0p6MTBLZC81alMyaVBkN0J3PT1cbj1wUC9wXG4tLS0tLUVORCBQR1AgUFJJVkFURSBLRVkgQkxPQ0stLS0tLSJ9
+"""
+
+##
+
+[[stack]]
+name = "twingate"
+[stack.config]
+server = "kmd1"
+file_contents = """
+services:
+  twingate_connector:
+    container_name: twingate
+    image: twingate/connector:latest
+    restart: always
+    env_file:
+    - .env
+    sysctls:
+      net.ipv4.ping_group_range: "0 65535"
+"""
+environment = """
+TWINGATE_NETWORK=d3net
+TWINGATE_ACCESS_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6Ii1NeDFKWVRyS3gzQjZ0T0NuMUFoX3J2OTdRNERzYksybUVuekZHczNnWG8iLCJ0eXAiOiJEQVQifQ.eyJhdWRzIjpudWxsLCJudCI6IkFOIiwiYWlkIjoiNjcxOTkxIiwiZGlkIjoiMjc1NTg0MyIsInJudyI6MTc2NDU3MTE1NSwianRpIjoiNDI4NDY3ZTgtODEwNy00ZmY3LThlNmQtNzgxNWI0ZGMxMmFiIiwiaXNzIjoidHdpbmdhdGUiLCJhdWQiOiJkM25ldCIsImV4cCI6MTc2NDU3NDUxMSwiaWF0IjoxNzY0NTcwOTExLCJ2ZXIiOiI0IiwidGlkIjoiMTAzNTY0Iiwicm5ldGlkIjoiMTM1OTMxIn0.CdZaPpe231AQ5pp2soFm5jpcRavScNLmv2YV4Xbn9zESR-f1FzUcB44hgoiLRm3zKzL-YJQR7XinfmYOx4PGmg
+TWINGATE_REFRESH_TOKEN=Ecgu9VB-ikKlX9bAU1ntj-36WHVbIRul_mM2i3UxrkBitEPEWlUUO0xYUesxHLB01aGrl02FfeJ4KF7jW7haX4BifZiDdrf5B11GOkny69rfw05TVMXYCsgjb2yI9Zy9EFscQQ
+TWINGATE_LABEL_HOSTNAME="`hostname`"
+"""
+
+##
+
+[[repo]]
+name = "dIIIhl"
+[repo.config]
+server = "kmd0"
+git_provider = "Github.com"
+git_account = "d3hl"
+repo = "d3hl/dIIIhl"
+path = "koomodo"
+
+##
+
+[[procedure]]
+name = "Backup Core Database"
+description = "Triggers the Core database backup at the scheduled time."
+tags = ["system"]
+config.schedule = "Every day at 01:00"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
+]
+
+##
+
+[[procedure]]
+name = "Global Auto Update"
+description = "Pulls and auto updates Stacks and Deployments using 'poll_for_updates' or 'auto_update'."
+tags = ["system"]
+config.schedule = "Every day at 03:00"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "GlobalAutoUpdate", execution.params = {}, enabled = true }
+]
+
+##
+
+[[action]]
+name = "DeployPeriphery"
+[action.config]
+file_contents = """
+type Server = { id: string; name: string; version: string; err?: Error };
+
+function sleep(ms: number) { return new Promise(r => setTimeout(r, ms)); }
+function parseContainerId(s: string): string | null { const m = s.match(/\b([0-9a-f]{12,64})\b/i); return m ? m[1] : null; }
+function normalizeVersion(s: string | undefined | null): string { return String(s ?? "").trim().replace(/^v/i, ""); }
+
+function truthy(v: unknown): boolean {
+  if (typeof v === "boolean") return v;
+  const s = String(v ?? "").trim().toLowerCase();
+  return s === "true" || s === "1" || s === "yes" || s === "on";
+}
+
+function parseLimitServers(x: unknown): string[] {
+  if (Array.isArray(x)) return x.map(String).map(s => s.trim()).filter(Boolean);
+  const raw = String(x ?? "").trim();
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) return parsed.map(String).map(s => s.trim()).filter(Boolean);
+  } catch {}
+  return raw.split(/[,\s]+/).map(s => s.trim()).filter(Boolean);
+}
+
+function extractRecap(s: string): string | null {
+  const i = s.indexOf("PLAY RECAP");
+  return i >= 0 ? s.slice(i) : null;
+}
+
+function recapHasFailures(recap: string): boolean {
+  const failed = [...recap.matchAll(/failed=(\d+)/g)].some(([,n]) => parseInt(n,10) > 0);
+  const unreachable = [...recap.matchAll(/unreachable=(\d+)/g)].some(([,n]) => parseInt(n,10) > 0);
+  return failed || unreachable;
+}
+
+async function waitForServerUpdate(server: Server, timeoutMs = 40000, intervalMs = 1000): Promise<boolean> {
+  const end = Date.now() + timeoutMs;
+  while (Date.now() < end) {
+    const { version } = (await komodo.read("GetPeripheryVersion", { server: server.id })) as Types.GetPeripheryVersionResponse;
+    if (version === server.version) { console.log(`${server.name} Updated!`); return true; }
+    console.debug(`Version: ${version}`)
+    await sleep(intervalMs);
+  }
+  console.log(`${server.name} offline during update... Waiting to come back online...`);
+  return false;
+}
+
+async function followContainerLogs(server: Server, containerId: string): Promise<string> {
+  const term = `periphery-follow`;
+  const streamCmd = `docker logs -f ${containerId}`;
+
+  const getRecap = async (): Promise<string | null> => {
+    let recapSeen = false;
+    let recapText: string | null = null;
+    try {
+      await komodo.write("CreateTerminal", { 
+        server: server.name, 
+        name: term, 
+        command: "/bin/bash", 
+        recreate: Types.TerminalRecreateMode.Always 
+      });
+      await komodo.execute_terminal({ 
+        server: server.name, 
+        terminal: term, 
+        command: `${streamCmd}` 
+        },{
+          onLine: (line) => {
+            if (!recapSeen) {
+              const i = line.indexOf("PLAY RECAP");
+              if (i >= 0) {
+                recapSeen = true; 
+                const first = line.slice(i); 
+                recapText = first;
+                console.log(first);
+              }
+            } else {
+              console.log(line);
+              if (recapText) recapText += `\n${line}`;
+            }
+          },
+          onFinish: () => {},
+        }
+      );
+    } catch {}
+    return recapSeen ? recapText : null;
+  };
+
+  const first = await getRecap();
+  if (first) return first;
+  // Server likely dropped out because it is currently updating. 
+  // Wait a few seconds, then try to see if it comes back up, then try again
+  await sleep(15000);
+  const ok = await waitForServerUpdate(server);
+  if (!ok) throw new Error(`Timeout waiting for ${server.name} to report version ${server.version}`);
+  const second = await getRecap();
+  if (!second) throw new Error(`No Ansible recap captured from ${server.name}`);
+  return second;
+}
+
+async function resolveRequiredVersion(): Promise<string> {
+  const req = String(ARGS.KOMODO_VERSION || "");
+  if (req.toLowerCase() === "core") {
+    const { version } = (await komodo.read("GetVersion", {})) as Types.GetVersionResponse;
+    return normalizeVersion(version);
+  }
+  return normalizeVersion(req);
+}
+
+async function isServerOnline(id: string): Promise<boolean> {
+  const res = await komodo.read("GetServerState", { server: id }) as Types.GetServerStateResponse;
+  return res.status === Types.ServerState.Ok;
+}
+
+async function update() {
+  const DRY_RUN = truthy(ARGS.DRY_RUN);
+  const FORCE = truthy(ARGS.FORCE);
+  const LIMIT_SERVERS = parseLimitServers(ARGS.LIMIT_SERVERS);
+  const IGNORE_SERVERS = parseLimitServers(ARGS.IGNORE_SERVERS);
+
+  const requiredVersion = await resolveRequiredVersion();
+  if (!requiredVersion) throw new Error("Missing required version");
+
+  const base = (await komodo.read("ListServers", { query: {} })) as Types.ListServersResponse;
+
+  const allServers: Server[] = await Promise.all(
+    base.map(async ({ id, name }) => {
+      try {
+        const { version } = (await komodo.read("GetPeripheryVersion", { server: id })) as Types.GetPeripheryVersionResponse;
+        return { id, name, version };
+      } catch (err) {
+        return { id, name, version: "ERROR", err: err as Error };
+      }
+    })
+  );
+
+  const ignoreSet = new Set(IGNORE_SERVERS);
+  const unknownIgnores = IGNORE_SERVERS.filter(
+    v => !allServers.some(s => s.name === v || s.id === v)
+  );
+  let servers = allServers.filter(s => !ignoreSet.has(s.name) && !ignoreSet.has(s.id));
+
+  if (IGNORE_SERVERS.length) {
+    console.log(`Ignoring servers: ${IGNORE_SERVERS.join(", ") || "(none)"}`);
+    if (unknownIgnores.length) console.log(`No match for ignored: ${unknownIgnores.join(", ")}`);
+  }
+
+  if (servers.length === 0) {
+    console.log("🦎 All servers are ignored. Nothing to do. 🦎");
+    return;
+  }
+
+  const byName = new Map(servers.map(s => [s.name, s]));
+  const limits = LIMIT_SERVERS;
+  const unknownLimits = limits.filter(n => !byName.has(n));
+  if (limits.length) console.log(`Limiting to: ${limits.join(", ") || "(none)"}`);
+  if (unknownLimits.length) console.log(`Ignoring unknown servers: ${unknownLimits.join(", ")}`);
+
+  let candidates: Server[];
+  if (limits.length) {
+    candidates = limits.map(n => byName.get(n)).filter((x): x is Server => !!x);
+    candidates = FORCE ? candidates : candidates.filter(s => !s.err && normalizeVersion(s.version) !== requiredVersion);
+  } else if (FORCE) {
+    candidates = servers.filter(s => !s.err);
+  } else {
+    candidates = servers.filter(s => !s.err && normalizeVersion(s.version) !== requiredVersion);
+  }
+
+  const targetIds = new Set(candidates.map(s => s.id));
+  const labelWidth = Math.max(...servers.map(({ id, name }) => `${name} (id=${id})`.length));
+
+  console.log("Periphery version check:");
+  servers.forEach((s) => {
+    const label = `${s.name} (id=${s.id})`.padEnd(labelWidth);
+    const cur = normalizeVersion(s.version);
+    const inScope = targetIds.has(s.id);
+
+    let msg: string;
+    if (s.err) {
+      msg = `❌  Error: ${(s.err as Error).message}`;
+    } else if (inScope) {
+      if (FORCE && cur === requiredVersion) {
+        msg = `🔁 forcing update (currently ${cur})`;
+      } else if (cur !== requiredVersion) {
+        msg = `🎯 target: ${cur} → ${requiredVersion}`;
+      } else {
+        msg = `✅ up to date${FORCE ? " (forcing update)" : ""}`;
+      }
+    } else {
+      if (cur !== requiredVersion) {
+        msg = `⏭️  not targeted (current ${cur}, required ${requiredVersion})`;
+      } else {
+        msg = `✅ up to date`;
+      }
+    }
+
+    console.log(`  - ${label} : ${msg}`);
+  });
+
+  if (candidates.length === 0) {
+    console.log("🦎 Nothing to do. 🦎");
+    return;
+  }
+
+  const stack = (await komodo.read("GetStack", { stack: ARGS.STACK_NAME })) as Types.GetStackResponse;
+  const stackServerId = (stack as any).config?.server_id as string | undefined;
+  const stackServer = servers.find(s => s.id === stackServerId);
+  const includesStackServer = !!stackServer && candidates.some(s => s.id === stackServer.id);
+
+  const DETACH = DRY_RUN ? false : includesStackServer;
+
+  const allTargeted = candidates.length === servers.filter(s => !s.err).length;
+  const allManaged = servers.filter(s => !s.err);
+  let limitPattern: string | undefined;
+
+  if (LIMIT_SERVERS.length || IGNORE_SERVERS.length) {
+    limitPattern = candidates.map(s => s.name).join(",");
+  } else {
+    const allTargeted = candidates.length === allManaged.length;
+    limitPattern = allTargeted ? undefined : candidates.map(s => s.name).join(",");
+  }
+  
+  const command = [
+    "ansible-playbook",
+    ARGS.PLAYBOOK,
+    "-i", ARGS.INVENTORY,
+    "-e", `komodo_action=${ARGS.KOMODO_ACTION}`,
+    "-e", `komodo_version=v${requiredVersion}`,
+    "-e", "pause_after=true",
+  ];
+  if (limitPattern) command.push("-l", limitPattern);
+  if (DRY_RUN) command.push("--check", "--diff");
+
+  const result = (await komodo.execute_and_poll("RunStackService", {
+    stack: ARGS.STACK_NAME,
+    service: ARGS.SERVICE_NAME,
+    command,
+    detach: DETACH,
+    pull: true,
+    no_deps: true,
+    env: { VAULT_PASS: "[[VAULT_PASS]]" },
+  })) as Types.Update;
+
+  const runLog = result.logs.find(l => l.stage === "Compose Run");
+  if (!runLog) throw new Error("No 'Compose Run' stage found in logs.");
+
+  let recapText: string | null = null;
+
+  if (DETACH && stackServer) {
+    // Detached: stdout/stderr should contain the container id; follow its logs to get the recap
+    const cid = parseContainerId(`${runLog.stdout || ""}\n${runLog.stderr || ""}`);
+    if (!cid) throw new Error("Could not parse container id from output; unable to follow logs.");
+
+    console.log(`Following container logs (${cid}) on ${stackServer.name}…`);
+
+    // we expect this host to update to requiredVersion
+    stackServer.version = requiredVersion;
+
+    recapText = await followContainerLogs(stackServer, cid);
+  } else {
+    // Non-detached: compose output should include the recap
+    if (!runLog.success) {
+      console.error(runLog.stdout);
+      console.error(runLog.stderr);
+      throw new Error("Periphery Update Failed");
+    }
+    recapText = extractRecap(runLog.stdout) ?? extractRecap(runLog.stderr || "");
+    if (!recapText) throw new Error("Ansible run completed but recap was not found in output.");
+    console.log(recapText);
+  }
+
+  if (recapHasFailures(recapText)) throw new Error("Ansible recap indicates failures.");
+
+  if (!DRY_RUN) {
+    const offline = await Promise.all(
+      candidates.map(async s => ({ s, ok: await isServerOnline(s.id) }))
+    ).then(rows => rows.filter(r => !r.ok).map(r => r.s.name));
+    if (offline.length) throw new Error(`Post-update check failed: offline servers: ${offline.join(", ")}`);
+  }
+
+  console.log("🦎 Periphery Update Successful 🦎");
+}
+
+await update();
+"""
+arguments_format = "json"
+arguments = """
+{
+  "PLAYBOOK": "/ansible/playbooks/komodo.yml",
+  "INVENTORY": "/ansible/inventory/komodo.yml",
+  "KOMODO_VERSION": "core",
+  "STACK_NAME": "komodo-ee",
+  "SERVICE_NAME": "ansible",
+  "DRY_RUN": false,
+  "FORCE": false,
+  "LIMIT_SERVERS": [],
+  "IGNORE_SERVERS": []
+}
+"""
+
+##
+
+[[builder]]
+name = "kmd0"
+[builder.config]
+type = "Server"
+params = {}
+
+##
+
+[[resource_sync]]
+name = "sync"
+[resource_sync.config]
+linked_repo = "dIIIhl"
+resource_path = ["komodo/all.toml"]
+managed = true
