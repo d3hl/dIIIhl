@@ -123,6 +123,129 @@ AUTHENTIK_ERROR_REPORTING__ENABLED=true
 ##
 
 [[stack]]
+name = "ente"
+[stack.config]
+server = "kmd0"
+extra_args = ["--build"]
+file_contents = """
+services:
+  museum:
+    build:
+      context: ..
+    ports:
+      - 8080:8080 # Museum/API
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    volumes:
+      - ./museum.yaml:/museum.yaml:ro
+      - ./data:/data:ro
+
+  # Resolve "localhost:3200" in the museum container to the minio container.
+  socat:
+    image: alpine/socat
+    network_mode: service:museum
+    depends_on: [museum]
+    command: "TCP-LISTEN:3200,fork,reuseaddr TCP:minio:3200"
+
+  postgres:
+    image: postgres:15-trixie
+    env_file:
+      - .env
+    # Wait for postgres to accept connections before starting museum.
+    healthcheck:
+      test: pg_isready -q -d ${POSTGRES_DB} -U ${POSTGRES_USER}
+      start_period: 30s
+      start_interval: 1s
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  minio:
+    image: minio/minio
+    ports:
+      - 3200:3200 # MinIO API
+      # - 3201:3201 # MinIO Console (uncomment to access externally)
+    env_file:
+      - .env
+    command: server /data --address ":3200" --console-address ":3201"
+    volumes:
+      - minio-data:/data
+    post_start:
+      - command: |
+          sh -c '
+          #!/bin/sh
+
+          while ! mc alias set h0 http://minio:3200 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD} 2>/dev/null
+          do
+            echo "Waiting for minio..."
+            sleep 0.5
+          done
+
+          cd /data
+
+          mc mb -p b2-eu-cen
+          mc mb -p wasabi-eu-central-2-v3
+          mc mb -p scw-eu-fr-v3
+          '
+
+  ente-web:
+    build:
+      context: ../..
+      dockerfile: web/Dockerfile
+    ports:
+      - 3000:3000
+      - 3001:3001
+      - 3002:3002
+      - 3003:3003
+      - 3004:3004
+      - 3005:3005
+      - 3006:3006
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - .env
+
+volumes:
+  postgres-data:
+  minio-data:
+"""
+environment = """
+# Copy this file to .env in the same directory in which this file is present
+# This file contains the environment variables needed for Ente's cluster to run properly.
+# This file is split based on services declared in Docker Compose file
+# 
+# Service: Postgres
+# This is used for storing data in database pertaining to collections, files, users, subscriptions, etc.
+# These credentials are needed for accessing the database via Museum.
+# Please set a strong password for accessing the database.
+# Enter these values in museum.yaml file under `db`.
+# This need not be defined if using external DB (i. e. no Compose service for PostgreSQL is used)
+POSTGRES_USER=pguser
+POSTGRES_PASSWORD=rwt8ZHFubg8gyp0vra
+POSTGRES_DB=ente_db
+
+# Service: MinIO
+# This is used for MinIO object storage service that's shipped by default with the compose file
+# to reduce need for an external S3-compatible bucket for quick testing.
+# It is recommended to use an external bucket for long-term usage.
+# The credentials required for accessing the object storage is documented below.
+# It is not needed to configure these variables if you are using an external bucket
+# Enter the user value into key and password in secret for buckets in museum.yaml under `s3` section.
+MINIO_ROOT_USER=-
+MINIO_ROOT_PASSWORD=vgJXVKoXcVtfkRXnxHM6M8LxoE7Amra
+# Service: Web
+# This is used for configuring public albums, API endpoints, etc.
+# Replace the below endpoints to the correct subdomains of your choice.
+ENTE_API_ORIGIN=http://localhost:8080
+ENTE_ALBUMS_ORIGIN=https://localhost:3002
+ENTE_PHOTOS_ORIGIN=http://localhost:3000
+"""
+
+##
+
+[[stack]]
 name = "homepage"
 tags = ["kmd1"]
 [stack.config]
@@ -392,6 +515,195 @@ HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
 ##
 
 [[stack]]
+name = "immich-app"
+[stack.config]
+server = "kmd1"
+file_contents = """
+#
+# WARNING: To install Immich, follow our guide: https://docs.immich.app/install/docker-compose
+#
+# Make sure to use the docker-compose.yml of the current release:
+#
+# https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
+#
+# The compose file on main may not be compatible with the latest release.
+
+name: immich
+
+services:
+  immich-server:
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    # extends:
+    #   file: hwaccel.transcoding.yml
+    #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
+    volumes:
+      # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
+      - ${UPLOAD_LOCATION}:/data
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    ports:
+      - '2283:2283'
+    depends_on:
+      - redis
+      - database
+    restart: always
+    healthcheck:
+      disable: false
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    # For hardware acceleration, add one of -[armnn, cuda, rocm, openvino, rknn] to the image tag.
+    # Example tag: ${IMMICH_VERSION:-release}-cuda
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    # extends: # uncomment this section for hardware acceleration - see https://docs.immich.app/features/ml-hardware-acceleration
+    #   file: hwaccel.ml.yml
+    #   service: cpu # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
+    volumes:
+      - model-cache:/cache
+    env_file:
+      - .env
+    restart: always
+    healthcheck:
+      disable: false
+
+  redis:
+    container_name: immich_redis
+    image: docker.io/valkey/valkey:8@sha256:81db6d39e1bba3b3ff32bd3a1b19a6d69690f94a3954ec131277b9a26b95b3aa
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+
+  database:
+    container_name: immich_postgres
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE_NAME}
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+      # Uncomment the DB_STORAGE_TYPE: 'HDD' var if your database isn't stored on SSDs
+      # DB_STORAGE_TYPE: 'HDD'
+    volumes:
+      # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
+      - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
+    shm_size: 128mb
+    restart: always
+
+volumes:
+  model-cache:
+"""
+environment = """
+IMMICH_IGNORE_MOUNT_CHECK_ERRORS=true
+# You can find documentation for all the supported env variables at https://docs.immich.app/install/environment-variables
+PGID=1000
+PUID=1000
+# The location where your uploaded files are stored
+UPLOAD_LOCATION=/mnt/zApps/imm_library
+
+# The location where your database files are stored. Network shares are not supported for the database
+DB_DATA_LOCATION=./postgres
+
+# To set a timezone, uncomment the next line and change Etc/UTC to a TZ identifier from this list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+# TZ=Etc/UTC
+
+# The Immich version to use. You can pin this to a specific version like "v2.1.0"
+IMMICH_VERSION=v2.3.1
+
+# Connection secret for postgres. You should change it to a random password
+# Please use only the characters `A-Za-z0-9`, without special characters or spaces
+DB_PASSWORD=postgres2taolavodch
+
+# The values below this line do not need to be changed
+###################################################################################
+DB_USERNAME=postgres
+DB_DATABASE_NAME=immich
+"""
+
+##
+
+[[stack]]
+name = "kestra"
+[stack.config]
+server = "kmd1"
+file_contents = """
+volumes:
+  postgres-data:
+    driver: local
+  kestra-data:
+    driver: local
+
+services:
+  postgres:
+    image: postgres:18
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    env_file: .env
+    environment:
+      POSTGRES_DB: kestra
+      POSTGRES_USER: kestra
+      POSTGRES_PASSWORD: k3str4
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+
+  kestra:
+    image: kestra/kestra:latest
+    pull_policy: always
+    # Kestra, by default, has a termination grace period of 5m. We need to wait a little more to be sure no active tasks are running.
+    stop_grace_period: 6m
+    # Note that this setup with a root user is intended for development purpose.
+    # Our base image runs without root, but the Docker Compose implementation needs root to access the Docker socket
+    user: "root"
+    command: server standalone
+    volumes:
+      - kestra-data:/app/storage
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/kestra-wd:/tmp/kestra-wd
+    env_file: .env
+    environment:
+      KESTRA_CONFIGURATION: |
+        datasources:
+          postgres:
+            url: jdbc:postgresql://postgres:5432/kestra
+            driverClassName: org.postgresql.Driver
+            username: kestra
+            password: k3str4
+        kestra:
+          # server:
+          #   basic-auth:
+          #     username: admin@kestra.io # it must be a valid email address
+          #     password: Admin1234 # it must be at least 8 characters long with uppercase letter and a number
+          repository:
+            type: postgres
+          storage:
+            type: local
+            local:
+              base-path: "/app/storage"
+          queue:
+            type: postgres
+          tasks:
+            tmp-dir:
+              path: /tmp/kestra-wd/tmp
+          url: http://localhost:8080/
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      postgres:
+        condition: service_started
+"""
+environment = """
+GH_USERNAME=[[GH_USERNAME]]
+GH_ACCESS_TOKEN=[[GH_ACCESS_TOKEN]]
+"""
+
+##
+
+[[stack]]
 name = "komodo-ee"
 [stack.config]
 server = "kmd0"
@@ -466,6 +778,31 @@ services:
 environment = """
 OMNI_ENDPOINT=https://omni.d3hl.site
 OMNI_SERVICE_ACCOUNT_KEY=eyJuYW1lIjoiYmFyZS1tZXRhbCIsInBncF9rZXkiOiItLS0tLUJFR0lOIFBHUCBQUklWQVRFIEtFWSBCTE9DSy0tLS0tXG5cbnhWZ0VhU3NFWVJZSkt3WUJCQUhhUnc4QkFRZEFlWHQ5N0pydlRBZWR6cGtSTGZXc1d0ekhwUld2QzNMbVxuOHV1RmdVL1BIUTBBQVFDZXlycXpsUTVvR1oveGwvbk1uTXBYcXIxMFpVdXR0RUlQZU9sd1dMMnZseElNXG56VG84WW1GeVpTMXRaWFJoYkVCcGJtWnlZUzF3Y205MmFXUmxjaTV6WlhKMmFXTmxZV05qYjNWdWRDNXZcbmJXNXBMbk5wWkdWeWJ5NWtaWFkrd3NBWkJCTVdDZ0NMQllKcEt3UmhCWWtCNFRPQUF3c0pCd2tRQThoMlxuenY3Um9oeEZGQUFBQUFBQUhBQWdjMkZzZEVCdWIzUmhkR2x2Ym5NdWIzQmxibkJuY0dwekxtOXlaN2M4XG5WYlF2dVAyclg5T0NlUk4xN1BPNS9KWkRYcW9rd1NnK05tT0c2UFFDQlJVSUNnNE1CQllDQUFFQ0dRRUNcbm13TUNIZ0VXSVFSaC80aDdsMnZVTjZxZXJ1RUR5SGJPL3RHaUhBQUFsYUFCQUtOTWJyV2tIY29tSzJQMVxuOXVpd1FzbWxzaVJhaGRhVk9JUk9UQ2xnNjYxakFRRHBlNno4YjU5RTVRTWo0L0ltWEw5UWJXTHdNRkliXG5WekdHWHNWblphOGFEc2RkQkdrckJHRVNDaXNHQVFRQmwxVUJCUUVCQjBEQjRFM3hMazNIWGtHL2M2UWtcblNvUEJlNEpqTkkrVTBLTVlqMHRoZEd6ZmZRTUJDQWNBQVA5bXRkTXZZMW54cWJwNGNJOVorRFRxcGZSRFxud3ZGbWMxYTBRTm5pTEIvajBCTjl3c0FFQkJnV0NnQjJCWUpwS3dSaEJZa0I0VE9BQ1JBRHlIYk8vdEdpXG5IRVVVQUFBQUFBQWNBQ0J6WVd4MFFHNXZkR0YwYVc5dWN5NXZjR1Z1Y0dkd2FuTXViM0pucERuTzNYVldcbnE1QkNhQjMveTgvZW82MUR2M3lqQ2lvVFB0bjBlVHhkK1IwQ213d1dJUVJoLzRoN2wydlVONnFlcnVFRFxueUhiTy90R2lIQUFBMjNzQS9qS3FpSlhTeGlCVU9vSkxhRTUvY05oNkNaQnl3aW8vQ1d0RDltaFJCUWdtXG5BUDBRTDVXa0gxRllyelZFN1pnNHdYanZkRUJvT0p6MTBLZC81alMyaVBkN0J3PT1cbj1wUC9wXG4tLS0tLUVORCBQR1AgUFJJVkFURSBLRVkgQkxPQ0stLS0tLSJ9
+"""
+
+##
+
+[[stack]]
+name = "pulse"
+[stack.config]
+server = "kmd1"
+file_contents = """
+services:
+  pulse:
+    image: rcourtman/pulse:latest
+    container_name: pulse
+    restart: unless-stopped
+    ports:
+      - "7655:7655"
+    volumes:
+      - $[DATA}:/data
+      - /var/run/docker.sock:/var/run/docker.sock # Optional: Monitor local Docker
+    env_file: .env
+"""
+environment = """
+DATA=/mnt/cFS/appdata/pulse
+PULSE_AUTH_USER=d3
+PULSE_AUTH_PASS=abcd
 """
 
 ##
