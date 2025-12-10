@@ -17,6 +17,38 @@ passkey = "k9sFdHxaIyKy00rel7gyxDdGkN4C8Ft8"
 ##
 
 [[stack]]
+name = "1pconnect"
+[stack.config]
+server = "kmd1"
+file_contents = """
+services:
+  op-connect-api:
+    image: 1password/connect-api:latest
+    env_file: .env
+    ports:
+      - "8082:8080"
+    volumes:
+      - ${CDATA}/1password-credentials.json:/home/opuser/.op/1password-credentials.json
+      - "data:/home/opuser/.op/data"
+  op-connect-sync:
+    image: 1password/connect-sync:latest
+    env_file: .env
+    ports:
+      - "8083:8080"
+    volumes:
+      - ${CDATA}/1password-credentials.json:/home/opuser/.op/1password-credentials.json
+      - "data:/home/opuser/.op/data"
+
+volumes:
+  data:
+"""
+environment = """
+CDATA=/mnt/cFS/appdata/1pconnect
+"""
+
+##
+
+[[stack]]
 name = "authentik"
 [stack.config]
 server = "kmd1"
