@@ -2,6 +2,8 @@ services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
+    networks:
+      - internal_web
     env_file:
       - .env
     ports:
@@ -12,3 +14,18 @@ services:
       - ${HOMEPAGE_DATA_DIR}/images:/app/public/images
       #- /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
+    labels:
+      # Public Resource Configuration
+      - pangolin.public-resources.phpipam.name=phpipam
+      - pangolin.public-resources.phpipam.full-domain=phpipam.d3adc3ii.cc
+      - pangolin.public-resources.phpipam.protocol=http
+      #auth
+      - pangolin.public-resources.phpipam.auth=sso-enabled
+      - pangolin.public-resources.phpipam.auth.sso-roles=Admin
+      - pangolin.public-resources.phpipam.healthcheck=true
+      - pangolin.public-resources.phpipamh.healthcheck.hostname=phpipam
+      - pangolin.public-resources.phpipamh.healthcheck.port=80
+networks:
+  internal_web:
+    external: true
+
