@@ -291,6 +291,7 @@ links = ["https://homepage.d3adc3ii.cc"]
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
+destroy_before_deploy = true
 linked_repo = "dIIIhl"
 run_directory = "komodo/homepage"
 file_paths = ["compose.yaml"]
