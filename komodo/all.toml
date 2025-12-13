@@ -20,6 +20,9 @@ passkey = "k9sFdHxaIyKy00rel7gyxDdGkN4C8Ft8"
 name = "1pconnect"
 [stack.config]
 server = "kmd1"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 file_contents = """
 services:
   op-connect-api:
@@ -30,6 +33,7 @@ services:
     volumes:
       - ${CDATA}/1password-credentials.json:/home/opuser/.op/1password-credentials.json
       - "data:/home/opuser/.op/data"
+    restart: unless-stopped
   op-connect-sync:
     image: 1password/connect-sync:latest
     env_file: .env
@@ -38,6 +42,7 @@ services:
     volumes:
       - ${CDATA}/1password-credentials.json:/home/opuser/.op/1password-credentials.json
       - "data:/home/opuser/.op/data"
+    restart: unless-stopped
 
 volumes:
   data:
@@ -681,7 +686,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 10
-
+    restart: unless-stopped
   kestra:
     image: kestra/kestra:latest
     pull_policy: always
@@ -727,6 +732,7 @@ services:
     depends_on:
       postgres:
         condition: service_started
+        restart: unless-stopped
 """
 environment = """
 GH_USERNAME=[[GH_USERNAME]]
@@ -776,15 +782,61 @@ services:
     image: fosrl/newt
     container_name: newt
     restart: unless-stopped
+    networks:
+      - default
+      - internal_web
     environment:
       - PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.cc
-      - NEWT_ID=ixrel8im3yl6fgh
-      - NEWT_SECRET=zuad2oldb22s0oypic8y3y8hdj9tk52muf3r176pss0g1zgm
-      - ACCEPT_CLIENTS=true
-      - DOCKER_SOCKET=/var/run/docker.sock
+      - NEWT_ID=3fvxj21qpm1ipsv
+      - NEWT_SECRET=fthakowv4ueg8ssvgqybrm1p6xj9h8rz35ceakf65taxhynt
+      - DOCKER_SOCKET=tcp://socket-proxy:2375
+     # - DOCKER_HOST=tcp://socket-proxy:2375
+
+
+  socket-proxy:
+    image: lscr.io/linuxserver/socket-proxy:latest
+    container_name: socket-proxy
+    networks:
+      - internal_web
+    environment:
+      - ALLOW_START=1 #optional
+      - ALLOW_STOP=1 #optional
+      - ALLOW_RESTARTS=1 #optional
+      - AUTH=1 #optional
+      - BUILD=1 #optional
+      - COMMIT=1 #optional
+      - CONFIGS=1 #optional
+      - CONTAINERS=1 #optional
+      - DISABLE_IPV6=1 #optional
+      - DISTRIBUTION=1 #optional
+      - EVENTS=1 #optional
+      - EXEC=1 #optional
+      - IMAGES=1 #optional
+      - INFO=1 #optional
+      - LOG_LEVEL=info #optional
+      - NETWORKS=1 #optional
+      - NODES=1 #optional
+      - PING=1 #optional
+      - PLUGINS=1 #optional
+      - POST=1 #optional
+      - SECRETS=1 #optional
+      - SERVICES=1 #optional
+      - SESSION=1 #optional
+      - SWARM=1 #optional
+      - SYSTEM=1 #optional
+      - TASKS=1 #optional
+      - TZ=Etc/UTC #optional
+      - VERSION=1 #optional
+      - VOLUMES=1 #optional
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /run
 networks:
-  default:
-    name: pangolin_default
+  internal_web:
+    external: true
 """
 environment = """
   # VARIABLE = value
@@ -810,6 +862,71 @@ services:
 environment = """
 OMNI_ENDPOINT=https://omni.d3hl.site
 OMNI_SERVICE_ACCOUNT_KEY=eyJuYW1lIjoiYmFyZS1tZXRhbCIsInBncF9rZXkiOiItLS0tLUJFR0lOIFBHUCBQUklWQVRFIEtFWSBCTE9DSy0tLS0tXG5cbnhWZ0VhU3NFWVJZSkt3WUJCQUhhUnc4QkFRZEFlWHQ5N0pydlRBZWR6cGtSTGZXc1d0ekhwUld2QzNMbVxuOHV1RmdVL1BIUTBBQVFDZXlycXpsUTVvR1oveGwvbk1uTXBYcXIxMFpVdXR0RUlQZU9sd1dMMnZseElNXG56VG84WW1GeVpTMXRaWFJoYkVCcGJtWnlZUzF3Y205MmFXUmxjaTV6WlhKMmFXTmxZV05qYjNWdWRDNXZcbmJXNXBMbk5wWkdWeWJ5NWtaWFkrd3NBWkJCTVdDZ0NMQllKcEt3UmhCWWtCNFRPQUF3c0pCd2tRQThoMlxuenY3Um9oeEZGQUFBQUFBQUhBQWdjMkZzZEVCdWIzUmhkR2x2Ym5NdWIzQmxibkJuY0dwekxtOXlaN2M4XG5WYlF2dVAyclg5T0NlUk4xN1BPNS9KWkRYcW9rd1NnK05tT0c2UFFDQlJVSUNnNE1CQllDQUFFQ0dRRUNcbm13TUNIZ0VXSVFSaC80aDdsMnZVTjZxZXJ1RUR5SGJPL3RHaUhBQUFsYUFCQUtOTWJyV2tIY29tSzJQMVxuOXVpd1FzbWxzaVJhaGRhVk9JUk9UQ2xnNjYxakFRRHBlNno4YjU5RTVRTWo0L0ltWEw5UWJXTHdNRkliXG5WekdHWHNWblphOGFEc2RkQkdrckJHRVNDaXNHQVFRQmwxVUJCUUVCQjBEQjRFM3hMazNIWGtHL2M2UWtcblNvUEJlNEpqTkkrVTBLTVlqMHRoZEd6ZmZRTUJDQWNBQVA5bXRkTXZZMW54cWJwNGNJOVorRFRxcGZSRFxud3ZGbWMxYTBRTm5pTEIvajBCTjl3c0FFQkJnV0NnQjJCWUpwS3dSaEJZa0I0VE9BQ1JBRHlIYk8vdEdpXG5IRVVVQUFBQUFBQWNBQ0J6WVd4MFFHNXZkR0YwYVc5dWN5NXZjR1Z1Y0dkd2FuTXViM0pucERuTzNYVldcbnE1QkNhQjMveTgvZW82MUR2M3lqQ2lvVFB0bjBlVHhkK1IwQ213d1dJUVJoLzRoN2wydlVONnFlcnVFRFxueUhiTy90R2lIQUFBMjNzQS9qS3FpSlhTeGlCVU9vSkxhRTUvY05oNkNaQnl3aW8vQ1d0RDltaFJCUWdtXG5BUDBRTDVXa0gxRllyelZFN1pnNHdYanZkRUJvT0p6MTBLZC81alMyaVBkN0J3PT1cbj1wUC9wXG4tLS0tLUVORCBQR1AgUFJJVkFURSBLRVkgQkxPQ0stLS0tLSJ9
+"""
+
+##
+
+[[stack]]
+name = "phpipam"
+[stack.config]
+server = "kmd0"
+file_contents = """
+services:
+  phpipam-web:
+    image: phpipam/phpipam-www:latest
+    networks:
+      - default
+      - internal_web
+    ports:
+      - "80:80"
+    env_file: .env
+    restart: always
+    volumes:
+      - ${APPDATA}/logo:/phpipam/css/images/logo
+      - ${APPDATA}/ca:/usr/local/share/ca-certificates:ro
+    depends_on:
+      - phpipam-mariadb
+    labels:
+      # Public Resource Configuration
+      - pangolin.public-resources.phpipam.name=phpipam
+      - pangolin.public-resources.phpipam.full-domain=phpipam.d3adc3ii.cc
+      - pangolin.public-resources.phpipam.protocol=http
+      #auth
+      - pangolin.public-resources.phpipam.auth=sso-enabled
+      - pangolin.public-resources.phpipam.auth.sso-roles=Admin
+      - pangolin.public-resources.phpipam.healthcheck=true
+      - pangolin.public-resources.phpipamh.healthcheck.hostname=phpipam
+      - pangolin.public-resources.phpipamh.healthcheck.port=80
+
+  phpipam-cron:
+    image: phpipam/phpipam-cron:latest
+    env_file: .env
+    restart: always
+    volumes:
+      - ${APPDATA}/ca:/usr/local/share/ca-certificates:ro
+    depends_on:
+      - phpipam-mariadb
+
+  phpipam-mariadb:
+    image: mariadb:latest
+    env_file: .env
+    restart: always
+    volumes:
+      - ${APPDATA}/db:/var/lib/mysql
+
+networks:
+  internal_web:
+    external: true
+"""
+environment = """
+TZ=Asia/Singapore
+IPAM_DATABASE_HOST=phpipam-mariadb
+IPAM_DATABASE_PASS=[[IPAM_DATABASE_PASS]]
+IPAM_DATABASE_WEBHOST=%
+SCAN_INTERVAL=1h
+APPDATA=/mnt/cFS/appdata/PHPiPAM
+MYSQL_USER: 'd3'
+MYSQL_ROOT_PASSWORD=taolavoodch123
 """
 
 ##
