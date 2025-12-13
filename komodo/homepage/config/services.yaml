@@ -59,7 +59,7 @@
         sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
         widget:
             type: pangolin
-            url:  https://pangolin.d3adc3ii.cc/api/ 
+            url:  https://pangolin.d3adc3ii.cc 
             key: {{HOMEPAGE_VAR_PANGOLIN_KEY}}
             org: d3hl
     - GoDoxy:
