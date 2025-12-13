@@ -380,7 +380,7 @@ HOMEPAGE_VAR_GODOXY_URL= "https://doxy.d3hl.site"
 # PANGOLIN
 HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin-light.png"
 HOMEPAGE_VAR_PANGOLIN_URL= "https://pangolin.d3adc3ii.cc"
-
+HOMEPAGE_VAR_PANGOLIN_KEY=fquvgwrf7fv3u6h.y5nnfb2vnpwvaetrsiqfxyj6r56d3krgf6vujlqj
 #### NETWORK ####################################################################################################################################################################################################
 # NetAlertX 
 HOMEPAGE_VAR_NETALERTX_ICON= "/icons/netalertx-light.png"

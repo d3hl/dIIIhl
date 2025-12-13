@@ -57,6 +57,11 @@
         icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
         href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
         sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
+        widget:
+            type: pangolin
+            url: https://api.pangolin.net
+            key: {{HOMEPAGE_VAR_PANGOLIN_KEY}}
+            org: d3hl
     - GoDoxy:
         icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
         href: {{HOMEPAGE_VAR_GODOXY_URL}} 
