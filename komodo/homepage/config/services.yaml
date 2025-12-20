@@ -36,23 +36,6 @@
             showStacks: true # optional, default: false
 ########################################################################################################################################################################################################
 - Domain:
-    - Authentik:
-        icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
-        href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
-        widget:
-            type: authentik
-            url: http://10.10.10.70:8175
-            key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}}
-#    - Technitium:
-#        icon: {{HOMEPAGE_VAR_DNS_ICON}} 
-#        href: {{HOMEPAGE_VAR_DNS_URL}}
-#        ping: {{HOMEPAGE_VAR_DNS_URL}}
-#        widget:
-#            type: technitium
-#            url: {{HOMEPAGE_VAR_DNS_URL}}
-#            key: {{HOMEPAGE_VAR_DNS_KEY}}
-#            range: {{HOMEPAGE_VAR_DNS_RANGE}}
     - Pangolin:
         icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
         href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
@@ -62,6 +45,26 @@
             url:  https://pangolin.d3adc3ii.cc 
             key: {{HOMEPAGE_VAR_PANGOLIN_KEY}}
             org: d3hl
+    - Authentik:
+        icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
+        href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+        widget:
+            type: authentik
+            url: http://10.10.10.70:8175
+            key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}}
+    - Omni:
+        icon: {{HOMEPAGE_VAR_OMNI_ICON}}
+        href: {{HOMEPAGE_VAR_OMNI_URL}}
+#    - Technitium:
+#        icon: {{HOMEPAGE_VAR_DNS_ICON}} 
+#        href: {{HOMEPAGE_VAR_DNS_URL}}
+#        ping: {{HOMEPAGE_VAR_DNS_URL}}
+#        widget:
+#            type: technitium
+#            url: {{HOMEPAGE_VAR_DNS_URL}}
+#            key: {{HOMEPAGE_VAR_DNS_KEY}}
+#            range: {{HOMEPAGE_VAR_DNS_RANGE}}
 #    - GoDoxy:
  #       icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
   #      href: {{HOMEPAGE_VAR_GODOXY_URL}} 
@@ -106,6 +109,9 @@
             #version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
             #bitratePrecision: 3 
             #fields: [ "systems", "up" ]
+    - Prtg:
+        icon: {{HOMEPAGE_VAR_PRTG_ICON}}
+        href: {{HOMEPAGE_VAR_PRTG_URL}} 
     - Pulse:
         icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
         href: {{HOMEPAGE_VAR_PULSEXT_URL}} 
@@ -113,10 +119,10 @@
      #   icon: sh-lunalytics-light 
       #  href: https://lunalytics.d3adc3ii.cc/ 
        # sitemonitor: https://lunalytics.d3adc3ii.cc/
-    - Zabbix:
-        icon: sh-zabbix-light 
-        href: https://zabbix.d3adc3ii.site/zabbix
-        sitemonitor: https://zabbix.d3adc3ii.site/zabbix 
+    #- Zabbix:
+     #   icon: sh-zabbix-light 
+      #  href: https://zabbix.d3adc3ii.site/zabbix
+       # sitemonitor: https://zabbix.d3adc3ii.site/zabbix 
     #- Wazuh:
      #   icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
       #  href: {{HOMEPAGE_VAR_WAZUH_URL}}
