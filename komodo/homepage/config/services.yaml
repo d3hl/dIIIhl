@@ -1,4 +1,4 @@
-- Infra Core:
+- Infra Cores:
     - PVE:
         icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
         href: https://pve.d3adc3ii.cc 
@@ -62,21 +62,21 @@
             url:  https://pangolin.d3adc3ii.cc 
             key: {{HOMEPAGE_VAR_PANGOLIN_KEY}}
             org: d3hl
-    - GoDoxy:
-        icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
-        href: {{HOMEPAGE_VAR_GODOXY_URL}} 
-        ping: {{HOMEPAGE_VAR_GODOXY_URL}}
+#    - GoDoxy:
+ #       icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
+  #      href: {{HOMEPAGE_VAR_GODOXY_URL}} 
+   #     ping: {{HOMEPAGE_VAR_GODOXY_URL}}
 ########################################################################################################################################################################################################
 - Network:
-    - NetAlertX:
-        icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
-        href: {{HOMEPAGE_VAR_NETALERTX_URL}}
-        ping: {{HOMEPAGE_VAR_NETALERTX_URL}}
-        widget:
-            type: netalertx
-            key: {{HOMEPAGE_VAR_NETALERTX_KEY}}
-            url: {{HOMEPAGE_VAR_NETALERTX_URL}}
-            fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
+  #  - NetAlertX:
+   #     icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
+    #    href: {{HOMEPAGE_VAR_NETALERTX_URL}}
+     #   ping: {{HOMEPAGE_VAR_NETALERTX_URL}}
+      #  widget:
+      #      type: netalertx
+       #     key: {{HOMEPAGE_VAR_NETALERTX_KEY}}
+        #    url: {{HOMEPAGE_VAR_NETALERTX_URL}}
+         #   fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
     - Netbox@HL:
         icon: {{HOMEPAGE_VAR_NETBOX_ICON}}
         href: {{HOMEPAGE_VAR_NETBOXHL_URL}}        
@@ -94,33 +94,33 @@
         href: {{HOMEPAGE_VAR_NAUTOBOT_URL}}        
 ########################################################################################################################################################################################################
 - Monitor:
-    - Beszel:
-        icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
-        href: {{HOMEPAGE_VAR_BESZEL_URL}}
-        sitemonitor: {{HOMEPAGE_VAR_BESZEL_URL}}
-        widget:
-            type: beszel
-            url: {{HOMEPAGE_VAR_BESZEL_URL}}
-            username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
-            password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
-            version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
+   # - Beszel:
+    #    icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
+     #   href: {{HOMEPAGE_VAR_BESZEL_URL}}
+      #  sitemonitor: {{HOMEPAGE_VAR_BESZEL_URL}}
+       # widget:
+            #type: beszel
+            #url: {{HOMEPAGE_VAR_BESZEL_URL}}
+            #username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+            #password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+            #version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
             #bitratePrecision: 3 
-            fields: [ "systems", "up" ]
+            #fields: [ "systems", "up" ]
     - Pulse:
         icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
         href: {{HOMEPAGE_VAR_PULSEXT_URL}} 
-    - Lunalytics:
-        icon: sh-lunalytics-light 
-        href: https://lunalytics.d3adc3ii.cc/ 
-        sitemonitor: https://lunalytics.d3adc3ii.cc/
+    #- Lunalytics:
+     #   icon: sh-lunalytics-light 
+      #  href: https://lunalytics.d3adc3ii.cc/ 
+       # sitemonitor: https://lunalytics.d3adc3ii.cc/
     - Zabbix:
         icon: sh-zabbix-light 
         href: https://zabbix.d3adc3ii.site/zabbix
         sitemonitor: https://zabbix.d3adc3ii.site/zabbix 
-    - Wazuh:
-        icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
-        href: {{HOMEPAGE_VAR_WAZUH_URL}}
-        ping: {{HOMEPAGE_VAR_WAZUH_URL}}
+    #- Wazuh:
+     #   icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
+      #  href: {{HOMEPAGE_VAR_WAZUH_URL}}
+       # ping: {{HOMEPAGE_VAR_WAZUH_URL}}
 ########################################################################################################################################################################################################
 - Backup: 
     - PBS: 
