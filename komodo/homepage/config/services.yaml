@@ -53,9 +53,9 @@
             type: authentik
             url: http://10.10.10.70:8175
             key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}}
-    - Omni:
-        icon: {{HOMEPAGE_VAR_OMNI_ICON}}
-        href: {{HOMEPAGE_VAR_OMNI_URL}}
+ #   - Omni:
+  #      icon: {{HOMEPAGE_VAR_OMNI_ICON}}
+   #     href: {{HOMEPAGE_VAR_OMNI_URL}}
 #    - Technitium:
 #        icon: {{HOMEPAGE_VAR_DNS_ICON}} 
 #        href: {{HOMEPAGE_VAR_DNS_URL}}
@@ -109,9 +109,9 @@
             #version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
             #bitratePrecision: 3 
             #fields: [ "systems", "up" ]
-    - Prtg:
-        icon: {{HOMEPAGE_VAR_PRTG_ICON}}
-        href: {{HOMEPAGE_VAR_PRTG_URL}} 
+ #   - Prtg:
+  #      icon: {{HOMEPAGE_VAR_PRTG_ICON}}
+   #     href: {{HOMEPAGE_VAR_PRTG_URL}} 
     - Pulse:
         icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
         href: {{HOMEPAGE_VAR_PULSEXT_URL}} 
