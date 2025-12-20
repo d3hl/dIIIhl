@@ -42,7 +42,7 @@ services:
     volumes:
       - ${CDATA}/1password-credentials.json:/home/opuser/.op/1password-credentials.json
       - "data:/home/opuser/.op/data"
-    restart: unless-stopped
+    restart: always
 
 volumes:
   data:
@@ -160,131 +160,29 @@ AUTHENTIK_ERROR_REPORTING__ENABLED=true
 ##
 
 [[stack]]
-name = "ente"
+name = "domotz"
 [stack.config]
 server = "kmd0"
-extra_args = ["--build"]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 file_contents = """
 services:
-  museum:
-    build:
-      context: ..
-    ports:
-      - 8080:8080 # Museum/API
-    depends_on:
-      postgres:
-        condition: service_healthy
-    env_file:
-      - .env
+  domotz-collector:
+    image: "domotz/domotz-collector"
+    network_mode: "host"
+    container_name: domotz-collector
     volumes:
-      - ./museum.yaml:/museum.yaml:ro
-      - ./data:/data:ro
-
-  # Resolve "localhost:3200" in the museum container to the minio container.
-  socat:
-    image: alpine/socat
-    network_mode: service:museum
-    depends_on: [museum]
-    command: "TCP-LISTEN:3200,fork,reuseaddr TCP:minio:3200"
-
-  postgres:
-    image: postgres:15-trixie
-    env_file:
-      - .env
-    # Wait for postgres to accept connections before starting museum.
-    healthcheck:
-      test: pg_isready -q -d ${POSTGRES_DB} -U ${POSTGRES_USER}
-      start_period: 30s
-      start_interval: 1s
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-
-  minio:
-    image: minio/minio
-    ports:
-      - 3200:3200 # MinIO API
-      # - 3201:3201 # MinIO Console (uncomment to access externally)
-    env_file:
-      - .env
-    command: server /data --address ":3200" --console-address ":3201"
-    volumes:
-      - minio-data:/data
-    post_start:
-      - command: |
-          sh -c '
-          #!/bin/sh
-
-          while ! mc alias set h0 http://minio:3200 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD} 2>/dev/null
-          do
-            echo "Waiting for minio..."
-            sleep 0.5
-          done
-
-          cd /data
-
-          mc mb -p b2-eu-cen
-          mc mb -p wasabi-eu-central-2-v3
-          mc mb -p scw-eu-fr-v3
-          '
-
-  ente-web:
-    build:
-      context: ../..
-      dockerfile: web/Dockerfile
-    ports:
-      - 3000:3000
-      - 3001:3001
-      - 3002:3002
-      - 3003:3003
-      - 3004:3004
-      - 3005:3005
-      - 3006:3006
-    environment:
-      - NODE_ENV=development
-    env_file:
-      - .env
-
-volumes:
-  postgres-data:
-  minio-data:
-"""
-environment = """
-# Copy this file to .env in the same directory in which this file is present
-# This file contains the environment variables needed for Ente's cluster to run properly.
-# This file is split based on services declared in Docker Compose file
-# 
-# Service: Postgres
-# This is used for storing data in database pertaining to collections, files, users, subscriptions, etc.
-# These credentials are needed for accessing the database via Museum.
-# Please set a strong password for accessing the database.
-# Enter these values in museum.yaml file under `db`.
-# This need not be defined if using external DB (i. e. no Compose service for PostgreSQL is used)
-POSTGRES_USER=pguser
-POSTGRES_PASSWORD=rwt8ZHFubg8gyp0vra
-POSTGRES_DB=ente_db
-
-# Service: MinIO
-# This is used for MinIO object storage service that's shipped by default with the compose file
-# to reduce need for an external S3-compatible bucket for quick testing.
-# It is recommended to use an external bucket for long-term usage.
-# The credentials required for accessing the object storage is documented below.
-# It is not needed to configure these variables if you are using an external bucket
-# Enter the user value into key and password in secret for buckets in museum.yaml under `s3` section.
-MINIO_ROOT_USER=-
-MINIO_ROOT_PASSWORD=vgJXVKoXcVtfkRXnxHM6M8LxoE7Amra
-# Service: Web
-# This is used for configuring public albums, API endpoints, etc.
-# Replace the below endpoints to the correct subdomains of your choice.
-ENTE_API_ORIGIN=http://localhost:8080
-ENTE_ALBUMS_ORIGIN=https://localhost:3002
-ENTE_PHOTOS_ORIGIN=http://localhost:3000
+      - /mnt/cFS/appdata/domotz/config/domotz.json:/opt/domotz/etc/domotz.json
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
 """
 
 ##
 
 [[stack]]
 name = "homepage"
-tags = ["kmd1"]
 [stack.config]
 server = "kmd0"
 links = ["https://homepage.d3adc3ii.cc"]
@@ -367,9 +265,6 @@ HOMEPAGE_VAR_KOMODO_KEY=K-69zvNUYoxn5KREW5nVpLqeLa741U7NHmPXoEx4S1
 HOMEPAGE_VAR_KOMODO_SECRET=S-5hhHrLWPfLHPJCRGBMV2auU7QsqfUaGrTJYuOW9M
 
 #### DOMAIN ####################################################################################################################################################################################################
-# OMNI
-HOMEPAGE_VAR_OMN_ICON= "/icons/pangolin-light.png"
-HOMEPAGE_VAR_OMNI_URL= "https://omni.d3hl.site"
 # Authentik
 HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik-light.png"
 HOMEPAGE_VAR_AUTHENTIK_URL= "https://auth.d3adc3ii.cc"
@@ -433,9 +328,6 @@ HOMEPAGE_VAR_APPRISE_URL= "http://192.168.2.33:8000"
 # Healthchecks
 HOMEPAGE_VAR_HEALTHCHECKS_ICON= "/icons/healthchecks-light.png"
 HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
-# PRTG
-HOMEPAGE_VAR_PRTG_ICON= "/icons/prtg-light.png"
-HOMEPAGE_VAR_PRTG_URL= "http://prtg.d3adc3ii.site"
 
 #### BACKUP ####################################################################################################################################################################################################
 # PBS
@@ -672,6 +564,9 @@ DB_DATABASE_NAME=immich
 name = "kestra"
 [stack.config]
 server = "kmd1"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 file_contents = """
 volumes:
   postgres-data:
@@ -709,6 +604,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp/kestra-wd:/tmp/kestra-wd
     env_file: .env
+    restart: unless-stopped
     environment:
       KESTRA_CONFIGURATION: |
         datasources:
@@ -740,7 +636,6 @@ services:
     depends_on:
       postgres:
         condition: service_started
-        restart: unless-stopped
 """
 environment = """
 GH_USERNAME=[[GH_USERNAME]]
@@ -854,23 +749,122 @@ environment = """
 ##
 
 [[stack]]
-name = "omni-infra-provider-bare-metal"
+name = "patchmon"
 [stack.config]
-server = "kmd0"
+server = "kmd1"
+links = ["https://patchmon.d3adc3ii.cc"]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 file_contents = """
+# Change 3 Passwords in this file:
+# Generate passwords with 'openssl rand -hex 64'
+# 
+# 1. The database password in the environment variable POSTGRES_PASSWORD
+# 2. The redis password in the command redis-server --requirepass your-redis-password-here
+# 3. The jwt secret in the environment variable JWT_SECRET
+#
+#
+# Change 2 URL areas in this file:
+# 1. Setup your CORS_ORIGIN to what url you will use for accessing PatchMon frontend url
+# 2. Setup your SERVER_PROTOCOL, SERVER_HOST and SERVER_PORT to what you will use for linux agents to access PatchMon
+#
+# This is generally the same as your CORS_ORIGIN url , in some cases it might be different - SERVER_* variables are used in the scripts for Server connection.
+# You can also change this in the front-end but in the case of docker-compose - it is overwritten by the variables set here.
+
+
+name: patchmon
+
 services:
-    omni-infra-provider-bare-metal:
-        container_name: omni-bare-metal-infra-provider
-        restart: always
-        network_mode: host
-        env_file:
-          - .env
-        image: ghcr.io/siderolabs/omni-infra-provider-bare-metal:v0.1.0
-        command: --api-advertise-address=10.10.10.211
+  database:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: patchmon_db
+      POSTGRES_USER: patchmon_user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U patchmon_user -d patchmon_db"]
+      interval: 3s
+      timeout: 5s
+      retries: 7
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --requirepass nec9vhn2kht7davUGV # CHANGE THIS TO YOUR REDIS PASSWORD
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "--no-auth-warning", "-a", "nec9vhn2kht7dav*UGV", "ping"] # CHANGE THIS TO YOUR REDIS PASSWORD
+      interval: 3s
+      timeout: 5s
+      retries: 7
+
+  backend:
+    image: ghcr.io/patchmon/patchmon-backend:latest
+    restart: unless-stopped
+    # See PatchMon Docker README for additional environment variables and configuration instructions
+    environment:
+      LOG_LEVEL: info
+      DATABASE_URL: postgresql://patchmon_user:${POSTGRES_PASSWORD}@database:5432/patchmon_db
+      JWT_SECRET: ${JWT_SECRET}
+      SERVER_PROTOCOL: http
+      SERVER_HOST: localhost
+      SERVER_PORT: 3000
+      CORS_ORIGIN: ${CORS_ORIGIN}
+      # Database Connection Pool Configuration (Prisma)
+      DB_CONNECTION_LIMIT: 30
+      DB_POOL_TIMEOUT: 20
+      DB_CONNECT_TIMEOUT: 10
+      DB_IDLE_TIMEOUT: 300
+      DB_MAX_LIFETIME: 1800
+      # Rate Limiting (times in milliseconds)
+      RATE_LIMIT_WINDOW_MS: 900000
+      RATE_LIMIT_MAX: 5000
+      AUTH_RATE_LIMIT_WINDOW_MS: 600000
+      AUTH_RATE_LIMIT_MAX: 500
+      AGENT_RATE_LIMIT_WINDOW_MS: 60000
+      AGENT_RATE_LIMIT_MAX: 1000
+      # Redis Configuration
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: nec9vhn2kht7davUGV
+      REDIS_DB: 0
+    volumes:
+      - ${APP_DATA}/agents:/app/agents
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    image: ghcr.io/patchmon/patchmon-frontend:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:
 """
 environment = """
-OMNI_ENDPOINT=https://omni.d3hl.site
-OMNI_SERVICE_ACCOUNT_KEY=eyJuYW1lIjoiYmFyZS1tZXRhbCIsInBncF9rZXkiOiItLS0tLUJFR0lOIFBHUCBQUklWQVRFIEtFWSBCTE9DSy0tLS0tXG5cbnhWZ0VhU3NFWVJZSkt3WUJCQUhhUnc4QkFRZEFlWHQ5N0pydlRBZWR6cGtSTGZXc1d0ekhwUld2QzNMbVxuOHV1RmdVL1BIUTBBQVFDZXlycXpsUTVvR1oveGwvbk1uTXBYcXIxMFpVdXR0RUlQZU9sd1dMMnZseElNXG56VG84WW1GeVpTMXRaWFJoYkVCcGJtWnlZUzF3Y205MmFXUmxjaTV6WlhKMmFXTmxZV05qYjNWdWRDNXZcbmJXNXBMbk5wWkdWeWJ5NWtaWFkrd3NBWkJCTVdDZ0NMQllKcEt3UmhCWWtCNFRPQUF3c0pCd2tRQThoMlxuenY3Um9oeEZGQUFBQUFBQUhBQWdjMkZzZEVCdWIzUmhkR2x2Ym5NdWIzQmxibkJuY0dwekxtOXlaN2M4XG5WYlF2dVAyclg5T0NlUk4xN1BPNS9KWkRYcW9rd1NnK05tT0c2UFFDQlJVSUNnNE1CQllDQUFFQ0dRRUNcbm13TUNIZ0VXSVFSaC80aDdsMnZVTjZxZXJ1RUR5SGJPL3RHaUhBQUFsYUFCQUtOTWJyV2tIY29tSzJQMVxuOXVpd1FzbWxzaVJhaGRhVk9JUk9UQ2xnNjYxakFRRHBlNno4YjU5RTVRTWo0L0ltWEw5UWJXTHdNRkliXG5WekdHWHNWblphOGFEc2RkQkdrckJHRVNDaXNHQVFRQmwxVUJCUUVCQjBEQjRFM3hMazNIWGtHL2M2UWtcblNvUEJlNEpqTkkrVTBLTVlqMHRoZEd6ZmZRTUJDQWNBQVA5bXRkTXZZMW54cWJwNGNJOVorRFRxcGZSRFxud3ZGbWMxYTBRTm5pTEIvajBCTjl3c0FFQkJnV0NnQjJCWUpwS3dSaEJZa0I0VE9BQ1JBRHlIYk8vdEdpXG5IRVVVQUFBQUFBQWNBQ0J6WVd4MFFHNXZkR0YwYVc5dWN5NXZjR1Z1Y0dkd2FuTXViM0pucERuTzNYVldcbnE1QkNhQjMveTgvZW82MUR2M3lqQ2lvVFB0bjBlVHhkK1IwQ213d1dJUVJoLzRoN2wydlVONnFlcnVFRFxueUhiTy90R2lIQUFBMjNzQS9qS3FpSlhTeGlCVU9vSkxhRTUvY05oNkNaQnl3aW8vQ1d0RDltaFJCUWdtXG5BUDBRTDVXa0gxRllyelZFN1pnNHdYanZkRUJvT0p6MTBLZC81alMyaVBkN0J3PT1cbj1wUC9wXG4tLS0tLUVORCBQR1AgUFJJVkFURSBLRVkgQkxPQ0stLS0tLSJ9
+APP_DATA=/mnt/cFS/appdata/patchmon
+CORS_ORIGIN= https://patchmon.d3adc3ii.cc
+PGID=1000
+PUID=1000
+POSTGRES_DB=patchmon_db
+POSTGRES_USER=patchmon_user
+POSTGRES_PASSWORD=c3fdKLUcYnTmHkpaHNDGiWNGUjofsJZ
+DATABASE_URL=postgresql://patchmon_user:c3fdKLUcYnTmHkpaHNDGiWNGUjofsJZ@vrc@database:5432/patchmon_db
+REDIS_PASSWORD=nec9vhn2kht7davUGV
+JWT_SECRET=e595840adb6788343dbf0f778f483c4f78be1af65484fc5f290cc4165e7d595a99fcafb8f012ed8fc720dddeb54662086ec644b11f52093e2bb64bc4212088b9
 """
 
 ##
@@ -966,6 +960,100 @@ PULSE_AUTH_PASS=abcd
 ##
 
 [[stack]]
+name = "scanopy"
+[stack.config]
+server = "kmd1"
+file_contents = """
+name: scanopy
+
+x-scanopy-env: &scanopy-env
+  SCANOPY_LOG_LEVEL: ${SCANOPY_LOG_LEVEL:-info}
+  SCANOPY_SERVER_PORT: ${SCANOPY_SERVER_PORT:-60072}
+  SCANOPY_DAEMON_PORT: ${SCANOPY_DAEMON_PORT:-60073}
+
+services:
+  daemon:
+    image: ghcr.io/scanopy/scanopy/daemon:latest
+    container_name: scanopy-daemon
+    network_mode: host
+    privileged: true
+    restart: unless-stopped
+    ports:
+      - "${SCANOPY_DAEMON_PORT:-60073}:${SCANOPY_DAEMON_PORT:-60073}"
+    environment:
+      <<: *scanopy-env
+      SCANOPY_SERVER_URL: ${SCANOPY_SERVER_URL:-http://127.0.0.1:60072}
+      SCANOPY_PORT: ${SCANOPY_DAEMON_PORT:-60073}
+      SCANOPY_BIND_ADDRESS: ${SCANOPY_BIND_ADDRESS:-0.0.0.0}
+      SCANOPY_NAME: ${SCANOPY_NAME:-scanopy-daemon}
+      SCANOPY_HEARTBEAT_INTERVAL: ${SCANOPY_HEARTBEAT_INTERVAL:-30}
+      SCANOPY_MODE: ${SCANOPY_MODE:-Push}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:${SCANOPY_DAEMON_PORT:-60073}/api/health || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+    volumes:
+      - daemon-config:/root/.config/daemon
+      # Comment out the line below to disable docker discovery
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: scanopy
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - scanopy
+
+  server:
+    image: ghcr.io/scanopy/scanopy/server:latest
+    ports:
+      - "${SCANOPY_SERVER_PORT:-60072}:${SCANOPY_SERVER_PORT:-60072}"
+    environment:
+      <<: *scanopy-env
+      SCANOPY_DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-password}@postgres:5432/scanopy
+      SCANOPY_WEB_EXTERNAL_PATH: /app/static
+      SCANOPY_PUBLIC_URL: ${SCANOPY_PUBLIC_URL:-http://localhost:${SCANOPY_SERVER_PORT:-60072}}
+      # How server reaches integrated daemon
+      # 172.17.0.1 is Docker's default bridge gateway. If your's is different, make sure to change it.
+      SCANOPY_INTEGRATED_DAEMON_URL: http://172.17.0.1:${SCANOPY_DAEMON_PORT:-60073}
+    volumes:
+      - ./data:/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      daemon:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - scanopy
+
+volumes:
+  postgres_data:
+  daemon-config:
+
+networks:
+  scanopy:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.31.0.0/16
+          gateway: 172.31.0.1
+"""
+
+##
+
+[[stack]]
 name = "twingate"
 [stack.config]
 server = "kmd1"
@@ -1025,6 +1113,25 @@ name = "Stage 1"
 enabled = true
 executions = [
   { execution.type = "GlobalAutoUpdate", execution.params = {}, enabled = true }
+]
+
+##
+
+[[procedure]]
+name = "pull repo + redeploy homepage"
+
+[[procedure.config.stage]]
+name = "Pull Repo"
+enabled = true
+executions = [
+  { execution.type = "PullRepo", execution.params.repo = "dIIIhl", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Reploy Homepage"
+enabled = true
+executions = [
+  { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
 ]
 
 ##
