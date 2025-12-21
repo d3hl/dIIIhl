@@ -18,7 +18,7 @@ disableCollapse: true
 # Layout Configuration
 layout:
   # HOME Tab Items
-  Infra Core:
+  Infra Cores:
       style: column
       tab: Home
       icon: mdi-file-multiple
