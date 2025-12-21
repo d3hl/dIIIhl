@@ -112,9 +112,6 @@
  #   - Prtg:
   #      icon: {{HOMEPAGE_VAR_PRTG_ICON}}
    #     href: {{HOMEPAGE_VAR_PRTG_URL}} 
-    - Pulse:
-        icon: {{HOMEPAGE_VAR_PULSEXT_ICON}}
-        href: {{HOMEPAGE_VAR_PULSEXT_URL}} 
     #- Lunalytics:
      #   icon: sh-lunalytics-light 
       #  href: https://lunalytics.d3adc3ii.cc/ 
