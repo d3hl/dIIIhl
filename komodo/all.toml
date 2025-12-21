@@ -263,9 +263,7 @@ HOMEPAGE_VAR_KOMODO_URL= "https://komodo.d3adc3ii.cc"
 HOMEPAGE_VAR_KOMODO_IPURL= "http://10.10.10.25:9120"
 HOMEPAGE_VAR_KOMODO_KEY=K-69zvNUYoxn5KREW5nVpLqeLa741U7NHmPXoEx4S1
 HOMEPAGE_VAR_KOMODO_SECRET=S-5hhHrLWPfLHPJCRGBMV2auU7QsqfUaGrTJYuOW9M
-#Omni
-HOMEPAGE_VAR_OMNI_ICON= "/icons/omni.png"
-HOMEPAGE_VAR_OMNI_URL= "https://omni.d3hl.site"
+
 #### DOMAIN ####################################################################################################################################################################################################
 # Authentik
 HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik-light.png"
@@ -892,11 +890,9 @@ services:
     depends_on:
       - phpipam-mariadb
     labels:
-      # Public Resource Configuration
       - pangolin.public-resources.phpipam.name=phpipam
       - pangolin.public-resources.phpipam.full-domain=phpipam.d3adc3ii.cc
       - pangolin.public-resources.phpipam.protocol=http
-      #auth
       - pangolin.public-resources.phpipam.auth=sso-enabled
       - pangolin.public-resources.phpipam.auth.sso-roles=Admin
       - pangolin.public-resources.phpipam.healthcheck=true
@@ -929,9 +925,9 @@ IPAM_DATABASE_HOST=phpipam-mariadb
 IPAM_DATABASE_PASS=[[IPAM_DATABASE_PASS]]
 IPAM_DATABASE_WEBHOST=%
 SCAN_INTERVAL=1h
-APPDATA=/mnt/cFS/appdata/PHPiPAM
+APPDATA=/mnt/cFS/appdata/phpipam
 MYSQL_USER: 'd3'
-MYSQL_ROOT_PASSWORD=taolavoodch123
+MYSQL_ROOT_PASSWORD=[[IPAM_DATABASE_PASS]]
 """
 
 ##
