@@ -377,6 +377,9 @@ HOMEPAGE_VAR_GUACAMOLEEXT_URL= "https://guaca.d3adc3ii.cc/guacamole"
 # SHELLHUB
 HOMEPAGE_VAR_SHELLHUB_ICON= "sh-shellhub-light"
 HOMEPAGE_VAR_SHELLHUB_URL= "http://192.168.2.33"
+# KESTRA
+HOMEPAGE_VAR_KESTRA_ICON= "st-kestra-light.png"
+HOMEPAGE_VAR_KESTRA_URL= "https://kestra.d3adc3ii.site"
 
 #### LOGGING ####################################################################################################################################################################################################
 # Grafana

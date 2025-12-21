@@ -38,7 +38,7 @@ layout:
   Media:
       tab: Home
       style: column
-  Access:
+  Automation:
       tab: Home
       style: column
   Logging:
