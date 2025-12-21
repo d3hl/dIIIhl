@@ -264,6 +264,11 @@ HOMEPAGE_VAR_KOMODO_IPURL= "http://10.10.10.25:9120"
 HOMEPAGE_VAR_KOMODO_KEY=K-69zvNUYoxn5KREW5nVpLqeLa741U7NHmPXoEx4S1
 HOMEPAGE_VAR_KOMODO_SECRET=S-5hhHrLWPfLHPJCRGBMV2auU7QsqfUaGrTJYuOW9M
 
+# OMNI
+HOMEPAGE_VAR_OMNI_ICON= "/icons/omni.png"
+HOMEPAGE_VAR_OMNI_URL= "https://omni.d3hl.site"
+
+
 #### DOMAIN ####################################################################################################################################################################################################
 # Authentik
 HOMEPAGE_VAR_AUTHENTIK_ICON= "/icons/authentik-light.png"
@@ -415,9 +420,6 @@ HOMEPAGE_VAR_KARAKEEP_URL= "https://kara.d3adc3ii.cc"
 # Wallos
 HOMEPAGE_VAR_WALLOS_ICON= "/icons/wallos-light.png"
 HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
-# Ommni Tools
-HOMEPAGE_VAR_OMNITOOLS_ICON= "sh-omnitools-light"
-HOMEPAGE_VAR_OMNITOOLS_URL= "https://omnitools.d3adc3ii.cc"
 
 #### TOOLS ####################################################################################################################################################################################################
 
