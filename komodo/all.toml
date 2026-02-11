@@ -735,16 +735,20 @@ services:
     ports:
       - "4533:4533"
     restart: unless-stopped
-    environment:
+    env_file:
+      - .env
+    #environment:
       # Optional: put your config options customization here. Examples:
       # ND_LOGLEVEL: debug
     volumes:
       - ${CAPP}/navidrome/data:/data
-      - ${ZAPP}/navidrome/library:/music:ro"
+      - ${ZAPP}/Music:/music:ro
 """
 environment = """
 CAPP=/mnt/cFS/appdata
-ZAPP=/mnt/zApps/navidrome/library
+ZAPP=/mnt/zApps/
+ND_LASTFM_APIKEY=adfca2220d61f7db89301eefd781e1a0
+ND_LASTFM_SECRET=e77025bb0c5f619c11f3dc3d5566fbb6
 """
 
 ##
@@ -1148,6 +1152,35 @@ TWINGATE_NETWORK=d3net
 TWINGATE_ACCESS_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6Ii1NeDFKWVRyS3gzQjZ0T0NuMUFoX3J2OTdRNERzYksybUVuekZHczNnWG8iLCJ0eXAiOiJEQVQifQ.eyJhdWRzIjpudWxsLCJudCI6IkFOIiwiYWlkIjoiNjcxOTkxIiwiZGlkIjoiMjc1NTg0MyIsInJudyI6MTc2NDU3MTE1NSwianRpIjoiNDI4NDY3ZTgtODEwNy00ZmY3LThlNmQtNzgxNWI0ZGMxMmFiIiwiaXNzIjoidHdpbmdhdGUiLCJhdWQiOiJkM25ldCIsImV4cCI6MTc2NDU3NDUxMSwiaWF0IjoxNzY0NTcwOTExLCJ2ZXIiOiI0IiwidGlkIjoiMTAzNTY0Iiwicm5ldGlkIjoiMTM1OTMxIn0.CdZaPpe231AQ5pp2soFm5jpcRavScNLmv2YV4Xbn9zESR-f1FzUcB44hgoiLRm3zKzL-YJQR7XinfmYOx4PGmg
 TWINGATE_REFRESH_TOKEN=Ecgu9VB-ikKlX9bAU1ntj-36WHVbIRul_mM2i3UxrkBitEPEWlUUO0xYUesxHLB01aGrl02FfeJ4KF7jW7haX4BifZiDdrf5B11GOkny69rfw05TVMXYCsgjb2yI9Zy9EFscQQ
 TWINGATE_LABEL_HOSTNAME="`hostname`"
+"""
+
+##
+
+[[stack]]
+name = "yubal"
+[stack.config]
+server = "kmd1"
+file_contents = """
+# compose.yaml
+services:
+  yubal:
+    image: ghcr.io/guillevc/yubal:latest
+    container_name: yubal
+    user: 1000:1000
+    ports:
+      - 8000:8000
+    environment:
+      YUBAL_SCHEDULER_CRON: "0 0 * * *"
+      YUBAL_DOWNLOAD_UGC: false
+      YUBAL_TZ: Asia/Singapore
+    volumes:
+      - ${ZAPP}/Music/:/app/data
+      - ${CAPP}/yubal/config:/app/config
+    restart: unless-stopped
+"""
+environment = """
+ZAPP=/mnt/zApps
+CAPP=/mnt/cFS/appdata
 """
 
 ##
