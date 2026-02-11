@@ -47,28 +47,28 @@ layout:
   Applications:
       tab: Home
       style: column
-  Tools:
-      tab: Home
-      style: column
-  Extras:
-      tab: Home
-      style: column
-  IPMI:
-      tab: BMC
-      style: column
-  Office Core:
-      tab: Corp
-      style: column
-  Corp Systems:
-      tab: Corp
-      style: column
-  Fortigate:
-    tab: Corp
-    style: column
-  Corp Network:
-      tab: Corp
-      style: column
-  Corp Cloud:
-      tab: Corp
-      style: column
+#  Tools:
+#      tab: Home
+#      style: column
+#  Extras:
+#      tab: Home
+ #     style: column
+  #IPMI:
+   #   tab: BMC
+    #  style: column
+  #Office Core:
+   #   tab: Corp
+    #  style: column
+  #Corp Systems:
+   #   tab: Corp
+    #  style: column
+  #Fortigate:
+   # tab: Corp
+    #style: column
+  #Corp Network:
+   #   tab: Corp
+    #  style: column
+  #Corp Cloud:
+   #   tab: Corp
+    #  style: column
     
