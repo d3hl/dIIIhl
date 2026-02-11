@@ -41,15 +41,15 @@ layout:
   Automation:
       tab: Home
       style: column
-  Logging:
-      tab: Home
-      style: column
-  Applications:
-      tab: Home
-      style: column
-  Tools:
-      tab: Home
-      style: column
+#  Logging:
+#      tab: Home
+ #     style: column
+#  Applications:
+ #     tab: Home
+  #    style: column
+  #Tools:
+   #   tab: Home
+    #  style: column
   #Extras:
    #   tab: Home
     #  style: column
