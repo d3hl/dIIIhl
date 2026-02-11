@@ -29,9 +29,9 @@ layout:
   Network:
       tab: Home
       style: column
-  Monitor:
-      tab: Home
-      style: column
+#  Monitor:
+ #     tab: Home
+  #    style: column
 #  Backup:
  #     tab: Home
   #    style: column
