@@ -22,31 +22,31 @@ layout:
       style: column
       tab: Home
       icon: mdi-file-multiple
-  Domain:
-      style: column
-      tab: Home
-      icon: mdi-multimedia
-  Network:
-      tab: Home
-      style: column
-  Monitor:
-      tab: Home
-      style: column
-  Backup:
-      tab: Home
-      style: column
-  Media:
-      tab: Home
-      style: column
-  Automation:
-      tab: Home
-      style: column
-  Logging:
-      tab: Home
-      style: column
-  Applications:
-      tab: Home
-      style: column
+#  Domain:
+#      style: column
+ #     tab: Home
+  #    icon: mdi-multimedia
+  #Network:
+   #   tab: Home
+    #  style: column
+  #Monitor:
+   #   tab: Home
+    #  style: column
+  #Backup:
+   #   tab: Home
+    #  style: column
+  #Media:
+   #   tab: Home
+    #  style: column
+  #Automation:
+   #   tab: Home
+    #  style: column
+  #Logging:
+   #   tab: Home
+    #  style: column
+  #Applications:
+   #   tab: Home
+    #  style: column
 #  Tools:
 #      tab: Home
 #      style: column
