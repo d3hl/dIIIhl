@@ -96,3 +96,216 @@
   #      icon: {{HOMEPAGE_VAR_NAUTOBOT_ICON}}
   #      href: {{HOMEPAGE_VAR_NAUTOBOT_URL}}        
 ##############################################################################################################################################################################################
+########################################################################################################################################################################################################
+- Monitor:
+   # - Beszel:
+    #    icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
+     #   href: {{HOMEPAGE_VAR_BESZEL_URL}}
+      #  sitemonitor: {{HOMEPAGE_VAR_BESZEL_URL}}
+       # widget:
+            #type: beszel
+            #url: {{HOMEPAGE_VAR_BESZEL_URL}}
+            #username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
+            #password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
+            #version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
+            #bitratePrecision: 3 
+            #fields: [ "systems", "up" ]
+ #   - Prtg:
+  #      icon: {{HOMEPAGE_VAR_PRTG_ICON}}
+   #     href: {{HOMEPAGE_VAR_PRTG_URL}} 
+    #- Lunalytics:
+     #   icon: sh-lunalytics-light 
+      #  href: https://lunalytics.d3adc3ii.cc/ 
+       # sitemonitor: https://lunalytics.d3adc3ii.cc/
+    #- Zabbix:
+     #   icon: sh-zabbix-light 
+      #  href: https://zabbix.d3adc3ii.site/zabbix
+       # sitemonitor: https://zabbix.d3adc3ii.site/zabbix 
+    #- Wazuh:
+     #   icon: {{HOMEPAGE_VAR_WAZUH_ICON}}
+      #  href: {{HOMEPAGE_VAR_WAZUH_URL}}
+       # ping: {{HOMEPAGE_VAR_WAZUH_URL}}
+########################################################################################################################################################################################################
+- Backup: 
+    - PBS: 
+        icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+        href: {{HOMEPAGE_VAR_PBS_URL}}
+        ping: {{HOMEPAGE_VAR_PBS_URL}} 
+        widget:
+            type: proxmoxbackupserver
+            url: {{HOMEPAGE_VAR_PBS_URL}} 
+            username: {{HOMEPAGE_VAR_PBS_USER}}
+            password: {{HOMEPAGE_VAR_PBS_SECRET}}
+            #datastore: datastore_name #optional; if ommitted, will display a combination of all datastores used / total    
+    - Backrest:
+        icon: {{HOMEPAGE_VAR_BACKREST_ICON}}
+        href: {{HOMEPAGE_VAR_BACKREST_URL}}
+        ping: {{HOMEPAGE_VAR_BACKREST_URL}}
+    - remote-backups:
+        icon: {{HOMEPAGE_VAR_REMOTEBACKUP_ICON}}
+        href: {{HOMEPAGE_VAR_REMOTEBACKUP_URL}}
+
+########################################################################################################################################################################################################
+- Media:
+    - Jellyfin:
+        icon: {{HOMEPAGE_VAR_JELLY_ICON}}
+        href: {{HOMEPAGE_VAR_JELLY_URL}}
+        ping: {{HOMEPAGE_VAR_JELLY_URL}}
+        widget:
+            type: jellyfin
+            url: {{HOMEPAGE_VAR_JELLY_URL}} 
+            key: {{HOMEPAGE_VAR_JELLY_KEY}}
+            enableBlock: {{HOMEPAGE_VAR_JELLY_ENABLEBLOCK}}
+            enableNowPlaying: {{HOMEPAGE_VAR_JELLY_NOWPLAY}}
+    - Immich:
+        icon: {{HOMEPAGE_VAR_IMMICH_ICON}} 
+        href: {{HOMEPAGE_VAR_IMMICH_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_IMMICH_URL}}
+        widget:
+            type: immich
+            url: {{HOMEPAGE_VAR_IMMICH_URL}} 
+            key: {{HOMEPAGE_VAR_IMMICH_KEY}}
+            version: {{HOMEPAGE_VAR_IMMICH_VERSION}}
+            fields:  {{HOMEPAGE_VAR_IMMICH_FIELDS}}  
+    - Sh:
+        icon: {{HOMEPAGE_VAR_STASH_ICON}}
+        href: {{HOMEPAGE_VAR_STASH_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_STASH_URL}}
+        widget:
+            type: stash
+            url: {{HOMEPAGE_VAR_STASH_URL}}
+            stashapikey: {{HOMEPAGE_VAR_STASH_API}}
+
+########################################################################################################################################################################################################
+- Automation:
+    - Kestra:
+        icon: {{HOMEPAGE_VAR_KESTRA_ICON}}
+        href: {{HOMEPAGE_VAR_KESTRA_URL}}
+    #- Termix:
+########################################################################################################################################################################################################
+- Logging:
+    - Grafana Cloud:
+        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+        href: {{HOMEPAGE_VAR_GRAFANAC_URL}}
+    - Grafana:
+        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+        href: {{HOMEPAGE_VAR_GRAFANA_URL}}
+    - InfluxDB:
+        icon: {{HOMEPAGE_VAR_INFLUX_ICON}}
+        href: {{HOMEPAGE_VAR_INFLUX_URL}}
+    - Dozzle:
+        icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
+        href: {{HOMEPAGE_VAR_DOZZLE_URL}}
+    - Scrutiny:
+        icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
+        href: {{HOMEPAGE_VAR_SCRUTINY_URL}}     
+
+########################################################################################################################################################################################################
+- Applications:
+    #- Karakeep:
+    - Actual:
+        icon: {{HOMEPAGE_VAR_ACTUAL_ICON}}
+        href: {{HOMEPAGE_VAR_ACTUAL_URL}}
+    - SteamentSensei:
+        icon: {{HOMEPAGE_VAR_SENSEI_ICON}}
+        href: {{HOMEPAGE_VAR_SENSEI_URL}} 
+
+    - nzbget:
+        icon: {{HOMEPAGE_VAR_NZBGET_ICON}}
+        href: {{HOMEPAGE_VAR_NZBGET_URL}}
+        ping: {{HOMEPAGE_VAR_NZBGET_URL}}
+    - wallos:
+        icon: {{HOMEPAGE_VAR_WALLOS_ICON}} 
+        href: {{HOMEPAGE_VAR_WALLOS_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_WALLOS_URL}}
+    - Omni-tools:
+        icon: {{HOMEPAGE_VAR_OMNITOOLS_ICON}} 
+        href: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
+    - Apprise-API:
+        icon: {{HOMEPAGE_VAR_APPRISE_ICON}}
+        href: {{HOMEPAGE_VAR_APPRISE_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_APPRISE_URL}}
+    - Semaphore:
+        icon: {{HOMEPAGE_VAR_SEMAPHORE_ICON}}
+        href: {{HOMEPAGE_VAR_SEMAPHORE_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_SEMAPHORE_URL}}
+
+########################################################################################################################################################################################################
+### CORP TAB ###    
+- Office Core:
+    - PVECORP:
+        icon: {{HOMEPAGE_VAR_PROXMOX_ICON}} 
+        href: {{HOMEPAGE_VAR_PVECORP_URL}} 
+    - Komodocorp:
+        icon: {{HOMEPAGE_VAR_KOMODO_ICON}} 
+        href: {{HOMEPAGE_VAR_KOMODOCORP_URL}} 
+    - Fenrus:
+        icon: {{HOMEPAGE_VAR_FENRUS_ICON}} 
+        href: {{HOMEPAGE_VAR_FENRUS_URL}} 
+- Corp Systems:
+    - Unimus:
+        icon: {{HOMEPAGE_VAR_UNIMUS_ICON}} 
+        href: {{HOMEPAGE_VAR_UNIMUS_URL}} 
+    - Wordpress:
+        icon: wordpress
+        href: https://ntn.com.sg/wp-login.php
+########################################################################################################################################################################################################
+### CLOUD TAB ### 
+- Fortigate:
+    - FortiGate Cloud:
+        icon: fortinet 
+        href: https://portal.ca.fortigate.forticloud.com/ui/dashboard/319895 
+    - Fortigate-100F:
+        icon: fortinet 
+        href: https://fw.ntn.com.sg:7443 
+    - Fortinate-100F-D3:
+        icon: fortinet 
+        href: https://fw.d3hl.site:7443
+    - FortiAnalyzer:
+        icon: fortinet 
+        href: http://10.203.1.16
+    - FortiEMS:
+        icon: fortinet
+        href: http://ems.ntn.com.sg
+- Corp Network:
+    - Cisco:
+        icon: cisco 
+        href: https://10.203.1.254/webui/
+    - Synology:
+        icon: synology 
+        href: http://10.203.1.111:5000 
+    - Crestron:
+        icon: https://static.wixstatic.com/media/007dac_d97541360d5849a492f61055994b510e~mv2.png/v1/fill/w_281,h_281,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/007dac_d97541360d5849a492f61055994b510e~mv2.png
+        href: http://10.203.7.125
+    - Ruckus:
+        icon: Ruckus 
+        href: http://10.203.6.200
+    - BMC-116:
+        icon: rundeck 
+        href: https://10.203.3.159
+########################################################################################################################################################################################################
+### BMC TAB ###        
+- BMC:
+    - nodeA:
+        icon: /icons/microsoft-365.png 
+        href: https://nodeA.d3adc3i.cc
+    - nodeC:
+        icon: /icons/microsoft-365.png 
+        href: https://10.10.10.19:8444
+########################################################################################################################################################################################################
+### CLOUD TAB ###        
+- Corp Cloud:
+    - Intune:
+        icon: /icons/microsoft-365.png 
+        href: https://intune.microsoft.com
+    - Entra:
+        icon: /icons/microsoft-365.png
+        href: https://entra.microsoft.com
+    - Azure Portal:
+        icon: /icons/azure.png
+        href: https://portal.azure.com
+    - AzureDevOps:
+        icon: /icons/azure-devops.png 
+        href: https://dev.azure.com/ntnsg/intune
+    
