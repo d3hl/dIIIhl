@@ -22,13 +22,13 @@ layout:
       style: column
       tab: Home
       icon: mdi-file-multiple
-#  Domain:
-#      style: column
- #     tab: Home
-  #    icon: mdi-multimedia
-  #Network:
-   #   tab: Home
-    #  style: column
+  Domain:
+      style: column
+      tab: Home
+      icon: mdi-multimedia
+  Network:
+      tab: Home
+      style: column
   #Monitor:
    #   tab: Home
     #  style: column

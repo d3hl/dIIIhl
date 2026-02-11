@@ -3,12 +3,12 @@
         icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
         href: https://pve.d3adc3ii.cc 
         ping: 10.10.10.10
-        widget:
-            type: proxmox
-            url:  https://10.10.10.10:8006
-            username: homepage@pve!homepage 
-            password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}       
-            node: pve10
+       # widget:
+       #     type: proxmox
+       #     url:  https://10.10.10.10:8006
+       #     username: homepage@pve!homepage 
+       #     password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}       
+       #     node: pve10
     - Ceph:
         icon: sh-ceph-light 
         href: https://ceph.d3adc3ii.cc
@@ -34,3 +34,65 @@
             secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
             showSummary: true # optional, default: false
             showStacks: true # optional, default: false
+########################################################################################################################################################################################################
+- Domain:
+    - Pangolin:
+        icon: {{HOMEPAGE_VAR_PANGOLIN_ICON}}
+        href: {{HOMEPAGE_VAR_PANGOLIN_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_PANGOLIN_URL}}
+        widget:
+            type: pangolin
+            url:  https://pangolin.d3adc3ii.cc 
+            key: {{HOMEPAGE_VAR_PANGOLIN_KEY}}
+            org: d3hl
+    - Authentik:
+        icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
+        href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
+        widget:
+            type: authentik
+            url: http://10.10.10.70:8175
+            key: {{HOMEPAGE_VAR_AUTHENTIK_KEY}}
+#    - Omni:
+ #       icon: {{HOMEPAGE_VAR_OMNI_ICON}}
+  #      href: {{HOMEPAGE_VAR_OMNI_URL}}
+#    - Technitium:
+#        icon: {{HOMEPAGE_VAR_DNS_ICON}} 
+#        href: {{HOMEPAGE_VAR_DNS_URL}}
+#        ping: {{HOMEPAGE_VAR_DNS_URL}}
+#        widget:
+#            type: technitium
+#            url: {{HOMEPAGE_VAR_DNS_URL}}
+#            key: {{HOMEPAGE_VAR_DNS_KEY}}
+#            range: {{HOMEPAGE_VAR_DNS_RANGE}}
+#    - GoDoxy:
+ #       icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
+  #      href: {{HOMEPAGE_VAR_GODOXY_URL}} 
+   #     ping: {{HOMEPAGE_VAR_GODOXY_URL}}
+########################################################################################################################################################################################################
+- Network:
+  #  - NetAlertX:
+   #     icon: {{HOMEPAGE_VAR_NETALERTX_ICON}}
+    #    href: {{HOMEPAGE_VAR_NETALERTX_URL}}
+     #   ping: {{HOMEPAGE_VAR_NETALERTX_URL}}
+      #  widget:
+      #      type: netalertx
+       #     key: {{HOMEPAGE_VAR_NETALERTX_KEY}}
+        #    url: {{HOMEPAGE_VAR_NETALERTX_URL}}
+         #   fields: {{HOMEPAGE_VAR_NETALERTX_FIELDS}}
+    - Netbox@HL:
+        icon: {{HOMEPAGE_VAR_NETBOX_ICON}}
+        href: {{HOMEPAGE_VAR_NETBOXHL_URL}}        
+    - PHPIPAM:
+        icon: {{HOMEPAGE_VAR_PHPIPAM_ICON}}
+        href: {{HOMEPAGE_VAR_PHPIPAM_URL}}
+ #   - Netbox Cloud:
+  #      icon: {{HOMEPAGE_VAR_NETBOX_ICON}}
+  #      href: {{HOMEPAGE_VAR_NETBOXCL_URL}}
+  #  - Netbox Console:
+  #      icon: {{HOMEPAGE_VAR_NETBOX_ICON}}
+  #      href: {{HOMEPAGE_VAR_NETBOXCS_URL}}
+  #  - Nautobox:
+  #      icon: {{HOMEPAGE_VAR_NAUTOBOT_ICON}}
+  #      href: {{HOMEPAGE_VAR_NAUTOBOT_URL}}        
+##############################################################################################################################################################################################
