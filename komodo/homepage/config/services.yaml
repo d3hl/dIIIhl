@@ -95,7 +95,6 @@
   #  - Nautobox:
   #      icon: {{HOMEPAGE_VAR_NAUTOBOT_ICON}}
   #      href: {{HOMEPAGE_VAR_NAUTOBOT_URL}}        
-##############################################################################################################################################################################################
 ########################################################################################################################################################################################################
 #- Monitor:
    # - Beszel:
@@ -126,3 +125,21 @@
       #  href: {{HOMEPAGE_VAR_WAZUH_URL}}
        # ping: {{HOMEPAGE_VAR_WAZUH_URL}}
 ########################################################################################################################################################################################################
+- Backup: 
+    - PBS: 
+        icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+        href: {{HOMEPAGE_VAR_PBS_URL}}
+        ping: {{HOMEPAGE_VAR_PBS_URL}} 
+        widget:
+            type: proxmoxbackupserver
+            url: {{HOMEPAGE_VAR_PBS_URL}} 
+            username: {{HOMEPAGE_VAR_PBS_USER}}
+            password: {{HOMEPAGE_VAR_PBS_SECRET}}
+            #datastore: datastore_name #optional; if ommitted, will display a combination of all datastores used / total    
+    - Backrest:
+        icon: {{HOMEPAGE_VAR_BACKREST_ICON}}
+        href: {{HOMEPAGE_VAR_BACKREST_URL}}
+        ping: {{HOMEPAGE_VAR_BACKREST_URL}}
+    - remote-backups:
+        icon: {{HOMEPAGE_VAR_REMOTEBACKUP_ICON}}
+        href: {{HOMEPAGE_VAR_REMOTEBACKUP_URL}}
