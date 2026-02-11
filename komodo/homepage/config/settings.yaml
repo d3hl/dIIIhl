@@ -35,26 +35,26 @@ layout:
   Backup:
       tab: Home
       style: column
-#  Media:
-#      tab: Home
-#      style: column
-  #Automation:
+  Media:
+      tab: Home
+      style: column
+  Automation:
+      tab: Home
+      style: column
+  Logging:
+      tab: Home
+      style: column
+  Applications:
+      tab: Home
+      style: column
+  Tools:
+      tab: Home
+      style: column
+  #Extras:
    #   tab: Home
     #  style: column
-  #Logging:
-   #   tab: Home
-    #  style: column
-  #Applications:
-   #   tab: Home
-    #  style: column
-#  Tools:
-#      tab: Home
-#      style: column
-#  Extras:
-#      tab: Home
-#      style: column
-#  IPMI:
-#      tab: BMC
+  #IPMI:
+   #   tab: BMC
 #      style: column
 #  Office Core:
 #      tab: Corp

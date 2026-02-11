@@ -143,3 +143,88 @@
     - remote-backups:
         icon: {{HOMEPAGE_VAR_REMOTEBACKUP_ICON}}
         href: {{HOMEPAGE_VAR_REMOTEBACKUP_URL}}
+
+- Automation:
+    - Kestra:
+        icon: {{HOMEPAGE_VAR_KESTRA_ICON}}
+        href: {{HOMEPAGE_VAR_KESTRA_URL}}
+    #- Termix:
+########################################################################################################################################################################################################
+- Logging:
+    - Grafana Cloud:
+        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+        href: {{HOMEPAGE_VAR_GRAFANAC_URL}}
+    - Grafana:
+        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+        href: {{HOMEPAGE_VAR_GRAFANA_URL}}
+    - InfluxDB:
+        icon: {{HOMEPAGE_VAR_INFLUX_ICON}}
+        href: {{HOMEPAGE_VAR_INFLUX_URL}}
+    - Dozzle:
+        icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
+        href: {{HOMEPAGE_VAR_DOZZLE_URL}}
+    - Scrutiny:
+        icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
+        href: {{HOMEPAGE_VAR_SCRUTINY_URL}}     
+########################################################################################################################################################################################################
+- Applications:
+    #- Karakeep:
+    - Actual:
+        icon: {{HOMEPAGE_VAR_ACTUAL_ICON}}
+        href: {{HOMEPAGE_VAR_ACTUAL_URL}}
+    - SteamentSensei:
+        icon: {{HOMEPAGE_VAR_SENSEI_ICON}}
+        href: {{HOMEPAGE_VAR_SENSEI_URL}} 
+
+    - nzbget:
+        icon: {{HOMEPAGE_VAR_NZBGET_ICON}}
+        href: {{HOMEPAGE_VAR_NZBGET_URL}}
+        ping: {{HOMEPAGE_VAR_NZBGET_URL}}
+    - wallos:
+        icon: {{HOMEPAGE_VAR_WALLOS_ICON}} 
+        href: {{HOMEPAGE_VAR_WALLOS_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_WALLOS_URL}}
+    - Omni-tools:
+        icon: {{HOMEPAGE_VAR_OMNITOOLS_ICON}} 
+        href: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_OMNITOOLS_URL}}
+    - Apprise-API:
+        icon: {{HOMEPAGE_VAR_APPRISE_ICON}}
+        href: {{HOMEPAGE_VAR_APPRISE_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_APPRISE_URL}}
+    - Semaphore:
+        icon: {{HOMEPAGE_VAR_SEMAPHORE_ICON}}
+        href: {{HOMEPAGE_VAR_SEMAPHORE_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_SEMAPHORE_URL}}
+########################################################################################################################################################################################################
+- Media:
+    - Jellyfin:
+        icon: {{HOMEPAGE_VAR_JELLY_ICON}}
+        href: {{HOMEPAGE_VAR_JELLY_URL}}
+        ping: {{HOMEPAGE_VAR_JELLY_URL}}
+        widget:
+            type: jellyfin
+            url: {{HOMEPAGE_VAR_JELLY_URL}} 
+            key: {{HOMEPAGE_VAR_JELLY_KEY}}
+            enableBlock: {{HOMEPAGE_VAR_JELLY_ENABLEBLOCK}}
+            enableNowPlaying: {{HOMEPAGE_VAR_JELLY_NOWPLAY}}
+    - Immich:
+        icon: {{HOMEPAGE_VAR_IMMICH_ICON}} 
+        href: {{HOMEPAGE_VAR_IMMICH_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_IMMICH_URL}}
+        widget:
+            type: immich
+            url: {{HOMEPAGE_VAR_IMMICH_URL}} 
+            key: {{HOMEPAGE_VAR_IMMICH_KEY}}
+            version: {{HOMEPAGE_VAR_IMMICH_VERSION}}
+            fields:  {{HOMEPAGE_VAR_IMMICH_FIELDS}}  
+    - Sh:
+        icon: {{HOMEPAGE_VAR_STASH_ICON}}
+        href: {{HOMEPAGE_VAR_STASH_URL}}
+        sitemonitor: {{HOMEPAGE_VAR_STASH_URL}}
+        widget:
+            type: stash
+            url: {{HOMEPAGE_VAR_STASH_URL}}
+            stashapikey: {{HOMEPAGE_VAR_STASH_API}}
+
+########################################################################################################################################################################################################
