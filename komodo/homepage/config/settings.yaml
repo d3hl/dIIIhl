@@ -32,12 +32,12 @@ layout:
   Monitor:
       tab: Home
       style: column
-  Backup:
-      tab: Home
-      style: column
-  Media:
-      tab: Home
-      style: column
+#  Backup:
+ #     tab: Home
+  #    style: column
+#  Media:
+#      tab: Home
+#      style: column
   #Automation:
    #   tab: Home
     #  style: column
