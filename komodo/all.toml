@@ -356,7 +356,9 @@ HOMEAGE_VAR_JELLY_WIDGETURL= "http://10.10.10.27:8096"
 HOMEPAGE_VAR_JELLY_KEY=a6a45c61dd1d4f059b02fa22ad8c0ef3
 HOMEPAGE_VAR_JELLY_ENABLEBLOCK=true
 HOMEPAGE_VAR_JELLY_NOWPLAY=false
-
+#Navidrome
+HOMEPAGE_VAR_NAVID_ICON = "/icons/navidrome-light.png"
+HOMEPAGE_VAR_NAVID_URL= "https://navid.d3adc3ii.site"
 # Immich
 HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich-light.png"
 HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3hl.site"
