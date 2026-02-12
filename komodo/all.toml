@@ -656,6 +656,71 @@ GH_ACCESS_TOKEN=[[GH_ACCESS_TOKEN]]
 ##
 
 [[stack]]
+name = "stashapp"
+tags = ["kmd-1"]
+[stack.config]
+server = "kmd-1"
+links = ["https://stash.d3adc3ii.cc"]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+# APPNICENAME=Stash
+# APPDESCRIPTION=An organizer for your porn, written in Go
+services:
+  stash:
+    image: stashapp/stash:latest
+    container_name: stash
+    restart: unless-stopped
+    ## the container's port must be the same with the STASH_PORT in the environment section
+    ports:
+      - "9999:9999"
+    ## If you intend to use stash's DLNA functionality uncomment the below network mode and comment out the above ports section
+    # network_mode: host
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - STASH_STASH=/data/
+      - STASH_GENERATED=/generated/
+      - STASH_METADATA=/metadata/
+      - STASH_CACHE=/cache/
+      ## Adjust below to change default port (9999)
+      - STASH_PORT=9999
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      ## Adjust below paths (the left part) to your liking.
+      ## E.g. you can change ./config:/root/.stash to ./stash:/root/.stash
+      ## The left part is the path on your host, the right part is the path in the stash container.
+
+      ## Keep configs, scrapers, and plugins here.
+      - ${CAPP}/stashapp/config:/root/.stash
+      ## Point this at your collection./stashapp/config
+      ## The left side is where your collection is on your host, the right side is where it will be in stash.
+      - ${VAULT}:/data
+      ## This is where your stash's metadata lives
+      - ${CAPP}/stashapp/metadata:/metadata
+      ## Any other cache content.
+      - ${CAPP}/stashapp/cache:/cache
+      ## Where to store binary blob data (scene covers, images)
+      - ${CAPP}/stashapp/blobs:/blobs
+      ## Where to store generated content (screenshots,previews,transcodes,sprites)
+      -  ${CAPP}/stashapp/generated:/generated
+
+"""
+environment = """
+VAULT=/mnt/zxxx
+CAPP=/mnt/cFS/appdata
+"""
+
+##
+[[stack]]
 name = "kikusan"
 [stack.config]
 server = "kmd1"
