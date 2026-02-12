@@ -157,7 +157,7 @@
           #  enableBlock: {{HOMEPAGE_VAR_JELLY_ENABLEBLOCK}}
            # enableNowPlaying: {{HOMEPAGE_VAR_JELLY_NOWPLAY}}
     - Navidrome:
-        #icon: {{HOMEPAGE_VAR_NAVIDROME_ICON}}
+        icon: {{HOMEPAGE_VAR_NAVIDROME_ICON}}
         href: {{HOMEPAGE_VAR_NAVIDROME_URL}}
     - Immich:
         icon: {{HOMEPAGE_VAR_IMMICH_ICON}} 
