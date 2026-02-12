@@ -358,7 +358,7 @@ HOMEPAGE_VAR_JELLY_ENABLEBLOCK=true
 HOMEPAGE_VAR_JELLY_NOWPLAY=false
 
 # Navidrome
-HOMEPAGE_VAR_NAVIDROME_ICON= "st-navidrome-light"
+HOMEPAGE_VAR_NAVIDROME_ICON= "sh-navidrome-light"
 HOMEPAGE_VAR_NAVIDROME_URL= "https://navi.d3adc3ii.site"
 # Immich
 HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich-light.png"
