@@ -162,7 +162,7 @@
        # ping: {{HOMEPAGE_VAR_NAVIDROME_URL}}
 
 #    - Immich:
-        icon: {{HOMEPAGE_VAR_IMMICH_ICON}} 
+     #   icon: {{HOMEPAGE_VAR_IMMICH_ICON}} 
  ##       href: {{HOMEPAGE_VAR_IMMICH_URL}}
    #     sitemonitor: {{HOMEPAGE_VAR_IMMICH_URL}}
     #    widget:
