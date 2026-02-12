@@ -38,6 +38,9 @@ layout:
   Media:
       tab: Home
       style: column    
+  Download:
+      tab: Home
+      style: column    
 #  Automation:
 #      tab: Home
       #style: column
