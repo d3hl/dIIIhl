@@ -179,30 +179,29 @@
          #   stashapikey: {{HOMEPAGE_VAR_STASH_API}}
 
 ########################################################################################################################################################################################################
-- DOWNLOAD:
+- Download:
     - Yubal:
         icon: {{HOMEPAGE_VAR_YUBAL_ICON}}
         href: {{HOMEPAGE_VAR_YUBAL_URL}}
 ########################################################################################################################################################################################################
-#- Automation:
- #   - Kestra:
-  #      icon: {{HOMEPAGE_VAR_KESTRA_ICON}}
-   #     href: {{HOMEPAGE_VAR_KESTRA_URL}}
-    #- Termix:
+- Automation:
+    - Kestra:
+        icon: {{HOMEPAGE_VAR_KESTRA_ICON}}
+        href: {{HOMEPAGE_VAR_KESTRA_URL}}
 ########################################################################################################################################################################################################
-#- Logging:
- #   - Grafana Cloud:
-  #      icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
-   #     href: {{HOMEPAGE_VAR_GRAFANAC_URL}}
-    #- Grafana:
-     #   icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
-      #  href: {{HOMEPAGE_VAR_GRAFANA_URL}}
-    #- InfluxDB:
-   #     icon: {{HOMEPAGE_VAR_INFLUX_ICON}}
-    #    href: {{HOMEPAGE_VAR_INFLUX_URL}}
-    #- Dozzle:
-     #   icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
-      #  href: {{HOMEPAGE_VAR_DOZZLE_URL}}
-    #- Scrutiny:
-     #   icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
-      #  href: {{HOMEPAGE_VAR_SCRUTINY_URL}}     
+- Logging:
+    - Grafana Cloud:
+        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+        href: {{HOMEPAGE_VAR_GRAFANAC_URL}}
+    - Grafana:
+        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+        href: {{HOMEPAGE_VAR_GRAFANA_URL}}
+    - InfluxDB:
+        icon: {{HOMEPAGE_VAR_INFLUX_ICON}}
+        href: {{HOMEPAGE_VAR_INFLUX_URL}}
+    - Dozzle:
+        icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
+        href: {{HOMEPAGE_VAR_DOZZLE_URL}}
+    - Scrutiny:
+        icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
+        href: {{HOMEPAGE_VAR_SCRUTINY_URL}}     
