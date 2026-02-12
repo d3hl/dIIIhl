@@ -125,24 +125,24 @@
       #  href: {{HOMEPAGE_VAR_WAZUH_URL}}
        # ping: {{HOMEPAGE_VAR_WAZUH_URL}}
 ########################################################################################################################################################################################################
-- Backup: 
-    - PBS: 
-        icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
-        href: {{HOMEPAGE_VAR_PBS_URL}}
-        ping: {{HOMEPAGE_VAR_PBS_URL}} 
-        widget:
-            type: proxmoxbackupserver
-            url: {{HOMEPAGE_VAR_PBS_URL}} 
-            username: {{HOMEPAGE_VAR_PBS_USER}}
-            password: {{HOMEPAGE_VAR_PBS_SECRET}}
-            #datastore: datastore_name #optional; if ommitted, will display a combination of all datastores used / total    
-    - Backrest:
-        icon: {{HOMEPAGE_VAR_BACKREST_ICON}}
-        href: {{HOMEPAGE_VAR_BACKREST_URL}}
-        ping: {{HOMEPAGE_VAR_BACKREST_URL}}
-    - remote-backups:
-        icon: {{HOMEPAGE_VAR_REMOTEBACKUP_ICON}}
-        href: {{HOMEPAGE_VAR_REMOTEBACKUP_URL}}
+#- Backup: 
+#    - PBS: 
+#        icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+#        href: {{HOMEPAGE_VAR_PBS_URL}}
+#        ping: {{HOMEPAGE_VAR_PBS_URL}} 
+#        widget:
+#            type: proxmoxbackupserver
+#            url: {{HOMEPAGE_VAR_PBS_URL}} 
+ #           username: {{HOMEPAGE_VAR_PBS_USER}}
+  #          password: {{HOMEPAGE_VAR_PBS_SECRET}}
+   #         #datastore: datastore_name #optional; if ommitted, will display a combination of all datastores used / total    
+   # - Backrest:
+    #    icon: {{HOMEPAGE_VAR_BACKREST_ICON}}
+     #   href: {{HOMEPAGE_VAR_BACKREST_URL}}
+      #  ping: {{HOMEPAGE_VAR_BACKREST_URL}}
+#    - remote-backups:
+ #       icon: {{HOMEPAGE_VAR_REMOTEBACKUP_ICON}}
+  #      href: {{HOMEPAGE_VAR_REMOTEBACKUP_URL}}
 
 ########################################################################################################################################################################################################
 - Media:
@@ -181,25 +181,25 @@
             stashapikey: {{HOMEPAGE_VAR_STASH_API}}
 
 ########################################################################################################################################################################################################
-- Automation:
-    - Kestra:
-        icon: {{HOMEPAGE_VAR_KESTRA_ICON}}
-        href: {{HOMEPAGE_VAR_KESTRA_URL}}
+#- Automation:
+ #   - Kestra:
+  #      icon: {{HOMEPAGE_VAR_KESTRA_ICON}}
+   #     href: {{HOMEPAGE_VAR_KESTRA_URL}}
     #- Termix:
 ########################################################################################################################################################################################################
-- Logging:
-    - Grafana Cloud:
-        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
-        href: {{HOMEPAGE_VAR_GRAFANAC_URL}}
-    - Grafana:
-        icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
-        href: {{HOMEPAGE_VAR_GRAFANA_URL}}
-    - InfluxDB:
-        icon: {{HOMEPAGE_VAR_INFLUX_ICON}}
-        href: {{HOMEPAGE_VAR_INFLUX_URL}}
-    - Dozzle:
-        icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
-        href: {{HOMEPAGE_VAR_DOZZLE_URL}}
-    - Scrutiny:
-        icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
-        href: {{HOMEPAGE_VAR_SCRUTINY_URL}}     
+#- Logging:
+ #   - Grafana Cloud:
+  #      icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+   #     href: {{HOMEPAGE_VAR_GRAFANAC_URL}}
+    #- Grafana:
+     #   icon: {{HOMEPAGE_VAR_GRAFANA_ICON}}
+      #  href: {{HOMEPAGE_VAR_GRAFANA_URL}}
+    #- InfluxDB:
+   #     icon: {{HOMEPAGE_VAR_INFLUX_ICON}}
+    #    href: {{HOMEPAGE_VAR_INFLUX_URL}}
+    #- Dozzle:
+     #   icon: {{HOMEPAGE_VAR_DOZZLE_ICON}}
+      #  href: {{HOMEPAGE_VAR_DOZZLE_URL}}
+    #- Scrutiny:
+     #   icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
+      #  href: {{HOMEPAGE_VAR_SCRUTINY_URL}}     
