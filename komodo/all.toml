@@ -361,7 +361,7 @@ HOMEPAGE_VAR_NAVID_ICON = "/icons/navidrome-light.png"
 HOMEPAGE_VAR_NAVID_URL= "https://navid.d3adc3ii.cc"
 # Immich
 HOMEPAGE_VAR_IMMICH_ICON = "/icons/immich-light.png"
-HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3hl.site"
+HOMEPAGE_VAR_IMMICH_URL= "https://immich.d3adc3ii.cc"
 HOMEPAGE_VAR_IMMICH_KEY=W7IJnjVEIhc7d72AAm4sxJ49YJI1kdtkiVvmCZipVqc
 HOMEPAGE_VAR_IMMICH_VERSION= 2
 HOMEPAGE_VAR_IMMICH_FIELDS= ["storage","photos","videos"] 
