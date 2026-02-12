@@ -657,9 +657,9 @@ GH_ACCESS_TOKEN=[[GH_ACCESS_TOKEN]]
 
 [[stack]]
 name = "stashapp"
-tags = ["kmd-1"]
+tags = ["kmd1"]
 [stack.config]
-server = "kmd-1"
+server = "kmd1"
 links = ["https://stash.d3adc3ii.cc"]
 poll_for_updates = true
 auto_update = true
