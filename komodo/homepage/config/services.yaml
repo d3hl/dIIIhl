@@ -184,8 +184,8 @@
         icon: {{HOMEPAGE_VAR_YUBAL_ICON}}
         href: {{HOMEPAGE_VAR_YUBAL_URL}}
     - Kikusan:
-        icon: {{HOMEPAGE_VAR_KIKUSAN_ICON}}
-        href: {{HOMEPAGE_VAR__URL}}
+        icon: {{HOMEPAGE_VAR_YUBAL_ICON}}
+        href: {{HOMEPAGE_VAR_KIKUSAN_URL}}
 ########################################################################################################################################################################################################
 - Automation:
     - Kestra:
