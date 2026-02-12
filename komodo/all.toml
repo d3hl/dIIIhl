@@ -1236,6 +1236,13 @@ executions = [
 ]
 
 [[procedure.config.stage]]
+name = "Stage 3"
+enabled = true
+executions = [
+  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
+]
+
+[[procedure.config.stage]]
 name = "Reploy Homepage"
 enabled = true
 executions = [
