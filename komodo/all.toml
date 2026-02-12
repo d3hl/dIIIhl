@@ -373,8 +373,8 @@ HOMEPAGE_VAR_QBIT_API= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN
 ### DOWNLOAD #####################################################################################################################################################################################################
 #Yubal
 HOMEPAGE_VAR_YUBAL_ICON= "sh-yubal-light.png"
-HOMEPAGE_VAR_YUBAL_URL= "https://yubal.d3adc3ii.site"
-HOMEPAGE_VAR_KIKUSAN_URL= "https://kikusan.d3adc3ii.site"
+HOMEPAGE_VAR_YUBAL_URL= "https://yubal.d3adc3ii.cc"
+HOMEPAGE_VAR_KIKUSAN_URL= "https://kikusan.d3adc3ii.cc"
 #### ACCESS ####################################################################################################################################################################################################
 # Guacamole
 HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/apache-guacamole-light.png"
