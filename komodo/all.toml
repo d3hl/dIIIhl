@@ -370,7 +370,10 @@ HOMEPAGE_VAR_STASH_ICON= "/icons/stash-light.png"
 HOMEPAGE_VAR_STASH_URL= "https://stash.d3adc3ii.site"
 HOMEPAGE_VAR_STASH_USER= "d3adc3ii"
 HOMEPAGE_VAR_QBIT_API= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJkMyIsInN1YiI6IkFQSUtleSIsImlhdCI6MTc0NjAzOTExOX0.OQqokQMNgdCRNxfPOQGOTFH4GCB0pQvZbIS9orkgkrg"
-
+### DOWNLOAD #####################################################################################################################################################################################################
+#Yubal
+HOMEPAGE_VAR_YUBAL_ICON= "sh-yubal-light.png"
+HOMEPAGE_VAR_YUBAL_URL= "https://yubal.d3adc3ii.site"
 #### ACCESS ####################################################################################################################################################################################################
 # Guacamole
 HOMEPAGE_VAR_GUACAMOLE_ICON= "/icons/apache-guacamole-light.png"
