@@ -191,9 +191,9 @@
    #     href: {{HOMEPAGE_VAR_METUBE_URL}}
 ########################################################################################################################################################################################################
 - Apps:
-#    - Karakeep:
-        #icon: {{HOMEPAGE_VAR_KARAKEEP_ICON}}
-        #href: {{HOMEPAGE_VAR_KARAKEEP_URL}}
+    - Karakeep:
+        icon: {{HOMEPAGE_VAR_KARAKEEP_ICON}}
+        href: {{HOMEPAGE_VAR_KARAKEEP_URL}}
     - Sure:
         icon: {{HOMEPAGE_VAR_SURE_ICON}}
         href: {{HOMEPAGE_VAR_SURE_URL}}
