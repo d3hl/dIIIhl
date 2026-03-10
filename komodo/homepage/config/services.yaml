@@ -98,7 +98,8 @@
 ########################################################################################################################################################################################################
 - Monitor:
     - Patchmon:
-        icon: {{HOMEPAGE_VAR_PATCHMON_ICON}}
+#        icon: {{HOMEPAGE_VAR_PATCHMON_ICON}}
+        icon: sh-patchmon-light
         href: {{HOMEPAGE_VAR_PATCHMON_URL}}
    # - Beszel:
     #    icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
@@ -190,7 +191,8 @@
         icon: {{HOMEPAGE_VAR_YUBAL_ICON}}
         href: {{HOMEPAGE_VAR_KIKUSAN_URL}}
     - Metube:
-        icon: {{HOMEPAGE_VAR_METUBE_ICON}}
+        #icon: {{HOMEPAGE_VAR_METUBE_ICON}}
+        icon: sh-metube-light
         href: {{HOMEPAGE_VAR_METUBE_URL}}
 ########################################################################################################################################################################################################
 - Apps:

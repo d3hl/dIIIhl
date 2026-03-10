@@ -1008,6 +1008,8 @@ services:
       POSTGRES_DB: patchmon_db
       POSTGRES_USER: patchmon_user
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    networks:
+      - patchmon-internal
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -1015,6 +1017,11 @@ services:
       interval: 3s
       timeout: 5s
       retries: 7
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   redis:
     image: redis:7-alpine
@@ -1022,55 +1029,66 @@ services:
     command: redis-server --requirepass nec9vhn2kht7davUGV # CHANGE THIS TO YOUR REDIS PASSWORD
     volumes:
       - redis_data:/data
+    networks:
+      - patchmon-internal
     healthcheck:
-      test: ["CMD", "redis-cli", "--no-auth-warning", "-a", "nec9vhn2kht7dav*UGV", "ping"] # CHANGE THIS TO YOUR REDIS PASSWORD
+      test: ["CMD", "redis-cli", "--no-auth-warning", "-a", "${REDIS_PASSWORD}", "ping"]
       interval: 3s
       timeout: 5s
       retries: 7
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   backend:
     image: ghcr.io/patchmon/patchmon-backend:latest
     restart: unless-stopped
     # See PatchMon Docker README for additional environment variables and configuration instructions
+    env_file: .env
     environment:
-      LOG_LEVEL: info
+      # Internal Docker wiring - do not change
       DATABASE_URL: postgresql://patchmon_user:${POSTGRES_PASSWORD}@database:5432/patchmon_db
-      JWT_SECRET: ${JWT_SECRET}
-      SERVER_PROTOCOL: http
-      SERVER_HOST: localhost
-      SERVER_PORT: 3000
-      CORS_ORIGIN: ${CORS_ORIGIN}
-      # Database Connection Pool Configuration (Prisma)
-      DB_CONNECTION_LIMIT: 30
-      DB_POOL_TIMEOUT: 20
-      DB_CONNECT_TIMEOUT: 10
-      DB_IDLE_TIMEOUT: 300
-      DB_MAX_LIFETIME: 1800
-      # Rate Limiting (times in milliseconds)
-      RATE_LIMIT_WINDOW_MS: 900000
-      RATE_LIMIT_MAX: 5000
-      AUTH_RATE_LIMIT_WINDOW_MS: 600000
-      AUTH_RATE_LIMIT_MAX: 500
-      AGENT_RATE_LIMIT_WINDOW_MS: 60000
-      AGENT_RATE_LIMIT_MAX: 1000
-      # Redis Configuration
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      REDIS_PASSWORD: nec9vhn2kht7davUGV
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
       REDIS_DB: 0
+      ASSETS_DIR: /app/assets
     volumes:
-      - ${APP_DATA}/agents:/app/agents
+      - agent_files:/app/agents
+      - branding_assets:/app/assets
+    networks:
+      - patchmon-internal
     depends_on:
       database:
         condition: service_healthy
       redis:
         condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
 
   frontend:
     image: ghcr.io/patchmon/patchmon-frontend:latest
     restart: unless-stopped
     ports:
       - "3000:3000"
+    volumes:
+      - branding_assets:/usr/share/nginx/html/assets
+    networks:
+      - patchmon-internal
+    depends_on:
+      backend:
+        condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     depends_on:
       backend:
         condition: service_healthy
@@ -1078,6 +1096,8 @@ services:
 volumes:
   postgres_data:
   redis_data:
+  agent_files:
+  branding_assets:
 """
 environment = """
 APP_DATA=/mnt/cFS/appdata/patchmon
