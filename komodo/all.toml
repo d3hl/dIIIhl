@@ -329,6 +329,9 @@ HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"# NETBOX CONSOLE
 HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
 
 #### MONITORING  ####################################################################################################################################################################################################
+# PATCHMON
+HOMEPAGE_VAR_PATCHMON_ICON= sh-patchmon-light
+HOMEPAGE_VAR_PATCHMON_URL= "https://patchmon.d3adc3ii.cc"
 # Beszel
 HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel-light.png"
 HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
