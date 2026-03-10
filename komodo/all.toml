@@ -395,7 +395,7 @@ HOMEPAGE_VAR_YUBAL_ICON= "sh-yubal-light.png"
 HOMEPAGE_VAR_YUBAL_URL= "https://yubal.d3adc3ii.cc"
 HOMEPAGE_VAR_KIKUSAN_URL= "https://kikusan.d3adc3ii.cc"
 #Metube
-HOMEPAGE_VAR_METUBE_ICON= "sh-metube-light"
+HOMEPAGE_VAR_METUBE_ICON= "sh-metube-light.png"
 HOMEPAGE_VAR_METUBE_URL= "http://10.10.10.36:8781"
 #### ACCESS ####################################################################################################################################################################################################
 # Guacamole
