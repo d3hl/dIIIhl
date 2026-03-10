@@ -452,8 +452,8 @@ HOMEPAGE_VAR_ARIA_URL= "https://dl.d3adc3ii.site"
 HOMEPAGE_VAR_NZBGET_ICON= "sh-nzbget-light"
 HOMEPAGE_VAR_NZBGET_URL= "https://nzbget.d3adc3ii.site"
 # Karakeep
-HOMEPAGE_VAR_KARAKEEP_ICON= "/icons/karakeep.png"
-HOMEPAGE_VAR_KARAKEEP_URL= "https://kara.d3adc3ii.cc"
+HOMEPAGE_VAR_KARAKEEP_ICON= "sh-karakeep-light"
+HOMEPAGE_VAR_KARAKEEP_URL= "https://karakeep.d3adc3ii.cc"
 # Wallos
 HOMEPAGE_VAR_WALLOS_ICON= "/icons/wallos-light.png"
 HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
