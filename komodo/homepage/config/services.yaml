@@ -186,9 +186,9 @@
     - Kikusan:
         icon: {{HOMEPAGE_VAR_YUBAL_ICON}}
         href: {{HOMEPAGE_VAR_KIKUSAN_URL}}
- #   - Metube:
-  #      icon: {{HOMEPAGE_VAR_METUBE_ICON}}
-   #     href: {{HOMEPAGE_VAR_METUBE_URL}}
+    - Metube:
+        icon: {{HOMEPAGE_VAR_METUBE_ICON}}
+        href: {{HOMEPAGE_VAR_METUBE_URL}}
 ########################################################################################################################################################################################################
 - Apps:
     - Karakeep:
