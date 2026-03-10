@@ -186,15 +186,15 @@
     - Kikusan:
         icon: {{HOMEPAGE_VAR_YUBAL_ICON}}
         href: {{HOMEPAGE_VAR_KIKUSAN_URL}}
-   # - Metube:
+    - Metube:
     #    icon: {{HOMEPAGE_VAR_METUBE_ICON}}
-     #   href: {{HOMEPAGE_VAR_METUBE_URL}}
+        href: {{HOMEPAGE_VAR_METUBE_URL}}
 ########################################################################################################################################################################################################
 - Apps:
     - Paperless-ngx:
         #icon: {{HOMEPAGE_VAR_PAPERLESS_ICON}}
         icon: sh-paperless-ngx-light
-        #href: {{HOMEPAGE_VAR_PAPERLESS_URL}}
+        href: {{HOMEPAGE_VAR_PAPERLESS_URL}}
     - Karakeep:
         icon: {{HOMEPAGE_VAR_KARAKEEP_ICON}}
         href: {{HOMEPAGE_VAR_KARAKEEP_URL}}
