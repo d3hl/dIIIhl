@@ -430,6 +430,9 @@ HOMEPAGE_VAR_PULSEXT_ICON= "sh-proxmox-light"
 HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
 
 #### APPS ####################################################################################################################################################################################################
+# Paperless
+HOMEPAGE_VAR_PAPERLESS_ICON= "sh-paperless-ngx-light"
+HOMEPAGE_VAR_PAPERLESS_URL= "https://paperless.d3adc3ii.cc"
 # Sure
 HOMEPAGE_VAR_SURE_ICON= "sh-sure-finance-light"
 HOMEPAGE_VAR_SURE_URL= "https://sure.d3adc3ii.cc"
