@@ -41,6 +41,9 @@ layout:
   Download:
       tab: Home
       style: column    
+  Apps:
+      tab: Home
+      style: column    
 #  Automation:
 #      tab: Home
       #style: column
