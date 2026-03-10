@@ -160,6 +160,25 @@ AUTHENTIK_ERROR_REPORTING__ENABLED=true
 ##
 
 [[stack]]
+name = "bento"
+[stack.config]
+server = "kmd1"
+links = ["https://bento.d3adc3ii.cc"]
+file_contents = """
+services:
+  bentopdf:
+    image: ghcr.io/alam00000/bentopdf:latest
+    container_name: bentopdf
+    restart: unless-stopped
+    ports:
+      - '8003:8080'
+    environment:
+      - DISABLE_IPV6=true
+"""
+
+##
+
+[[stack]]
 name = "domotz"
 [stack.config]
 server = "kmd0"
@@ -472,6 +491,7 @@ HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
 name = "immich-app"
 [stack.config]
 server = "kmd1"
+links = ["http://immich.d3adc3ii.cc/"]
 file_contents = """
 #
 # WARNING: To install Immich, follow our guide: https://docs.immich.app/install/docker-compose
@@ -531,7 +551,7 @@ services:
 
   database:
     container_name: immich_postgres
-    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USERNAME}
@@ -563,8 +583,8 @@ DB_DATA_LOCATION=./postgres
 # TZ=Etc/UTC
 
 # The Immich version to use. You can pin this to a specific version like "v2.1.0"
-IMMICH_VERSION=v2.3.1
-
+#IMMICH_VERSION=v2.3.1
+IMMICH_VERSION=v2.5.6
 # Connection secret for postgres. You should change it to a random password
 # Please use only the characters `A-Za-z0-9`, without special characters or spaces
 DB_PASSWORD=postgres2taolavodch
@@ -662,71 +682,6 @@ GH_ACCESS_TOKEN=[[GH_ACCESS_TOKEN]]
 ##
 
 [[stack]]
-name = "stashapp"
-tags = ["kmd1"]
-[stack.config]
-server = "kmd1"
-links = ["https://stash.d3adc3ii.cc"]
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-# APPNICENAME=Stash
-# APPDESCRIPTION=An organizer for your porn, written in Go
-services:
-  stash:
-    image: stashapp/stash:latest
-    container_name: stash
-    restart: unless-stopped
-    ## the container's port must be the same with the STASH_PORT in the environment section
-    ports:
-      - "9999:9999"
-    ## If you intend to use stash's DLNA functionality uncomment the below network mode and comment out the above ports section
-    # network_mode: host
-    logging:
-      driver: "json-file"
-      options:
-        max-file: "10"
-        max-size: "2m"
-    env_file:
-      - .env
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - STASH_STASH=/data/
-      - STASH_GENERATED=/generated/
-      - STASH_METADATA=/metadata/
-      - STASH_CACHE=/cache/
-      ## Adjust below to change default port (9999)
-      - STASH_PORT=9999
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      ## Adjust below paths (the left part) to your liking.
-      ## E.g. you can change ./config:/root/.stash to ./stash:/root/.stash
-      ## The left part is the path on your host, the right part is the path in the stash container.
-
-      ## Keep configs, scrapers, and plugins here.
-      - ${CAPP}/stashapp/config:/root/.stash
-      ## Point this at your collection./stashapp/config
-      ## The left side is where your collection is on your host, the right side is where it will be in stash.
-      - ${VAULT}:/data
-      ## This is where your stash's metadata lives
-      - ${CAPP}/stashapp/metadata:/metadata
-      ## Any other cache content.
-      - ${CAPP}/stashapp/cache:/cache
-      ## Where to store binary blob data (scene covers, images)
-      - ${CAPP}/stashapp/blobs:/blobs
-      ## Where to store generated content (screenshots,previews,transcodes,sprites)
-      -  ${CAPP}/stashapp/generated:/generated
-
-"""
-environment = """
-VAULT=/mnt/zxxx
-CAPP=/mnt/cFS/appdata
-"""
-
-##
-[[stack]]
 name = "kikusan"
 [stack.config]
 server = "kmd1"
@@ -792,49 +747,6 @@ services:
 environment = """
 PUID=1000
 PGID=1000
-"""
-
-##
-
-[[stack]]
-name = "lagident"
-[stack.config]
-server = "kmd0"
-file_contents = """
-services:
-  app:
-    image: nook24/lagident:latest
-    #build: .
-    container_name: app
-    ports:
-      - 9933:8080
-    depends_on:
-      - db
-    environment:
-      PUID: 1000
-      PGID: 1000
-      PROFILE: prod
-      DB_TYPE: mysql   # mysql or sqlite
-      DB_HOST: db
-      DB_POST: 3306
-      DB_USER: lagident
-      DB_PASS: pass
-      DB_NAME: lagident
-    volumes:
-      - ${APPDATA}/sqldata:/data
-  db:
-    image: mysql:8.0.31
-    container_name: db
-    environment:
-      MYSQL_DATABASE: lagident
-      MYSQL_USER: lagident
-      MYSQL_PASSWORD: pass
-      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-    volumes:
-      - ${APPDATA}/init-mysqldb.sql:/docker-entrypoint-initdb.d/init.sql
-"""
-environment = """
-APPDATA=/mnt/cFS/appdata/lagident
 """
 
 ##
@@ -944,6 +856,110 @@ networks:
 """
 environment = """
   # VARIABLE = value
+"""
+
+##
+
+[[stack]]
+name = "paperless-ngx"
+[stack.config]
+server = "kmd0"
+links = [
+  "https://paperless.d3adc3ii.cc"
+]
+file_contents = """
+services:
+  broker:
+    image: docker.io/library/redis:8
+    restart: unless-stopped
+    volumes:
+      - paperless-redisdata:/data
+  db:
+    image: docker.io/library/mariadb:12
+    restart: unless-stopped
+    volumes:
+      - paperless-dbdata:/var/lib/mysql
+    env_file:
+      - .env
+    #environment:
+     #  MARIADB_HOST: paperless
+     #  MARIADB_DATABASE: paperless
+     #  MARIADB_USER: paperless
+     #  MARIADB_PASSWORD: paperless
+     #  MARIADB_ROOT_PASSWORD: paperless
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+      - gotenberg
+      - tika
+    ports:
+      - "8101:8000"
+    volumes:
+      - data:/usr/src/paperless/data
+      - media:/usr/src/paperless/media
+      - ${ZDATA}/paperless-ngx/export:/usr/src/paperless/export
+      #- ${ZDATA}/paperless-ngx/consume:/usr/src/paperless/consume
+      - ./consume:/usr/src/paperless/consume
+      - ${ZDATA}/paperless-ngx/corp:/usr/src/paperless/corp
+    env_file: .env
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBENGINE: mariadb
+      PAPERLESS_DBHOST: db
+      PAPERLESS_DBUSER: ${PAPERLESS_DBUSER}
+      PAPERLESS_DBPASS: ${PAPERLESS_DBPASS} # only needed if non-default password
+      PAPERLESS_DBPORT: 3306
+      PAPERLESS_TIKA_ENABLED: 1
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
+      PAPERLESS_TIKA_ENDPOINT: http://tika:9998
+  gotenberg:
+    image: docker.io/gotenberg/gotenberg:8.25
+    restart: unless-stopped
+    # The gotenberg chromium route is used to convert .eml files. We do not
+    # want to allow external content like tracking pixels or even javascript.
+    command:
+      - "gotenberg"
+      - "--chromium-disable-javascript=true"
+      - "--chromium-allow-list=file:///tmp/.*"
+  tika:
+    image: docker.io/apache/tika:latest
+    restart: unless-stopped
+volumes:
+  data:
+  media:
+  paperless-dbdata:
+  paperless-redisdata:
+"""
+environment = """
+COMPOSE_PROJECT_NAME=paperless
+USERMAP_UID=1000
+USERMAP_GID=1000
+PAPERLESS_URL=https://paperless.d3adc3ii.cc
+PAPERLESS_SECRET_KEY=[[PAPERLESS_SECRET_KEY]]
+
+MARIADB_HOST: paperless
+MARIADB_DATABASE: paperless
+MARIADB_USER: d3
+MARIADB_PASSWORD: [[PAPERLESS_MARIADB_PASSWORD]]
+MARIADB_ROOT_PASSWORD: [[PAPERLESS_MARIADB_PASSWORD]]
+PAPERLESS_DBUSER: d3 # only needed if non-default username
+PAPERLESS_DBPASS: [[PAPERLESS_MARIADB_PASSWORD]] # only needed if non-default password
+
+PAPERLESS_TIME_ZONE=Asia/Singapore
+PAPERLESS_OCR_LANGUAGE=eng
+# Additional languages to install for text recognition, separated by a whitespace.
+# Note that this is different from PAPERLESS_OCR_LANGUAGE (default=eng), which defines
+# the language used for OCR.
+# The container installs English, German, Italian, Spanish and French by default.
+# See https://packages.debian.org/search?keywords=tesseract-ocr-&searchon=names
+# for available languages.
+#PAPERLESS_OCR_LANGUAGES=tur ces
+
+ZDATA: /mnt/zApps
+CDATA: /mnt/cFS/appdata/paperless-ngx
 """
 
 ##
@@ -1247,6 +1263,71 @@ networks:
       config:
         - subnet: 172.31.0.0/16
           gateway: 172.31.0.1
+"""
+
+##
+
+[[stack]]
+name = "stashapp"
+tags = ["kmd1"]
+[stack.config]
+server = "kmd1"
+links = ["https://stash.d3adc3ii.cc"]
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+file_contents = """
+# APPNICENAME=Stash
+# APPDESCRIPTION=An organizer for your porn, written in Go
+services:
+  stash:
+    image: stashapp/stash:latest
+    container_name: stash
+    restart: unless-stopped
+    ## the container's port must be the same with the STASH_PORT in the environment section
+    ports:
+      - "9999:9999"
+    ## If you intend to use stash's DLNA functionality uncomment the below network mode and comment out the above ports section
+    # network_mode: host
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - STASH_STASH=/data/
+      - STASH_GENERATED=/generated/
+      - STASH_METADATA=/metadata/
+      - STASH_CACHE=/cache/
+      ## Adjust below to change default port (9999)
+      - STASH_PORT=9999
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      ## Adjust below paths (the left part) to your liking.
+      ## E.g. you can change ./config:/root/.stash to ./stash:/root/.stash
+      ## The left part is the path on your host, the right part is the path in the stash container.
+
+      ## Keep configs, scrapers, and plugins here.
+      - ${CAPP}/stashapp/config:/root/.stash
+      ## Point this at your collection./stashapp/config
+      ## The left side is where your collection is on your host, the right side is where it will be in stash.
+      - ${VAULT}:/data
+      ## This is where your stash's metadata lives
+      - ${CAPP}/stashapp/metadata:/metadata
+      ## Any other cache content.
+      - ${CAPP}/stashapp/cache:/cache
+      ## Where to store binary blob data (scene covers, images)
+      - ${CAPP}/stashapp/blobs:/blobs
+      ## Where to store generated content (screenshots,previews,transcodes,sprites)
+      -  ${CAPP}/stashapp/generated:/generated
+"""
+environment = """
+VAULT=/mnt/zxxx
+CAPP=/mnt/cFS/appdata
 """
 
 ##
