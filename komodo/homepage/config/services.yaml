@@ -192,8 +192,9 @@
 ########################################################################################################################################################################################################
 - Apps:
     - Paperless-ngx:
-        icon: {{HOMEPAGE_VAR_PAPERLESS_ICON}}
-        href: {{HOMEPAGE_VAR_PAPERLESS_URL}}
+        #icon: {{HOMEPAGE_VAR_PAPERLESS_ICON}}
+        icon: sh-paperless-ngx-light
+        #href: {{HOMEPAGE_VAR_PAPERLESS_URL}}
     - Karakeep:
         icon: {{HOMEPAGE_VAR_KARAKEEP_ICON}}
         href: {{HOMEPAGE_VAR_KARAKEEP_URL}}
