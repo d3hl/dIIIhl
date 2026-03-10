@@ -428,10 +428,10 @@ HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
 
 #### APPS ####################################################################################################################################################################################################
 # Sure
-HOMEPAGE_VAR_SURE_ICON= "sh-sure-light"
+HOMEPAGE_VAR_SURE_ICON= "sh-sure-finance-light"
 HOMEPAGE_VAR_SURE_URL= "https://sure.d3adc3ii.cc"
 # Bento
-HOMEPAGE_VAR_BENTO_ICON= "sh-bento-light"
+HOMEPAGE_VAR_BENTO_ICON= "sh-bentopdf-light"
 HOMEPAGE_VAR_BENTO_URL= "https://bento.d3adc3ii.cc"
 # Actual Budget
 HOMEPAGE_VAR_ACTUAL_ICON= "sh-actual-budget-light"
