@@ -498,7 +498,7 @@ HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
 HOMEPAGE_VAR_SELFHST_ICON= "sh-selfh-st-light" 
 HOMEPAGE_VAR_SELFHST_URL= "https://selfhst-icons.d3adc3ii.cc"
 
-###################   CORP    ##################### 
+###################   CORP    ###################### 
 
 # Komodo
 HOMEPAGE_VAR_KOMODOCORP_URL="http://10.203.1.121:9120"
