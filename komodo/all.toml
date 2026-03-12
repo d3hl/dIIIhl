@@ -1803,7 +1803,7 @@ executions = [
 name = "Reploy Homepage"
 enabled = true
 executions = [
-  { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
+  { execution.type = "DeployStackIfChanged", execution.params.stack = "homepage", enabled = true }
 ]
 
 ##
@@ -2126,3 +2126,14 @@ name = "sync"
 linked_repo = "dIIIhl"
 resource_path = ["komodo/all.toml"]
 managed = true
+
+##
+
+[[resource_sync]]
+name = "sync.homeppage"
+tags = ["homepage"]
+[resource_sync.config]
+linked_repo = "dIIIhl"
+resource_path = ["komodo/homepage.toml"]
+managed = true
+match_tags = ["homepage"]
