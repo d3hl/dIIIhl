@@ -498,10 +498,15 @@ HOMEPAGE_VAR_WALLOS_URL= "https://wallos.d3adc3ii.cc"
 HOMEPAGE_VAR_SELFHST_ICON= "sh-selfh-st-light" 
 HOMEPAGE_VAR_SELFHST_URL= "https://selfhst-icons.d3adc3ii.cc"
 
+<<<<<<< HEAD
 ###################   CORP    ###################### 
 # Fortinet
 HOMEPAGE_VAR_FORTIGATE_ICON= "shfortinet-light"
 HOMEPAGE_VAR_FORTIGATECORP_URL="https://10.203.1.254:7443"
+=======
+###################   CORP    ##################### 
+
+>>>>>>> 617c0e8d919cd46b256eff502bd15173b17581ce
 # Komodo
 HOMEPAGE_VAR_KOMODOCORP_URL="http://10.203.1.121:9120"
 # Fenrus
@@ -1781,16 +1786,9 @@ executions = [
 
 [[procedure.config.stage]]
 name = "Reploy Homepage"
-enabled = false
-executions = [
-  { execution.type = "DeployStackIfChanged", execution.params.stack = "homepage", enabled = true }
-]
-
-[[procedure.config.stage]]
-name = "Stage 3"
 enabled = true
 executions = [
-  { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = ".*", enabled = true }
+  { execution.type = "DeployStack", execution.params.stack = "homepage", execution.params.services = [], enabled = true }
 ]
 
 ##
