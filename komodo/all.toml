@@ -1768,21 +1768,6 @@ executions = [
 ##
 
 [[procedure]]
-name = "Global Auto Update"
-description = "Pulls and auto updates Stacks and Deployments using 'poll_for_updates' or 'auto_update'."
-tags = ["system"]
-config.schedule = "Every day at 03:00"
-
-[[procedure.config.stage]]
-name = "Stage 1"
-enabled = true
-executions = [
-  { execution.type = "GlobalAutoUpdate", execution.params.skip_auto_update = false, enabled = true }
-]
-
-##
-
-[[procedure]]
 name = "pull repo + redeploy homepage"
 
 [[procedure.config.stage]]
@@ -1793,17 +1778,17 @@ executions = [
 ]
 
 [[procedure.config.stage]]
-name = "Stage 3"
+name = "Reploy Homepage"
 enabled = false
 executions = [
-  { execution.type = "CommitSync", execution.params.sync = "sync", enabled = true }
+  { execution.type = "DeployStackIfChanged", execution.params.stack = "homepage", enabled = true }
 ]
 
 [[procedure.config.stage]]
-name = "Reploy Homepage"
+name = "Stage 3"
 enabled = true
 executions = [
-  { execution.type = "DeployStackIfChanged", execution.params.stack = "homepage", enabled = true }
+  { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = ".*", enabled = true }
 ]
 
 ##
