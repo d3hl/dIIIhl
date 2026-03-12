@@ -65,9 +65,9 @@ layout:
 #  Office Core:
 #      tab: Corp
 #      style: column
-#  Corp Systems:
-#      tab: Corp
-#      style: column
+  Office:
+      tab: Corp
+      style: column
 #  Fortigate:
 #      tab: Corp
  #     style: column

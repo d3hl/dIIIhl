@@ -231,3 +231,11 @@
     - Scrutiny:
         icon: {{HOMEPAGE_VAR_SCRUTINY_ICON}}
         href: {{HOMEPAGE_VAR_SCRUTINY_URL}}     
+########################################################################################################################################################################################################
+- Office:
+    - Fortigate:
+        icon: {{HOMEPAGE_VAR_FORTIGATE_ICON}}
+        href: https://10.203.1.254:7443
+    - Proxmox:
+        icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+        href: https://10.203.1.113:8006
