@@ -499,6 +499,9 @@ HOMEPAGE_VAR_SELFHST_ICON= "sh-selfh-st-light"
 HOMEPAGE_VAR_SELFHST_URL= "https://selfhst-icons.d3adc3ii.cc"
 
 ###################   CORP    ##################### 
+# Fortigate
+HOMEPAGE_VAR_FORTIGATE_ICON= "sh-fortinet-light"
+HOMEPAGE_VAR_FORTIGATECORP_URL="https://10.203.1.254:7443"
 
 # Komodo
 HOMEPAGE_VAR_KOMODOCORP_URL="http://10.203.1.121:9120"
