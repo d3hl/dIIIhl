@@ -228,7 +228,7 @@ services:
 
 [[stack]]
 name = "homepage"
-tags = ["3731"]
+tags = ["3731", "homepage"]
 [stack.config]
 server = "kmd0"
 links = ["https://homepage.d3adc3ii.cc"]
@@ -653,10 +653,6 @@ services:
       NODE_TLS_REJECT_UNAUTHORIZED: 0
       MEILI_ADDR: http://meilisearch:7700
       BROWSER_WEB_URL: http://chrome:9222
-      # OPENAI_API_KEY: ...
-
-      # You almost never want to change the value of the DATA_DIR variable.
-      # If you want to mount a custom directory, change the volume mapping above instead.
       DATA_DIR: /data # DON'T CHANGE THIS
   chrome:
     image: gcr.io/zenika-hub/alpine-chrome:124
