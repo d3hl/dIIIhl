@@ -101,18 +101,12 @@
 #        icon: {{HOMEPAGE_VAR_PATCHMON_ICON}}
         icon: sh-patchmon-light
         href: {{HOMEPAGE_VAR_PATCHMON_URL}}
-   # - Beszel:
-    #    icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
-     #   href: {{HOMEPAGE_VAR_BESZEL_URL}}
-      #  sitemonitor: {{HOMEPAGE_VAR_BESZEL_URL}}
-       # widget:
-            #type: beszel
-            #url: {{HOMEPAGE_VAR_BESZEL_URL}}
-            #username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
-            #password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
-            #version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
-            #bitratePrecision: 3 
-            #fields: [ "systems", "up" ]
+    - Traefik Dashboard:
+        icon: {{HOMEPAGE_VAR_TRAEFIK_ICON}}
+        href: {{HOMEPAGE_VAR_TRAEFIK_URL}}
+    - Traefik Logs:
+        icon: {{HOMEPAGE_VAR_TRAEFIK_ICON}}
+        href: {{HOMEPAGE_VAR_TRAEFIKLOG_URL}}
  #   - Prtg:
   #      icon: {{HOMEPAGE_VAR_PRTG_ICON}}
    #     href: {{HOMEPAGE_VAR_PRTG_URL}} 
