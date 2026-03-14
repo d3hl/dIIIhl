@@ -4,6 +4,6 @@ services:
     container_name: bentopdf
     restart: unless-stopped
     ports:
-      - '8003:8080'
+      - 3000
     environment:
       - DISABLE_IPV6=true
