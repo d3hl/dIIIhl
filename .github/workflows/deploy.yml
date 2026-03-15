@@ -3,6 +3,90 @@ on:
   push:
     branches: ["main"]
 jobs:
+  test-and-update-fixtures:
+    name: Run Tests and Update Fixtures
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@1.90.0
+        with:
+          components: rustfmt, clippy
+      
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: backend
+      
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y libssl-dev pkg-config
+
+      - name: Install tbls
+        run: |
+          curl -sL https://github.com/k1LoW/tbls/releases/download/v1.79.3/tbls_v1.79.3_linux_amd64.tar.gz | tar xz
+          sudo mv tbls /usr/local/bin/
+          tbls version
+
+      - name: Free up disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc "$AGENT_TOOLSDIRECTORY"
+          docker system prune -af --volumes
+          df -h
+                  
+      - name: Run all tests
+        run: |
+          make dev-down
+          rm -rf ./data/daemon_config/*
+          export DATABASE_URL="postgresql://postgres:password@localhost:5432/scanopy_test"
+          cd backend && cargo test --features generate-fixtures -- --nocapture --test-threads=1
+
+      - name: Show container logs on test failure
+        if: failure()
+        run: |
+          docker compose -f docker-compose.test.yml logs
+          docker compose -f docker-compose.test.yml ps
+          
+      - name: Cleanup containers
+        if: always()
+        run: make dev-down
+      
+      - name: Update fixtures
+        run: |
+          mv backend/src/tests/scanopy-next.sql backend/src/tests/scanopy.sql
+          mv backend/src/tests/daemon_config-next.json backend/src/tests/daemon_config.json
+          mv ui/static/services-next.json ui/static/services.json
+          mv ui/static/schema-next.mermaid ui/static/schema.mermaid
+          mv ui/static/schema-er-next.mermaid ui/static/schema-er.mermaid
+          mv ui/static/entity-metadata-next.json ui/static/entity-metadata.json
+          echo "✅ Updated test fixtures"
+      
+      - name: Commit and push fixture updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add backend/Cargo.toml backend/Cargo.lock ui/package.json ui/package-lock.json
+          git add backend/src/tests/scanopy.sql backend/src/tests/daemon_config.json ui/static/services.json ui/static/schema.mermaid ui/static/schema-er.mermaid ui/static/entity-metadata.json
+          git add backend/tests/integration/compat/fixtures/
+
+          if git diff --staged --quiet; then
+            echo "No fixture changes to commit"
+          else
+            BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+            git commit -m "chore: update test fixtures for release ${{ github.event.release.tag_name }}"
+            git push origin "$BRANCH_NAME"
+            echo "✅ Pushed fixture updates to $BRANCH_NAME"
+          fi
+
+      - name: Upload generated UI fixtures
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-fixtures
+          path: ui/src/lib/data/*.json
+          retention-days: 1
 
   build-binaries:
     name: Build Daemon Binaries
