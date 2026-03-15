@@ -1,0 +1,78 @@
+name: Build Docker images
+on:
+  push:
+    branches: ["main"]
+jobs:
+  build-docker-server-community:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GITHUB_USER }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+#      - name: Set up Docker Buildx
+ #       uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./scanopy/Dockerfile
+          platforms: linux/amd64
+          push: true
+          build-args: |
+            PUBLIC_SERVER_HOSTNAME=default
+            PUBLIC_SERVER_PORT=60072
+          tags: |
+            ghcr.io/${{ github.repository }}/server:latest
+  
+  build-docker-daemon:
+    name: Build Daemon Docker
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Linux amd64 binary
+        uses: actions/download-artifact@v4
+        with:
+          name: scanopy-daemon-linux-amd64
+          path: scanopy/
+    
+      - name: Download Linux arm64 binary
+        uses: actions/download-artifact@v4
+        with:
+          name: scanopy-daemon-linux-arm64
+          path: scanopy/
+      
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GITHUB_USER }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: ./scanopy
+          file: ./scanopy/Dockerfile.daemon
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/daemon:latest
