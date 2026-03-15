@@ -6,7 +6,7 @@ jobs:
 
   build-binaries:
     name: Build Daemon Binaries
-    runs-on: ${{ matrix.os }}
+    runs-on: linux/amd64 
     permissions:
       contents: read
     strategy:
@@ -16,7 +16,6 @@ jobs:
             target: x86_64-unknown-linux-musl
             binary: scanopy-daemon-linux-amd64
             use_cross: true
-          - os: ubuntu-latest
   build-docker-server-community:
     runs-on: ubuntu-latest
     steps:
