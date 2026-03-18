@@ -32,12 +32,30 @@ services:
       - DNS_SERVER_FORWARDER_PROTOCOL=${DNS_SERVER_FORWARDER_PROTOCOL:-Tcp}
       - DNS_SERVER_LOG_USING_LOCAL_TIME=${DNS_SERVER_LOG_USING_LOCAL_TIME:-true}
 
-
     volumes:
       - config:/etc/dns
     restart: unless-stopped
     sysctls:
       - net.ipv4.ip_local_port_range=1024 65535
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: mariadb
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Singapore
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=dns_log #optional
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD} #optional
+#      - REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
+      - CLI_OPTS= #optional
+    volumes:
+      - /mnt/cFS/appdata/techmariadb/config:/config
+    ports:
+      - 3306:3306
+    restart: unless-stopped 
+
 
 volumes:
     config:
