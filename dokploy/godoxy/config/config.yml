@@ -8,10 +8,10 @@
 #   key_path: /path/to/priv.key # default: /app/certs/priv.key
 autocert:
   provider: cloudflare
-  email: admin@example.com
+  email: d3tech@ppm.me
   domains:
-    - example.com
-    - "*.example.com"
+    - d3hl.site
+    - *.d3hl.site
   options:
     auth_token: ${CF_API_TOKEN}
   resolvers:
