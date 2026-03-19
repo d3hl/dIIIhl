@@ -53,9 +53,9 @@ services:
       - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
       - ${CDATA}/grafana/victoriametrics.json:/var/lib/grafana/dashboards/vm.json
       - ${CDATA}/grafana/vmagent.json:/var/lib/grafana/dashboards/vmagent.json
-     # - ./grafana/vmalert.json:/var/lib/grafana/dashboards/vmalert.json
-      #- ./grafana/alert-statistics.json:/var/lib/grafana/dashboards/alert-statistics.json
-      #- ./grafana/metrics-explorer.json:/var/lib/grafana/dashboards/metrics-explorer.json
+      - ${CDATA}/grafana/vmalert.json:/var/lib/grafana/dashboards/vmalert.json
+      - ${CDATA}/grafana/alert-statistics.json:/var/lib/grafana/dashboards/alert-statistics.json
+      - ${CDATA}/grafana/metrics-explorer.json:/var/lib/grafana/dashboards/metrics-explorer.json
 
   # vmalert executes alerting and recording rules
   vmalert:
