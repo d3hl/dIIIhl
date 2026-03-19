@@ -1,0 +1,167 @@
+# Autocert (choose one below and uncomment to enable)
+#
+# 1. use existing cert
+
+# autocert:
+#   provider: local
+#   cert_path: /path/to/cert.crt # default: /app/certs/cert.crt
+#   key_path: /path/to/priv.key # default: /app/certs/priv.key
+autocert:
+  provider: cloudflare
+  email: admin@example.com
+  domains:
+    - example.com
+    - "*.example.com"
+  options:
+    auth_token: ${CF_API_TOKEN}
+  resolvers:
+    - 1.1.1.1:53
+
+# 3. other providers, see https://docs.godoxy.dev/DNS-01-Providers
+
+# Access Control
+# When enabled, it will be applied globally at connection level,
+# all incoming connections (web, tcp and udp) will be checked against the ACL rules.
+
+# acl:
+#   default: allow # or deny (default: allow)
+#   allow_local: true # or false (default: true)
+#   allow:
+#     - ip:1.2.3.4
+#     - cidr:1.2.3.4/32
+#     - country:US
+#     - timezone:Asia/Shanghai
+#   deny:
+#     - ip:1.2.3.4
+#     - cidr:1.2.3.4/32
+#     - country:US
+#     - timezone:Asia/Shanghai
+#   log: # warning: logging ACL can be slow based on the number of incoming connections and configured rules
+#     path: /app/logs/acl.log # (default: none)
+#     stdout: false # (default: false)
+#     keep: 30 days # (default: 30 days)
+#     log_allowed: false # (default: false)
+#   notify:
+#     interval: 1m # (default: 1m)
+#     to: [gotify, discord] # names under providers.notification
+#     include_allowed: false # (default: false)
+
+entrypoint:
+  # Proxy Protocol: https://www.haproxy.com/blog/use-the-proxy-protocol-to-preserve-a-clients-ip-address
+  # When set to true, web entrypoint and all tcp routes will be wrapped with Proxy Protocol listener in order to preserve the client's IP address.
+  # Note that HTTP/3 with proxy protocol is not supported yet.
+  support_proxy_protocol: false
+
+  # To relay the client address to a TCP upstream, enable `relay_proxy_protocol_header: true`
+  # on that specific TCP route. UDP relay is not supported yet.
+
+  # Below define an example of middleware config
+  # 1. set security headers
+  # 2. block non local IP connections
+  # 3. redirect HTTP to HTTPS
+  #
+  middlewares:
+    - use: CloudflareRealIP
+    - use: ModifyResponse
+      set_headers:
+        Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD
+        Access-Control-Allow-Headers: "*"
+        Access-Control-Allow-Origin: "*"
+        Access-Control-Max-Age: 180
+        Vary: "*"
+        X-XSS-Protection: 1; mode=block
+        Content-Security-Policy: "object-src 'self'; frame-ancestors 'self';"
+        X-Content-Type-Options: nosniff
+        X-Frame-Options: SAMEORIGIN
+        Referrer-Policy: same-origin
+        Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+    # - use: RedirectHTTP
+
+  # below enables access log
+  access_log:
+    format: combined
+    path: /app/logs/entrypoint.log
+    stdout: false # (default: false)
+    keep: 30 days # (default: 30 days)
+
+  # customize behavior for non-existent routes, e.g. pass over to another proxy
+  #
+  # rules:
+  #   not_found:
+  #     - name: default
+  #       do: proxy http://other-proxy:8080
+
+defaults:
+  healthcheck:
+    interval: 5s
+    timeout: 15s
+    retries: 3
+
+providers:
+  # include files are standalone yaml files under `config/` directory
+  #
+  # include:
+  #   - file1.yml
+  #   - file2.yml
+
+  docker:
+    # $DOCKER_HOST implies environment variable `DOCKER_HOST` or unix:///var/run/docker.sock by default
+    local: $DOCKER_HOST
+
+    # explicit only mode
+    # only containers with explicit aliases will be proxied
+    # add "!" after provider name to enable explicit only mode
+    #
+    # local!: $DOCKER_HOST
+    #
+    # add more docker providers if needed
+    # for value format, see https://docs.docker.com/reference/cli/dockerd/
+    #
+    # remote-1: tcp://10.0.2.1:2375
+    # remote-2: ssh://root:1234@10.0.2.2
+
+  # notification providers
+  #
+  # notification:
+  #   - name: ntfy
+  #     provider: ntfy
+  #     url: https://ntfy.domain.tld
+  #     topic: godoxy
+  #   - name: gotify
+  #     provider: gotify
+  #     url: https://gotify.domain.tld
+  #     token: abcd
+  #   - name: discord
+  #     provider: webhook
+  #     url: https://discord.com/api/webhooks/...
+  #     template: discord # this means use payload template from internal/notif/templates/discord.json
+  #   - name: pushover
+  #     provider: webhook
+  #     url: https://api.pushover.net/1/messages.json
+  #     mime_type: application/x-www-form-urlencoded
+  #     payload: '{"token": "your-app-token", "user": "your-user-key", "title": $title, "message": $message}'
+
+  # Proxmox providers (for idlesleep support for proxmox LXCs)
+  #
+  # proxmox:
+  #   - url: https://pve.domain.com:8006/api2/json
+  #     token_id: root@pam!abcdef
+  #     secret: aaaa-bbbb-cccc-dddd
+  #     no_tls_verify: true
+
+# Match domains
+# See https://docs.godoxy.dev/Certificates-and-domain-matching
+#
+# match_domains:
+#   - my.site
+#   - node1.my.app
+
+# homepage config
+homepage:
+  # use default app categories detected from alias or docker image name
+  use_default_categories: true
+
+# Below are fixed options (non hot-reloadable)
+
+# timeout for shutdown (in seconds)
+timeout_shutdown: 5
