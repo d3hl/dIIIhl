@@ -233,3 +233,9 @@
     - Proxmox:
         icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
         href: {{HOMEPAGE_VAR_PROXMOXCORP_URL}}
+    - Veeam Backup Console:
+        icon: {{HOMEPAGE_VAR_VEEAM_ICON}}
+        href: {{HOMEPAGE_VAR_VEEAMCONSOLE_URL}}
+    - Veeam Admin:
+        icon: {{HOMEPAGE_VAR_VEEAM_ICON}}
+        href: {{HOMEPAGE_VAR_VEEAMADMIN_URL}}
