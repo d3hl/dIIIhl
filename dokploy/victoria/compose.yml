@@ -10,7 +10,7 @@ services:
       - 8429:8429
     volumes:
       - vmagentdata:/vmagentdata
-      - ./prometheus-vm-single.yml:/etc/prometheus/prometheus.yml
+      - /mnt/cFS/appdata/victoriametrics/prometheus-vm-single.yml:/etc/prometheus/prometheus.yml
     command:
       - "--promscrape.config=/etc/prometheus/prometheus.yml"
       - "--remoteWrite.url=http://victoriametrics:8428/api/v1/write"
@@ -48,14 +48,14 @@ services:
       - GF_PLUGINS_PREINSTALL=yesoreyeram-infinity-datasource
     volumes:
       - grafanadata:/var/lib/grafana
-      - ./provisioning/datasources/prometheus/single.yml:/etc/grafana/provisioning/datasources/single.yml
-      - ./provisioning/datasources/infinity/single.yml:/etc/grafana/provisioning/datasources/infinity-single.yml
-      - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
-      - ./dashboards/victoriametrics.json:/var/lib/grafana/dashboards/vm.json
-      - ./dashboards/vmagent.json:/var/lib/grafana/dashboards/vmagent.json
-      - ./dashboards/vmalert.json:/var/lib/grafana/dashboards/vmalert.json
-      - ./dashboards/alert-statistics.json:/var/lib/grafana/dashboards/alert-statistics.json
-      - ./dashboards/metrics-explorer.json:/var/lib/grafana/dashboards/metrics-explorer.json
+      - /mnt/cFS/appdata/victoriametrics/provisioning/datasources/prometheus/single.yml:/etc/grafana/provisioning/datasources/single.yml
+      - /mnt/cFS/appdata/victoriametrics/provisioning/datasources/infinity/single.yml:/etc/grafana/provisioning/datasources/infinity-single.yml
+      - /mnt/cFS/appdata/victoriametrics/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - /mnt/cFS/appdata/victoriametrics/dashboards/victoriametrics.json:/var/lib/grafana/dashboards/vm.json
+      - /mnt/cFS/appdata/victoriametrics/dashboards/vmagent.json:/var/lib/grafana/dashboards/vmagent.json
+      - /mnt/cFS/appdata/victoriametrics/dashboards/vmalert.json:/var/lib/grafana/dashboards/vmalert.json
+      - /mnt/cFS/appdata/victoriametrics/dashboards/alert-statistics.json:/var/lib/grafana/dashboards/alert-statistics.json
+      - /mnt/cFS/appdata/victoriametrics/dashboards/metrics-explorer.json:/var/lib/grafana/dashboards/metrics-explorer.json
 
   # vmalert executes alerting and recording rules
   vmalert:
@@ -66,10 +66,10 @@ services:
     ports:
       - 8880:8880
     volumes:
-      - ./rules/alerts.yml:/etc/alerts/alerts.yml
-      - ./rules/alerts-health.yml:/etc/alerts/alerts-health.yml
-      - ./rules/alerts-vmagent.yml:/etc/alerts/alerts-vmagent.yml
-      - ./rules/alerts-vmalert.yml:/etc/alerts/alerts-vmalert.yml
+      - /mnt/cFS/appdata/victoriametrics/rules/alerts.yml:/etc/alerts/alerts.yml
+      - /mnt/cFS/appdata/victoriametrics/rules/alerts-health.yml:/etc/alerts/alerts-health.yml
+      - /mnt/cFS/appdata/victoriametrics/rules/alerts-vmagent.yml:/etc/alerts/alerts-vmagent.yml
+      - /mnt/cFS/appdata/victoriametrics/rules/alerts-vmalert.yml:/etc/alerts/alerts-vmalert.yml
     command:
       - "--datasource.url=http://victoriametrics:8428/"
       - "--remoteRead.url=http://victoriametrics:8428/"
@@ -86,7 +86,7 @@ services:
   alertmanager:
     image: prom/alertmanager:v0.28.1
     volumes:
-      - ./alertmanager.yml:/config/alertmanager.yml
+      - /mnt/cFS/appdata/victoriametrics/alertmanager.yml:/config/alertmanager.yml
     command:
       - "--config.file=/config/alertmanager.yml"
     ports:
