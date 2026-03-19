@@ -52,8 +52,11 @@ services:
       - ./provisioning/datasources/infinity/single.yml:/etc/grafana/provisioning/datasources/infinity-single.yml
       - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
       #- ./grafana/victoriametrics.json:/var/lib/grafana/dashboards/vm.json
-      - ./grafana/vmagent.json:/var/lib/grafana/dashboards/vmagent.json
-      - ./grafana/vmalert.json:/var/lib/grafana/dashboards/vmalert.json
+      - type: bind
+        source: ./grafana/victoriametrics.json
+        target: /var/lib/grafana/dashboards/vm.json
+      #- ./grafana/vmagent.json:/var/lib/grafana/dashboards/vmagent.json
+     # - ./grafana/vmalert.json:/var/lib/grafana/dashboards/vmalert.json
       #- ./grafana/alert-statistics.json:/var/lib/grafana/dashboards/alert-statistics.json
       #- ./grafana/metrics-explorer.json:/var/lib/grafana/dashboards/metrics-explorer.json
 
