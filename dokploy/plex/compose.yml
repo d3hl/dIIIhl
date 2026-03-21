@@ -1,0 +1,13 @@
+services:
+  plex:
+    container_name: plex
+    image: plexinc/pms-docker
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Singaore
+     # - PLEX_CLAIM=<claimToken>
+    network_mode: host
+    volumes:
+      - /mnt/cFS/appdata/plex/database:/config
+      - /mnt/cFS/appdata/plex/transcode/temp>:/transcode
+      - /mnt/cFS/appdata/movies:/data
