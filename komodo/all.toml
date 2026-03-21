@@ -177,6 +177,29 @@ services:
 ##
 
 [[stack]]
+name = "beszel"
+[stack.config]
+server = "kmd1"
+links = ["https://beszel.d3adc3ii.cc"]
+poll_for_updates = true
+file_contents = """
+services:
+  beszel:
+    image: henrygd/beszel
+    container_name: beszel
+    restart: unless-stopped
+    environment:
+      - APP_URL=http://localhost:8090
+      - USER_CREATION=true
+    ports:
+      - 8090:8090
+    volumes:
+      - /mnt/cFS/appdata/beszel/data:/beszel_data
+"""
+
+##
+
+[[stack]]
 name = "dockhand"
 [stack.config]
 server = "kmd0"
