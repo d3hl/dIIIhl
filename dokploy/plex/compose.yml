@@ -10,4 +10,4 @@ services:
     volumes:
       - /mnt/cFS/appdata/plex/database:/config
       - /mnt/cFS/appdata/plex/transcode/temp>:/transcode
-      - /mnt/cFS/appdata/movies:/data
+      - /mnt/zApps/appdata/movies:/data
