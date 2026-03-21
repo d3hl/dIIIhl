@@ -4,6 +4,8 @@ services:
     image: plexinc/pms-docker
     restart: unless-stopped
     environment:
+      - PLEX_UID=1001
+      - PLEX_GID=1001
       - TZ=Asia/Singaore
      # - PLEX_CLAIM=<claimToken>
     network_mode: host
