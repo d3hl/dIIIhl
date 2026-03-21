@@ -34,6 +34,10 @@
             secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
             showSummary: true # optional, default: false
             showStacks: true # optional, default: false
+    - Dokploy:
+        icon: {{HOMEPAGE_VAR_DOKPLOY_ICON}} 
+        href: {{HOMEPAGE_VAR_DOKPLOY_URL}}
+        sitemonitor: http://10.10.10.38:3000 
 ########################################################################################################################################################################################################
 - Domain:
     - Pangolin:
@@ -45,6 +49,9 @@
             url:  https://pangolin.d3adc3ii.cc 
             key: {{HOMEPAGE_VAR_PANGOLIN_KEY}}
             org: d3hl
+    - Godoxy:
+        icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
+        href: {{HOMEPAGE_VAR_GODOXY_URL}}
     - Authentik:
         icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
         href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
@@ -65,10 +72,6 @@
 #            url: {{HOMEPAGE_VAR_DNS_URL}}
 #            key: {{HOMEPAGE_VAR_DNS_KEY}}
 #            range: {{HOMEPAGE_VAR_DNS_RANGE}}
-#    - GoDoxy:
- #       icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
-  #      href: {{HOMEPAGE_VAR_GODOXY_URL}} 
-   #     ping: {{HOMEPAGE_VAR_GODOXY_URL}}
 ########################################################################################################################################################################################################
 - Network:
   #  - NetAlertX:
