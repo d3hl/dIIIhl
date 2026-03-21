@@ -16,7 +16,7 @@ services:
       - PLEX_UID=1001
       - PLEX_GID=1001
       - TZ=Asia/Singaore
-     # - PLEX_CLAIM=<claimToken>
+      - PLEX_CLAIM=claim-GBp3xUsDNij9uvPPSN17
       - ADVERTISE_IP=http://10.10.10.38:32400/
     volumes:
       - /mnt/cFS/appdata/plex/database:/config
