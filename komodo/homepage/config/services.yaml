@@ -11,7 +11,8 @@
        #     node: pve10
     - Ceph:
         icon: sh-ceph-light 
-        href: https://ceph.d3adc3ii.cc
+        #href: https://ceph.d3adc3ii.cc
+        href: https://10.10.10.10:8443
     -  Truenas:
         id: truenas 
         icon: {{HOMEPAGE_VAR_TRUENAS_ICON}}
