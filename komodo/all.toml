@@ -16,6 +16,14 @@ passkey = "k9sFdHxaIyKy00rel7gyxDdGkN4C8Ft8"
 
 ##
 
+[[swarm]]
+name = "d3swarm"
+[swarm.config]
+servers = ["kmd0", "kmd1"]
+send_unhealthy_alerts = true
+
+##
+
 [[stack]]
 name = "1p-d3hl"
 [stack.config]
@@ -195,6 +203,80 @@ services:
       - 8090:8090
     volumes:
       - /mnt/cFS/appdata/beszel/data:/beszel_data
+"""
+
+##
+
+[[stack]]
+name = "dns2"
+[stack.config]
+server = "kmd0"
+pre_deploy.command = """
+echo -e "DNS_SERVER_ADMIN_PASSWORD=""op://d3HL/Technitium-dns/DNS_SERVER_ADMIN_PASSWORD""\nDNS_SERVER_PREFER_IPV6="op://d3HL/Technitium-dns/DNS_SERVER_PREFER_IPV6"\nDNS_SERVER_WEB_SERVICE_HTTP_PORT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_HTTP_PORT"\nDNS_SERVER_WEB_SERVICE_HTTPS_PORT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_HTTPS_PORT"\nDNS_SERVER_WEB_SERVICE_ENABLE_HTTPS="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_HTTPS_PORT"\nDNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT"\nDNS_SERVER_RECURSION="op://d3HL/Technitium-dns/DNS_SERVER_RECURSION"\nDNS_SERVER_RECURSION_NETWORK_ACL="op://d3HL/Technitium-dns/DNS_SERVER_RECURSION_NETWORK_ACL"\nDNS_SERVER_ENABLE_BLOCKING="op://d3HL/Technitium-dns/DNS_SERVER_ENABLE_BLOCKING"\nDNS_SERVER_FORWARDERS="op://d3HL/Technitium-dns/ DNS_SERVER_FORWARDERS"\nDNS_SERVER_FORWARDER_PROTOCOL="op://d3HL/Technitium-dns/DNS_SERVER_FORWARDER_PROTOCOL"\nDNS_SERVER_LOG_USING_LOCAL_TIME="op://d3HL/Technitium-dns/DNS_SERVER_LOG_USING_LOCAL_TIME"\nMYSQL_ROOT_PASSWORD="op://d3HL/Technitium-dns/MYSQL_ROOT_PASSWORD"\nMYSQL_USER="op://d3HL/Technitium-dns/MYSQL_USER"\nMYSQL_PASSWORD="op://d3HL/Technitium-dns/ MYSQL_PASSWORD"" >> .env.template
+TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
+"""
+file_contents = """
+services:
+  dns-server:
+    container_name: dns2
+    hostname: dns2
+    image: technitium/dns-server:latest
+    # For DHCP deployments, use "host" network mode and remove all the port mappings, including the ports array by commenting them
+    # network_mode: "host"
+    ports:
+      - "5380:5380/tcp" #DNS web console (HTTP)
+      - "53443:53443/tcp" #DNS web console (HTTPS)
+      - "53:53/udp" #DNS service
+      - "53:53/tcp" #DNS service
+      # - "853:853/udp" #DNS-over-QUIC service
+      # - "853:853/tcp" #DNS-over-TLS service
+      # - "443:443/udp" #DNS-over-HTTPS service (HTTP/3)
+      # - "443:443/tcp" #DNS-over-HTTPS service (HTTP/1.1, HTTP/2)
+      # - "80:80/tcp" #DNS-over-HTTP service (use with reverse proxy or certbot certificate renewal)
+      # - "8053:8053/tcp" #DNS-over-HTTP service (use with reverse proxy)
+      # - "67:67/udp" #DHCP service
+    environment:
+      - DNS_SERVER_DOMAIN=${DNS_SERVER_DOMAIN:-dns2}
+      - DNS_SERVER_ADMIN_PASSWORD=${DNS_SERVER_ADMIN_PASSWORD}
+      - DNS_SERVER_PREFER_IPV6=${DNS_SERVER_PREFER_IPV6:-false}
+      - DNS_SERVER_WEB_SERVICE_HTTP_PORT=${DNS_SERVER_WEB_SERVICE_HTTP_PORT:-5380}
+      - DNS_SERVER_WEB_SERVICE_HTTPS_PORT=${DNS_SERVER_WEB_SERVICE_HTTPS_PORT:-53443}
+      - DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS=${DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS:-true}
+      - DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT=${DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT:-false}
+      - DNS_SERVER_RECURSION=${DNS_SERVER_RECURSION:-AllowOnlyForPrivateNetworks}
+      - DNS_SERVER_RECURSION_NETWORK_ACL=${DNS_SERVER_RECURSION_NETWORK_ACL:-10.10.10.0/24,10.20.20.0/24,192.168.3.0/24}
+      - DNS_SERVER_ENABLE_BLOCKING=${DNS_SERVER_ENABLE_BLOCKING:-false}
+      - DNS_SERVER_FORWARDERS=${DNS_SERVER_FORWARDERS:-1.1.1.1}
+      - DNS_SERVER_FORWARDER_PROTOCOL=${DNS_SERVER_FORWARDER_PROTOCOL:-Tcp}
+      - DNS_SERVER_LOG_USING_LOCAL_TIME=${DNS_SERVER_LOG_USING_LOCAL_TIME:-true}
+
+    volumes:
+      - config:/etc/dns
+    restart: unless-stopped
+    sysctls:
+      - net.ipv4.ip_local_port_range=1024 65535
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: mariadb
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Singapore
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=dns_log #optional
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD} #optional
+#      - REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
+      - CLI_OPTS= #optional
+    volumes:
+      - /mnt/cFS/appdata/techmariadb/config:/config
+    ports:
+      - 3306:3306
+    restart: unless-stopped 
+
+
+volumes:
+    config:
 """
 
 ##
@@ -558,10 +640,11 @@ links = ["http://immich.d3adc3ii.cc/"]
 project_name = "immich"
 destroy_before_deploy = true
 pre_deploy.command = """
+echo -e "UPLOAD_LOCATION="op://d3HL/immich_env/UPLOAD_LOCATION"\nIMMICH_VERSION="op://d3HL/immich_env/IMMICH_VERSION"\nDB_DATA_LOCATION="op://d3HL/immich_env/DB_DATA_LOCATION"\nPGID="op://d3HL/immich_env/PGID"\nPUID="op://d3HL/immich_env/PUID"\nDB_PASSWORD="op://d3HL/immich_env/DB_PASSWORD"\nDB_USERNAME="op://d3HL/immich_env/DB_USERNAME"\nDB_DATABASE_NAME="op://d3HL/immich_env/DB_DATABASE_NAME"\nIMMICH_IGNORE_MOUNT_CHECK_ERRORS="op://d3HL/immich_env/IMMICH_IGNORE_MOUNT_CHECK_ERRORS"" >> .env.template
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
 post_deploy.command = """
-rm .env
+rm .env*
 """
 file_contents = """
 #
@@ -640,7 +723,7 @@ volumes:
   model-cache:
 """
 environment = """
-
+#environment
 """
 
 ##
@@ -1765,6 +1848,24 @@ environment = """
 ZAPP=/mnt/zApps
 CAPP=/mnt/cFS/appdata
 """
+
+##
+
+[[build]]
+name = "dnsserver"
+[build.config]
+builder = "kmd0"
+
+##
+
+[[repo]]
+name = "d3hl/DnsServer"
+[repo.config]
+server = "kmd0"
+builder = "kmd0"
+git_provider = "Github.com"
+git_account = "d3hl"
+repo = "d3hl/DnsServer"
 
 ##
 
