@@ -4,25 +4,9 @@
     text_size: 4xl
     text: d3 Personal Page
 
-#- glances:
-#    url: {{HOMEPAGE_VAR_GL11_URL}}
-#    version: {{HOMEPAGE_VAR_GL11_VERSION}} 
-#    cpu: {{HOMEPAGE_VAR_GL11_CPU}} # optional, enabled by default, disable by setting to false
-#    mem: {{HOMEPAGE_VAR_GL11_MEM}} # optional, enabled by default, disable by setting to false
-#    cputemp: {{HOMEPAGE_VAR_GL11_CPUTEMP}} # disabled by default
-#    uptime: {{HOMEPAGE_VAR_GL11_UPTIME}} # disabled by default
-#    label: {{HOMEPAGE_VAR_GL11_LABEL}} # optional
 - greeting:
     text_size: 4xl
     text: —
-#- glances:
-#    url: {{HOMEPAGE_VAR_GL12_URL}}
-#    version: {{HOMEPAGE_VAR_GL12_VERSION}} 
-#    cpu: {{HOMEPAGE_VAR_GL12_CPU}} # optional, enabled by default, disable by setting to false
-#    mem: {{HOMEPAGE_VAR_GL12_MEM}} # optional, enabled by default, disable by setting to false
-#    cputemp: {{HOMEPAGE_VAR_GL12_CPUTEMP}} # disabled by default
-#    uptime: {{HOMEPAGE_VAR_GL12_UPTIME}} # disabled by default
-#    label: {{HOMEPAGE_VAR_GL12_LABEL}} # optional
 - greeting:
     text_size: 4xl
     text: —
