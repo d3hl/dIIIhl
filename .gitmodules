@@ -1,0 +1,3 @@
+[submodule "dokploy/scanopy"]
+	path = dokploy/scanopy
+	url = https://github.com/scanopy/scanopy.git

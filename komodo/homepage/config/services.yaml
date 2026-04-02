@@ -11,7 +11,8 @@
        #     node: pve10
     - Ceph:
         icon: sh-ceph-light 
-        href: https://ceph.d3adc3ii.cc
+        #href: https://ceph.d3adc3ii.cc
+        href: https://10.10.10.10:8443
     -  Truenas:
         id: truenas 
         icon: {{HOMEPAGE_VAR_TRUENAS_ICON}}
@@ -34,6 +35,10 @@
             secret: {{HOMEPAGE_VAR_KOMODO_SECRET}}
             showSummary: true # optional, default: false
             showStacks: true # optional, default: false
+    - Dokploy:
+        icon: {{HOMEPAGE_VAR_DOKPLOY_ICON}} 
+        href: {{HOMEPAGE_VAR_DOKPLOY_URL}}
+        sitemonitor: http://10.10.10.38:3000 
 ########################################################################################################################################################################################################
 - Domain:
     - Pangolin:
@@ -45,6 +50,9 @@
             url:  https://pangolin.d3adc3ii.cc 
             key: {{HOMEPAGE_VAR_PANGOLIN_KEY}}
             org: d3hl
+  #  - Godoxy:
+   #     icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
+    #    href: {{HOMEPAGE_VAR_GODOXY_URL}}
     - Authentik:
         icon: {{HOMEPAGE_VAR_AUTHENTIK_ICON}}
         href: {{HOMEPAGE_VAR_AUTHENTIK_URL}}
@@ -65,10 +73,6 @@
 #            url: {{HOMEPAGE_VAR_DNS_URL}}
 #            key: {{HOMEPAGE_VAR_DNS_KEY}}
 #            range: {{HOMEPAGE_VAR_DNS_RANGE}}
-#    - GoDoxy:
- #       icon: {{HOMEPAGE_VAR_GODOXY_ICON}}
-  #      href: {{HOMEPAGE_VAR_GODOXY_URL}} 
-   #     ping: {{HOMEPAGE_VAR_GODOXY_URL}}
 ########################################################################################################################################################################################################
 - Network:
   #  - NetAlertX:
@@ -101,18 +105,12 @@
 #        icon: {{HOMEPAGE_VAR_PATCHMON_ICON}}
         icon: sh-patchmon-light
         href: {{HOMEPAGE_VAR_PATCHMON_URL}}
-   # - Beszel:
-    #    icon: {{HOMEPAGE_VAR_BESZEL_ICON}} 
-     #   href: {{HOMEPAGE_VAR_BESZEL_URL}}
-      #  sitemonitor: {{HOMEPAGE_VAR_BESZEL_URL}}
-       # widget:
-            #type: beszel
-            #url: {{HOMEPAGE_VAR_BESZEL_URL}}
-            #username: {{HOMEPAGE_VAR_BESZEL_USERNAME}}
-            #password: {{HOMEPAGE_VAR_BESZEL_PASSWORD}} 
-            #version: {{HOMEPAGE_VAR_BESZEL_VERSION}}
-            #bitratePrecision: 3 
-            #fields: [ "systems", "up" ]
+    - Traefik Dashboard:
+        icon: {{HOMEPAGE_VAR_TRAEFIK_ICON}}
+        href: {{HOMEPAGE_VAR_TRAEFIK_URL}}
+    - Traefik Logs:
+        icon: {{HOMEPAGE_VAR_TRAEFIK_ICON}}
+        href: {{HOMEPAGE_VAR_TRAEFIKLOG_URL}}
  #   - Prtg:
   #      icon: {{HOMEPAGE_VAR_PRTG_ICON}}
    #     href: {{HOMEPAGE_VAR_PRTG_URL}} 
@@ -129,17 +127,10 @@
       #  href: {{HOMEPAGE_VAR_WAZUH_URL}}
        # ping: {{HOMEPAGE_VAR_WAZUH_URL}}
 ########################################################################################################################################################################################################
-#- Backup: 
-#    - PBS: 
-#        icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
-#        href: {{HOMEPAGE_VAR_PBS_URL}}
-#        ping: {{HOMEPAGE_VAR_PBS_URL}} 
-#        widget:
-#            type: proxmoxbackupserver
-#            url: {{HOMEPAGE_VAR_PBS_URL}} 
- #           username: {{HOMEPAGE_VAR_PBS_USER}}
-  #          password: {{HOMEPAGE_VAR_PBS_SECRET}}
-   #         #datastore: datastore_name #optional; if ommitted, will display a combination of all datastores used / total    
+- Backup: 
+    - PBS: 
+        icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+        href: {{HOMEPAGE_VAR_PBS_URL}}
    # - Backrest:
     #    icon: {{HOMEPAGE_VAR_BACKREST_ICON}}
      #   href: {{HOMEPAGE_VAR_BACKREST_URL}}
@@ -239,3 +230,9 @@
     - Proxmox:
         icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
         href: {{HOMEPAGE_VAR_PROXMOXCORP_URL}}
+    - Veeam Backup Console:
+        icon: {{HOMEPAGE_VAR_VEEAM_ICON}}
+        href: {{HOMEPAGE_VAR_VEEAMCONSOLE_URL}}
+    - Veeam Admin:
+        icon: {{HOMEPAGE_VAR_VEEAM_ICON}}
+        href: {{HOMEPAGE_VAR_VEEAMADMIN_URL}}

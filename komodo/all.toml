@@ -16,6 +16,22 @@ passkey = "k9sFdHxaIyKy00rel7gyxDdGkN4C8Ft8"
 
 ##
 
+[[server]]
+name = "kmd2"
+[server.config]
+address = "https://10.10.10.38:8120"
+enabled = true
+
+##
+
+[[swarm]]
+name = "d3swarm"
+[swarm.config]
+servers = ["kmd0"]
+send_unhealthy_alerts = true
+
+##
+
 [[stack]]
 name = "1p-d3hl"
 [stack.config]
@@ -177,6 +193,103 @@ services:
 ##
 
 [[stack]]
+name = "beszel"
+[stack.config]
+server = "kmd1"
+links = ["https://beszel.d3adc3ii.cc"]
+poll_for_updates = true
+file_contents = """
+services:
+  beszel:
+    image: henrygd/beszel
+    container_name: beszel
+    restart: unless-stopped
+    environment:
+      - APP_URL=http://localhost:8090
+      - USER_CREATION=true
+    ports:
+      - 8090:8090
+    volumes:
+      - /mnt/cFS/appdata/beszel/data:/beszel_data
+"""
+
+##
+
+[[stack]]
+name = "dns2"
+[stack.config]
+server = "kmd0"
+pre_deploy.command = """
+echo -e "DNS_SERVER_ADMIN_PASSWORD=""op://d3HL/Technitium-dns/DNS_SERVER_ADMIN_PASSWORD""\nDNS_SERVER_PREFER_IPV6="op://d3HL/Technitium-dns/DNS_SERVER_PREFER_IPV6"\nDNS_SERVER_WEB_SERVICE_HTTP_PORT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_HTTP_PORT"\nDNS_SERVER_WEB_SERVICE_HTTPS_PORT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_HTTPS_PORT"\nDNS_SERVER_WEB_SERVICE_ENABLE_HTTPS="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_HTTPS_PORT"\nDNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT"\nDNS_SERVER_RECURSION="op://d3HL/Technitium-dns/DNS_SERVER_RECURSION"\nDNS_SERVER_RECURSION_NETWORK_ACL="op://d3HL/Technitium-dns/DNS_SERVER_RECURSION_NETWORK_ACL"\nDNS_SERVER_ENABLE_BLOCKING="op://d3HL/Technitium-dns/DNS_SERVER_ENABLE_BLOCKING"\nDNS_SERVER_FORWARDERS="op://d3HL/Technitium-dns/ DNS_SERVER_FORWARDERS"\nDNS_SERVER_FORWARDER_PROTOCOL="op://d3HL/Technitium-dns/DNS_SERVER_FORWARDER_PROTOCOL"\nDNS_SERVER_LOG_USING_LOCAL_TIME="op://d3HL/Technitium-dns/DNS_SERVER_LOG_USING_LOCAL_TIME"\nMYSQL_ROOT_PASSWORD="op://d3HL/Technitium-dns/MYSQL_ROOT_PASSWORD"\nMYSQL_USER="op://d3HL/Technitium-dns/MYSQL_USER"\nMYSQL_PASSWORD="op://d3HL/Technitium-dns/ MYSQL_PASSWORD"" >> .env.template
+TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
+"""
+file_contents = """
+services:
+  dns-server:
+    container_name: dns2
+    hostname: dns2
+    image: technitium/dns-server:latest
+    # For DHCP deployments, use "host" network mode and remove all the port mappings, including the ports array by commenting them
+    # network_mode: "host"
+    ports:
+      - "5380:5380/tcp" #DNS web console (HTTP)
+      - "53443:53443/tcp" #DNS web console (HTTPS)
+      - "53:53/udp" #DNS service
+      - "53:53/tcp" #DNS service
+      # - "853:853/udp" #DNS-over-QUIC service
+      # - "853:853/tcp" #DNS-over-TLS service
+      # - "443:443/udp" #DNS-over-HTTPS service (HTTP/3)
+      # - "443:443/tcp" #DNS-over-HTTPS service (HTTP/1.1, HTTP/2)
+      # - "80:80/tcp" #DNS-over-HTTP service (use with reverse proxy or certbot certificate renewal)
+      # - "8053:8053/tcp" #DNS-over-HTTP service (use with reverse proxy)
+      # - "67:67/udp" #DHCP service
+    environment:
+      - DNS_SERVER_DOMAIN=${DNS_SERVER_DOMAIN:-dns2}
+      - DNS_SERVER_ADMIN_PASSWORD=${DNS_SERVER_ADMIN_PASSWORD}
+      - DNS_SERVER_PREFER_IPV6=${DNS_SERVER_PREFER_IPV6:-false}
+      - DNS_SERVER_WEB_SERVICE_HTTP_PORT=${DNS_SERVER_WEB_SERVICE_HTTP_PORT:-5380}
+      - DNS_SERVER_WEB_SERVICE_HTTPS_PORT=${DNS_SERVER_WEB_SERVICE_HTTPS_PORT:-53443}
+      - DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS=${DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS:-true}
+      - DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT=${DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT:-false}
+      - DNS_SERVER_RECURSION=${DNS_SERVER_RECURSION:-AllowOnlyForPrivateNetworks}
+      - DNS_SERVER_RECURSION_NETWORK_ACL=${DNS_SERVER_RECURSION_NETWORK_ACL:-10.10.10.0/24,10.20.20.0/24,192.168.3.0/24}
+      - DNS_SERVER_ENABLE_BLOCKING=${DNS_SERVER_ENABLE_BLOCKING:-false}
+      - DNS_SERVER_FORWARDERS=${DNS_SERVER_FORWARDERS:-1.1.1.1}
+      - DNS_SERVER_FORWARDER_PROTOCOL=${DNS_SERVER_FORWARDER_PROTOCOL:-Tcp}
+      - DNS_SERVER_LOG_USING_LOCAL_TIME=${DNS_SERVER_LOG_USING_LOCAL_TIME:-true}
+
+    volumes:
+      - config:/etc/dns
+    restart: unless-stopped
+    sysctls:
+      - net.ipv4.ip_local_port_range=1024 65535
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: mariadb
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Singapore
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=dns_log #optional
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD} #optional
+#      - REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
+      - CLI_OPTS= #optional
+    volumes:
+      - /mnt/cFS/appdata/techmariadb/config:/config
+    ports:
+      - 3306:3306
+    restart: unless-stopped 
+
+
+volumes:
+    config:
+"""
+
+##
+
+[[stack]]
 name = "dockhand"
 [stack.config]
 server = "kmd0"
@@ -310,6 +423,9 @@ HOMEPAGE_VAR_KOMODO_IPURL= "http://10.10.10.25:9120"
 HOMEPAGE_VAR_KOMODO_KEY=K-69zvNUYoxn5KREW5nVpLqeLa741U7NHmPXoEx4S1
 HOMEPAGE_VAR_KOMODO_SECRET=S-5hhHrLWPfLHPJCRGBMV2auU7QsqfUaGrTJYuOW9M
 
+# Dokploy
+HOMEPAGE_VAR_DOKPLOY_ICON= sh-dokploy-light
+HOMEPAGE_VAR_DOKPLOY_URL= "https://dokploy.d3adc3ii.cc"
 # OMNI
 HOMEPAGE_VAR_OMNI_ICON= "/icons/omni.png"
 HOMEPAGE_VAR_OMNI_URL= "https://omni.d3hl.site"
@@ -326,7 +442,7 @@ HOMEPAGE_VAR_DNS_URL= "https://ns.d3adc3ii.site"
 HOMEPAGE_VAR_DNS_KEY= [[HOMEPAGE_VAR_DNS_KEY]]
 HOMEPAGE_VAR_DNS_RANGE: LastDay # optional, defaults to LastHour
 # GoDoxy
-HOMEPAGE_VAR_GODOXY_ICON= "/icons/godoxy-light.png"
+HOMEPAGE_VAR_GODOXY_ICON= sh-godoxy-light 
 HOMEPAGE_VAR_GODOXY_URL= "https://doxy.d3hl.site"
 # PANGOLIN
 HOMEPAGE_VAR_PANGOLIN_ICON= "/icons/pangolin-light.png"
@@ -359,17 +475,10 @@ HOMEPAGE_VAR_NETBOXCS_URL= "https://console.netboxlabs.com/"
 # PATCHMON
 HOMEPAGE_VAR_PATCHMON_ICON= sh-patchmon-light
 HOMEPAGE_VAR_PATCHMON_URL= "https://patchmon.d3adc3ii.cc"
-# Beszel
-HOMEPAGE_VAR_BESZEL_ICON= "/icons/beszel-light.png"
-HOMEPAGE_VAR_BESZEL_URL= "https://beszel.d3adc3ii.cc"
-HOMEPAGE_VAR_BESZEL_USERNAME= "d3tech@pm.me"
-HOMEPAGE_VAR_BESZEL_PASSWORD= "KVG6qpu0rnb-ybd9etn" 
-HOMEPAGE_VAR_BESZEL_VERSION= "2"
-HOMEPAGE_VAR_BESZEL_SYSTEMID_pve11= pve11
-HOMEPAGE_VAR_BESZEL_SYSTEMID_pve12= pve12
-HOMEPAGE_VAR_BESZEL_SYSTEMID_pve13= pve13
-HOMEPAGE_VAR_BESZEL_SYSTEMID_pbs= pbs
-HOMEPAGE_VAR_BESZEL_FIELDS= ["cpu","memory","disk","network"]
+# TRAEFIK
+HOMEPAGE_VAR_TRAEFIK_ICON= sh-traefik-light
+HOMEPAGE_VAR_TRAEFIK_URL= "https://traefik-dashboard.d3adc3ii.cc"
+HOMEPAGE_VAR_TRAEFIK_URL= "https://traefik-log.d3adc3ii.cc"
 # SPEEDTEST
 HOMEPAGE_VAR_SPEEDTEST_ICON= "sh-speedtest-tracker-light"
 HOMEPAGE_VAR_SPEEDTEST_URL= "https://speedtest.d3adc3ii.site"
@@ -385,7 +494,7 @@ HOMEPAGE_VAR_HEALTHCHECKS_URL= "http://health.d3adc3ii.site"
 
 #### BACKUP ####################################################################################################################################################################################################
 # PBS
-HOMEPAGE_VAR_PBS_URL="https://pbs.d3hl.site"
+HOMEPAGE_VAR_PBS_URL="https://10.10.10.10:8007"
 HOMEPAGE_VAR_PBS_USER=homepage@pbs!homepage
 HOMEPAGE_VAR_PBS_SECRET=56ff3a13-0620-432b-b173-d048b1298a50
 # Backrest
@@ -504,6 +613,10 @@ HOMEPAGE_VAR_FORTIGATE_ICON= "sh-fortinet-light"
 HOMEPAGE_VAR_FORTIGATECORP_URL="https://10.203.1.254:7443"
 # PROXMOXORP
 HOMEPAGE_VAR_PROXMOXCORP_URL="https://10.203.1.113:8006"
+# Veeam
+HOMEPAGE_VAR_VEEAM_ICON= "/icons/veeam.svg"
+HOMEPAGE_VAR_VEEAMCONSOLE_URL="https://10.203.1.118"
+HOMEPAGE_VAR_VEEAMADMIN_URL="https://10.203.1.118:10443"
 
 # Komodo
 HOMEPAGE_VAR_KOMODOCORP_URL="http://10.203.1.121:9120"
@@ -527,6 +640,83 @@ HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
 ##
 
 [[stack]]
+name = "immich"
+[stack.config]
+swarm = "d3swarm"
+project_name = "immich"
+file_contents = """
+services:
+  server:
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    environment:
+      DB_PASSWORD: postgres2taolavodch
+      DB_USERNAME: postgres
+      DB_DATABASE_NAME: immich
+      DB_HOSTNAME: immich_database
+      REDIS_HOSTNAME: immich_redis
+      TZ: Asia/Singapore
+      PGUD: 1000
+      PUID: 1000
+    volumes:
+      - /mnt/zApps/imm_library:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    deploy:
+      replicas: 2  # Change this number
+    ports:
+      - 2284:2283
+    depends_on:
+      - redis
+      - database
+    restart: always
+    healthcheck:
+      disable: true
+
+  redis:
+    image: docker.io/valkey/valkey:9@sha256:3eeb09785cd61ec8e3be35f8804c8892080f3ca21934d628abc24ee4ed1698f6
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+
+  database:
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
+    environment:
+      POSTGRES_PASSWORD: postgres2taolavodch
+      POSTGRES_USER: postgres
+      POSTGRES_DB: immich
+      POSTGRES_HOST: immich_database
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+      PGUD: 1000
+      PUID: 1000
+    volumes:
+      - /mnt/cFS/appdata/immich-swarm/postgres:/var/lib/postgresql/data
+    shm_size: 128mb
+    healthcheck:
+      disable: false
+    restart: always
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    # For hardware acceleration, add one of -[armnn, cuda, rocm, openvino, rknn] to the image tag.
+    # Example tag: ${IMMICH_VERSION:-release}-cuda
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    # extends: # uncomment this section for hardware acceleration - see https://docs.immich.app/features/ml-hardware-acceleration
+    #   file: hwaccel.ml.yml
+    #   service: cpu # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
+    volumes:
+      - /mnt/cFS/appdata/immich-swarm/model-cache:/cache
+    #env_file:
+    #  - .env
+    environment:   
+      PGUD: 1000
+      PUID: 1000 
+    restart: always
+    healthcheck:
+      disable: false
+"""
+
+##
+
+[[stack]]
 name = "immich-app"
 tags = ["2283"]
 [stack.config]
@@ -535,10 +725,11 @@ links = ["http://immich.d3adc3ii.cc/"]
 project_name = "immich"
 destroy_before_deploy = true
 pre_deploy.command = """
+echo -e "UPLOAD_LOCATION="op://d3HL/immich_env/UPLOAD_LOCATION"\nIMMICH_VERSION="op://d3HL/immich_env/IMMICH_VERSION"\nDB_DATA_LOCATION="op://d3HL/immich_env/DB_DATA_LOCATION"\nPGID="op://d3HL/immich_env/PGID"\nPUID="op://d3HL/immich_env/PUID"\nDB_PASSWORD="op://d3HL/immich_env/DB_PASSWORD"\nDB_USERNAME="op://d3HL/immich_env/DB_USERNAME"\nDB_DATABASE_NAME="op://d3HL/immich_env/DB_DATABASE_NAME"\nIMMICH_IGNORE_MOUNT_CHECK_ERRORS="op://d3HL/immich_env/IMMICH_IGNORE_MOUNT_CHECK_ERRORS"" >> .env.template
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
 post_deploy.command = """
-rm .env
+rm .env*
 """
 file_contents = """
 #
@@ -617,7 +808,7 @@ volumes:
   model-cache:
 """
 environment = """
-
+#environment
 """
 
 ##
@@ -1745,6 +1936,24 @@ CAPP=/mnt/cFS/appdata
 
 ##
 
+[[build]]
+name = "dnsserver"
+[build.config]
+builder = "kmd0"
+
+##
+
+[[repo]]
+name = "d3hl/DnsServer"
+[repo.config]
+server = "kmd0"
+builder = "kmd0"
+git_provider = "Github.com"
+git_account = "d3hl"
+repo = "d3hl/DnsServer"
+
+##
+
 [[repo]]
 name = "dIIIhl"
 [repo.config]
@@ -2114,14 +2323,3 @@ name = "sync"
 linked_repo = "dIIIhl"
 resource_path = ["komodo/all.toml"]
 managed = true
-
-##
-
-[[resource_sync]]
-name = "sync.homeppage"
-tags = ["homepage"]
-[resource_sync.config]
-linked_repo = "dIIIhl"
-resource_path = ["komodo/homepage.toml"]
-managed = true
-match_tags = ["homepage"]
