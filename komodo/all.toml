@@ -25,9 +25,9 @@ enabled = true
 ##
 
 [[swarm]]
-name = "d3hl_swarm"
+name = "d3hl-swarm"
 [swarm.config]
-servers = ["kmd1"]
+servers = ["kmd2"]
 send_unhealthy_alerts = true
 
 ##
