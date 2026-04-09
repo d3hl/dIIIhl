@@ -16,18 +16,10 @@ passkey = "k9sFdHxaIyKy00rel7gyxDdGkN4C8Ft8"
 
 ##
 
-[[server]]
-name = "kmd2"
-[server.config]
-address = "https://10.10.10.38:8120"
-enabled = true
-
-##
-
 [[swarm]]
 name = "d3hl_swarm"
 [swarm.config]
-servers = ["kmd2", "kmd1"]
+servers = ["kmd1"]
 send_unhealthy_alerts = true
 
 ##
@@ -279,14 +271,10 @@ services:
 #      - REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
       - CLI_OPTS= #optional
     volumes:
-      - /mnt/cFS/appdata/techmariadb/config:/config
+      - ${CDATA}/dns1/mariadb/config:/config
     ports:
       - 3306:3306
-    restart: unless-stopped 
-
-
-volumes:
-    config:
+    restart: unless-stopped
 """
 environment = """
   ## VARIABLE = value
@@ -297,7 +285,7 @@ environment = """
 [[stack]]
 name = "dns2"
 [stack.config]
-server = "kmd2"
+
 pre_deploy.command = """
 echo -e "DNS_SERVER_ADMIN_PASSWORD="op://d3HL/Technitium-dns/DNS_SERVER_ADMIN_PASSWORD"\nDNS_SERVER_PREFER_IPV6="op://d3HL/Technitium-dns/DNS_SERVER_PREFER_IPV6"\nDNS_SERVER_WEB_SERVICE_HTTP_PORT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_HTTP_PORT"\nDNS_SERVER_WEB_SERVICE_HTTPS_PORT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_HTTPS_PORT"\nDNS_SERVER_WEB_SERVICE_ENABLE_HTTPS="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS"\nDNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT"\nDNS_SERVER_RECURSION="op://d3HL/Technitium-dns/DNS_SERVER_RECURSION"\nDNS_SERVER_RECURSION_NETWORK_ACL="op://d3HL/Technitium-dns/DNS_SERVER_RECURSION_NETWORK_ACL"\nDNS_SERVER_ENABLE_BLOCKING="op://d3HL/Technitium-dns/DNS_SERVER_ENABLE_BLOCKING"\nDNS_SERVER_FORWARDERS="op://d3HL/Technitium-dns/DNS_SERVER_FORWARDERS"\nDNS_SERVER_FORWARDER_PROTOCOL="op://d3HL/Technitium-dns/DNS_SERVER_FORWARDER_PROTOCOL"\nDNS_SERVER_LOG_USING_LOCAL_TIME="op://d3HL/Technitium-dns/DNS_SERVER_LOG_USING_LOCAL_TIME"\nMYSQL_ROOT_PASSWORD="op://d3HL/Technitium-dns/MYSQL_ROOT_PASSWORD"\nMYSQL_USER="op://d3HL/Technitium-dns/MYSQL_USER"\nMYSQL_PASSWORD="op://d3HL/Technitium-dns/MYSQL_USER"\ncDATA="op://d3HL/Technitium-dns/cDATA""  >> .env.template
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
@@ -673,7 +661,6 @@ HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
 [[stack]]
 name = "homey"
 [stack.config]
-server = "kmd2"
 file_contents = """
 services:
   homey-shs:
@@ -1209,7 +1196,6 @@ environment = """
 [[stack]]
 name = "pankha"
 [stack.config]
-server = "kmd2"
 destroy_before_deploy = true
 file_contents = """
 # Docker Compose for Pankha Repository
@@ -1689,7 +1675,6 @@ networks:
 [[stack]]
 name = "pegaprox"
 [stack.config]
-server = "kmd2"
 file_contents = """
 services:
   pegaprox:
@@ -1780,7 +1765,6 @@ MYSQL_ROOT_PASSWORD="op://d3HL/phpipam/IPAM_DATABASE_PASS"
 [[stack]]
 name = "proxcenter"
 [stack.config]
-server = "kmd2"
 file_contents = """
 # ============================================
 # ProxCenter Community Edition
@@ -1796,7 +1780,8 @@ services:
     container_name: proxcenter-frontend
     restart: unless-stopped
     ports:
-      - "3000:3000"  # Unified HTTP + WebSocket
+      - "3110:3000"  # Unified HTTP + WebSocket
+    user: "1000:1000" 
     environment:
       - NODE_ENV=production
       - DATABASE_URL=file:/app/data/proxcenter.db
@@ -1847,7 +1832,11 @@ networks:
 volumes:
   proxcenter_data:
     name: proxcenter_data
-    external: true
+    driver: wetopi/rbd
+"""
+environment = """
+APP_SECRET=U.9wP-jVh@GLP3X6ewo2Z2UEkjdo72eJJ8_.kdDw*k!D6Jh-NiiXu4RRr4k4G2tZtg
+NEXTAUTH_SECRET=U.9wP-jVh@GLP3X6ewo2Z2UEk82sfg72eJJ8_.kdDw*k!D6Jh-NiiXu4RRr4k4G2tZtg
 """
 
 ##
@@ -2320,7 +2309,6 @@ POSTHOG_HOST=
 [[stack]]
 name = "upsnap"
 [stack.config]
-server = "kmd2"
 file_contents = """
 services:
   upsnap:
