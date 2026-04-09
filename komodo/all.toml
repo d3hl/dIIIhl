@@ -16,6 +16,14 @@ passkey = "k9sFdHxaIyKy00rel7gyxDdGkN4C8Ft8"
 
 ##
 
+[[server]]
+name = "kmd2"
+[server.config]
+address = "https://10.10.10.38:8120"
+enabled = true
+
+##
+
 [[swarm]]
 name = "d3hl_swarm"
 [swarm.config]
@@ -1765,6 +1773,8 @@ MYSQL_ROOT_PASSWORD="op://d3HL/phpipam/IPAM_DATABASE_PASS"
 [[stack]]
 name = "proxcenter"
 [stack.config]
+server = "kmd2"
+destroy_before_deploy = true
 file_contents = """
 # ============================================
 # ProxCenter Community Edition
@@ -1779,8 +1789,9 @@ services:
     image: ghcr.io/adminsyspro/proxcenter-frontend:${VERSION:-latest}
     container_name: proxcenter-frontend
     restart: unless-stopped
-    ports:
-      - "3110:3000"  # Unified HTTP + WebSocket
+    network_mode: "host"
+    #ports:
+    #  - "3110:3000"  # Unified HTTP + WebSocket
     user: "1000:1000" 
     environment:
       - NODE_ENV=production
@@ -1796,12 +1807,12 @@ services:
       # - APP_SECRET_FILE=/run/secrets/app_secret
       # - NEXTAUTH_SECRET_FILE=/run/secrets/nextauth_secret
     volumes:
-      - proxcenter_data:/app/data
+      - /mnt/cFS/appdata/proxcenter/data:/app/data
     # secrets:
     #   - app_secret
     #   - nextauth_secret
-    networks:
-      - proxcenter
+    #networks:
+    #  - proxcenter
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health"]
       interval: 30s
@@ -1812,10 +1823,10 @@ services:
 # ========================================
 # Networks
 # ========================================
-networks:
-  proxcenter:
-    driver: bridge
-    name: proxcenter
+#networks:
+ # proxcenter:
+  #  driver: bridge
+   # name: proxcenter
 
 # ========================================
 # Volumes
@@ -1828,11 +1839,10 @@ networks:
 #     external: true
 #   nextauth_secret:
 #     external: true
-
-volumes:
-  proxcenter_data:
-    name: proxcenter_data
-    driver: wetopi/rbd
+#volumes:
+#  proxcenter_data:
+#    name: proxcenter_data
+ #   driver: wetopi/rbd
 """
 environment = """
 APP_SECRET=U.9wP-jVh@GLP3X6ewo2Z2UEkjdo72eJJ8_.kdDw*k!D6Jh-NiiXu4RRr4k4G2tZtg
