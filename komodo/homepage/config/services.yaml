@@ -3,15 +3,14 @@
         icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
         href: https://pve.d3adc3ii.cc 
         ping: 10.10.10.10
-       # widget:
-       #     type: proxmox
-       #     url:  https://10.10.10.10:8006
-       #     username: homepage@pve!homepage 
-       #     password: {{HOMEPAGE_VAR_PROXMOX_SECRET}}       
-       #     node: pve10
+    - ProxCenter:
+        icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+        href: https://proxcenter.d3adc3ii.cc 
+    - PegaProx:
+        icon: {{HOMEPAGE_VAR_PROXMOX_ICON}}
+        href: https://10.10.10.9:5000/
     - Ceph:
         icon: sh-ceph-light 
-        #href: https://ceph.d3adc3ii.cc
         href: https://10.10.10.10:8443
     -  Truenas:
         id: truenas 

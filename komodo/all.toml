@@ -316,7 +316,7 @@ HOMEPAGE_VAR_GL13_LABEL= pve13
 #### INFRA ####################################################################################################################################################################################################
 # Proxmox
 HOMEPAGE_VAR_PROXMOX_ICON= "/icons/proxmox-light.png"
-HOMEPAGE_VAR_PROXMOX_URL_PVE11= "https://pve.d3adc3ii.cc"
+HOMEPAGE_VAR_PROXMOX_URL_PVE11= "https://pve10.d3hl.site"
 HOMEPAGE_VAR_PROXMOX_IP_PVE11="https://10.10.10.10:8006"
 #HOMEPAGE_VAR_PROXMOX_USER=homepage@pve!homepage 
 HOMEPAGE_VAR_PROXMOX_SECRET=bd9d76fb-00a6-4e4d-af8a-66f0606ba7fc
