@@ -16,6 +16,22 @@ passkey = "k9sFdHxaIyKy00rel7gyxDdGkN4C8Ft8"
 
 ##
 
+[[server]]
+name = "kmd2"
+[server.config]
+address = "https://10.10.10.38:8120"
+enabled = true
+
+##
+
+[[swarm]]
+name = "d3hl-swarm"
+[swarm.config]
+servers = ["kmd2"]
+send_unhealthy_alerts = true
+
+##
+
 [[stack]]
 name = "1p-d3hl"
 [stack.config]
@@ -77,7 +93,7 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 pre_deploy.command = """
-echo -e "CAPP="op://d3HL/authentik_env/CAPP"\nPG_PASS="op://d3HL/authentik_env/PG_PASS"\nAUTHENTIK_SECRET_KEY="op://d3HL/authentik_env/AUTHENTIK_SECRET_KEY"\nAUTHENTIK_TAG="op://d3HL/authentik_env/AUTHENTIK_TAG"" >> .env.template
+echo -e "POSTGRES_PASSWORD="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_PASSWORD"\nPOSTGRES_USER="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_USER"\nPOSTGRES_DB="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_DB"\nPANKHA_HUB_IP="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/PANKHA_HUB_IP"\nPANKHA_STAGING_DIR="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/PANKHA_STAGING_DIR"\nLOG_LEVEL="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/LOG_LEVEL"\nPOSTGRES_MAX_WAL_SIZE="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_MAX_WAL_SIZE"\nPOSTGRES_CHECKPOINT_TIMEOUT="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_CHECKPOINT_TIMEOUT"\nPOSTGRES_PORT="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_PORT"\n >> .env.template
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
 post_deploy.command = """
@@ -200,29 +216,130 @@ services:
 ##
 
 [[stack]]
-name = "dockhand"
+name = "dns1"
 [stack.config]
 server = "kmd0"
+pre_deploy.command = """
+echo -e "DNS_SERVER_ADMIN_PASSWORD="op://d3HL/Technitium-dns/DNS_SERVER_ADMIN_PASSWORD"\nDNS_SERVER_PREFER_IPV6="op://d3HL/Technitium-dns/DNS_SERVER_PREFER_IPV6"\nDNS_SERVER_WEB_SERVICE_HTTP_PORT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_HTTP_PORT"\nDNS_SERVER_WEB_SERVICE_HTTPS_PORT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_HTTPS_PORT"\nDNS_SERVER_WEB_SERVICE_ENABLE_HTTPS="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS"\nDNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT"\nDNS_SERVER_RECURSION="op://d3HL/Technitium-dns/DNS_SERVER_RECURSION"\nDNS_SERVER_RECURSION_NETWORK_ACL="op://d3HL/Technitium-dns/DNS_SERVER_RECURSION_NETWORK_ACL"\nDNS_SERVER_ENABLE_BLOCKING="op://d3HL/Technitium-dns/DNS_SERVER_ENABLE_BLOCKING"\nDNS_SERVER_FORWARDERS="op://d3HL/Technitium-dns/DNS_SERVER_FORWARDERS"\nDNS_SERVER_FORWARDER_PROTOCOL="op://d3HL/Technitium-dns/DNS_SERVER_FORWARDER_PROTOCOL"\nDNS_SERVER_LOG_USING_LOCAL_TIME="op://d3HL/Technitium-dns/DNS_SERVER_LOG_USING_LOCAL_TIME"\nMYSQL_ROOT_PASSWORD="op://d3HL/Technitium-dns/MYSQL_ROOT_PASSWORD"\nMYSQL_USER="op://d3HL/Technitium-dns/MYSQL_USER"\nMYSQL_PASSWORD="op://d3HL/Technitium-dns/MYSQL_USER"\ncDATA="op://d3HL/Technitium-dns/cDATA""  >> .env.template
+TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
+"""
+post_deploy.command = """
+rm .env*
+"""
 file_contents = """
 services:
-  dockhand:
-    image: fnsys/dockhand:latest
-    container_name: dockhand
-    restart: unless-stopped
-    ports:
-      - "3011:3000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - dockhand_data:/app/data
-      - /mnt/cFS/appdata/komodo/stacks:/mnt/cFS/appdata/komodo/stacks
+  dns-server:
+    container_name: dns1
+    hostname: dns1
+    image: technitium/dns-server:latest
+    # For DHCP deployments, use "host" network mode and remove all the port mappings, including the ports array by commenting them
+    network_mode: "host"
+    #ports:
+    #  - "5380:5380/tcp" #DNS web console (HTTP)
+    #  - "53443:53443/tcp" #DNS web console (HTTPS)
+    #  - "53:53/udp" #DNS service
+    #  - "53:53/tcp" #DNS service
+      # - "853:853/udp" #DNS-over-QUIC service
+      # - "853:853/tcp" #DNS-over-TLS service
+      # - "443:443/udp" #DNS-over-HTTPS service (HTTP/3)
+      # - "443:443/tcp" #DNS-over-HTTPS service (HTTP/1.1, HTTP/2)
+      # - "80:80/tcp" #DNS-over-HTTP service (use with reverse proxy or certbot certificate renewal)
+      # - "8053:8053/tcp" #DNS-over-HTTP service (use with reverse proxy)
+      # - "67:67/udp" #DHCP service
     environment:
-      - PUID=1000  # Your user ID (run: id -u)
-      - PGID=1000  # Your group ID (run: id -g)
-    group_add:
-      - "999"  # Docker group GID for socket access
+      - DNS_SERVER_DOMAIN=${DNS_SERVER_DOMAIN:-dns1}
+      - DNS_SERVER_ADMIN_PASSWORD=${DNS_SERVER_ADMIN_PASSWORD}
+      - DNS_SERVER_PREFER_IPV6=${DNS_SERVER_PREFER_IPV6}
+      - DNS_SERVER_WEB_SERVICE_HTTP_PORT=${DNS_SERVER_WEB_SERVICE_HTTP_PORT}
+      - DNS_SERVER_WEB_SERVICE_HTTPS_PORT=${DNS_SERVER_WEB_SERVICE_HTTPS_PORT}
+      - DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS=${DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS}
+      - DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT=${DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT}
+      - DNS_SERVER_RECURSION=${DNS_SERVER_RECURSION}
+      - DNS_SERVER_RECURSION_NETWORK_ACL=${DNS_SERVER_RECURSION_NETWORK_ACL}
+      - DNS_SERVER_ENABLE_BLOCKING=${DNS_SERVER_ENABLE_BLOCKING:-false}
+      - DNS_SERVER_FORWARDERS=${DNS_SERVER_FORWARDERS:-1.1.1.1}
+      - DNS_SERVER_FORWARDER_PROTOCOL=${DNS_SERVER_FORWARDER_PROTOCOL:-Tcp}
+      - DNS_SERVER_LOG_USING_LOCAL_TIME=${DNS_SERVER_LOG_USING_LOCAL_TIME:-true}
+    volumes:
+      - ${CDATA}/dns1/config:/etc/dns
+    restart: unless-stopped
+    #sysctls:  # no need if network host
+    #  - net.ipv4.ip_local_port_range=1024 65535
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: mariadb
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Singapore
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=dns_log
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD} #optional
+#      - REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
+      - CLI_OPTS= #optional
+    volumes:
+      - ${CDATA}/dns1/mariadb/config:/config
+    ports:
+      - 3306:3306
+    restart: unless-stopped
+"""
+environment = """
+  ## VARIABLE = value
+"""
 
-volumes:
-  dockhand_data:
+##
+
+[[stack]]
+name = "dns2"
+[stack.config]
+
+pre_deploy.command = """
+echo -e "DNS_SERVER_ADMIN_PASSWORD="op://d3HL/Technitium-dns/DNS_SERVER_ADMIN_PASSWORD"\nDNS_SERVER_PREFER_IPV6="op://d3HL/Technitium-dns/DNS_SERVER_PREFER_IPV6"\nDNS_SERVER_WEB_SERVICE_HTTP_PORT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_HTTP_PORT"\nDNS_SERVER_WEB_SERVICE_HTTPS_PORT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_HTTPS_PORT"\nDNS_SERVER_WEB_SERVICE_ENABLE_HTTPS="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS"\nDNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT="op://d3HL/Technitium-dns/DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT"\nDNS_SERVER_RECURSION="op://d3HL/Technitium-dns/DNS_SERVER_RECURSION"\nDNS_SERVER_RECURSION_NETWORK_ACL="op://d3HL/Technitium-dns/DNS_SERVER_RECURSION_NETWORK_ACL"\nDNS_SERVER_ENABLE_BLOCKING="op://d3HL/Technitium-dns/DNS_SERVER_ENABLE_BLOCKING"\nDNS_SERVER_FORWARDERS="op://d3HL/Technitium-dns/DNS_SERVER_FORWARDERS"\nDNS_SERVER_FORWARDER_PROTOCOL="op://d3HL/Technitium-dns/DNS_SERVER_FORWARDER_PROTOCOL"\nDNS_SERVER_LOG_USING_LOCAL_TIME="op://d3HL/Technitium-dns/DNS_SERVER_LOG_USING_LOCAL_TIME"\nMYSQL_ROOT_PASSWORD="op://d3HL/Technitium-dns/MYSQL_ROOT_PASSWORD"\nMYSQL_USER="op://d3HL/Technitium-dns/MYSQL_USER"\nMYSQL_PASSWORD="op://d3HL/Technitium-dns/MYSQL_USER"\ncDATA="op://d3HL/Technitium-dns/cDATA""  >> .env.template
+TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
+"""
+post_deploy.command = """
+rm .env*
+"""
+file_contents = """
+services:
+  dns-server:
+    container_name: dns2
+    hostname: dns2
+    image: technitium/dns-server:latest
+    # For DHCP deployments, use "host" network mode and remove all the port mappings, including the ports array by commenting them
+    network_mode: "host"
+    #ports:
+    #  - "5380:5380/tcp" #DNS web console (HTTP)
+    #  - "53443:53443/tcp" #DNS web console (HTTPS)
+    #  - "53:53/udp" #DNS service
+    #  - "53:53/tcp" #DNS service
+      # - "853:853/udp" #DNS-over-QUIC service
+      # - "853:853/tcp" #DNS-over-TLS service
+      # - "443:443/udp" #DNS-over-HTTPS service (HTTP/3)
+      # - "443:443/tcp" #DNS-over-HTTPS service (HTTP/1.1, HTTP/2)
+      # - "80:80/tcp" #DNS-over-HTTP service (use with reverse proxy or certbot certificate renewal)
+      # - "8053:8053/tcp" #DNS-over-HTTP service (use with reverse proxy)
+      # - "67:67/udp" #DHCP service
+    environment:
+      - DNS_SERVER_DOMAIN=dns2
+      - DNS_SERVER_ADMIN_PASSWORD=${DNS_SERVER_ADMIN_PASSWORD}
+      - DNS_SERVER_PREFER_IPV6=${DNS_SERVER_PREFER_IPV6}
+      - DNS_SERVER_WEB_SERVICE_HTTP_PORT=${DNS_SERVER_WEB_SERVICE_HTTP_PORT}
+      - DNS_SERVER_WEB_SERVICE_HTTPS_PORT=${DNS_SERVER_WEB_SERVICE_HTTPS_PORT}
+      - DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS=${DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS}
+      - DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT=${DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT}
+      - DNS_SERVER_RECURSION=${DNS_SERVER_RECURSION}
+      - DNS_SERVER_RECURSION_NETWORK_ACL=${DNS_SERVER_RECURSION_NETWORK_ACL}
+      - DNS_SERVER_ENABLE_BLOCKING=${DNS_SERVER_ENABLE_BLOCKING:-false}
+      - DNS_SERVER_FORWARDERS=${DNS_SERVER_FORWARDERS:-1.1.1.1}
+      - DNS_SERVER_FORWARDER_PROTOCOL=${DNS_SERVER_FORWARDER_PROTOCOL:-Tcp}
+      - DNS_SERVER_LOG_USING_LOCAL_TIME=${DNS_SERVER_LOG_USING_LOCAL_TIME:-true}
+    volumes:
+      - ${CDATA}/dns2/config:/etc/dns
+    restart: unless-stopped
+    #sysctls:  # no need if network host
+    #  - net.ipv4.ip_local_port_range=1024 65535
 """
 
 ##
@@ -550,6 +667,131 @@ HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
 ##
 
 [[stack]]
+name = "homey"
+[stack.config]
+file_contents = """
+services:
+  homey-shs:
+    image: ghcr.io/athombv/homey-shs:latest
+    container_name: homey-shs
+    restart: unless-stopped
+    #network_mode: bridge
+    ports:
+      - 4859:4859
+      - 4860:4860
+      - 4861:4861 
+      - 4862:4862
+    privileged: true
+    volumes:
+      - /mnt/cFS/appdata/homey:/homey/user
+
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    image: ghcr.io/koenkk/zigbee2mqtt
+    restart: unless-stopped
+    volumes:
+      - /mnt/cFS/appdata/homey/zigbee2mqtt:/app/data
+      - /run/udev:/run/udev:ro
+    #ports:
+      # Frontend port
+    #  - 8080:8080
+    network_mode: host
+    environment:
+      TZ: Asia/Singapore
+    #group_add:
+    #  - dialout
+    #user: 1000:1000
+
+#MQTT broker      
+  emqx1:
+    image: emqx/emqx:latest
+    container_name: emqx1
+    ports:
+      - 1883:1883
+      - 18083:18083
+    volumes:
+      - /mnt/cFS/appdata/emqx/data:/opt/emqx/data
+"""
+
+##
+
+[[stack]]
+name = "immich"
+[stack.config]
+project_name = "immich"
+file_contents = """
+services:
+  server:
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    environment:
+      DB_PASSWORD: postgres2taolavodch
+      DB_USERNAME: postgres
+      DB_DATABASE_NAME: immich
+      DB_HOSTNAME: immich_database
+      REDIS_HOSTNAME: immich_redis
+      TZ: Asia/Singapore
+      PGUD: 1000
+      PUID: 1000
+    volumes:
+      - /mnt/zApps/imm_library:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    deploy:
+      replicas: 2  # Change this number
+    ports:
+      - 2284:2283
+    depends_on:
+      - redis
+      - database
+    restart: always
+    healthcheck:
+      disable: true
+
+  redis:
+    image: docker.io/valkey/valkey:9@sha256:3eeb09785cd61ec8e3be35f8804c8892080f3ca21934d628abc24ee4ed1698f6
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+
+  database:
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
+    environment:
+      POSTGRES_PASSWORD: postgres2taolavodch
+      POSTGRES_USER: postgres
+      POSTGRES_DB: immich
+      POSTGRES_HOST: immich_database
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+      PGUD: 1000
+      PUID: 1000
+    volumes:
+      - /mnt/cFS/appdata/immich-swarm/postgres:/var/lib/postgresql/data
+    shm_size: 128mb
+    healthcheck:
+      disable: false
+    restart: always
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    # For hardware acceleration, add one of -[armnn, cuda, rocm, openvino, rknn] to the image tag.
+    # Example tag: ${IMMICH_VERSION:-release}-cuda
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    # extends: # uncomment this section for hardware acceleration - see https://docs.immich.app/features/ml-hardware-acceleration
+    #   file: hwaccel.ml.yml
+    #   service: cpu # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
+    volumes:
+      - /mnt/cFS/appdata/immich-swarm/model-cache:/cache
+    #env_file:
+    #  - .env
+    environment:   
+      PGUD: 1000
+      PUID: 1000 
+    restart: always
+    healthcheck:
+      disable: false
+"""
+
+##
+
+[[stack]]
 name = "immich-app"
 tags = ["2283"]
 [stack.config]
@@ -558,10 +800,11 @@ links = ["http://immich.d3adc3ii.cc/"]
 project_name = "immich"
 destroy_before_deploy = true
 pre_deploy.command = """
+echo -e "UPLOAD_LOCATION="op://d3HL/immich_env/UPLOAD_LOCATION"\nIMMICH_VERSION="op://d3HL/immich_env/IMMICH_VERSION"\nDB_DATA_LOCATION="op://d3HL/immich_env/DB_DATA_LOCATION"\nPGID="op://d3HL/immich_env/PGID"\nPUID="op://d3HL/immich_env/PUID"\nDB_PASSWORD="op://d3HL/immich_env/DB_PASSWORD"\nDB_USERNAME="op://d3HL/immich_env/DB_USERNAME"\nDB_DATABASE_NAME="op://d3HL/immich_env/DB_DATABASE_NAME"\nIMMICH_IGNORE_MOUNT_CHECK_ERRORS="op://d3HL/immich_env/IMMICH_IGNORE_MOUNT_CHECK_ERRORS"" >> .env.template
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
 post_deploy.command = """
-rm .env
+rm .env*
 """
 file_contents = """
 #
@@ -640,7 +883,7 @@ volumes:
   model-cache:
 """
 environment = """
-
+#environment
 """
 
 ##
@@ -830,34 +1073,6 @@ CAPP=/mnt/cFS/appdata
 ##
 
 [[stack]]
-name = "komodo-ee"
-[stack.config]
-server = "kmd0"
-file_contents = """
----
-
-services:
-  ansible:
-    image: ghcr.io/bpbradley/ansible/komodo-ee:v1.3 # or latest
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    volumes:
-      - ./ansible:/ansible # Mount ansible files into container
-      - /mnt/cFS/appdata/komodo/komodo_ansible:/root/.ssh/id_ed25519:ro # Make sure the user you run the container has read access to the key
-    env_file:
-      - .env
-    environment:
-      ANSIBLE_HOST_KEY_CHECKING: ${ANSIBLE_HOST_KEY_CHECKING:-false} # Necessary for automation, unless you manage known_hosts and map it into container
-    command: "sleep 3600" # this keeps the container running by default, which will help with testing so you can exec into it temporarily
-"""
-environment = """
-PUID=1000
-PGID=1000
-"""
-
-##
-
-[[stack]]
 name = "metube"
 [stack.config]
 server = "kmd1"
@@ -982,6 +1197,260 @@ networks:
 """
 environment = """
   # VARIABLE = value
+"""
+
+##
+
+[[stack]]
+name = "pankha"
+[stack.config]
+destroy_before_deploy = true
+file_contents = """
+# Docker Compose for Pankha Repository
+# run:
+# docker compose down && docker compose pull && docker compose up -d
+
+services:
+  pankha-app:
+    container_name: pankha_app
+    image: anexgohan/pankha:latest # :latest = stable | :beta = absolute latest | :testing = pre-release
+    # Log rotation: managed by your Docker daemon config (/etc/docker/daemon.json)
+    ports:
+      - "${PANKHA_PORT:-3143}:3143" # Web server (host:container) (change left side only, set to your desired port, or set PANKHA_PORT environment variable)
+    environment:
+      # Timezone: set TIMEZONE in .env (list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+      - TZ=${TIMEZONE:-UTC}
+      - PORT=3143 # Internal port Do Not Change
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3143/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      pankha-postgres:
+        condition: service_healthy
+    volumes:
+      - ./docker-data/staging:${PANKHA_STAGING_DIR}
+    restart: unless-stopped
+
+  pankha-postgres:
+    container_name: pankha_postgres
+    image: postgres:18-alpine
+    command:
+      - "postgres"
+      - "-c"
+      - "max_wal_size=${POSTGRES_MAX_WAL_SIZE:-256MB}"
+      - "-c"
+      - "min_wal_size=${POSTGRES_MIN_WAL_SIZE:-80MB}"
+      - "-c"
+      - "checkpoint_timeout=${POSTGRES_CHECKPOINT_TIMEOUT:-5min}"
+      - "-c"
+      - "wal_keep_size=${POSTGRES_WAL_KEEP_SIZE:-128MB}"
+      - "-c"
+      # PostgreSQL logging: only log warnings and errors (reduces noise)
+      # Options: DEBUG5, DEBUG1, INFO, NOTICE, WARNING, ERROR, LOG, FATAL, PANIC
+      # Default: NOTICE (logs notices, warnings, errors) | Using: WARNING (only warnings and errors)
+      - "log_min_messages=WARNING"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    env_file:
+      - .env
+    volumes:
+      - ./docker-data/backend/database/postgres_data:/var/lib/postgresql
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+"""
+environment = """
+# Environment Variables for pankha Repository
+
+# PostgreSQL Database Configuration
+POSTGRES_USER="pankha_user"
+POSTGRES_PASSWORD="pankha_password"
+POSTGRES_DB="db_pankha"
+POSTGRES_HOST="pankha-postgres"
+
+PANKHA_HUB_IP="<YOUR_PANKHA_IP>"     # Local LAN IP or hostname of the pankha server, used in agents deployment
+PANKHA_PORT="3143"      # HTTP/Web server port (browser connects here)
+
+# Staging Directory
+# Path to store downloaded agent binaries, checksums, reports, etc. (persistent)
+PANKHA_STAGING_DIR="/app/backend/data/staging"
+
+# Logging Configuration
+# LOG_LEVEL: Set logging verbosity (error, warn, info, debug, trace), default=warn
+LOG_LEVEL="info"
+
+# Extra Environment Variables:
+# TIMEZONE: Set the timezone for the application (default: UTC), remove # to set
+# List of valid timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+# Setting wrong timezone will result in wrong time being displayed in the dashboard and logs
+
+# TIMEZONE="Asia/Kolkata"
+
+# PostgreSQL Performance Tuning (Optional) (leave as is unless you know what you're doing)
+# Controls transaction log size and cleanup behavior to prevent disk space bloat
+POSTGRES_MAX_WAL_SIZE="256MB"
+# Minimum WAL to keep (default: 80MB), PostgreSQL recycles old WAL files down to this minimum
+POSTGRES_MIN_WAL_SIZE="80MB"
+# Time between checkpoints (default: 5min)
+POSTGRES_CHECKPOINT_TIMEOUT="5min"
+# WAL size to keep for recovery purposes (default: 64MB)
+POSTGRES_WAL_KEEP_SIZE="64MB"
+POSTGRES_PORT="5432"    # PostgreSQL port (database clients connect here) (keep unchanged unless conflicted)
+
+# Authentication Secrets - CHANGE THESE (use anything random and long)
+# JWT_SECRET="your-super-secret-jwt-key-change-this"
+# SESSION_SECRET="your-super-secret-session-key-change-this"
+
+# Database Connection String (for manual queries, NOT used by backend)
+# The backend constructs its own DATABASE_URL from the vars above with URL-encoding
+# To query the database with psql, use:  
+# docker exec -it <container_name> psql -U <POSTGRES_USER> -d <POSTGRES_DB>
+# directly connect to pankha-postgres:
+# Format: postgresql://USER:PASSWORD@HOST:PORT/DATABASE
+# DATABASE_URL="postgresql://pankha_user:pankha_password@pankha-postgres:5432/db_pankha"
+# DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
+"""
+
+##
+
+[[stack]]
+name = "pankha2"
+[stack.config]
+server = "kmd1"
+file_contents = """
+# Docker Compose for Pankha Repository
+# run:
+# docker compose down && docker compose pull && docker compose up -d
+
+services:
+  pankha-app:
+    container_name: pankha_app
+    image: anexgohan/pankha:latest # :latest = stable | :beta = absolute latest | :testing = pre-release
+    # Log rotation: managed by your Docker daemon config (/etc/docker/daemon.json)
+    ports:
+      - "${PANKHA_PORT:-3143}:3143" # Web server (host:container) (change left side only, set to your desired port, or set PANKHA_PORT environment variable)
+    environment:
+      # Timezone: set TIMEZONE in .env (list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+      - TZ=Asia/Singapore
+      - PORT=3143 # Internal port Do Not Change
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3143/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      pankha-postgres:
+        condition: service_healthy
+    volumes:
+      - ./docker-data/staging:${PANKHA_STAGING_DIR}
+    restart: unless-stopped
+
+  pankha-postgres:
+    container_name: pankha_postgres
+    image: postgres:18-alpine
+    command:
+      - "postgres"
+      - "-c"
+      - "max_wal_size=${POSTGRES_MAX_WAL_SIZE:-256MB}"
+      - "-c"
+      - "min_wal_size=${POSTGRES_MIN_WAL_SIZE:-80MB}"
+      - "-c"
+      - "checkpoint_timeout=${POSTGRES_CHECKPOINT_TIMEOUT:-5min}"
+      - "-c"
+      - "wal_keep_size=${POSTGRES_WAL_KEEP_SIZE:-128MB}"
+      - "-c"
+      # PostgreSQL logging: only log warnings and errors (reduces noise)
+      # Options: DEBUG5, DEBUG1, INFO, NOTICE, WARNING, ERROR, LOG, FATAL, PANIC
+      # Default: NOTICE (logs notices, warnings, errors) | Using: WARNING (only warnings and errors)
+      - "log_min_messages=WARNING"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    env_file:
+      - .env
+    volumes:
+      - ./docker-data/backend/database/postgres_data:/var/lib/postgresql
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+"""
+environment = """
+# Environment Variables for pankha Repository
+
+# PostgreSQL Database Configuration
+POSTGRES_USER="pankha_user"
+POSTGRES_PASSWORD="pankha_password"
+POSTGRES_DB="db_pankha"
+POSTGRES_HOST="pankha-postgres"
+
+PANKHA_HUB_IP="<YOUR_PANKHA_IP>"     # Local LAN IP or hostname of the pankha server, used in agents deployment
+PANKHA_PORT="3143"      # HTTP/Web server port (browser connects here)
+
+# Staging Directory
+# Path to store downloaded agent binaries, checksums, reports, etc. (persistent)
+PANKHA_STAGING_DIR="/app/backend/data/staging"
+
+# Logging Configuration
+# LOG_LEVEL: Set logging verbosity (error, warn, info, debug, trace), default=warn
+LOG_LEVEL="info"
+
+# Extra Environment Variables:
+# TIMEZONE: Set the timezone for the application (default: UTC), remove # to set
+# List of valid timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+# Setting wrong timezone will result in wrong time being displayed in the dashboard and logs
+
+# TIMEZONE="Asia/Kolkata"
+
+# PostgreSQL Performance Tuning (Optional) (leave as is unless you know what you're doing)
+# Controls transaction log size and cleanup behavior to prevent disk space bloat
+POSTGRES_MAX_WAL_SIZE="256MB"
+# Minimum WAL to keep (default: 80MB), PostgreSQL recycles old WAL files down to this minimum
+POSTGRES_MIN_WAL_SIZE="80MB"
+# Time between checkpoints (default: 5min)
+POSTGRES_CHECKPOINT_TIMEOUT="5min"
+# WAL size to keep for recovery purposes (default: 64MB)
+POSTGRES_WAL_KEEP_SIZE="64MB"
+POSTGRES_PORT="5432"    # PostgreSQL port (database clients connect here) (keep unchanged unless conflicted)
+
+# Authentication Secrets - CHANGE THESE (use anything random and long)
+# JWT_SECRET="your-super-secret-jwt-key-change-this"
+# SESSION_SECRET="your-super-secret-session-key-change-this"
+
+# Database Connection String (for manual queries, NOT used by backend)
+# The backend constructs its own DATABASE_URL from the vars above with URL-encoding
+# To query the database with psql, use:  
+# docker exec -it <container_name> psql -U <POSTGRES_USER> -d <POSTGRES_DB>
+# directly connect to pankha-postgres:
+# Format: postgresql://USER:PASSWORD@HOST:PORT/DATABASE
+# DATABASE_URL="postgresql://pankha_user:pankha_password@pankha-postgres:5432/db_pankha"
+# DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
 """
 
 ##
@@ -1212,6 +1681,33 @@ networks:
 ##
 
 [[stack]]
+name = "pegaprox"
+[stack.config]
+file_contents = """
+services:
+  pegaprox:
+    image: ghcr.io/pegaprox/pegaprox:latest
+    container_name: pegaprox
+    ports:
+      - "5000:5000"   # web UI + API
+      - "5001:5001"   # VNC websocket (noVNC console)
+      - "5002:5002"   # SSH websocket (xterm.js)
+    volumes:
+      - /mnt/cFS/appdata/pegaprox/config:/app/config
+      - /mnt/cFS/appdata/pegaprox/logs:/app/logs
+      # - ./ssl:/app/ssl   # mount custom certs if needed
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - PEGAPROX_BEHIND_PROXY= "true"           # behind nginx/haproxy
+      - PEGAPROX_TRUSTED_PROXIES= "172.16.0.0/12"
+      - PEGAPROX_ALLOWED_ORIGINS= "https://pegaprox.d3adc3ii.cc"
+"""
+
+##
+
+[[stack]]
 name = "phpipam"
 [stack.config]
 server = "kmd0"
@@ -1270,6 +1766,87 @@ SCAN_INTERVAL="op://d3HL/phpipam/SCAN_INTERVAL"
 APPDATA="op://d3HL/phpipam/APPDATA"
 MYSQL_USER="op://d3HL/phpipam/uqrt2zczba2py2sdmb6flhld2m"
 MYSQL_ROOT_PASSWORD="op://d3HL/phpipam/IPAM_DATABASE_PASS"
+"""
+
+##
+
+[[stack]]
+name = "proxcenter"
+[stack.config]
+server = "kmd2"
+destroy_before_deploy = true
+file_contents = """
+# ============================================
+# ProxCenter Community Edition
+# Frontend only - No orchestrator required
+# ============================================
+
+services:
+  # ========================================
+  # Frontend (Next.js + WebSocket Proxy)
+  # ========================================
+  frontend:
+    image: ghcr.io/adminsyspro/proxcenter-frontend:${VERSION:-latest}
+    container_name: proxcenter-frontend
+    restart: unless-stopped
+    network_mode: "host"
+    #ports:
+    #  - "3110:3000"  # Unified HTTP + WebSocket
+    user: "1000:1000" 
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/app/data/proxcenter.db
+      - APP_SECRET=${APP_SECRET}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-http://localhost:3000}
+      - APP_URL=${APP_URL:-http://localhost:3000}
+      # No ORCHESTRATOR_URL = Community mode
+      #
+      # Docker Secrets support (Swarm / file-based):
+      # Instead of setting APP_SECRET directly, point to a secret file:
+      # - APP_SECRET_FILE=/run/secrets/app_secret
+      # - NEXTAUTH_SECRET_FILE=/run/secrets/nextauth_secret
+    volumes:
+      - /mnt/cFS/appdata/proxcenter/data:/app/data
+    # secrets:
+    #   - app_secret
+    #   - nextauth_secret
+    #networks:
+    #  - proxcenter
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+# ========================================
+# Networks
+# ========================================
+#networks:
+ # proxcenter:
+  #  driver: bridge
+   # name: proxcenter
+
+# ========================================
+# Volumes
+# ========================================
+# ========================================
+# Secrets (uncomment for Docker Swarm)
+# ========================================
+# secrets:
+#   app_secret:
+#     external: true
+#   nextauth_secret:
+#     external: true
+#volumes:
+#  proxcenter_data:
+#    name: proxcenter_data
+ #   driver: wetopi/rbd
+"""
+environment = """
+APP_SECRET=U.9wP-jVh@GLP3X6ewo2Z2UEkjdo72eJJ8_.kdDw*k!D6Jh-NiiXu4RRr4k4G2tZtg
+NEXTAUTH_SECRET=U.9wP-jVh@GLP3X6ewo2Z2UEk82sfg72eJJ8_.kdDw*k!D6Jh-NiiXu4RRr4k4G2tZtg
 """
 
 ##
@@ -1740,6 +2317,44 @@ POSTHOG_HOST=
 ##
 
 [[stack]]
+name = "upsnap"
+[stack.config]
+file_contents = """
+services:
+  upsnap:
+    cap_add:
+      - NET_RAW # NET_RAW is required for privileged ping and network device scan (nmap)
+    cap_drop:
+      - ALL
+    container_name: upsnap
+    image: ghcr.io/seriousm4x/upsnap:5 # images are also available on docker hub: seriousm4x/upsnap:5
+    network_mode: host # host is required for WOL magic packets
+    restart: unless-stopped
+    volumes:
+      - /mnt/cFS/appdata/upsnap/data:/app/pb_data
+    # # To use a non-root user, create the mountpoint first (mkdir data) so that it has the right permission.
+    user: 1000:1000
+    environment:
+      - TZ=Asia/Singapore # Set container timezone for cron schedules
+      - UPSNAP_HTTP_LISTEN=10.10.10.38:8191
+      - UPSNAP_INTERVAL=*/10 * * * * * # Sets the interval in which the devices are pinged
+      - UPSNAP_SCAN_RANGE=10.10.10.0/24
+      - UPSNAP_SCAN_TIMEOUT=500ms # Scan timeout is nmap's --host-timeout value to wait for devices (https://nmap.org/book/man-performance.html)
+      - UPSNAP_PING_PRIVILEGED=true # Default is true. Set to false for unprivileged ping
+    #     For Linux hosts, unprivileged pings REQUIRES the host to set 'sysctl net.ipv4.ping_group_range="0 2147483647"'
+    #     or another suitable value to grant the group access to send ping and WOL magic packets.
+    #   - UPSNAP_WEBSITE_TITLE=Custom name # Custom website title
+    # security_opt:
+    #   - no-new-privileges=true
+    # dns is used for name resolution during network scan
+    dns:
+      - 10.10.10.35
+      - 10.10.10.2
+"""
+
+##
+
+[[stack]]
 name = "yubal"
 [stack.config]
 server = "kmd1"
@@ -1765,6 +2380,24 @@ environment = """
 ZAPP=/mnt/zApps
 CAPP=/mnt/cFS/appdata
 """
+
+##
+
+[[build]]
+name = "dnsserver"
+[build.config]
+builder = "kmd0"
+
+##
+
+[[repo]]
+name = "d3hl/DnsServer"
+[repo.config]
+server = "kmd0"
+builder = "kmd0"
+git_provider = "Github.com"
+git_account = "d3hl"
+repo = "d3hl/DnsServer"
 
 ##
 
