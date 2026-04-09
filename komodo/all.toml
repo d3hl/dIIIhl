@@ -25,9 +25,9 @@ enabled = true
 ##
 
 [[swarm]]
-name = "d3swarm"
+name = "d3hl_swarm"
 [swarm.config]
-servers = ["kmd0"]
+servers = ["kmd2", "kmd1"]
 send_unhealthy_alerts = true
 
 ##
@@ -366,22 +366,6 @@ services:
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
-"""
-
-##
-
-[[stack]]
-name = "fan-pilot"
-[stack.config]
-server = "kmd2"
-file_contents = """
-services:
-  ipmilink:
-    container_name: ipmilink
-    image: devluigi06/ipmi-fanpilot:latest
-    network_mode: host
-    volumes:
-      - /mnt/cFS/appdata/fan-pilot/data:/data
 """
 
 ##
@@ -1703,6 +1687,34 @@ networks:
 ##
 
 [[stack]]
+name = "pegaprox"
+[stack.config]
+server = "kmd2"
+file_contents = """
+services:
+  pegaprox:
+    image: ghcr.io/pegaprox/pegaprox:latest
+    container_name: pegaprox
+    ports:
+      - "5000:5000"   # web UI + API
+      - "5001:5001"   # VNC websocket (noVNC console)
+      - "5002:5002"   # SSH websocket (xterm.js)
+    volumes:
+      - /mnt/cFS/appdata/pegaprox/config:/app/config
+      - /mnt/cFS/appdata/pegaprox/logs:/app/logs
+      # - ./ssl:/app/ssl   # mount custom certs if needed
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - PEGAPROX_BEHIND_PROXY= "true"           # behind nginx/haproxy
+      - PEGAPROX_TRUSTED_PROXIES= "172.16.0.0/12"
+      - PEGAPROX_ALLOWED_ORIGINS= "https://pegaprox.d3adc3ii.cc"
+"""
+
+##
+
+[[stack]]
 name = "phpipam"
 [stack.config]
 server = "kmd0"
@@ -1761,6 +1773,81 @@ SCAN_INTERVAL="op://d3HL/phpipam/SCAN_INTERVAL"
 APPDATA="op://d3HL/phpipam/APPDATA"
 MYSQL_USER="op://d3HL/phpipam/uqrt2zczba2py2sdmb6flhld2m"
 MYSQL_ROOT_PASSWORD="op://d3HL/phpipam/IPAM_DATABASE_PASS"
+"""
+
+##
+
+[[stack]]
+name = "proxcenter"
+[stack.config]
+server = "kmd2"
+file_contents = """
+# ============================================
+# ProxCenter Community Edition
+# Frontend only - No orchestrator required
+# ============================================
+
+services:
+  # ========================================
+  # Frontend (Next.js + WebSocket Proxy)
+  # ========================================
+  frontend:
+    image: ghcr.io/adminsyspro/proxcenter-frontend:${VERSION:-latest}
+    container_name: proxcenter-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"  # Unified HTTP + WebSocket
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/app/data/proxcenter.db
+      - APP_SECRET=${APP_SECRET}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-http://localhost:3000}
+      - APP_URL=${APP_URL:-http://localhost:3000}
+      # No ORCHESTRATOR_URL = Community mode
+      #
+      # Docker Secrets support (Swarm / file-based):
+      # Instead of setting APP_SECRET directly, point to a secret file:
+      # - APP_SECRET_FILE=/run/secrets/app_secret
+      # - NEXTAUTH_SECRET_FILE=/run/secrets/nextauth_secret
+    volumes:
+      - proxcenter_data:/app/data
+    # secrets:
+    #   - app_secret
+    #   - nextauth_secret
+    networks:
+      - proxcenter
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+# ========================================
+# Networks
+# ========================================
+networks:
+  proxcenter:
+    driver: bridge
+    name: proxcenter
+
+# ========================================
+# Volumes
+# ========================================
+# ========================================
+# Secrets (uncomment for Docker Swarm)
+# ========================================
+# secrets:
+#   app_secret:
+#     external: true
+#   nextauth_secret:
+#     external: true
+
+volumes:
+  proxcenter_data:
+    name: proxcenter_data
+    external: true
 """
 
 ##
@@ -2226,6 +2313,45 @@ POSTHOG_HOST=
 # GENERIC_S3_BUCKET=
 # GENERIC_S3_ENDPOINT=
 # GENERIC_S3_FORCE_PATH_STYLE= <- defaults to false
+"""
+
+##
+
+[[stack]]
+name = "upsnap"
+[stack.config]
+server = "kmd2"
+file_contents = """
+services:
+  upsnap:
+    cap_add:
+      - NET_RAW # NET_RAW is required for privileged ping and network device scan (nmap)
+    cap_drop:
+      - ALL
+    container_name: upsnap
+    image: ghcr.io/seriousm4x/upsnap:5 # images are also available on docker hub: seriousm4x/upsnap:5
+    network_mode: host # host is required for WOL magic packets
+    restart: unless-stopped
+    volumes:
+      - /mnt/cFS/appdata/upsnap/data:/app/pb_data
+    # # To use a non-root user, create the mountpoint first (mkdir data) so that it has the right permission.
+    user: 1000:1000
+    environment:
+      - TZ=Asia/Singapore # Set container timezone for cron schedules
+      - UPSNAP_HTTP_LISTEN=10.10.10.38:8191
+      - UPSNAP_INTERVAL=*/10 * * * * * # Sets the interval in which the devices are pinged
+      - UPSNAP_SCAN_RANGE=10.10.10.0/24
+      - UPSNAP_SCAN_TIMEOUT=500ms # Scan timeout is nmap's --host-timeout value to wait for devices (https://nmap.org/book/man-performance.html)
+      - UPSNAP_PING_PRIVILEGED=true # Default is true. Set to false for unprivileged ping
+    #     For Linux hosts, unprivileged pings REQUIRES the host to set 'sysctl net.ipv4.ping_group_range="0 2147483647"'
+    #     or another suitable value to grant the group access to send ping and WOL magic packets.
+    #   - UPSNAP_WEBSITE_TITLE=Custom name # Custom website title
+    # security_opt:
+    #   - no-new-privileges=true
+    # dns is used for name resolution during network scan
+    dns:
+      - 10.10.10.35
+      - 10.10.10.2
 """
 
 ##
