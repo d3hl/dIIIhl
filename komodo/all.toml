@@ -216,6 +216,78 @@ services:
 ##
 
 [[stack]]
+name = "cv4pve-admin"
+[stack.config]
+server = "kmd2"
+files_on_host = true
+run_directory = "/mnt/cFS/appdata/cv4pve-admn"
+file_paths = ["docker-compose.yaml"]
+environment = """
+# CV4PVE Admin Configuration
+# Copyright (c) Corsinvest Srl
+# Website: https://corsinvest.it
+# Repository: https://gitlab.com/Corsinvest/cv4pve-admin
+
+# ==============================================================================
+# PostgreSQL Configuration
+# ==============================================================================
+POSTGRES_DB=cv4pve-admin-db
+POSTGRES_USER=postgres
+
+# WARNING: Change this password before deploying to production!
+# Generate strong password with: openssl rand -base64 32
+POSTGRES_PASSWORD=cv4pve-admin
+
+# ==============================================================================
+# Data Directory
+# ==============================================================================
+# Where to store persistent data (database, backups, logs, etc.)
+# Relative path (recommended for portability):
+DATA_DIR=./data
+#
+# Absolute path example:
+# DATA_DIR=/path/to/your/data
+
+# ==============================================================================
+# Application Version
+# ==============================================================================
+# Docker image tag to use. Examples: latest, 2.0.0-rc1, 2.0.0
+# Check available tags at: https://hub.docker.com/r/corsinvest/cv4pve-admin/tags
+CV4PVE_ADMIN_TAG=latest
+
+# ==============================================================================
+# Network Ports
+# ==============================================================================
+# Main application web UI
+CV4PVE_ADMIN_PORT=8080
+
+# PgWeb admin interface (only when started with --profile admin)
+PGWEB_PORT=8082
+
+# ==============================================================================
+# Timezone Configuration
+# ==============================================================================
+# Set the timezone for the container (e.g., Europe/Rome, America/New_York, UTC)
+# This will be automatically used by .NET applications running in the container
+TZ=Europe/Rome
+
+# ==============================================================================
+# Backup Directory
+# ==============================================================================
+# Where to store backups (relative to this directory)
+BACKUP_DIR=./backups
+
+# ==============================================================================
+# Watchtower Configuration
+# ==============================================================================
+# API token for Watchtower HTTP API (used by cv4pve-admin to trigger updates)
+# Generate a secure token with: openssl rand -base64 32
+WATCHTOWER_HTTP_API_TOKEN=mySecretToken123
+"""
+
+##
+
+[[stack]]
 name = "dns1"
 [stack.config]
 server = "kmd0"
@@ -1126,6 +1198,38 @@ services:
 ##
 
 [[stack]]
+name = "netbird"
+[stack.config]
+server = "kmd2"
+file_contents = """
+services:
+  netbird-client:
+      container_name: netbird-client
+      hostname: <HOSTNAME>
+      cap_add:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE
+      devices:
+          # Required when using userspace mode or when kernel module is not available
+          - /dev/net/tun
+      network_mode: host
+      environment:
+          - NB_SETUP_KEY=${SETUP_KEY}
+      volumes:
+          - netbird-client:/var/lib/netbird
+      image: netbirdio/netbird:latest
+volumes:
+  netbird-client:
+      name: netbird-client
+"""
+environment = """
+SETUP_KEY=35F0A4D3-A9C0-4BEA-915E-E4707B9F846C
+"""
+
+##
+
+[[stack]]
 name = "newt"
 [stack.config]
 server = "kmd0"
@@ -1204,6 +1308,7 @@ environment = """
 [[stack]]
 name = "pankha"
 [stack.config]
+server = "kmd2"
 destroy_before_deploy = true
 file_contents = """
 # Docker Compose for Pankha Repository
@@ -1563,7 +1668,7 @@ CDATA: /mnt/cFS/appdata/paperless-ngx
 name = "patchmon"
 tags = ["3000"]
 [stack.config]
-server = "kmd1"
+swarm = "d3hl-swarm"
 links = ["https://patchmon.d3adc3ii.cc"]
 project_name = "patchmon"
 poll_for_updates = true
@@ -1571,24 +1676,25 @@ auto_update = true
 auto_update_all_services = true
 pre_deploy.command = """
 echo -e 'CDATA="op://d3HL/patchmon/CDATA"\nCORS_ORIGIN="op://d3HL/patchmon/CORS_ORIGIN"\nPGID="op://d3HL/patchmon/PUID"\nPUID="op://d3HL/patchmon/PUID"\nPOSTGRES_DB="op://d3HL/patchmon/POSTGRES_DB"\nPOSTGRES_USER="op://d3HL/patchmon/POSTGRES_USER"\nPOSTGRES_PASSWORD="op://d3HL/patchmon/POSTGRES_PASSWORD"\nDATABASE_URL="op://d3HL/patchmon/DATABASE_URL"\nREDIS_PASSWORD="op://d3HL/patchmon/REDIS_PASSWORD"\nJWT_SECRET="op://d3HL/patchmon/JWT_SECRET"\nOIDC_DISABLE_LOCAL_AUTH="op://d3HL/patchmon/OIDC_DISABLE_LOCAL_AUTH"\nOIDC_AUTO_CREATE_USERS="op://d3HL/patchmon/OIDC_AUTO_CREATE_USERS"\nOIDC_ENABLED="op://d3HL/patchmon/OIDC_ENABLED"\nOIDC_ISSUER_URL="op://d3HL/patchmon/OIDC_ISSUER_URL"\nOIDC_CLIENT_ID="op://d3HL/patchmon/OIDC_CLIENT_ID"\nOIDC_CLIENT_SECRET="op://d3HL/patchmon/OIDC_CLIENT_SECRET"\nOIDC_REDIRECT_URI="op://d3HL/patchmon/OIDC_REDIRECT_URI"\nOIDC_BUTTON_TEXT="op://d3HL/patchmon/OIDC_BUTTON_TEXT"\nOIDC_SCOPES="op://d3HL/patchmon/OIDC_SCOPES"\nOIDC_ADMIN_GROUP="op://d3HL/patchmon/OIDC_ADMIN_GROUP"\nOIDC_SUPERADMIN_GROUP="op://d3HL/patchmon/OIDC_SUPERADMIN_GROUP"\nOIDC_SYNC_ROLES="op://d3HL/patchmon/OIDC_SYNC_ROLES"' >> .env.template
-TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
+TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env3"
 """
 post_deploy.command = """
 rm .env*
 """
 file_contents = """
-name: patchmon
-
 services:
   database:
     image: postgres:17-alpine
-    restart: unless-stopped
+    configs:
+      - patchmon-conf.yml
     environment:
       POSTGRES_DB: patchmon_db
       POSTGRES_USER: patchmon_user
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    #restart: unless-stopped
+    secrets:
+      - patchmon-postgres-pw
     networks:
-      - patchmon-internal
+      - patchmon-int
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -1601,17 +1707,23 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    deploy:
+      replicas: 1
 
   redis:
     image: redis:7-alpine
-    restart: unless-stopped
-    command: redis-server --requirepass ${REDIS_PASSWORD} # CHANGE THIS TO YOUR REDIS PASSWORD
+   # restart: unless-stopped
+    configs:
+      - patchmon-conf.yml
+    secrets:
+      - REDIS_PASSWORD
+    command: redis-server --requirepass nec9vhn2kht7davUGV # CHANGE THIS TO YOUR REDIS PASSWORD
     volumes:
       - redis_data:/data
     networks:
-      - patchmon-internal
+      - patchmon-int
     healthcheck:
-      test: ["CMD", "redis-cli", "--no-auth-warning", "-a", "${REDIS_PASSWORD}", "ping"]
+      test: ["CMD", "redis-cli", "--no-auth-warning", "-a", "nec9vhn2kht7davUGV", "ping"]
       interval: 3s
       timeout: 5s
       retries: 7
@@ -1620,62 +1732,75 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    deploy:
+      replicas: 1
 
   backend:
     image: ghcr.io/patchmon/patchmon-backend:latest
-    restart: unless-stopped
-    # See PatchMon Docker README for additional environment variables and configuration instructions
-    env_file: .env
+    configs:
+      - patchmon-conf.yml
     environment:
       # Internal Docker wiring - do not change
-      DATABASE_URL: postgresql://patchmon_user:${POSTGRES_PASSWORD}@database:5432/patchmon_db
+      DATABASE_URL: postgresql://patchmon_user:c3fdKLUcYnTmHkpaHNDGiWNGUjofsJZ@database:5432/patchmon_db
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_PASSWORD: nec9vhn2kht7davUGV
       REDIS_DB: 0
       ASSETS_DIR: /app/assets
     volumes:
-      - agent_files:/app/agents
-      - ${CDATA}/patchmon/branding_assets:/app/assets
+      - /mnt/cFS/appdata/patchmon/agent_files:/app/agents
+      - /mnt/cFS/appdata/patchmon/branding_assets:/app/assets
     networks:
-      - patchmon-internal
-    depends_on:
-      database:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+      - patchmon-int
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
+    deploy:
+      replicas: 1
 
 
   frontend:
     image: ghcr.io/patchmon/patchmon-frontend:latest
-    restart: unless-stopped
+    configs:
+      - patchmon-conf.yml
+   # restart: unless-stopped
     ports:
       - "3000:3000"
     volumes:
-      - ${CDATA}/patchmon/branding_assets:/usr/share/nginx/html/assets
+      - /mnt/cFS/appdata/patchmon/branding_assets:/usr/share/nginx/html/assets
     networks:
-      - patchmon-internal
-    depends_on:
-      backend:
-        condition: service_healthy
+      - patchmon-int
+   # depends_on:
+   #   - backend:
+   #       condition: service_healthy
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
+    deploy:
+      replicas: 1
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.patchmon.rule=Host(`patchmon.d3adc3ii.cc`)"
+secrets:
+  patchmon-postgres-pw:
+    external: true
+  REDIS_PASSWORD:
+    external: true
+configs:
+  patchmon-conf.yml:   
+    external: true     
 volumes:
   postgres_data:
   redis_data:
-  agent_files:
+    driver: wetopi/rbd
 
 networks:
-  patchmon-internal:
-    driver: bridge
+  patchmon-int:
+    driver: overlay
 """
 
 ##
@@ -2312,6 +2437,28 @@ POSTHOG_HOST=
 # GENERIC_S3_BUCKET=
 # GENERIC_S3_ENDPOINT=
 # GENERIC_S3_FORCE_PATH_STYLE= <- defaults to false
+"""
+
+##
+
+[[stack]]
+name = "twingate"
+[stack.config]
+server = "kmd2"
+file_contents = """
+services:
+  twingate-connector:
+    image: twingate/connector:latest
+    restart: always
+    environment:
+      - TWINGATE_NETWORK=d3net
+      - TWINGATE_ACCESS_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6Im5ZYkRrcFlteGtoUk9OYnNINWdNeS1vNHliMXBNQjVpczFTMktVdHBsdGciLCJ0eXAiOiJEQVQifQ.eyJhdWRzIjpudWxsLCJudCI6IkFOIiwiYWlkIjoiNzgyNzU5IiwiZGlkIjoiMzEzMjA0NSIsInJudyI6MTc3NTc3Nzk1MCwianRpIjoiMjgwZjg3NjEtMjY0ZS00ZTRmLTkwZjMtNjE3NGVhYjc2NjNkIiwiaXNzIjoidHdpbmdhdGUiLCJhdWQiOiJkM25ldCIsImV4cCI6MTc3NTc4MTI0NSwiaWF0IjoxNzc1Nzc3NjQ1LCJ2ZXIiOiI0IiwidGlkIjoiMTAzNTY0Iiwicm5ldGlkIjoiMTM1OTMxIn0.PAfEa4lBto3ndynE2QmpE26-4tk7bRSXXbR9ZlJPIKABL-oEH-hkyggtfD-9X5Ypofhh0AaxZzWmrK07KQnsmQ
+      - TWINGATE_REFRESH_TOKEN=P_f_A-3OgmrQfTiN3Iu04IYRtfpzBcF4MHMbll00-LK_C84wS9MUC_-Sg8EUp7f31eGhkicpQn3_2Mhxgiu3l0ALfGXB6ych-pPeOxmxR9oZe7tzngZpmk6kphxjx3nC6TzJpw
+      - TWINGATE_LOG_ANALYTICS=v2
+      - TWINGATE_LOG_LEVEL=3
+    network_mode: host
+    #sysctls:
+     # net.ipv4.ping_group_range: "0 2147483647"
 """
 
 ##
