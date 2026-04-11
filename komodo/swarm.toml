@@ -1,0 +1,147 @@
+[[swarm]]
+name = "d3hl-swarm"
+tags = ["swarm"]
+[swarm.config]
+servers = ["kmd2"]
+send_unhealthy_alerts = true
+
+##
+
+[[stack]]
+name = "patchmon"
+tags = ["3000", "swarm"]
+[stack.config]
+swarm = "d3hl-swarm"
+links = ["https://patchmon.d3adc3ii.cc"]
+project_name = "patchmon"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+pre_deploy.command = """
+echo -e 'CDATA="op://d3HL/patchmon/CDATA"\nCORS_ORIGIN="op://d3HL/patchmon/CORS_ORIGIN"\nPGID="op://d3HL/patchmon/PUID"\nPUID="op://d3HL/patchmon/PUID"\nPOSTGRES_DB="op://d3HL/patchmon/POSTGRES_DB"\nPOSTGRES_USER="op://d3HL/patchmon/POSTGRES_USER"\nPOSTGRES_PASSWORD="op://d3HL/patchmon/POSTGRES_PASSWORD"\nDATABASE_URL="op://d3HL/patchmon/DATABASE_URL"\nREDIS_PASSWORD="op://d3HL/patchmon/REDIS_PASSWORD"\nJWT_SECRET="op://d3HL/patchmon/JWT_SECRET"\nOIDC_DISABLE_LOCAL_AUTH="op://d3HL/patchmon/OIDC_DISABLE_LOCAL_AUTH"\nOIDC_AUTO_CREATE_USERS="op://d3HL/patchmon/OIDC_AUTO_CREATE_USERS"\nOIDC_ENABLED="op://d3HL/patchmon/OIDC_ENABLED"\nOIDC_ISSUER_URL="op://d3HL/patchmon/OIDC_ISSUER_URL"\nOIDC_CLIENT_ID="op://d3HL/patchmon/OIDC_CLIENT_ID"\nOIDC_CLIENT_SECRET="op://d3HL/patchmon/OIDC_CLIENT_SECRET"\nOIDC_REDIRECT_URI="op://d3HL/patchmon/OIDC_REDIRECT_URI"\nOIDC_BUTTON_TEXT="op://d3HL/patchmon/OIDC_BUTTON_TEXT"\nOIDC_SCOPES="op://d3HL/patchmon/OIDC_SCOPES"\nOIDC_ADMIN_GROUP="op://d3HL/patchmon/OIDC_ADMIN_GROUP"\nOIDC_SUPERADMIN_GROUP="op://d3HL/patchmon/OIDC_SUPERADMIN_GROUP"\nOIDC_SYNC_ROLES="op://d3HL/patchmon/OIDC_SYNC_ROLES"' >> .env.template
+TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env3"
+"""
+post_deploy.command = """
+rm .env*
+"""
+file_contents = """
+services:
+  database:
+    image: postgres:17-alpine
+    configs:
+      - patchmon-conf.yml
+    environment:
+      POSTGRES_DB: patchmon_db
+      POSTGRES_USER: patchmon_user
+    #restart: unless-stopped
+    secrets:
+      - patchmon-postgres-pw
+    networks:
+      - patchmon-int
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U patchmon_user -d patchmon_db"]
+      interval: 3s
+      timeout: 5s
+      retries: 7
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      replicas: 1
+
+  redis:
+    image: redis:7-alpine
+   # restart: unless-stopped
+    configs:
+      - patchmon-conf.yml
+    secrets:
+      - REDIS_PASSWORD
+    command: redis-server --requirepass nec9vhn2kht7davUGV # CHANGE THIS TO YOUR REDIS PASSWORD
+    volumes:
+      - redis_data:/data
+    networks:
+      - patchmon-int
+    healthcheck:
+      test: ["CMD", "redis-cli", "--no-auth-warning", "-a", "nec9vhn2kht7davUGV", "ping"]
+      interval: 3s
+      timeout: 5s
+      retries: 7
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      replicas: 1
+
+  backend:
+    image: ghcr.io/patchmon/patchmon-backend:latest
+    configs:
+      - patchmon-conf.yml
+    environment:
+      # Internal Docker wiring - do not change
+      DATABASE_URL: postgresql://patchmon_user:c3fdKLUcYnTmHkpaHNDGiWNGUjofsJZ@database:5432/patchmon_db
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: nec9vhn2kht7davUGV
+      REDIS_DB: 0
+      ASSETS_DIR: /app/assets
+    volumes:
+      - /mnt/cFS/appdata/patchmon/agent_files:/app/agents
+      - /mnt/cFS/appdata/patchmon/branding_assets:/app/assets
+    networks:
+      - patchmon-int
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      replicas: 1
+
+
+  frontend:
+    image: ghcr.io/patchmon/patchmon-frontend:latest
+    configs:
+      - patchmon-conf.yml
+   # restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - /mnt/cFS/appdata/patchmon/branding_assets:/usr/share/nginx/html/assets
+    networks:
+      - patchmon-int
+   # depends_on:
+   #   - backend:
+   #       condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      replicas: 1
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.patchmon.rule=Host(`patchmon.d3adc3ii.cc`)"
+secrets:
+  patchmon-postgres-pw:
+    external: true
+  REDIS_PASSWORD:
+    external: true
+configs:
+  patchmon-conf.yml:   
+    external: true     
+volumes:
+  postgres_data:
+  redis_data:
+    driver: wetopi/rbd
+
+networks:
+  patchmon-int:
+    driver: overlay
+"""
