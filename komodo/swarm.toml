@@ -33,6 +33,7 @@ services:
     environment:
       POSTGRES_DB: patchmon_db
       POSTGRES_USER: patchmon_user
+      POSTGRES_PASSWORD: /run/secrets/patchmon-postgres-pw
     #restart: unless-stopped
     secrets:
       - patchmon-postgres-pw
@@ -90,6 +91,7 @@ services:
       REDIS_PASSWORD: nec9vhn2kht7davUGV
       REDIS_DB: 0
       ASSETS_DIR: /app/assets
+      CORS_ORIGIN: https://patchmon.d3adc3ii.cc
     volumes:
       - /mnt/cFS/appdata/patchmon/agent_files:/app/agents
       - /mnt/cFS/appdata/patchmon/branding_assets:/app/assets
