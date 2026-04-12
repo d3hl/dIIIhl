@@ -1864,7 +1864,7 @@ tags = ["patchmon", "kmd2", "3182"]
 [stack.config]
 server = "kmd2"
 links = ["https://patchmon.d3adc3ii.cc"]
-project_name = "patchmon"
+project_name = "patchmon-app"
 linked_repo = "dIIIhl"
 webhook_secret = "ywa.aeCDqCEo2LfqER*Dj_jvPBC.E!.iC9BoEtsRifz!wVwn*Lh7n2_gQ9wR_bovjA6LEf!-g_xqvaHybvXyZ-haw@CTgk8kHn4E"
 run_directory = "apps/patchmon"
