@@ -1291,6 +1291,12 @@ name = "pankha"
 [stack.config]
 server = "kmd2"
 destroy_before_deploy = true
+pre_deploy.command = """
+TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
+"""
+post_deploy.command = """
+rm .env
+"""
 file_contents = """
 # Docker Compose for Pankha Repository
 # run:
