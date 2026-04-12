@@ -7,4 +7,7 @@ services:
     ports:
       - '8003:8080'
     environment:
-      - DISABLE_IPV6=true
+      - DISABLE_IPV6=true 
+      - VITE_BRAND_NAME="Local PDF by Bento"
+      - VITE_BRAND_LOGO="images/d3.png"
+      - VITE_FOOTER_TEXT="© 2026 Internal use only."
