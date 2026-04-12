@@ -1,1 +1,1 @@
-mount_paths = ["immich.env"]
+mount_paths = [".env"]
