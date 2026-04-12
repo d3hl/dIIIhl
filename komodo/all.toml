@@ -89,82 +89,18 @@ tags = ["9000", "9443"]
 [stack.config]
 server = "kmd1"
 links = ["https://auth.d3adc3ii.cc"]
+project_name = "authentik"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
+linked_repo = "dIIIhl"
+run_directory = "apps/authentik"
 pre_deploy.command = """
 echo -e "POSTGRES_PASSWORD="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_PASSWORD"\nPOSTGRES_USER="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_USER"\nPOSTGRES_DB="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_DB"\nPANKHA_HUB_IP="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/PANKHA_HUB_IP"\nPANKHA_STAGING_DIR="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/PANKHA_STAGING_DIR"\nLOG_LEVEL="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/LOG_LEVEL"\nPOSTGRES_MAX_WAL_SIZE="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_MAX_WAL_SIZE"\nPOSTGRES_CHECKPOINT_TIMEOUT="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_CHECKPOINT_TIMEOUT"\nPOSTGRES_PORT="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_PORT"\n >> .env.template
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
 post_deploy.command = """
 rm .env*
-"""
-file_contents = """
-services:
-  postgresql:
-    env_file:
-    - .env
-    environment:
-      POSTGRES_DB: ${PG_DB:-authentik}
-      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
-      POSTGRES_USER: ${PG_USER:-authentik}
-    healthcheck:
-      interval: 30s
-      retries: 5
-      start_period: 20s
-      test:
-      - CMD-SHELL
-      - pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
-      timeout: 5s
-    image: docker.io/library/postgres:16-alpine
-    restart: unless-stopped
-    volumes:
-    - database:/var/lib/postgresql/data
-  server:
-    command: server
-    depends_on:
-      postgresql:
-        condition: service_healthy
-    env_file:
-    - .env
-    environment:
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
-      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG}
-    ports:
-    - ${COMPOSE_PORT_HTTP:-9000}:9000
-    - ${COMPOSE_PORT_HTTPS:-9443}:9443
-    restart: unless-stopped
-    volumes:
-    - ${CAPP}/data:/data
-    - ${CAPP}/custom-templates:/templates
-  worker:
-    command: worker
-    depends_on:
-      postgresql:
-        condition: service_healthy
-    env_file:
-    - .env
-    environment:
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
-      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
-    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG}
-    restart: unless-stopped
-    user: root
-    volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - ${CAPP}/data:/data
-    - ${CAPP}/certs:/certs
-    - ${CAPP}/custom-templates:/templates
-volumes:
-  database:
-    driver: local
 """
 environment = """
 
