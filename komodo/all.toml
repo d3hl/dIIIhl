@@ -112,6 +112,7 @@ environment = """
 name = "bento"
 tags = ["8003"]
 [stack.config]
+server = "kmd1"
 links = ["https://bento.d3adc3ii.cc"]
 project_name = "bento"
 linked_repo = "dIIIhl"
