@@ -1,0 +1,12 @@
+services:
+  beszel:
+    image: henrygd/beszel
+    container_name: beszel
+    restart: unless-stopped
+    environment:
+      - APP_URL=http://localhost:8090
+      - USER_CREATION=true
+    ports:
+      - 8090:8090
+    volumes:
+      - /mnt/cFS/appdata/beszel/data:/beszel_data
