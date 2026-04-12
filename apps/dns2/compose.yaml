@@ -1,0 +1,56 @@
+services:
+  dns-server:
+    container_name: dns2
+    hostname: dns2
+    image: technitium/dns-server:latest
+    # For DHCP deployments, use "host" network mode and remove all the port mappings, including the ports array by commenting them
+    network_mode: "host"
+    #ports:
+    #  - "5380:5380/tcp" #DNS web console (HTTP)
+    #  - "53443:53443/tcp" #DNS web console (HTTPS)
+    #  - "53:53/udp" #DNS service
+    #  - "53:53/tcp" #DNS service
+      # - "853:853/udp" #DNS-over-QUIC service
+      # - "853:853/tcp" #DNS-over-TLS service
+      # - "443:443/udp" #DNS-over-HTTPS service (HTTP/3)
+      # - "443:443/tcp" #DNS-over-HTTPS service (HTTP/1.1, HTTP/2)
+      # - "80:80/tcp" #DNS-over-HTTP service (use with reverse proxy or certbot certificate renewal)
+      # - "8053:8053/tcp" #DNS-over-HTTP service (use with reverse proxy)
+      # - "67:67/udp" #DHCP service
+    environment:
+      - DNS_SERVER_DOMAIN=${DNS_SERVER_DOMAIN:-dns1}
+      - DNS_SERVER_ADMIN_PASSWORD=${DNS_SERVER_ADMIN_PASSWORD}
+      - DNS_SERVER_PREFER_IPV6=${DNS_SERVER_PREFER_IPV6}
+      - DNS_SERVER_WEB_SERVICE_HTTP_PORT=${DNS_SERVER_WEB_SERVICE_HTTP_PORT}
+      - DNS_SERVER_WEB_SERVICE_HTTPS_PORT=${DNS_SERVER_WEB_SERVICE_HTTPS_PORT}
+      - DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS=${DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS}
+      - DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT=${DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT}
+      - DNS_SERVER_RECURSION=${DNS_SERVER_RECURSION}
+      - DNS_SERVER_RECURSION_NETWORK_ACL=${DNS_SERVER_RECURSION_NETWORK_ACL}
+      - DNS_SERVER_ENABLE_BLOCKING=${DNS_SERVER_ENABLE_BLOCKING:-false}
+      - DNS_SERVER_FORWARDERS=${DNS_SERVER_FORWARDERS:-1.1.1.1}
+      - DNS_SERVER_FORWARDER_PROTOCOL=${DNS_SERVER_FORWARDER_PROTOCOL:-Tcp}
+      - DNS_SERVER_LOG_USING_LOCAL_TIME=${DNS_SERVER_LOG_USING_LOCAL_TIME:-true}
+    volumes:
+      - ${CDATA}/dns2/config:/etc/dns
+    restart: unless-stopped
+    #sysctls:  # no need if network host
+    #  - net.ipv4.ip_local_port_range=1024 65535
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: mariadb
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Singapore
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=dns_log
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD} #optional
+#      - REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optionall
+      - CLI_OPTS= #optional
+    volumes:
+      - ${CDATA}/dns2/mariadb/config:/config
+    ports:
+      - 3306:3306
+    restart: unless-stopped
