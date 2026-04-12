@@ -1,3 +1,4 @@
+name: authentk
 services:
   postgresql:
     env_file:
