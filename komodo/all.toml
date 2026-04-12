@@ -96,7 +96,7 @@ auto_update_all_services = true
 linked_repo = "dIIIhl"
 run_directory = "apps/authentik"
 pre_deploy.command = """
-echo -e "POSTGRES_PASSWORD="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_PASSWORD"\nPOSTGRES_USER="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_USER"\nPOSTGRES_DB="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_DB"\nPANKHA_HUB_IP="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/PANKHA_HUB_IP"\nPANKHA_STAGING_DIR="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/PANKHA_STAGING_DIR"\nLOG_LEVEL="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/LOG_LEVEL"\nPOSTGRES_MAX_WAL_SIZE="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_MAX_WAL_SIZE"\nPOSTGRES_CHECKPOINT_TIMEOUT="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_CHECKPOINT_TIMEOUT"\nPOSTGRES_PORT="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_PORT"\n >> .env.template
+echo -e "POSTGRES_PASSWORD="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_PASSWORD"\nPOSTGRES_USER="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_USER"\nPOSTGRES_DB="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_DB"\nPANKHA_HUB_IP="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/PANKHA_HUB_IP"\nPANKHA_STAGING_DIR="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/PANKHA_STAGING_DIR"\nLOG_LEVEL="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/LOG_LEVEL"\nPOSTGRES_MAX_WAL_SIZE="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_MAX_WAL_SIZE"\nPOSTGRES_CHECKPOINT_TIMEOUT="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_CHECKPOINT_TIMEOUT"\nPOSTGRES_PORT="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_PORT"" >> .env.template
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
 post_deploy.command = """
