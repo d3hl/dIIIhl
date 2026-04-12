@@ -1863,8 +1863,10 @@ name = "patchmon_app"
 tags = ["patchmon", "kmd2", "3182"]
 [stack.config]
 server = "kmd2"
+links = ["https://patchmon.d3adc3ii.cc"]
 project_name = "patchmon"
 linked_repo = "dIIIhl"
+webhook_secret = "ywa.aeCDqCEo2LfqER*Dj_jvPBC.E!.iC9BoEtsRifz!wVwn*Lh7n2_gQ9wR_bovjA6LEf!-g_xqvaHybvXyZ-haw@CTgk8kHn4E"
 run_directory = "apps/patchmon"
 pre_deploy.command = """
 echo -e 'CORS_ORIGIN="op://d3HL/patchmon/CORS_ORIGIN"\nPGID="op://d3HL/patchmon/PUID"\nPUID="op://d3HL/patchmon/PUID"\nPOSTGRES_DB="op://d3HL/patchmon/POSTGRES_DB"\nPOSTGRES_USER="op://d3HL/patchmon/POSTGRES_USER"\nPOSTGRES_PASSWORD="op://d3HL/patchmon/POSTGRES_PASSWORD"\nDATABASE_URL="op://d3HL/patchmon/DATABASE_URL"\nREDIS_PASSWORD="op://d3HL/patchmon/REDIS_PASSWORD"\nJWT_SECRET="op://d3HL/patchmon/JWT_SECRET"\nOIDC_DISABLE_LOCAL_AUTH="op://d3HL/patchmon/OIDC_DISABLE_LOCAL_AUTH"\nOIDC_AUTO_CREATE_USERS="op://d3HL/patchmon/OIDC_AUTO_CREATE_USERS"\nOIDC_ENABLED="op://d3HL/patchmon/OIDC_ENABLED"\nOIDC_ISSUER_URL="op://d3HL/patchmon/OIDC_ISSUER_URL"\nOIDC_CLIENT_ID="op://d3HL/patchmon/OIDC_CLIENT_ID"\nOIDC_CLIENT_SECRET="op://d3HL/patchmon/OIDC_CLIENT_SECRET"\nOIDC_REDIRECT_URI="op://d3HL/patchmon/OIDC_REDIRECT_URI"\nOIDC_BUTTON_TEXT="op://d3HL/patchmon/OIDC_BUTTON_TEXT"\nOIDC_SCOPES="op://d3HL/patchmon/OIDC_SCOPES"\nOIDC_ADMIN_GROUP="op://d3HL/patchmon/OIDC_ADMIN_GROUP"\nOIDC_SUPERADMIN_GROUP="op://d3HL/patchmon/OIDC_SUPERADMIN_GROUP"\nOIDC_SYNC_ROLES="op://d3HL/patchmon/OIDC_SYNC_ROLES"' >> .env.template
