@@ -96,7 +96,7 @@ auto_update_all_services = true
 linked_repo = "dIIIhl"
 run_directory = "apps/authentik"
 pre_deploy.command = """
-echo -e "POSTGRES_PASSWORD="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_PASSWORD"\nPOSTGRES_USER="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_USER"\nPOSTGRES_DB="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_DB"\nPANKHA_HUB_IP="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/PANKHA_HUB_IP"\nPANKHA_STAGING_DIR="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/PANKHA_STAGING_DIR"\nLOG_LEVEL="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/LOG_LEVEL"\nPOSTGRES_MAX_WAL_SIZE="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_MAX_WAL_SIZE"\nPOSTGRES_CHECKPOINT_TIMEOUT="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_CHECKPOINT_TIMEOUT"\nPOSTGRES_PORT="op://d3HL/yijz4s4w4brmwbquvgptdwzpue/POSTGRES_PORT"" >> .env.template
+echo -e "CAPP="op://d3HL/authentik_env/CAPP"\nPG_PASS="op://d3HL/authentik_env/PG_PASS"\nAUTHENTIK_SECRET_KEY="op://d3HL/authentik_env/AUTHENTIK_SECRET_KEY"\nAUTHENTIK_TAG="op://d3HL/authentik_env/AUTHENTIK_TAG"" >> .env.template
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
 post_deploy.command = """
