@@ -12,7 +12,7 @@
 # See the PatchMon documentation for full configuration details.
 # =============================================================================
 
-name: patchmon
+name: patchmon-app
 
 services:
   database:
