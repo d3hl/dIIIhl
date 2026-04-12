@@ -802,8 +802,7 @@ destroy_before_deploy = true
 linked_repo = "dIIIhl"
 run_directory = "apps/immich-app"
 pre_deploy.command = """
-  # Add multiple commands on new lines. Supports comments.
-  TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
+  op run --environment blgexucrwfr2dtsxe2q4uu7dp4 -- printenv
 """
 post_deploy.command = """
 rm .env
