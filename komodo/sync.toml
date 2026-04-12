@@ -126,20 +126,8 @@ name = "beszel"
 server = "kmd1"
 links = ["https://beszel.d3adc3ii.cc"]
 poll_for_updates = true
-file_contents = """
-services:
-  beszel:
-    image: henrygd/beszel
-    container_name: beszel
-    restart: unless-stopped
-    environment:
-      - APP_URL=http://localhost:8090
-      - USER_CREATION=true
-    ports:
-      - 8090:8090
-    volumes:
-      - /mnt/cFS/appdata/beszel/data:/beszel_data
-"""
+linked_repo = "dIIIhl"
+run_directory = "apps/beszel"
 
 ##
 
@@ -2216,7 +2204,7 @@ enabled = true
 executions = [
   { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = """
 # Match stacks by name, id, wildcard, or \regex\.
-homepage,patchmon,authentik,bento,pankha,immich-app,dns1,homey,karakeep,netbird,dns2
+homepage,patchmon,authentik,bento,pankha,immich-app,dns1,homey,karakeep,netbird,dns2,beszel
 """, enabled = true }
 ]
 
