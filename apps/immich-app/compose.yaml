@@ -1,4 +1,4 @@
-name: immich-app  # Docker version
+name: immich-app  
 
 services:
   immich-server:
