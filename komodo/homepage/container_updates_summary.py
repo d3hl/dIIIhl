@@ -43,7 +43,7 @@ def container_update_summary():
         })
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": "An internal error has occurred."}), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5070)
