@@ -800,7 +800,7 @@ links = ["http://immich.d3adc3ii.cc/"]
 project_name = "immich"
 destroy_before_deploy = true
 linked_repo = "dIIIhl"
-run_directory = "apps/immich-apps"
+run_directory = "apps/immich-app"
 pre_deploy.command = """
   # Add multiple commands on new lines. Supports comments.
   TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
