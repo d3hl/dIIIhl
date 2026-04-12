@@ -802,7 +802,7 @@ destroy_before_deploy = true
 linked_repo = "dIIIhl"
 run_directory = "apps/immich-app"
 pre_deploy.command = """
-  op run --environment blgexucrwfr2dtsxe2q4uu7dp4 -- printenv
+  op run --environment zjn5ogakm3v2bx4amre5y5ny44 -- printenv
 """
 post_deploy.command = """
 rm .env
