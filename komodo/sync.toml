@@ -136,7 +136,7 @@ name = "cv4pve-admin"
 [stack.config]
 server = "kmd2"
 files_on_host = true
-run_directory = "/mnt/cFS/appdata/cv4pve-admn"
+run_directory = "/mnt/cFS/appdata/komodo/stacks/cv4pve-admn"
 file_paths = ["docker-compose.yaml"]
 environment = """
 # CV4PVE Admin Configuration
@@ -1397,33 +1397,6 @@ TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
 post_deploy.command = """
 rm .en*
-"""
-
-##
-
-[[stack]]
-name = "pegaprox"
-[stack.config]
-file_contents = """
-services:
-  pegaprox:
-    image: ghcr.io/pegaprox/pegaprox:latest
-    container_name: pegaprox
-    ports:
-      - "5000:5000"   # web UI + API
-      - "5001:5001"   # VNC websocket (noVNC console)
-      - "5002:5002"   # SSH websocket (xterm.js)
-    volumes:
-      - /mnt/cFS/appdata/pegaprox/config:/app/config
-      - /mnt/cFS/appdata/pegaprox/logs:/app/logs
-      # - ./ssl:/app/ssl   # mount custom certs if needed
-    restart: unless-stopped
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - PEGAPROX_BEHIND_PROXY= "true"           # behind nginx/haproxy
-      - PEGAPROX_TRUSTED_PROXIES= "172.16.0.0/12"
-      - PEGAPROX_ALLOWED_ORIGINS= "https://pegaprox.d3adc3ii.cc"
 """
 
 ##
