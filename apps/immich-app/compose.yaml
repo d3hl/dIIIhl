@@ -1,4 +1,4 @@
-name: immich-app #test 
+name: immich-app #testtt 
 
 services:
   immich-server:
