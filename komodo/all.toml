@@ -112,19 +112,10 @@ environment = """
 name = "bento"
 tags = ["8003"]
 [stack.config]
-server = "kmd1"
 links = ["https://bento.d3adc3ii.cc"]
-file_contents = """
-services:
-  bentopdf:
-    image: ghcr.io/alam00000/bentopdf:latest
-    container_name: bentopdf
-    restart: unless-stopped
-    ports:
-      - '8003:8080'
-    environment:
-      - DISABLE_IPV6=true
-"""
+project_name = "bento"
+linked_repo = "dIIIhl"
+run_directory = "apps/bento"
 
 ##
 
@@ -2583,7 +2574,7 @@ executions = [
 ##
 
 [[procedure]]
-name = "pull repo + redeploy homepage"
+name = "Sync and Deploy if changed"
 
 [[procedure.config.stage]]
 name = "Pull Repo"
@@ -2598,7 +2589,7 @@ enabled = true
 executions = [
   { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = """
 # Match stacks by name, id, wildcard, or \regex\.
-homepage,patchmon,authentik""", enabled = true }
+homepage,patchmon,authentik,bento""", enabled = true }
 ]
 
 [[procedure.config.stage]]
