@@ -613,49 +613,8 @@ HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
 [[stack]]
 name = "homey"
 [stack.config]
-file_contents = """
-services:
-  homey-shs:
-    image: ghcr.io/athombv/homey-shs:latest
-    container_name: homey-shs
-    restart: unless-stopped
-    #network_mode: bridge
-    ports:
-      - 4859:4859
-      - 4860:4860
-      - 4861:4861 
-      - 4862:4862
-    privileged: true
-    volumes:
-      - /mnt/cFS/appdata/homey:/homey/user
-
-  zigbee2mqtt:
-    container_name: zigbee2mqtt
-    image: ghcr.io/koenkk/zigbee2mqtt
-    restart: unless-stopped
-    volumes:
-      - /mnt/cFS/appdata/homey/zigbee2mqtt:/app/data
-      - /run/udev:/run/udev:ro
-    #ports:
-      # Frontend port
-    #  - 8080:8080
-    network_mode: host
-    environment:
-      TZ: Asia/Singapore
-    #group_add:
-    #  - dialout
-    #user: 1000:1000
-
-#MQTT broker      
-  emqx1:
-    image: emqx/emqx:latest
-    container_name: emqx1
-    ports:
-      - 1883:1883
-      - 18083:18083
-    volumes:
-      - /mnt/cFS/appdata/emqx/data:/opt/emqx/data
-"""
+linked_repo = "dIIIhl"
+run_directory = "apps/homey"
 
 ##
 
