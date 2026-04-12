@@ -1,0 +1,9 @@
+services:
+  bentopdf:
+    image: ghcr.io/alam00000/bentopdf:latest
+    container_name: bentopdf
+    restart: unless-stopped
+    ports:
+      - '8003:8080'
+    environment:
+      - DISABLE_IPV6=true
