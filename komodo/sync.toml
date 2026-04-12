@@ -726,51 +726,11 @@ links = ["https://karakeep.d3adc3ii.cc"]
 project_name = "karakeep"
 auto_update = true
 destroy_before_deploy = true
+linked_repo = "dIIIhl"
+run_directory = "apps/karakeep"
 pre_deploy.command = """
+
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
-"""
-post_deploy.command = """
-  # Add multiple commands on new lines. Supports comments.
-  rm .env
-"""
-file_contents = """
-services:
-  web:
-    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
-    restart: unless-stopped
-    volumes:
-      # By default, the data is stored in a docker volume called "data".
-      # If you want to mount a custom directory, change the volume mapping to:
-      # - /path/to/your/directory:/data
-      - ${cDATA}/karakeep/data:/data
-    ports:
-      - 3111:3000
-    env_file:
-      - .env
-    environment:
-      NODE_TLS_REJECT_UNAUTHORIZED: 0
-      MEILI_ADDR: http://meilisearch:7700
-      BROWSER_WEB_URL: http://chrome:9222
-      DATA_DIR: /data # DON'T CHANGE THIS
-  chrome:
-    image: gcr.io/zenika-hub/alpine-chrome:124
-    restart: unless-stopped
-    command:
-      - --no-sandbox
-      - --disable-gpu
-      - --disable-dev-shm-usage
-      - --remote-debugging-address=0.0.0.0
-      - --remote-debugging-port=9222
-      - --hide-scrollbars
-  meilisearch:
-    image: getmeili/meilisearch:v1.13.3
-    restart: unless-stopped
-    env_file:
-      - .env
-    environment:
-      MEILI_NO_ANALYTICS: "true"
-    volumes:
-      - ${cDATA}/karakeep/meilisearch:/meili_data
 """
 
 ##
