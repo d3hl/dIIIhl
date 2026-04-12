@@ -239,7 +239,7 @@ name = "dns2"
 [stack.config]
 server = "kmd2"
 linked_repo = "dIIIhl"
-run_directory = "app/dns2"
+run_directory = "apps/dns2"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
