@@ -1,7 +1,7 @@
 # Docker Compose for Pankha Repository
 # run:
 # docker compose down && docker compose pull && docker compose up -d
-# test deplay 3
+# test 3
 services:
   pankha-app:
     container_name: pankha_app
