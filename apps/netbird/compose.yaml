@@ -1,4 +1,4 @@
-# test 4
+
 services:
   netbird-client:
       container_name: netbird-client
