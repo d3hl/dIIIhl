@@ -1,4 +1,4 @@
-name: authentk
+name: authentik   # test 1
 services:
   postgresql:
     env_file:
