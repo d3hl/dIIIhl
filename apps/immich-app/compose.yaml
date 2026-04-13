@@ -1,4 +1,4 @@
-name: immich-app # test 4
+name: immich-app 
 services:
   immich-server:
     container_name: immich_server

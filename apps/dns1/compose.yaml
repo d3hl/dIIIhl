@@ -1,4 +1,4 @@
-services:  # test 3
+services:  
   dns-server:
     container_name: dns1
     hostname: dns1
