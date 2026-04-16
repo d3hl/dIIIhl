@@ -1,0 +1,68 @@
+name: proxmox-vm-manage-and-config
+
+on:
+  workflow_dispatch:
+
+jobs:
+  provision_and_configure:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        working-directory: infra
+        env:
+          PM_API_URL: ${{ secrets.PVE_API_URL }}
+          PM_API_TOKEN_ID: ${{ secrets.PVE_API_TOKEN_ID }}
+          PM_API_TOKEN_SECRET: ${{ secrets.PVE_API_TOKEN_SECRET }}
+        run: terraform init
+
+      - name: Terraform Apply
+        working-directory: infra
+        env:
+          PM_API_URL: ${{ secrets.PVE_API_URL }}
+          PM_API_TOKEN_ID: ${{ secrets.PVE_API_TOKEN_ID }}
+          PM_API_TOKEN_SECRET: ${{ secrets.PVE_API_TOKEN_SECRET }}
+        run: terraform apply -auto-approve
+
+      - name: Get VM IP(s) from Terraform output
+        id: tfout
+        working-directory: infra
+        run: |
+          echo "vm_ips=$(terraform output -json vm_ips | jq -r '. | join(",")')" >> $GITHUB_OUTPUT
+
+      - name: Install Ansible
+        run: |
+          python3 -m pip install --user ansible
+
+      - name: Configure SSH key
+        run: |
+          install -m 700 -d ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Wait for SSH and run Ansible
+        env:
+          VM_IPS: ${{ steps.tfout.outputs.vm_ips }}
+        run: |
+          IFS=',' read -ra IPS <<< "$VM_IPS"
+          for ip in "${IPS[@]}"; do
+            echo "Waiting for SSH on $ip..."
+            until ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 ubuntu@"$ip" "echo ok" ; do
+              sleep 5
+            done
+          done
+
+          # build a temporary inventory
+          {
+            echo "[vms]"
+            for ip in "${IPS[@]}"; do
+              echo "$ip ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa"
+            done
+          } > inventory.ini
+
+          ansible-playbook -i inventory.ini playbooks/site.yml
