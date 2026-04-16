@@ -1,4 +1,4 @@
-services:
+services:  
   dns-server:
     container_name: dns1
     hostname: dns1

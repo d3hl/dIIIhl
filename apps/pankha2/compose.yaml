@@ -1,6 +1,3 @@
-# Docker Compose for Pankha Repository
-# run:
-# docker compose down && docker compose pull && docker compose up -d
 
 services:
   pankha-app:

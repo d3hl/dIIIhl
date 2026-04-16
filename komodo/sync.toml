@@ -33,19 +33,6 @@ send_unhealthy_alerts = true
 ##
 
 [[stack]]
-name = "1p-d3hl"
-[stack.config]
-server = "kmd0"
-files_on_host = true
-run_directory = "/mnt/cFS/appdata/komodo/stacks/1p-d3hl"
-file_paths = ["compose.yaml"]
-environment = """
-
-"""
-
-##
-
-[[stack]]
 name = "1pconnect"
 tags = ["8489", "8488"]
 [stack.config]
@@ -93,6 +80,7 @@ project_name = "authentik"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
+destroy_before_deploy = true
 linked_repo = "dIIIhl"
 run_directory = "apps/authentik"
 pre_deploy.command = """
@@ -655,7 +643,7 @@ destroy_before_deploy = true
 linked_repo = "dIIIhl"
 run_directory = "apps/immich-app"
 pre_deploy.command = """
-  op run --environment zjn5ogakm3v2bx4amre5y5ny44 -- printenv
+TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
 post_deploy.command = """
 rm .env
@@ -1080,59 +1068,10 @@ POSTGRES_PORT="5432"    # PostgreSQL port (database clients connect here) (keep 
 [[stack]]
 name = "pankha2"
 [stack.config]
+server = "kmd2"
 linked_repo = "dIIIhl"
+reclone = true
 run_directory = "apps/pankha2"
-environment = """
-# Environment Variables for pankha Repository
-
-# PostgreSQL Database Configuration
-POSTGRES_USER="pankha_user"
-POSTGRES_PASSWORD="pankha_password"
-POSTGRES_DB="db_pankha"
-POSTGRES_HOST="pankha-postgres"
-
-PANKHA_HUB_IP="<YOUR_PANKHA_IP>"     # Local LAN IP or hostname of the pankha server, used in agents deployment
-PANKHA_PORT="3143"      # HTTP/Web server port (browser connects here)
-
-# Staging Directory
-# Path to store downloaded agent binaries, checksums, reports, etc. (persistent)
-PANKHA_STAGING_DIR="/app/backend/data/staging"
-
-# Logging Configuration
-# LOG_LEVEL: Set logging verbosity (error, warn, info, debug, trace), default=warn
-LOG_LEVEL="info"
-
-# Extra Environment Variables:
-# TIMEZONE: Set the timezone for the application (default: UTC), remove # to set
-# List of valid timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-# Setting wrong timezone will result in wrong time being displayed in the dashboard and logs
-
-# TIMEZONE="Asia/Kolkata"
-
-# PostgreSQL Performance Tuning (Optional) (leave as is unless you know what you're doing)
-# Controls transaction log size and cleanup behavior to prevent disk space bloat
-POSTGRES_MAX_WAL_SIZE="256MB"
-# Minimum WAL to keep (default: 80MB), PostgreSQL recycles old WAL files down to this minimum
-POSTGRES_MIN_WAL_SIZE="80MB"
-# Time between checkpoints (default: 5min)
-POSTGRES_CHECKPOINT_TIMEOUT="5min"
-# WAL size to keep for recovery purposes (default: 64MB)
-POSTGRES_WAL_KEEP_SIZE="64MB"
-POSTGRES_PORT="5432"    # PostgreSQL port (database clients connect here) (keep unchanged unless conflicted)
-
-# Authentication Secrets - CHANGE THESE (use anything random and long)
-# JWT_SECRET="your-super-secret-jwt-key-change-this"
-# SESSION_SECRET="your-super-secret-session-key-change-this"
-
-# Database Connection String (for manual queries, NOT used by backend)
-# The backend constructs its own DATABASE_URL from the vars above with URL-encoding
-# To query the database with psql, use:  
-# docker exec -it <container_name> psql -U <POSTGRES_USER> -d <POSTGRES_DB>
-# directly connect to pankha-postgres:
-# Format: postgresql://USER:PASSWORD@HOST:PORT/DATABASE
-# DATABASE_URL="postgresql://pankha_user:pankha_password@pankha-postgres:5432/db_pankha"
-# DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
-"""
 
 ##
 
@@ -1236,147 +1175,6 @@ PAPERLESS_OCR_LANGUAGE="op://d3HL/paperless-ngx/PAPERLESS_OCR_LANGUAGE"
 
 ZDATA: /mnt/zApps
 CDATA: /mnt/cFS/appdata/paperless-ngx
-"""
-
-##
-
-[[stack]]
-name = "patchmon"
-tags = ["3000"]
-[stack.config]
-swarm = "d3hl-swarm"
-links = ["https://patchmon.d3adc3ii.cc"]
-project_name = "patchmon"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-pre_deploy.command = """
-echo -e 'CDATA="op://d3HL/patchmon/CDATA"\nCORS_ORIGIN="op://d3HL/patchmon/CORS_ORIGIN"\nPGID="op://d3HL/patchmon/PUID"\nPUID="op://d3HL/patchmon/PUID"\nPOSTGRES_DB="op://d3HL/patchmon/POSTGRES_DB"\nPOSTGRES_USER="op://d3HL/patchmon/POSTGRES_USER"\nPOSTGRES_PASSWORD="op://d3HL/patchmon/POSTGRES_PASSWORD"\nDATABASE_URL="op://d3HL/patchmon/DATABASE_URL"\nREDIS_PASSWORD="op://d3HL/patchmon/REDIS_PASSWORD"\nJWT_SECRET="op://d3HL/patchmon/JWT_SECRET"\nOIDC_DISABLE_LOCAL_AUTH="op://d3HL/patchmon/OIDC_DISABLE_LOCAL_AUTH"\nOIDC_AUTO_CREATE_USERS="op://d3HL/patchmon/OIDC_AUTO_CREATE_USERS"\nOIDC_ENABLED="op://d3HL/patchmon/OIDC_ENABLED"\nOIDC_ISSUER_URL="op://d3HL/patchmon/OIDC_ISSUER_URL"\nOIDC_CLIENT_ID="op://d3HL/patchmon/OIDC_CLIENT_ID"\nOIDC_CLIENT_SECRET="op://d3HL/patchmon/OIDC_CLIENT_SECRET"\nOIDC_REDIRECT_URI="op://d3HL/patchmon/OIDC_REDIRECT_URI"\nOIDC_BUTTON_TEXT="op://d3HL/patchmon/OIDC_BUTTON_TEXT"\nOIDC_SCOPES="op://d3HL/patchmon/OIDC_SCOPES"\nOIDC_ADMIN_GROUP="op://d3HL/patchmon/OIDC_ADMIN_GROUP"\nOIDC_SUPERADMIN_GROUP="op://d3HL/patchmon/OIDC_SUPERADMIN_GROUP"\nOIDC_SYNC_ROLES="op://d3HL/patchmon/OIDC_SYNC_ROLES"' >> .env.template
-TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env3"
-"""
-post_deploy.command = """
-rm .env*
-"""
-file_contents = """
-services:
-  database:
-    image: postgres:17-alpine
-    configs:
-      - patchmon-conf.yml
-    environment:
-      POSTGRES_DB: patchmon_db
-      POSTGRES_USER: patchmon_user
-    #restart: unless-stopped
-    secrets:
-      - patchmon-postgres-pw
-    networks:
-      - patchmon-int
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U patchmon_user -d patchmon_db"]
-      interval: 3s
-      timeout: 5s
-      retries: 7
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-    deploy:
-      replicas: 1
-
-  redis:
-    image: redis:7-alpine
-   # restart: unless-stopped
-    configs:
-      - patchmon-conf.yml
-    secrets:
-      - REDIS_PASSWORD
-    command: redis-server --requirepass nec9vhn2kht7davUGV # CHANGE THIS TO YOUR REDIS PASSWORD
-    volumes:
-      - redis_data:/data
-    networks:
-      - patchmon-int
-    healthcheck:
-      test: ["CMD", "redis-cli", "--no-auth-warning", "-a", "nec9vhn2kht7davUGV", "ping"]
-      interval: 3s
-      timeout: 5s
-      retries: 7
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-    deploy:
-      replicas: 1
-
-  backend:
-    image: ghcr.io/patchmon/patchmon-backend:latest
-    configs:
-      - patchmon-conf.yml
-    environment:
-      # Internal Docker wiring - do not change
-      DATABASE_URL: postgresql://patchmon_user:c3fdKLUcYnTmHkpaHNDGiWNGUjofsJZ@database:5432/patchmon_db
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      REDIS_PASSWORD: nec9vhn2kht7davUGV
-      REDIS_DB: 0
-      ASSETS_DIR: /app/assets
-    volumes:
-      - /mnt/cFS/appdata/patchmon/agent_files:/app/agents
-      - /mnt/cFS/appdata/patchmon/branding_assets:/app/assets
-    networks:
-      - patchmon-int
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-    deploy:
-      replicas: 1
-
-
-  frontend:
-    image: ghcr.io/patchmon/patchmon-frontend:latest
-    configs:
-      - patchmon-conf.yml
-   # restart: unless-stopped
-    ports:
-      - "3000:3000"
-    volumes:
-      - /mnt/cFS/appdata/patchmon/branding_assets:/usr/share/nginx/html/assets
-    networks:
-      - patchmon-int
-   # depends_on:
-   #   - backend:
-   #       condition: service_healthy
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-    deploy:
-      replicas: 1
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.patchmon.rule=Host(`patchmon.d3adc3ii.cc`)"
-secrets:
-  patchmon-postgres-pw:
-    external: true
-  REDIS_PASSWORD:
-    external: true
-configs:
-  patchmon-conf.yml:   
-    external: true     
-volumes:
-  postgres_data:
-  redis_data:
-    driver: wetopi/rbd
-
-networks:
-  patchmon-int:
-    driver: overlay
 """
 
 ##
@@ -2177,7 +1975,7 @@ enabled = true
 executions = [
   { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = """
 # Match stacks by name, id, wildcard, or \regex\.
-homepage,patchmon,authentik,bento,pankha,immich-app,dns1,homey,karakeep,netbird,dns2,beszel
+homepage,patchmon,authentik,bento,pankha,immich-app
 """, enabled = true }
 ]
 
