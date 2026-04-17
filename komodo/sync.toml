@@ -1369,6 +1369,21 @@ PULSE_AUTH_PASS=abcd
 ##
 
 [[stack]]
+name = "rackula"
+[stack.config]
+server = "kmd2"
+linked_repo = "dIIIhl"
+run_directory = "apps/rackula"
+pre_deploy.command = """
+TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
+"""
+post_deploy.command = """
+rm .env
+"""
+
+##
+
+[[stack]]
 name = "scanopy"
 [stack.config]
 server = "kmd1"
@@ -1975,7 +1990,7 @@ enabled = true
 executions = [
   { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = """
 # Match stacks by name, id, wildcard, or \regex\.
-authentik,homepage,patchmon,bento,pankha,immich-app,karakeep
+authentik,homepage,patchmon,bento,pankha,immich-app,karakeep,rackula
 """, enabled = true }
 ]
 
