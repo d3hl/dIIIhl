@@ -1990,7 +1990,7 @@ enabled = true
 executions = [
   { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = """
 # Match stacks by name, id, wildcard, or \regex\.
-authentik,homepage,patchmon,bento,pankha,immich-app,karakeep,rackula
+authentik,homepage,patchmon,bento,pankha,immich-app,karakeep,rackula,netbird
 """, enabled = true }
 ]
 
