@@ -861,6 +861,7 @@ run_directory = "apps/komodo-mcp"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 TARGET_ENV="d3hl" op inject -f -i ".config.toml.tpl" -o "config.toml"
+cp ./config.toml /mnt/cFS/appdata/komodo-mcp
 """
 post_deploy.command = """
 rm .env
