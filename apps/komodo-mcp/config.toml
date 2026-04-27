@@ -118,7 +118,7 @@ body_size_limit = "1mb"
 ## Important for servers exposed to the network.
 ## Env: MCP_ALLOWED_HOSTS (comma-separated)
 ## Optional, no default (all hosts allowed).
-allowed_hosts = ["komodo-mcp.d3adc3ii.cc", "localhost","10.10.10.38:8000"]
+#allowed_hosts = ["komodo-mcp.d3adc3ii.cc", "localhost","10.10.10.38:8000"]
 
 
 ## CORS allowed origins.
