@@ -102,9 +102,9 @@ rate_limit_window = "15m"
 ##   - IP/CIDR: "10.0.0.1", "172.16.0.0/12"
 ##   - Comma-separated: "loopback, 10.0.0.1"
 ## Env: MCP_TRUST_PROXY
-## Optional, no default (trust proxy disabled).
+## Optional, no default (trust proxy disabled).#
 
-trust_proxy = "loopback"
+trust_proxy = "loopback","10.10.10.0/24"
 
 
 ## Maximum request body size for the JSON body parser.
@@ -118,7 +118,7 @@ body_size_limit = "1mb"
 ## Important for servers exposed to the network.
 ## Env: MCP_ALLOWED_HOSTS (comma-separated)
 ## Optional, no default (all hosts allowed).
-# allowed_hosts = ["mcp.example.com", "localhost"]
+allowed_hosts = ["komodo-mcp.d3adc3ii.cc", "localhost"]
 
 
 ## CORS allowed origins.
