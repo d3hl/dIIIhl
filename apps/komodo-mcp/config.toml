@@ -150,7 +150,8 @@ helmet_hsts = false
 ##   Example: "default-src 'self'; script-src 'none'; style-src 'self'"
 ## Env: MCP_HELMET_CSP
 ## Optional, no default (Helmet default CSP).
-helmet_csp = "default-src 'self'"
+#helmet_csp = "default-src 'self'"
+helmet_csp = "false"
 
 ## X-Frame-Options header value via Helmet.
 ## Controls whether the server responses can be embedded in frames/iframes.
