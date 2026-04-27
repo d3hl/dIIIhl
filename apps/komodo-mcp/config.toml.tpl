@@ -14,7 +14,7 @@
 ##   - Docker: "https://host.docker.internal:9120"
 ## Env: KOMODO_URL
 ## Required for API connectivity.
-#url = "http://10.10.10.38:9120"
+url = "http://10.10.10.38:9120"
 
 ## API Key for key-based authentication (recommended over username/password).
 ## Obtain from your Komodo server configuration.
