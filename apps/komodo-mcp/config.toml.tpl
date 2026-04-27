@@ -41,7 +41,7 @@ api_timeout_ms = "30s"
 ## - "https"  — Multi-client HTTPS mode with TLS termination.
 ## Env: MCP_TRANSPORT
 ## Default: "http"
-mode = "http"
+mode = "https"
 
 ## Port the HTTP/HTTPS server listens on.
 ## Env: MCP_PORT
@@ -53,7 +53,7 @@ port = 8000
 ## Use "127.0.0.1" to only accept local connections.
 ## Env: MCP_BIND_HOST
 ## Default: "127.0.0.1"
-host = "127.0.0.1"
+host = "0.0.0.0"
 
 ## TLS configuration (required when mode = "https").
 ## Certificate files are read from the filesystem at server startup.
