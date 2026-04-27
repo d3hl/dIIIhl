@@ -41,7 +41,7 @@ api_timeout_ms = "30s"
 ## - "https"  — Multi-client HTTPS mode with TLS termination.
 ## Env: MCP_TRANSPORT
 ## Default: "http"
-mode = "https"
+mode = "http"
 
 ## Port the HTTP/HTTPS server listens on.
 ## Env: MCP_PORT
@@ -104,7 +104,7 @@ rate_limit_window = "15m"
 ## Env: MCP_TRUST_PROXY
 ## Optional, no default (trust proxy disabled).#
 
-trust_proxy = "loopback, linklocal, 10.10.10.0/24"
+trust_proxy = "loopback, 10.10.10.38"
 
 
 ## Maximum request body size for the JSON body parser.
