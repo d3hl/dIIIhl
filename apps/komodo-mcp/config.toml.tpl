@@ -14,18 +14,18 @@
 ##   - Docker: "https://host.docker.internal:9120"
 ## Env: KOMODO_URL
 ## Required for API connectivity.
-url = "http://10.10.10.38:9120"
+#url = "http://10.10.10.38:9120"
 
 ## API Key for key-based authentication (recommended over username/password).
 ## Obtain from your Komodo server configuration.
 ## Env: KOMODO_API_KEY
 ## Optional, no default.
-api_key = "op://d3HL/komodo-mcp-env/KOMODO_API_KEY"
+#api_key = "op://d3HL/komodo-mcp-env/KOMODO_API_KEY"
 
 ## API Secret for key-based authentication.
 ## Env: KOMODO_API_SECRET
 ## Optional, no default.
-api_secret = "op://d3HL/komodo-mcp-env/KOMODO_API_SECRET"
+#api_secret = "op://d3HL/komodo-mcp-env/KOMODO_API_SECRET"
 
 ## API request timeout.
 ## Accepts a duration string ("30s", "1m") or milliseconds (number).
