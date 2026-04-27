@@ -1,0 +1,13 @@
+{
+	"servers": {
+		"Komodo MCP Server": {
+			"type": "http",
+			"url": "http://10.10.10.38:8000/mcp"
+		},
+		"komodo-mcp": {
+			"url": "http://10.10.10.38:8000/mcp",
+			"type": "http"
+		}
+	},
+	"inputs": []
+}
