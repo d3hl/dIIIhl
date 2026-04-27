@@ -40,7 +40,7 @@ services:
     
     ## Optional: Mount custom config file
     volumes:
-      - ${CDATA}/config.toml:/app/config.toml
+      - ./config.toml:/app/config.toml
 
     ## Health check - uses /ready for accurate container status
     ## Returns: 200 (ready), 503 (Komodo disconnected), 429 (overloaded)
