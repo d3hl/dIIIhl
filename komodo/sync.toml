@@ -860,8 +860,12 @@ linked_repo = "dIIIhl"
 run_directory = "apps/komodo-mcp"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
+TARGET_ENV="d3hl" op inject -f -i ".config.toml.tpl" -o "config.toml"
 """
-post_deploy.path = "rm .env"
+post_deploy.command = """
+rm .env
+rm config.toml
+"""
 
 ##
 
