@@ -28,7 +28,7 @@ services:
       TZ: Asia/Singapore 
       ## MCP Server configuration
       MCP_CONFIG_FILE_PATH: ${KOMODO_MCP_CONFIG_PATH:-/app/config.toml}
-      MCP_TRANSPORT: ${KOMODO_MCP_TRANSPORT_MODE:-http}
+     #MCP_TRANSPORT: ${KOMODO_MCP_TRANSPORT_MODE:-http}
 
       ## Komodo Connection
       # KOMODO_URL: ${KOMODO_URL:-https://komodo.example.com:9120}
