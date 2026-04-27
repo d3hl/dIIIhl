@@ -27,7 +27,7 @@ services:
       ## Set timezone RFC3339 format, e.g. "UTC", "America/New_York"
       TZ: Asia/Singapore 
       ## MCP Server configuration
-      MCP_CONFIG_FILE_PATH: ${KOMODO_MCP_CONFIG_PATH:-/app/config.toml}
+      #MCP_CONFIG_FILE_PATH: ${KOMODO_MCP_CONFIG_PATH:-/app/config.toml}
      #MCP_TRANSPORT: ${KOMODO_MCP_TRANSPORT_MODE:-http}
 
       ## Komodo Connection
@@ -39,8 +39,8 @@ services:
       # KOMODO_PASSWORD: ${KOMODO_PASSWORD}
     
     ## Optional: Mount custom config file
-    volumes:
-      - ./config.toml:/app/config.toml
+   # volumes:
+    #  - ./config.toml:/app/config.toml
 
     ## Health check - uses /ready for accurate container status
     ## Returns: 200 (ready), 503 (Komodo disconnected), 429 (overloaded)
