@@ -103,7 +103,10 @@ rate_limit_window = "15m"
 ##   - Comma-separated: "loopback, 10.0.0.1"
 ## Env: MCP_TRUST_PROXY
 ## Optional, no default (trust proxy disabled).
+
 trust_proxy = "loopback"
+
+
 ## Maximum request body size for the JSON body parser.
 ## Accepts Express size strings (e.g. "500kb", "1mb", "2mb").
 ## Env: MCP_BODY_SIZE_LIMIT
