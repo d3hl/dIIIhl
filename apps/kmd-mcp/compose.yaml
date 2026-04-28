@@ -32,7 +32,7 @@ services:
       #MCP_TRUST_PROXY: loopback
       MCP_TRANSPORT: ${KOMODO_MCP_TRANSPORT_MODE:-http}
       MCP_CORS_ORIGIN: ${MCP_CORS_ORIGIN:-["*"]}
-      MCP_LEGACY_SSE_ENABLED: ${KOMODO_MCP_LEGACY_SSE_ENABLED:-true}
+      #MCP_LEGACY_SSE_ENABLED: ${KOMODO_MCP_LEGACY_SSE_ENABLED:-true}
       MCP_BIND_HOST: ${MCP_BIND_HOST:-127.0.0.1}
       ## Komodo Connection
       # KOMODO_URL: ${KOMODO_URL:-https://komodo.example.com:9120}
