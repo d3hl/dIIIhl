@@ -9,8 +9,8 @@ KOMODO_MCP_PORT=8000
 KOMODO_MCP_TRANSPORT_MODE=http
 #MCP_TRUST_PROXY=loopback
 ## Komodo
-#KOMODO_URL="op://d3HL/komodo-mcp-env/KOMODO_URL"
-KOMODO_URL=https://host.docker.internal:9120
+KOMODO_URL="op://d3HL/komodo-mcp-env/KOMODO_URL"
+#KOMODO_URL=https://host.docker.internal:9120
 KOMODO_API_KEY="op://d3HL/komodo-mcp-env/KOMODO_API_KEY"
 KOMODO_API_SECRET="op://d3HL/komodo-mcp-env/KOMODO_API_SECRET"
 # KOMODO_USERNAME=username
