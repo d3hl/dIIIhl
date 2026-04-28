@@ -30,7 +30,7 @@ services:
       ## MCP Server configuration
       MCP_CONFIG_FILE_PATH: ${KOMODO_MCP_CONFIG_PATH:-/app/config.toml}
       #MCP_TRUST_PROXY: loopback
-      MCP_TRANSPORT: ${KOMODO_MCP_TRANSPORT_MODE:-http}
+      MCP_TRANSPORT: ${KOMODO_MCP_TRANSPORT_MODE:-stdio}
       MCP_CORS_ORIGIN: ${MCP_CORS_ORIGIN:-["*"]}
       MCP_LEGACY_SSE_ENABLED: ${KOMODO_MCP_LEGACY_SSE_ENABLED:-true}
       #MCP_BIND_HOST: 0.0.0.0 
