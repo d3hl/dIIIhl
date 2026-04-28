@@ -803,7 +803,7 @@ name = "kmd-mcp"
 [stack.config]
 server = "kmd0"
 linked_repo = "dIIIhl"
-run_directory = "app/kmd-mcp"
+run_directory = "apps/kmd-mcp"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 #TARGET_ENV="d3hl" op inject -f -i "config.toml.tpl" -o "config.toml"
