@@ -1,6 +1,6 @@
 services:
   komodo-mcp:
-    image: ${KOMODO_MCP_IMAGE:-ghcr.io/mp-tool/komodo-mcp}:${KOMODO_MCP_IMAGE_TAG:-latest}
+    image: ${KOMODO_MCP_IMAGE:-ghcr.io/mp-tool/komodo-mcp-server}:${KOMODO_MCP_IMAGE_TAG:-latest}
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
