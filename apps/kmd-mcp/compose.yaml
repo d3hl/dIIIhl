@@ -18,7 +18,7 @@ services:
           cpus: '0.1'
 
     ## Optional: Environment variables from .env injected into container
-    ## See ../config/README.md for the full configuration referencidde 
+    ## See ../config/README.mdd for the full configuration referencidde 
     env_file:
       - .env
 
