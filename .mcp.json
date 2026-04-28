@@ -1,11 +1,8 @@
 {
-{
   "mcpServers": {
     "komodo": {
       "type": "streamable-http",
       "url": "http://10.10.10.38:333"
     }
   }
-},
-	"inputs": []
 }
