@@ -5,7 +5,7 @@ services:
     security_opt:
       - no-new-privileges:true
     ports:
-      - ${KOMODO_MCP_PORT:-8443}:8000
+      - ${KOMODO_MCP_PORT:-8000}:8000
 
     ## Optional:Resource limits
     deploy:
@@ -31,7 +31,7 @@ services:
       ## MCP Server configuration
     #  MCP_CONFIG_FILE_PATH: ${KOMODO_MCP_CONFIG_PATH:-/app/config.toml}
       MCP_TRUST_PROXY: loopback
-      MCP_TRANSPORT: ${KOMODO_MCP_TRANSPORT_MODE:-https}
+      #MCP_TRANSPORT: ${KOMODO_MCP_TRANSPORT_MODE:-https}
       MCP_BIND_HOST: 0.0.0.0 
       ## Komodo Connection
       # KOMODO_URL: ${KOMODO_URL:-https://komodo.example.com:9120}
