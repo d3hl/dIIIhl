@@ -4,7 +4,7 @@ KOMODO_MCP_IMAGE=ghcr.io/mp-tool/komodo-mcp-server
 KOMODO_MCP_IMAGE_TAG=latest
 ## Server
 # KOMODO_MCP_CONFIG_PATH=/app/config.toml
-MCP_BIND_HOST=0.0.0.0
+#MCP_BIND_HOST=0.0.0.0
 KOMODO_MCP_TRANSPORT_MODE=http
 #MCP_TRUST_PROXY=loopback
 ## Komodo
