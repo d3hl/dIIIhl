@@ -30,6 +30,7 @@ services:
       TZ: Asia/Singapore 
       ## MCP Server configuration
     #  MCP_CONFIG_FILE_PATH: ${KOMODO_MCP_CONFIG_PATH:-/app/config.toml}
+      MCP_TRUST_PROXY: loopback
       MCP_TRANSPORT: ${KOMODO_MCP_TRANSPORT_MODE:-https}
       MCP_BIND_HOST: 0.0.0.0 
       ## Komodo Connection
