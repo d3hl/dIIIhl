@@ -31,6 +31,7 @@ services:
       MCP_CONFIG_FILE_PATH: ${KOMODO_MCP_CONFIG_PATH:-/app/config.toml}
       #MCP_TRUST_PROXY: loopback
       MCP_TRANSPORT: ${KOMODO_MCP_TRANSPORT_MODE:-http}
+      MCP_CORS_ORIGIN: ${MCP_CORS_ORIGIN:-["*"]}
       #MCP_BIND_HOST: 0.0.0.0 
       ## Komodo Connection
       # KOMODO_URL: ${KOMODO_URL:-https://komodo.example.com:9120}

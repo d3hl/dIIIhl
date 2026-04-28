@@ -15,3 +15,5 @@ KOMODO_API_KEY="op://d3HL/komodo-mcp-env/KOMODO_API_KEY"
 KOMODO_API_SECRET="op://d3HL/komodo-mcp-env/KOMODO_API_SECRET"
 # KOMODO_USERNAME=username
 # KOMODO_PASSWORD=password
+
+MCP_CORS_ORIGIN= ["*"]
