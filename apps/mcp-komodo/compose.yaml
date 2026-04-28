@@ -1,0 +1,14 @@
+services:
+  komodo-mcp:
+    image: ${KOMODO_MCP_IMAGE:-ghcr.io/samik081/mcp-komodo}:${KOMODO_MCP_IMAGE_TAG:-latest}
+    restart: unless-stopped
+    ports:
+      - ${KOMODO_MCP_PORT:-333}:3000
+
+    env_file:
+      - .env
+    ## Environment variables
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      MCP_TRANSPORT: ${KOMODO_MCP_TRANSPORT_MODE:-http}
