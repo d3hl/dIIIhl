@@ -799,19 +799,6 @@ CAPP=/mnt/cFS/appdata
 ##
 
 [[stack]]
-name = "kmd-mcp"
-[stack.config]
-server = "kmd0"
-linked_repo = "dIIIhl"
-run_directory = "apps/kmd-mcp"
-pre_deploy.command = """
-TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
-#TARGET_ENV="d3hl" op inject -f -i "config.toml.tpl" -o "config.toml"
-"""
-
-##
-
-[[stack]]
 name = "komodo-import"
 [stack.config]
 server = "kmd2"
@@ -860,23 +847,6 @@ environment = """
 API_KEY=K_M0o44OtTX8HZ78GIbFFjB5RTRJ8lZQj6pBI3MkQm_K
 API_SECRET=S_gORaNpzb5lEP84Qj079I5l9siQVyZhpGqcbbGUdg_S
 KOMODO_URL=http://10.10.10.35:8120
-"""
-
-##
-
-[[stack]]
-name = "komodo-mcp"
-[stack.config]
-server = "kmd2"
-project_name = "komodo-mcp"
-linked_repo = "dIIIhl"
-run_directory = "apps/komodo-mcp"
-pre_deploy.command = """
-TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
-#TARGET_ENV="d3hl" op inject -f -i "config.toml.tpl" -o "config.toml"
-"""
-post_deploy.command = """
-rm .env
 """
 
 ##
@@ -2020,9 +1990,7 @@ enabled = true
 executions = [
   { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = """
 # Match stacks by name, id, wildcard, or \regex\.
-authentik,homepage,patchmon,bento,pankha,immich-app,karakeep,rackula,netbird,komodo-mcp,kmd-mcp
-
-
+authentik,homepage,patchmon,bento,pankha,immich-app,karakeep,rackula,netbird
 """, enabled = true }
 ]
 
