@@ -3,7 +3,7 @@ CDATA="op://d3HL/komodo-mcp-env/CDATA"
 KOMODO_MCP_IMAGE=ghcr.io/mp-tool/komodo-mcp-server
 KOMODO_MCP_IMAGE_TAG=latest
 ## Server
-# KOMODO_MCP_CONFIG_PATH=/app/config.toml
+# KOMODO_MCP_CONFIG_PATH=/app/config.tomil
 KOMODO_MCP_PORT=8000
 #MCP_BIND_HOST=0.0.0.0
 KOMODO_MCP_TRANSPORT_MODE=http
