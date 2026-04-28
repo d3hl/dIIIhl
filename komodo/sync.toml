@@ -852,6 +852,18 @@ KOMODO_URL=http://10.10.10.35:8120
 ##
 
 [[stack]]
+name = "mcp-komodo"
+[stack.config]
+server = "kmd2"
+linked_repo = "dIIIhl"
+run_directory = "apps/mcp-komodo"
+pre_deploy.command = """
+TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
+"""
+
+##
+
+[[stack]]
 name = "metube"
 [stack.config]
 server = "kmd1"
