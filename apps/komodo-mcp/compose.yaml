@@ -5,7 +5,7 @@ services:
     security_opt:
       - no-new-privileges:true
     ports:
-      - ${KOMODO_MCP_PORT:-8000}:8000
+      - ${KOMODO_MCP_PORT:-8443}:8000
 
     ## Optional:Resource limits
     deploy:
@@ -29,9 +29,9 @@ services:
       ## Set timezone RFC3339 format, e.g. "UTC", "America/New_York"
       TZ: Asia/Singapore 
       ## MCP Server configuration
-      MCP_CONFIG_FILE_PATH: ${KOMODO_MCP_CONFIG_PATH:-/app/config.toml}
+    #  MCP_CONFIG_FILE_PATH: ${KOMODO_MCP_CONFIG_PATH:-/app/config.toml}
       MCP_TRANSPORT: ${KOMODO_MCP_TRANSPORT_MODE:-https}
-
+      MCP_BIND_HOST: 0.0.0.0 
       ## Komodo Connection
       # KOMODO_URL: ${KOMODO_URL:-https://komodo.example.com:9120}
       # KOMODO_API_KEY: ${KOMODO_API_KEY}
@@ -41,15 +41,14 @@ services:
       # KOMODO_PASSWORD: ${KOMODO_PASSWORD}
     
     ## Optional: Mount custom config file
-    volumes:
-      - ${CDATA}/config.toml:/app/config.toml
-
-    ## Health check - uses /ready for accurate container status
+    #volumes:
+ #     - ${CDATA}/config.toml:/app/config.toml
+      #Health check - uses /ready for accurate container status
     ## Returns: 200 (ready), 503 (Komodo disconnected), 429 (overloaded)
     ## Was build in the image, but can be overridden here if needed
-    # healthcheck:
-    #   test: ["CMD-SHELL", "node -e \"fetch('http://localhost:8000/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 3
-    #   start_period: 10s
+    healthcheck:
+       test: ["CMD-SHELL", "node -e \"fetch('http://localhost:8000/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""]
+       interval: 30s
+       timeout: 10s
+       retries: 3
+       start_period: 10s
