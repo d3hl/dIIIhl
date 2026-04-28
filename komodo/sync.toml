@@ -869,6 +869,19 @@ rm .env
 ##
 
 [[stack]]
+name = "komodo-mcp-server"
+[stack.config]
+server = "kmd0"
+linked_repo = "dIIIhl"
+run_directory = "app/komodo-mcp-server"
+pre_deploy.command = """
+TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
+#TARGET_ENV="d3hl" op inject -f -i "config.toml.tpl" -o "config.toml"
+"""
+
+##
+
+[[stack]]
 name = "metube"
 [stack.config]
 server = "kmd1"
@@ -2007,7 +2020,7 @@ enabled = true
 executions = [
   { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = """
 # Match stacks by name, id, wildcard, or \regex\.
-authentik,homepage,patchmon,bento,pankha,immich-app,karakeep,rackula,netbird,komodo-mcp
+authentik,homepage,patchmon,bento,pankha,immich-app,karakeep,rackula,netbird,komodo-mcp,komodo-mcp-server
 """, enabled = true }
 ]
 
