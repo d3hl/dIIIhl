@@ -21,7 +21,7 @@ services:
       pankha-postgres:
         condition: service_healthy
     volumes:
-      - ./docker-data/staging:${PANKHA_STAGING_DIR}
+      - docker-data/staging:${PANKHA_STAGING_DIR}
     restart: unless-stopped
 
   pankha-postgres:
@@ -49,7 +49,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./postgres_data:/var/lib/postgresql
+      - postgres_data:/var/lib/postgresql
     ports:
       - "${POSTGRES_PORT:-5433}:5432"
     healthcheck:
