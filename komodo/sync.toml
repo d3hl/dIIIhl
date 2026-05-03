@@ -1006,9 +1006,9 @@ environment = """
 ##
 
 [[stack]]
-name = "pankha"
+name = "pankha1"
 [stack.config]
-server = "kmd2"
+server = "k4"
 destroy_before_deploy = true
 linked_repo = "dIIIhl"
 run_directory = "apps/pankha1"
