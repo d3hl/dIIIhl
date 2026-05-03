@@ -96,9 +96,13 @@ services:
 
 volumes:
   postgres_data:
+    driver: wetopi/rbd
   redis_data:
+    driver: wetopi/rbd
   agent_files:
+    driver: wetopi/rbd
   branding_assets:
+    driver: wetopi/rbd
 
 networks:
   patchmon-internal:

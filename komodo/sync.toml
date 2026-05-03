@@ -1196,7 +1196,7 @@ CDATA: /mnt/cFS/appdata/paperless-ngx
 name = "patchmon_app"
 tags = ["patchmon", "kmd2", "3182"]
 [stack.config]
-server = "kmd2"
+server = "k4"
 links = ["https://patchmon.d3adc3ii.cc"]
 project_name = "patchmon-app"
 linked_repo = "dIIIhl"
