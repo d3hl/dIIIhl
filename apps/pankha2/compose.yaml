@@ -25,7 +25,7 @@ services:
     restart: unless-stopped
 
   pankha-postgres:
-    container_name: pankha_postgres
+    container_name: pankha2_postgres
     image: postgres:18-alpine
     command:
       - "postgres"
