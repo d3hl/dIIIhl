@@ -65,44 +65,6 @@ send_unhealthy_alerts = true
 ##
 
 [[stack]]
-name = "1pconnect"
-tags = ["8489", "8488"]
-[stack.config]
-server = "kmd1"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  op-connect-api:
-    image: 1password/connect-api:latest
-    env_file: .env
-    ports:
-      - "8488:8080"
-    volumes:
-      - ${CDATA}/1password-credentials.json:/home/opuser/.op/1password-credentials.json
-      - "data:/home/opuser/.op/data"
-    restart: unless-stopped
-  op-connect-sync:
-    image: 1password/connect-sync:latest
-    env_file: .env
-    ports:
-      - "8489:8080"
-    volumes:
-      - ${CDATA}/1password-credentials.json:/home/opuser/.op/1password-credentials.json
-      - "data:/home/opuser/.op/data"
-    restart: always
-
-volumes:
-  data:
-"""
-environment = """
-CDATA=/mnt/cFS/appdata/1pconnect
-"""
-
-##
-
-[[stack]]
 name = "authentik"
 tags = ["9000", "9443"]
 [stack.config]
@@ -142,8 +104,9 @@ run_directory = "apps/bento"
 
 [[stack]]
 name = "beszel"
+tags = ["monitor", "8090"]
 [stack.config]
-server = "kmd1"
+server = "k4"
 links = ["https://beszel.d3adc3ii.cc"]
 poll_for_updates = true
 linked_repo = "dIIIhl"
@@ -2034,7 +1997,7 @@ enabled = true
 executions = [
   { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = """
 # Match stacks by name, id, wildcard, or \regex\.
-authentik,homepage,patchmon,bento,pankha,immich-app,karakeep,rackula,netbird
+authentik,beszel,homepage,patchmon,bento,pankha,immich-app,karakeep,rackula,netbird
 """, enabled = true }
 ]
 
