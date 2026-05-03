@@ -1,11 +1,11 @@
 
 services:
-  pankha-app:
-    container_name: pankha_app
+  pankha2:
+    container_name: pankha2
     image: anexgohan/pankha:latest # :latest = stable | :beta = absolute latest | :testing = pre-release
     # Log rotation: managed by your Docker daemon config (/etc/docker/daemon.json)
     ports:
-      - "${PANKHA_PORT:-3143}:3143" # Web server (host:container) (change left side only, set to your desired port, or set PANKHA_PORT environment variable)
+      - "${PANKHA_PORT:-3133}:3143" # Web server (host:container) (change left side only, set to your desired port, or set PANKHA_PORT environment variable)
     environment:
       # Timezone: set TIMEZONE in .env (list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
       - TZ=Asia/Singapore
@@ -49,9 +49,9 @@ services:
     env_file:
       - .env
     volumes:
-      - ./docker-data/backend/database/postgres_data:/var/lib/postgresql
+      - ./postgres_data:/var/lib/postgresql
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "${POSTGRES_PORT:-5433}:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
@@ -62,3 +62,6 @@ services:
 
 volumes:
   postgres_data:
+    driver: wetopi/rbd
+  docker-data:
+    driver: wetopi/rbd

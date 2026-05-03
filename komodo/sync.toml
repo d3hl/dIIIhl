@@ -1075,7 +1075,7 @@ POSTGRES_PORT="5432"    # PostgreSQL port (database clients connect here) (keep 
 [[stack]]
 name = "pankha2"
 [stack.config]
-server = "kmd2"
+server = "k4"
 linked_repo = "dIIIhl"
 reclone = true
 run_directory = "apps/pankha2"
