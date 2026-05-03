@@ -7,7 +7,7 @@ services:
       - "${PANKHA_PORT:-3143}:3143" # Web server (host:container) (change left side only, set to your desired port, or set PANKHA_PORT environment variable)
     environment:
       # Timezone: set TIMEZONE in .env (list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-      - TZ=${TIMEZONE:-UTC}
+      - TZ=Asia/Singapore
       - PORT=3143 # Internal port Do Not Change
     env_file:
       - .env
@@ -48,7 +48,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./docker-data/backend/database/postgres_data:/var/lib/postgresql
+      - ./postgres_data:/var/lib/postgresql
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     healthcheck:
@@ -61,3 +61,6 @@ services:
 
 volumes:
   postgres_data:
+      driver: wetopi/rbd
+  docker_data:
+      driver: wetopi/rbd

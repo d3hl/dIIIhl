@@ -1117,12 +1117,12 @@ environment = """
 [[stack]]
 name = "pankha"
 [stack.config]
-server = "kmd2"
+server = "k4"
 destroy_before_deploy = true
 linked_repo = "dIIIhl"
 run_directory = "apps/pankha1"
 pre_deploy.command = """
-TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
+TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 """
 post_deploy.command = """
 rm .env
