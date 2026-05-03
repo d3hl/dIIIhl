@@ -11,7 +11,7 @@ services:
       POSTGRES_USER: patchmon_user
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ${CDATA}/postgres_data:/var/lib/postgresql/data
     networks:
       - patchmon-internal
     healthcheck:
@@ -34,7 +34,7 @@ services:
     # Debug logging: Use --loglevel debug for maximum verbosity, or --loglevel verbose for less output
     command: redis-server --requirepass ${REDIS_PASSWORD}
     volumes:
-      - redis_data:/data
+      - ${CDATA}/redis_data:/data
     networks:
       - patchmon-internal
     healthcheck:
@@ -61,8 +61,8 @@ services:
       REDIS_DB: 0
       ASSETS_DIR: /app/assets
     volumes:
-      - agent_files:/app/agents
-      - branding_assets:/app/assets
+      - ${CDATA}/agent_files:/app/agents
+      - ${CDATA}/branding_assets:/app/assets
     networks:
       - patchmon-internal
     depends_on:
@@ -82,7 +82,7 @@ services:
     ports:
       - 3182:3000
     volumes:
-      - branding_assets:/usr/share/nginx/html/assets
+      - ${CDATA}/branding_assets:/usr/share/nginx/html/assets
     networks:
       - patchmon-internal
     depends_on:
@@ -94,23 +94,23 @@ services:
         max-size: "10m"
         max-file: "3"
 
-volumes:
-  postgres_data:
-    driver: wetopi/rbd
-    driver_opts:
-      mkfsOptions: "-Eroot_owner=1000:1000"
-  redis_data:
-    driver: wetopi/rbd
-    driver_opts:
-      mkfsOptions: "-Eroot_owner=1000:1000"
-  agent_files:
-    driver: wetopi/rbd
-    driver_opts:
-      mkfsOptions: "-Eroot_owner=1000:1000"
-  branding_assets:
-    driver: wetopi/rbd
-    driver_opts:
-      mkfsOptions: "-Eroot_owner=1000:1000"
+#volumes:
+ # postgres_data:
+  #  driver: wetopi/rbd
+   # driver_opts:
+    #  mkfsOptions: "-Eroot_owner=1000:1000"
+  #redis_data:
+   # driver: wetopi/rbd
+    #driver_opts:
+     # mkfsOptions: "-Eroot_owner=1000:1000"
+  #agent_files:
+   # driver: wetopi/rbd
+    #driver_opts:
+     # mkfsOptions: "-Eroot_owner=1000:1000"
+  #branding_assets:
+    #driver: wetopi/rbd
+#    driver_opts:
+   #   mkfsOptions: "-Eroot_owner=1000:1000"
 
 networks:
   patchmon-internal:
