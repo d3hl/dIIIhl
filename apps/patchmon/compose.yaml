@@ -97,13 +97,22 @@ services:
 volumes:
   postgres_data:
     driver: wetopi/rbd
+    driver_opts:
+      mkfsOptions: "-Eroot_owner=1000:1000"
   redis_data:
     driver: wetopi/rbd
+    driver_opts:
+      mkfsOptions: "-Eroot_owner=1000:1000"
   agent_files:
     driver: wetopi/rbd
+    driver_opts:
+      mkfsOptions: "-Eroot_owner=1000:1000"
   branding_assets:
     driver: wetopi/rbd
+    driver_opts:
+      mkfsOptions: "-Eroot_owner=1000:1000"
 
 networks:
   patchmon-internal:
     driver: bridge
+
