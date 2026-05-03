@@ -1,4 +1,36 @@
 [[server]]
+name = "k1"
+[server.config]
+address = "https://10.10.10.50:8120"
+enabled = true
+
+##
+
+[[server]]
+name = "k2"
+[server.config]
+address = "https://10.10.10.51:8120"
+enabled = true
+
+##
+
+[[server]]
+name = "k3"
+[server.config]
+address = "https://10.10.10.52:8120"
+enabled = true
+
+##
+
+[[server]]
+name = "k4"
+[server.config]
+address = "https://10.10.10.53:8120"
+enabled = true
+
+##
+
+[[server]]
 name = "kmd0"
 [server.config]
 address = "https://host.docker.internal:8120"
