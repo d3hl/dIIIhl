@@ -1193,14 +1193,10 @@ CDATA: /mnt/cFS/appdata/paperless-ngx
 ##
 
 [[stack]]
-name = "patchmon_app"
-tags = ["patchmon", "kmd2", "3182"]
+name = "patchmon"
 [stack.config]
 server = "k4"
-links = ["https://patchmon.d3adc3ii.cc"]
-project_name = "patchmon-app"
 linked_repo = "dIIIhl"
-webhook_secret = "ywa.aeCDqCEo2LfqER*Dj_jvPBC.E!.iC9BoEtsRifz!wVwn*Lh7n2_gQ9wR_bovjA6LEf!-g_xqvaHybvXyZ-haw@CTgk8kHn4E"
 run_directory = "apps/patchmon"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
