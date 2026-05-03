@@ -1073,6 +1073,22 @@ POSTGRES_PORT="5432"    # PostgreSQL port (database clients connect here) (keep 
 ##
 
 [[stack]]
+name = "pankha2"
+[stack.config]
+server = "k4"
+project_name = "pankha2"
+linked_repo = "dIIIhl"
+run_directory = "apps/pankha2"
+pre_deploy.command = """
+TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
+"""
+post_deploy.command = """
+rm .env
+"""
+
+##
+
+[[stack]]
 name = "paperless-ngx"
 [stack.config]
 server = "kmd0"
