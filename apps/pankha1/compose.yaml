@@ -1,6 +1,6 @@
 services:
-  pankha-app:
-    container_name: pankha_app
+  pankha1:
+    container_name: pankha1
     image: anexgohan/pankha:latest # :latest = stable | :beta = absolute latest | :testing = pre-release
     # Log rotation: managed by your Docker daemon config (/etc/docker/daemon.json)
     ports:
