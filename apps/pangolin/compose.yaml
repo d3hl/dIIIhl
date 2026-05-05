@@ -57,8 +57,19 @@ services:
       - ./config/traefik:/etc/traefik:ro # Volume to store the Traefik configuration
       - ./config/letsencrypt:/letsencrypt # Volume to store the Let's Encrypt certificates
       - ./config/traefik/logs:/var/log/traefik # Volume to store Traefik logs
-
+  newt:
+    image: fosrl/newt
+    container_name: newt-d3hl
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=https://pangolin.d3hl.site
+      - NEWT_ID=oz4ghj9m8p8oilb
+      - NEWT_SECRET=**************
+    networks:
+      newt:
 networks:
   default:
     driver: bridge
     name: pangolin
+  newt:
+    external: true
