@@ -62,14 +62,14 @@ services:
     container_name: newt-d3hl
     restart: unless-stopped
     environment:
-      - PANGOLIN_ENDPOINT=https://pangolin.d3hl.site
+      - PANGOLIN_ENDPOINT=https://pangolin.d3adc3ii.site
       - NEWT_ID=oz4ghj9m8p8oilb
       - NEWT_SECRET=**************
     networks:
-      newt:
+      newt-d3hl_newt:
 networks:
   default:
     driver: bridge
     name: pangolin
-  newt:
+  newt-d3hl_newt:
     external: true
