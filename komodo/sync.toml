@@ -78,11 +78,10 @@ destroy_before_deploy = true
 linked_repo = "dIIIhl"
 run_directory = "apps/authentik"
 pre_deploy.command = """
-echo -e "CAPP="op://d3HL/authentik_env/CAPP"\nPG_PASS="op://d3HL/authentik_env/PG_PASS"\nAUTHENTIK_SECRET_KEY="op://d3HL/authentik_env/AUTHENTIK_SECRET_KEY"\nAUTHENTIK_TAG="op://d3HL/authentik_env/AUTHENTIK_TAG"" >> .env.template
-TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
+TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 """
 post_deploy.command = """
-rm .env*
+rm .env
 """
 environment = """
 
