@@ -245,7 +245,7 @@ services:
 name = "homepage"
 tags = ["3731", "homepage"]
 [stack.config]
-server = "kmd0"
+server = "k3"
 links = ["https://homepage.d3adc3ii.cc"]
 poll_for_updates = true
 auto_update = true
