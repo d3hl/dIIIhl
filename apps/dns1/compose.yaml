@@ -51,7 +51,6 @@ services:
       - CLI_OPTS= #optional
     volumes:
       - ${CDATA}/dns1/mariadb/config:/config
-      - /etc/dns:/etc/dns:ro
     ports:
       - 3306:3306
     restart: unless-stopped

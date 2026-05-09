@@ -13,4 +13,4 @@ DNS_SERVER_LOG_USING_LOCAL_TIME=true
 MYSQL_ROOT_PASSWORD=op://d3HL/Technitium-dns/MYSQL_ROOT_PASSWORD
 MYSQL_USER=op://d3HL/Technitium-dns/MYSQL_USER
 MYSQL_PASSWORD="op://d3HL/Technitium-dns/ MYSQL_PASSWORD"
-cDATA=op://d3HL/Technitium-dns/cDATA
+CDATA=op://d3HL/Technitium-dns/cDATA
