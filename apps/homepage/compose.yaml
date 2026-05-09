@@ -25,5 +25,5 @@ services:
       - pangolin.public-resources.phpipam.healthcheck=true
       - pangolin.public-resources.phpipamh.healthcheck.hostname=phpipam
       - pangolin.public-resources.phpipamh.healthcheck.port=80
-networks:
+networks:  # docker swarm network
   internal_web:
