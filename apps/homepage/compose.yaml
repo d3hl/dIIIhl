@@ -27,5 +27,3 @@ services:
       - pangolin.public-resources.phpipamh.healthcheck.port=80
 networks:
   internal_web:
-    external: true
-
