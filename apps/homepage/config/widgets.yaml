@@ -1,0 +1,31 @@
+- logo:
+    icon: /icons/d3logo.svg
+- greeting:
+    text_size: 4xl
+    text: d3 Personal Page
+
+- greeting:
+    text_size: 4xl
+    text: —
+- greeting:
+    text_size: 4xl
+    text: —
+- datetime:
+    text_size: md
+    format:
+        dateStyle: long
+        hour12: false
+- openmeteo:
+    label: Singapore
+    latitude: 1.27
+    longitude: 103.8374
+    timezone: Asia/Singapore
+    cache: 5
+    units: metric
+    format:
+        maximumFractionDigits: 0
+- search:
+    provider: google
+    focus: true
+    showSearchSuggestions: true
+    target: _blank
