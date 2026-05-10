@@ -252,7 +252,7 @@ auto_update = true
 auto_update_all_services = true
 destroy_before_deploy = true
 linked_repo = "dIIIhl"
-run_directory = "komodo/homepage"
+run_directory = "apps/homepage"
 file_paths = ["compose.yaml"]
 config_files = [
   { path = "config/services.yaml" },
@@ -260,6 +260,12 @@ config_files = [
   { path = "config/docker.yaml" },
   { path = "config/bookmarks.yaml" }
 ]
+pre_deploy.command = """
+TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
+"""
+post_deploy.command = """
+rm .env
+"""
 environment = """
 HOMEPAGE_DATA_DIR= /mnt/cFS/appdata/komodo/repos/dIIIhl/komodo/homepage
 #HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,10.10.10.35:3731,homeppage.d3adc3ii.cc"
