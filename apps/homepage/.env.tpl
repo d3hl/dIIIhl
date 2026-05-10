@@ -1,4 +1,4 @@
-HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc"
+HOMEPAGE_ALLOWED_HOSTS=* 
 # Site Config
 HOMEPAGE_VAR_TITLE= "d3 Homepage"
 HOMEPAGE_VAR_FAVICON= "/icons/d3logo.png"
