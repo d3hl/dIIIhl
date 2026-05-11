@@ -260,9 +260,6 @@ config_files = [
   { path = "config/docker.yaml" },
   { path = "config/bookmarks.yaml" }
 ]
-pre_deploy.command = """
-TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
-"""
 post_deploy.command = """
 rm .env
 """
@@ -1989,6 +1986,9 @@ server = "kmd0"
 git_provider = "Github.com"
 git_account = "d3hl"
 repo = "d3hl/dIIIhl"
+on_pull.command = """
+bash apps/env/fetch-env.sh
+"""
 
 ##
 
@@ -2337,6 +2337,20 @@ arguments = """
   "LIMIT_SERVERS": [],
   "IGNORE_SERVERS": []
 }
+"""
+
+##
+
+[[action]]
+name = "test"
+[action.config]
+file_contents = """
+// Run actions using the pre initialized 'komodo' client.
+const version: Types.GetVersionResponse = await komodo.read('GetVersion', {});
+console.log('🦎 Komodo version:', version.version, '🦎\n');
+
+// Access arguments using the 'ARGS' object.
+console.log(ARGS);
 """
 
 ##
