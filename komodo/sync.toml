@@ -138,6 +138,18 @@ run_directory = "apps/ntfy"
 ##
 
 [[stack]]
+name = "gatus"
+tags = ["observability", "8082"]
+[stack.config]
+server = "k3"
+links = ["https://gatus.d3adc3ii.cc"]
+poll_for_updates = true
+linked_repo = "dIIIhl"
+run_directory = "apps/gatus"
+
+##
+
+[[stack]]
 name = "cv4pve-admin"
 [stack.config]
 server = "kmd2"
