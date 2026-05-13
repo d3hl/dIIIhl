@@ -126,6 +126,18 @@ run_directory = "apps/glance"
 ##
 
 [[stack]]
+name = "ntfy"
+tags = ["observability", "8081"]
+[stack.config]
+server = "k3"
+links = ["https://ntfy.d3adc3ii.cc"]
+poll_for_updates = true
+linked_repo = "dIIIhl"
+run_directory = "apps/ntfy"
+
+##
+
+[[stack]]
 name = "cv4pve-admin"
 [stack.config]
 server = "kmd2"
