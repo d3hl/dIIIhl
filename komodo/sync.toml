@@ -114,6 +114,18 @@ run_directory = "apps/beszel"
 ##
 
 [[stack]]
+name = "glance"
+tags = ["personal", "8080"]
+[stack.config]
+server = "k3"
+links = ["https://glance.d3adc3ii.cc"]
+poll_for_updates = true
+linked_repo = "dIIIhl"
+run_directory = "apps/glance"
+
+##
+
+[[stack]]
 name = "cv4pve-admin"
 [stack.config]
 server = "kmd2"
