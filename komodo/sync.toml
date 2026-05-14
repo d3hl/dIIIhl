@@ -139,13 +139,26 @@ run_directory = "apps/ntfy"
 
 [[stack]]
 name = "chhoto-url"
-tags = ["observability", "4567"]
+tags = ["application", "4567"]
 [stack.config]
 server = "k3"
 links = ["https://shorturl.d3adc3ii.cc"]
 poll_for_updates = true
 linked_repo = "dIIIhl"
 run_directory = "apps/chhoto-url"
+
+
+##
+
+[[stack]]
+name = "freshrss"
+tags = ["application", "8083"]
+[stack.config]
+server = "k3"
+links = ["https://freshrss.d3adc3ii.cc"]
+poll_for_updates = true
+linked_repo = "dIIIhl"
+run_directory = "apps/freshrss"
 
 ##
 
