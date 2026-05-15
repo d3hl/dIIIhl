@@ -165,7 +165,7 @@ run_directory = "apps/freshrss"
 
 [[stack]]
 name = "victoriametrics"
-tags = ["observability", "8428", "8880" ,"8085", "8429"]
+tags = ["observability", "8428", "8880" ,"8088", "8429"]
 [stack.config]
 server = "k3"
 links = ["https://vm-obx.d3adc3ii.cc"]
