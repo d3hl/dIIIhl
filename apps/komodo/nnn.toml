@@ -9,6 +9,7 @@ enabled = true
 
 [[server]]
 name = "k2"
+tags = ["mcp"]
 [server.config]
 address = "https://10.10.10.51:8120"
 enabled = true
@@ -19,6 +20,15 @@ enabled = true
 name = "k3"
 [server.config]
 address = "https://10.10.10.52:8120"
+enabled = true
+
+##
+
+[[server]]
+name = "k4"
+tags = ["monitor"]
+[server.config]
+address = "https://10.10.10.53:8120"
 enabled = true
 
 ##
@@ -51,17 +61,15 @@ enabled = true
 [[stack]]
 name = "authentik"
 [stack.config]
+server = "kmd1"
 links = ["https://auth.d3adc3ii.cc"]
 project_name = "authentik"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 destroy_before_deploy = true
+linked_repo = "Apps"
 run_directory = "apps/authentik"
-pre_deploy.command = """
-TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
-"""
-pre_deploy.shell_mode = false
 post_deploy.command = """
 rm .env
 """
@@ -75,8 +83,10 @@ environment = """
 [[stack]]
 name = "bento"
 [stack.config]
+server = "kmd1"
 links = ["https://bento.d3adc3ii.cc"]
 project_name = "bento"
+linked_repo = "Apps"
 run_directory = "apps/bento"
 
 ##
@@ -173,6 +183,8 @@ WATCHTOWER_HTTP_API_TOKEN=mySecretToken123
 [[stack]]
 name = "dns1"
 [stack.config]
+server = "k1"
+linked_repo = "Apps"
 run_directory = "apps/dns1"
 pre_deploy.command = """
   # Add multiple commands on new lines. Supports comments.
@@ -932,7 +944,9 @@ environment = """
 
 [[stack]]
 name = "newt"
+tags = ["core"]
 [stack.config]
+server = "k3"
 project_name = "pangolin"
 auto_update = true
 auto_update_all_services = true
@@ -997,7 +1011,6 @@ services:
 networks:
   default:
   internal_web:
-    external: true
 """
 environment = """
   # VARIABLE = value
@@ -1971,6 +1984,10 @@ server = "k2"
 git_provider = "Github.com"
 git_account = "d3hl"
 repo = "d3hl/dIIIhl"
+on_pull.command = """
+bash apps/env/fetch-env.sh
+"""
+on_pull.shell_mode = false
 
 ##
 
@@ -1994,6 +2011,37 @@ name = "Stage 1"
 enabled = true
 executions = [
   { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
+]
+
+##
+
+[[procedure]]
+name = "Deploy Hook"
+config.webhook_secret = "7woHryRsdw7cLLCFtm8YtTzcU-jmHApTJ-KzuggPT6376gBkXvMZTuwXnxwPuTTpVNKUX@p@Aqj6mrrvGxDZHrBzC*kaxUrM-VjK"
+
+[[procedure.config.stage]]
+name = "Pull repo"
+enabled = true
+executions = [
+  { execution.type = "PullRepo", execution.params.repo = "Apps", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Resource Sync"
+enabled = true
+executions = [
+  { execution.type = "RunSync", execution.params.sync = "nnn", enabled = true }
+]
+
+[[procedure.config.stage]]
+name = "Deploy if Changed"
+enabled = true
+executions = [
+  { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = """
+homepage
+bento
+authentik# Match stacks by name, id, wildcard, or \regex\.
+""", enabled = true }
 ]
 
 ##
