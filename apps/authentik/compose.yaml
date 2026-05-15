@@ -55,7 +55,7 @@ services:
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG}
     restart: unless-stopped
-    user: root ## Must run as root
+    user: root 
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - ${CAPP}/data:/data
