@@ -200,7 +200,7 @@ WATCHTOWER_HTTP_API_TOKEN=mySecretToken123
 [[stack]]
 name = "dns1"
 [stack.config]
-server = "kmd0"
+server = "k1"
 linked_repo = "dIIIhl"
 run_directory = "apps/dns1"
 post_deploy.command = """
