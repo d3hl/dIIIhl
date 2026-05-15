@@ -2006,6 +2006,7 @@ repo = "d3hl/DnsServer"
 [[repo]]
 name = "dIIIhl"
 [repo.config]
+server = "k1"
 git_provider = "Github.com"
 git_account = "d3hl"
 repo = "d3hl/dIIIhl"
