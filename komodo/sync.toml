@@ -114,30 +114,6 @@ run_directory = "apps/beszel"
 ##
 
 [[stack]]
-name = "glance"
-tags = ["personal", "8080"]
-[stack.config]
-server = "k3"
-links = ["https://glance.d3adc3ii.cc"]
-poll_for_updates = true
-linked_repo = "dIIIhl"
-run_directory = "apps/glance"
-
-##
-
-[[stack]]
-name = "ntfy"
-tags = ["observability", "8081"]
-[stack.config]
-server = "k3"
-links = ["https://ntfy.d3adc3ii.cc"]
-poll_for_updates = true
-linked_repo = "dIIIhl"
-run_directory = "apps/ntfy"
-
-##
-
-[[stack]]
 name = "chhoto-url"
 tags = ["application", "4567"]
 [stack.config]
@@ -146,33 +122,6 @@ links = ["https://shorturl.d3adc3ii.cc"]
 poll_for_updates = true
 linked_repo = "dIIIhl"
 run_directory = "apps/chhoto-url"
-
-
-##
-
-[[stack]]
-name = "freshrss"
-tags = ["application", "8083"]
-[stack.config]
-server = "k3"
-links = ["https://freshrss.d3adc3ii.cc"]
-poll_for_updates = true
-linked_repo = "dIIIhl"
-run_directory = "apps/freshrss"
-
-
-##
-
-[[stack]]
-name = "victoriametrics"
-tags = ["observability", "8428", "8880" ,"8088", "8429", "9093"]
-[stack.config]
-server = "k3"
-links = ["https://obx.d3adc3ii.cc"]
-poll_for_updates = true
-linked_repo = "dIIIhl"
-run_directory = "apps/victoria"
-file_paths = ["compose-vm-single.yml"]
 
 ##
 
@@ -254,12 +203,8 @@ name = "dns1"
 server = "kmd0"
 linked_repo = "dIIIhl"
 run_directory = "apps/dns1"
-pre_deploy.command = """
-  # Add multiple commands on new lines. Supports comments.
-  TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
-"""
 post_deploy.command = """
-rm .env*
+rm .env
 """
 environment = """
   ## VARIABLE = value
@@ -301,6 +246,30 @@ services:
       - NET_ADMIN
     restart: unless-stopped
 """
+
+##
+
+[[stack]]
+name = "freshrss"
+tags = ["application", "8083"]
+[stack.config]
+server = "k3"
+links = ["https://freshrss.d3adc3ii.cc"]
+poll_for_updates = true
+linked_repo = "dIIIhl"
+run_directory = "apps/freshrss"
+
+##
+
+[[stack]]
+name = "glance"
+tags = ["personal", "8080"]
+[stack.config]
+server = "k3"
+links = ["https://glance.d3adc3ii.cc"]
+poll_for_updates = true
+linked_repo = "dIIIhl"
+run_directory = "apps/glance"
 
 ##
 
@@ -1067,6 +1036,18 @@ networks:
 environment = """
   # VARIABLE = value
 """
+
+##
+
+[[stack]]
+name = "ntfy"
+tags = ["observability", "8081"]
+[stack.config]
+server = "k3"
+links = ["https://ntfy.d3adc3ii.cc"]
+poll_for_updates = true
+linked_repo = "dIIIhl"
+run_directory = "apps/ntfy"
 
 ##
 
@@ -1992,6 +1973,26 @@ services:
       - 10.10.10.35
       - 10.10.10.2
 """
+
+##
+
+[[stack]]
+name = "victoriametrics"
+tags = [
+  "observability",
+  "8428",
+  "8880",
+  "8088",
+  "8429",
+  "9093"
+]
+[stack.config]
+server = "k3"
+links = ["https://obx.d3adc3ii.cc"]
+poll_for_updates = true
+linked_repo = "dIIIhl"
+run_directory = "apps/victoria"
+file_paths = ["compose-vm-single.yml"]
 
 ##
 
