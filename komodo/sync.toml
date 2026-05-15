@@ -165,10 +165,10 @@ run_directory = "apps/freshrss"
 
 [[stack]]
 name = "victoriametrics"
-tags = ["observability", "8428", "8880" ,"8088", "8429"]
+tags = ["observability", "8428", "8880" ,"8088", "8429", "9093"]
 [stack.config]
 server = "k3"
-links = ["https://vm-obx.d3adc3ii.cc"]
+links = ["https://obx.d3adc3ii.cc"]
 poll_for_updates = true
 linked_repo = "dIIIhl"
 run_directory = "apps/victoria"
