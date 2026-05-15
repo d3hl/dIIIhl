@@ -1,6 +1,6 @@
 [[server]]
 name = "k1"
-tags = ["control"]
+tags = ["core"]
 [server.config]
 address = "https://10.10.10.50:8120"
 enabled = true
@@ -24,29 +24,19 @@ enabled = true
 ##
 
 [[server]]
-name = "k4"
-tags = ["monitor"]
-[server.config]
-address = "https://10.10.10.53:8120"
-enabled = true
-
-##
-
-[[server]]
 name = "kmd0"
 [server.config]
-address = "https://host.docker.internal:8120"
+address = "host.docker.internal:8120"
 enabled = true
-passkey = "g1ImlB3yyCCcLct6Lt2Ffx5969oVpCGR"
 
 ##
 
 [[server]]
 name = "kmd1"
+tags = ["system", "core"]
 [server.config]
 address = "https://10.10.10.36:8120"
 enabled = true
-passkey = "k9sFdHxaIyKy00rel7gyxDdGkN4C8Ft8"
 
 ##
 
@@ -61,16 +51,14 @@ enabled = true
 [[swarm]]
 name = "d3hl-swarm"
 [swarm.config]
-servers = ["kmd2"]
+servers = []
 send_unhealthy_alerts = true
 
 ##
 
 [[stack]]
 name = "authentik"
-tags = ["9000", "9443"]
 [stack.config]
-server = "kmd1"
 links = ["https://auth.d3adc3ii.cc"]
 project_name = "authentik"
 poll_for_updates = true
@@ -82,9 +70,11 @@ run_directory = "apps/authentik"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 """
+pre_deploy.shell_mode = false
 post_deploy.command = """
 rm .env
 """
+post_deploy.shell_mode = false
 environment = """
 
 """
@@ -93,9 +83,7 @@ environment = """
 
 [[stack]]
 name = "bento"
-tags = ["8003"]
 [stack.config]
-server = "kmd1"
 links = ["https://bento.d3adc3ii.cc"]
 project_name = "bento"
 linked_repo = "dIIIhl"
@@ -105,9 +93,7 @@ run_directory = "apps/bento"
 
 [[stack]]
 name = "beszel"
-tags = ["monitor", "8090"]
 [stack.config]
-server = "k4"
 links = ["https://beszel.d3adc3ii.cc"]
 poll_for_updates = true
 linked_repo = "dIIIhl"
@@ -117,9 +103,7 @@ run_directory = "apps/beszel"
 
 [[stack]]
 name = "chhoto-url"
-tags = ["application", "4567", "mike"]
 [stack.config]
-server = "k3"
 links = ["https://shorturl.d3adc3ii.cc"]
 poll_for_updates = true
 linked_repo = "dIIIhl"
@@ -130,7 +114,6 @@ run_directory = "apps/chhoto-url"
 [[stack]]
 name = "cv4pve-admin"
 [stack.config]
-server = "kmd2"
 files_on_host = true
 run_directory = "/mnt/cFS/appdata/komodo/stacks/cv4pve-admn"
 file_paths = ["docker-compose.yaml"]
@@ -202,12 +185,17 @@ WATCHTOWER_HTTP_API_TOKEN=mySecretToken123
 [[stack]]
 name = "dns1"
 [stack.config]
-server = "k1"
 linked_repo = "dIIIhl"
 run_directory = "apps/dns1"
-post_deploy.command = """
-rm .env
+pre_deploy.command = """
+  # Add multiple commands on new lines. Supports comments.
+  TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
+pre_deploy.shell_mode = false
+post_deploy.command = """
+rm .env*
+"""
+post_deploy.shell_mode = false
 environment = """
   ## VARIABLE = value
 """
@@ -217,22 +205,22 @@ environment = """
 [[stack]]
 name = "dns2"
 [stack.config]
-server = "kmd2"
 linked_repo = "dIIIhl"
 run_directory = "apps/dns2"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
+pre_deploy.shell_mode = false
 post_deploy.command = """
 rm .env
 """
+post_deploy.shell_mode = false
 
 ##
 
 [[stack]]
 name = "domotz"
 [stack.config]
-server = "kmd0"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -253,9 +241,7 @@ services:
 
 [[stack]]
 name = "freshrss"
-tags = ["application", "8083", "mike"]
 [stack.config]
-server = "k3"
 links = ["https://freshrss.d3adc3ii.cc"]
 poll_for_updates = true
 linked_repo = "dIIIhl"
@@ -264,10 +250,18 @@ run_directory = "apps/freshrss"
 ##
 
 [[stack]]
-name = "glance"
-tags = ["personal", "8080", "mike"]
+name = "gatus"
 [stack.config]
-server = "k3"
+links = ["https://gatus.d3adc3ii.cc"]
+poll_for_updates = true
+linked_repo = "dIIIhl"
+run_directory = "apps/gatus"
+
+##
+
+[[stack]]
+name = "glance"
+[stack.config]
 links = ["https://glance.d3adc3ii.cc"]
 poll_for_updates = true
 linked_repo = "dIIIhl"
@@ -277,9 +271,7 @@ run_directory = "apps/glance"
 
 [[stack]]
 name = "homepage"
-tags = ["3731", "homepage"]
 [stack.config]
-server = "k3"
 links = ["https://homepage.d3adc3ii.cc"]
 poll_for_updates = true
 auto_update = true
@@ -297,6 +289,7 @@ config_files = [
 post_deploy.command = """
 rm .env
 """
+post_deploy.shell_mode = false
 environment = """
 HOMEPAGE_DATA_DIR= /mnt/cFS/appdata/komodo/repos/dIIIhl/komodo/homepage
 #HOMEPAGE_ALLOWED_HOSTS= "homepage.d3adc3ii.cc,homepage.d3adc3ii.site,10.10.10.35:3731,homeppage.d3adc3ii.cc"
@@ -581,7 +574,6 @@ HOMEPAGE_VAR_GLANCES_PVE13= "http://10.10.10.13:61208"
 [[stack]]
 name = "homey"
 [stack.config]
-server = "kmd2"
 linked_repo = "dIIIhl"
 run_directory = "apps/homey"
 
@@ -665,9 +657,7 @@ services:
 
 [[stack]]
 name = "immich-app"
-tags = ["2283"]
 [stack.config]
-server = "kmd1"
 links = ["http://immich.d3adc3ii.cc/"]
 project_name = "immich"
 destroy_before_deploy = true
@@ -676,9 +666,11 @@ run_directory = "apps/immich-app"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
+pre_deploy.shell_mode = false
 post_deploy.command = """
 rm .env
 """
+post_deploy.shell_mode = false
 environment = """
 #environment
 """
@@ -687,9 +679,7 @@ environment = """
 
 [[stack]]
 name = "karakeep"
-tags = ["3111"]
 [stack.config]
-server = "kmd1"
 links = ["https://karakeep.d3adc3ii.cc"]
 project_name = "karakeep"
 auto_update = true
@@ -700,13 +690,13 @@ pre_deploy.command = """
 
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
+pre_deploy.shell_mode = false
 
 ##
 
 [[stack]]
 name = "kestra"
 [stack.config]
-server = "kmd1"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -790,7 +780,6 @@ GH_ACCESS_TOKEN=[[GH_ACCESS_TOKEN]]
 [[stack]]
 name = "kikusan"
 [stack.config]
-server = "kmd1"
 links = ["https://kikusan.d3adc3ii.cc"]
 poll_for_updates = true
 auto_update = true
@@ -832,7 +821,6 @@ CAPP=/mnt/cFS/appdata
 [[stack]]
 name = "komodo-import"
 [stack.config]
-server = "kmd2"
 file_contents = """
 services:
   komodo-import:
@@ -885,19 +873,18 @@ KOMODO_URL=http://10.10.10.35:8120
 [[stack]]
 name = "mcp-komodo"
 [stack.config]
-server = "kmd2"
 linked_repo = "dIIIhl"
 run_directory = "apps/mcp-komodo"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 """
+pre_deploy.shell_mode = false
 
 ##
 
 [[stack]]
 name = "metube"
 [stack.config]
-server = "kmd1"
 file_contents = """
 services:
   metube:
@@ -914,9 +901,7 @@ services:
 
 [[stack]]
 name = "navidrome"
-tags = ["4533"]
 [stack.config]
-server = "kmd1"
 links = ["https://navi.d3adc3ii.cc/"]
 project_name = "navidrome"
 auto_update = true
@@ -924,9 +909,11 @@ auto_update_all_services = true
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
+pre_deploy.shell_mode = false
 post_deploy.command = """
 rm .env
 """
+post_deploy.shell_mode = false
 file_contents = """
 services:
   navidrome:
@@ -950,15 +937,16 @@ services:
 [[stack]]
 name = "netbird"
 [stack.config]
-server = "kmd2"
 linked_repo = "dIIIhl"
 run_directory = "apps/netbird"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
+pre_deploy.shell_mode = false
 post_deploy.command = """
 rm .env
 """
+post_deploy.shell_mode = false
 environment = """
 
 """
@@ -968,7 +956,6 @@ environment = """
 [[stack]]
 name = "newt"
 [stack.config]
-server = "kmd0"
 project_name = "pangolin"
 auto_update = true
 auto_update_all_services = true
@@ -1043,9 +1030,7 @@ environment = """
 
 [[stack]]
 name = "ntfy"
-tags = ["observability", "8081", "mike"]
 [stack.config]
-server = "k3"
 links = ["https://ntfy.d3adc3ii.cc"]
 poll_for_updates = true
 linked_repo = "dIIIhl"
@@ -1056,7 +1041,6 @@ run_directory = "apps/ntfy"
 [[stack]]
 name = "pangolin"
 [stack.config]
-server = "k1"
 project_name = "pangolin"
 linked_repo = "dIIIhl"
 run_directory = "apps/pangolin"
@@ -1067,25 +1051,28 @@ config_files = [
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 """
+pre_deploy.shell_mode = false
 post_deploy.command = """
 rm .env
 """
+post_deploy.shell_mode = false
 
 ##
 
 [[stack]]
 name = "pankha1"
 [stack.config]
-server = "k4"
 destroy_before_deploy = true
 linked_repo = "dIIIhl"
 run_directory = "apps/pankha1"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 """
+pre_deploy.shell_mode = false
 post_deploy.command = """
 rm .env
 """
+post_deploy.shell_mode = false
 environment = """
 # Environment Variables for pankha Repository
 
@@ -1143,23 +1130,23 @@ POSTGRES_PORT="5432"    # PostgreSQL port (database clients connect here) (keep 
 [[stack]]
 name = "pankha2"
 [stack.config]
-server = "k4"
 project_name = "pankha2"
 linked_repo = "dIIIhl"
 run_directory = "apps/pankha2"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 """
+pre_deploy.shell_mode = false
 post_deploy.command = """
 rm .env
 """
+post_deploy.shell_mode = false
 
 ##
 
 [[stack]]
 name = "paperless-ngx"
 [stack.config]
-server = "kmd0"
 links = [
   "https://paperless.d3adc3ii.cc"
 ]
@@ -1263,22 +1250,22 @@ CDATA: /mnt/cFS/appdata/paperless-ngx
 [[stack]]
 name = "patchmon"
 [stack.config]
-server = "k4"
 linked_repo = "dIIIhl"
 run_directory = "apps/patchmon"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 """
+pre_deploy.shell_mode = false
 post_deploy.command = """
 rm .env
 """
+post_deploy.shell_mode = false
 
 ##
 
 [[stack]]
 name = "phpipam"
 [stack.config]
-server = "kmd0"
 file_contents = """
 services:
   phpipam-web:
@@ -1341,7 +1328,6 @@ MYSQL_ROOT_PASSWORD="op://d3HL/phpipam/IPAM_DATABASE_PASS"
 [[stack]]
 name = "proxcenter"
 [stack.config]
-server = "kmd2"
 destroy_before_deploy = true
 file_contents = """
 # ============================================
@@ -1422,7 +1408,6 @@ NEXTAUTH_SECRET=U.9wP-jVh@GLP3X6ewo2Z2UEk82sfg72eJJ8_.kdDw*k!D6Jh-NiiXu4RRr4k4G2
 [[stack]]
 name = "pulse"
 [stack.config]
-server = "kmd1"
 file_contents = """
 services:
   pulse:
@@ -1447,22 +1432,22 @@ PULSE_AUTH_PASS=abcd
 [[stack]]
 name = "rackula"
 [stack.config]
-server = "kmd2"
 linked_repo = "dIIIhl"
 run_directory = "apps/rackula"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
+pre_deploy.shell_mode = false
 post_deploy.command = """
 rm .env
 """
+post_deploy.shell_mode = false
 
 ##
 
 [[stack]]
 name = "scanopy"
 [stack.config]
-server = "kmd1"
 links = ["https://scanopy.d3adc3ii.cc"]
 file_contents = """
 name: scanopy
@@ -1556,9 +1541,7 @@ networks:
 
 [[stack]]
 name = "stashapp"
-tags = ["kmd1"]
 [stack.config]
-server = "kmd1"
 links = ["https://stash.d3adc3ii.cc"]
 poll_for_updates = true
 auto_update = true
@@ -1621,9 +1604,7 @@ CAPP=/mnt/cFS/appdata
 
 [[stack]]
 name = "sure"
-tags = ["3733"]
 [stack.config]
-server = "kmd1"
 links = ["https://sure.d3adc3ii.cc"]
 file_contents = """
 x-db-env: &db_env
@@ -1903,15 +1884,16 @@ POSTHOG_HOST=
 name = "template"
 template = true
 [stack.config]
-server = "kmd2"
 linked_repo = "dIIIhl"
 run_directory = "apps/netbird"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
+pre_deploy.shell_mode = false
 post_deploy.command = """
 rm .env
 """
+post_deploy.shell_mode = false
 environment = """
 
 """
@@ -1921,7 +1903,6 @@ environment = """
 [[stack]]
 name = "twingate"
 [stack.config]
-server = "kmd2"
 file_contents = """
 services:
   twingate-connector:
@@ -1979,29 +1960,8 @@ services:
 ##
 
 [[stack]]
-name = "victoriametrics"
-tags = [
-  "observability",
-  "8428",
-  "8880",
-  "8088",
-  "8429",
-  "9093"
-]
-[stack.config]
-server = "k3"
-links = ["https://obx.d3adc3ii.cc"]
-poll_for_updates = true
-linked_repo = "dIIIhl"
-run_directory = "apps/victoria"
-file_paths = ["compose-vm-single.yml"]
-
-##
-
-[[stack]]
 name = "yubal"
 [stack.config]
-server = "kmd1"
 file_contents = """
 # compose.yaml
 services:
@@ -2030,15 +1990,13 @@ CAPP=/mnt/cFS/appdata
 [[build]]
 name = "dnsserver"
 [build.config]
-builder = "kmd0"
+
 
 ##
 
 [[repo]]
 name = "d3hl/DnsServer"
 [repo.config]
-server = "kmd0"
-builder = "kmd0"
 git_provider = "Github.com"
 git_account = "d3hl"
 repo = "d3hl/DnsServer"
@@ -2048,13 +2006,13 @@ repo = "d3hl/DnsServer"
 [[repo]]
 name = "dIIIhl"
 [repo.config]
-server = "kmd0"
 git_provider = "Github.com"
 git_account = "d3hl"
 repo = "d3hl/dIIIhl"
 on_pull.command = """
 bash apps/env/fetch-env.sh
 """
+on_pull.shell_mode = false
 
 ##
 
@@ -2074,31 +2032,31 @@ executions = [
 ##
 
 [[procedure]]
-name = "Sync and Deploy if changed"
+name = "Global Auto Update"
+description = "Pulls and auto updates Stacks and Deployments using 'poll_for_updates' or 'auto_update'."
+tags = ["system"]
+config.schedule = "Every day at 03:00"
 
 [[procedure.config.stage]]
-name = "Pull Repo"
+name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "PullRepo", execution.params.repo = "dIIIhl", enabled = true }
+  { execution.type = "GlobalAutoUpdate", execution.params.skip_auto_update = false, enabled = true }
 ]
 
-[[procedure.config.stage]]
-name = "Reploy Homepage"
-enabled = true
-executions = [
-  { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = """
-# Match stacks by name, id, wildcard, or \regex\.
-authentik,beszel,homepage,patchmon,bento,pankha1,pankha2,immich-app,karakeep,rackula,netbird
-pangolin
-""", enabled = true }
-]
+##
+
+[[procedure]]
+name = "Rotate Server Keys"
+description = "Rotates all currently connected Server keys."
+tags = ["system"]
+config.schedule = "Every day at 06:00"
 
 [[procedure.config.stage]]
-name = "Stage 3"
+name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "RunSync", execution.params.sync = "synch", enabled = true }
+  { execution.type = "RotateAllServerKeys", execution.params = {}, enabled = true }
 ]
 
 ##
