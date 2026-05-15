@@ -1,5 +1,6 @@
 [[server]]
 name = "k1"
+tags = ["control"]
 [server.config]
 address = "https://10.10.10.50:8120"
 enabled = true
@@ -24,6 +25,7 @@ enabled = true
 
 [[server]]
 name = "k4"
+tags = ["monitor"]
 [server.config]
 address = "https://10.10.10.53:8120"
 enabled = true
@@ -115,7 +117,7 @@ run_directory = "apps/beszel"
 
 [[stack]]
 name = "chhoto-url"
-tags = ["application", "4567"]
+tags = ["application", "4567", "mike"]
 [stack.config]
 server = "k3"
 links = ["https://shorturl.d3adc3ii.cc"]
@@ -251,7 +253,7 @@ services:
 
 [[stack]]
 name = "freshrss"
-tags = ["application", "8083"]
+tags = ["application", "8083", "mike"]
 [stack.config]
 server = "k3"
 links = ["https://freshrss.d3adc3ii.cc"]
@@ -263,7 +265,7 @@ run_directory = "apps/freshrss"
 
 [[stack]]
 name = "glance"
-tags = ["personal", "8080"]
+tags = ["personal", "8080", "mike"]
 [stack.config]
 server = "k3"
 links = ["https://glance.d3adc3ii.cc"]
@@ -1041,7 +1043,7 @@ environment = """
 
 [[stack]]
 name = "ntfy"
-tags = ["observability", "8081"]
+tags = ["observability", "8081", "mike"]
 [stack.config]
 server = "k3"
 links = ["https://ntfy.d3adc3ii.cc"]
