@@ -42,7 +42,7 @@ services:
     depends_on:
       - "victoriametrics"
     ports:
-      - 3000:3000
+      - 8085:3000
     restart: always
     environment:
       - GF_PLUGINS_PREINSTALL=yesoreyeram-infinity-datasource
@@ -83,15 +83,15 @@ services:
 
   # alertmanager receives alerting notifications from vmalert
   # and distributes them according to --config.file.
-  alertmanager:
-    image: prom/alertmanager:v0.28.1
-    volumes:
-      - ./alertmanager.yml:/config/alertmanager.yml
-    command:
-      - "--config.file=/config/alertmanager.yml"
-    ports:
-      - 9093:9093
-    restart: always
+  # alertmanager:
+  #   image: prom/alertmanager:v0.28.1
+  #   volumes:
+  #     - ./alertmanager.yml:/config/alertmanager.yml
+  #   command:
+  #     - "--config.file=/config/alertmanager.yml"
+  #   ports:
+  #     - 9093:9093
+  #   restart: always
 
 volumes:
   vmagentdata: {}

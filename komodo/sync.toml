@@ -160,17 +160,19 @@ poll_for_updates = true
 linked_repo = "dIIIhl"
 run_directory = "apps/freshrss"
 
+
 ##
 
 [[stack]]
-name = "gatus"
-tags = ["observability", "8082"]
+name = "victoriametrics"
+tags = ["observability", "8428", "8880" ,"8085", "8429"]
 [stack.config]
 server = "k3"
-links = ["https://gatus.d3adc3ii.cc"]
+links = ["https://vm-obx.d3adc3ii.cc"]
 poll_for_updates = true
 linked_repo = "dIIIhl"
-run_directory = "apps/gatus"
+run_directory = "apps/victoria"
+file_paths = ["compose-vm-single.yml"]
 
 ##
 
