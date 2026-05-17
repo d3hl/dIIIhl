@@ -108,6 +108,7 @@ links = ["https://shorturl.d3adc3ii.cc"]
 poll_for_updates = true
 linked_repo = "Apps"
 run_directory = "apps/chhoto-url"
+file_paths = []
 
 ##
 
@@ -866,6 +867,8 @@ KOMODO_URL=http://10.10.10.35:8120
 [[stack]]
 name = "mcp-komodo"
 [stack.config]
+server = "k2"
+linked_repo = "Apps"
 run_directory = "apps/mcp-komodo"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
@@ -1953,6 +1956,16 @@ services:
       - 10.10.10.35
       - 10.10.10.2
 """
+
+##
+
+[[stack]]
+name = "victoria"
+[stack.config]
+server = "k3"
+linked_repo = "Apps"
+run_directory = "apps/victoria"
+file_paths = ["compose-vm-single.yml"]
 
 ##
 
