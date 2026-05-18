@@ -2,7 +2,7 @@
 services:
   netbird-client:
       container_name: netbird-client
-      hostname: <HOSTNAME>
+      hostname: k1 
       cap_add:
           - NET_ADMIN
           - SYS_ADMIN
@@ -12,7 +12,7 @@ services:
           - /dev/net/tun
       network_mode: host
       environment:
-          - NB_SETUP_KEY=${SETUP_KEY}
+          - NB_SETUP_KEY=35F0A4D3-A9C0-4BEA-915E-E4707B9F846C   #${SETUP_KEY}
       volumes:
           - netbird-client:/var/lib/netbird
       image: netbirdio/netbird:latest
