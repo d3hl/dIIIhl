@@ -1,1 +1,0 @@
-SETUP_KEY="op://d3HL/netbird/SETUP_KEY"
