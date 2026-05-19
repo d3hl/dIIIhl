@@ -19,6 +19,9 @@ services:
       # - "67:67/udp" #DHCP service
     env_file:
       - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
     volumes:
       - ${CDATA}/dns1/config:/etc/dns
     restart: unless-stopped
@@ -28,8 +31,8 @@ services:
     image: lscr.io/linuxserver/mariadb:latest
     container_name: mariadb
     environment:
-      - PUID=1001
-      - PGID=1001
+      - PUID=1000
+      - PGID=1000
       - TZ=Asia/Singapore
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=dns_log
