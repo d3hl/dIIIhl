@@ -8,8 +8,8 @@ services:
     ports:
       - "5380:5380/tcp" #DNS web console (HTTP)
       - "53443:53443/tcp" #DNS web console (HTTPS)
-      - "53:53/udp" #DNS service
-      - "53:53/tcp" #DNS service
+      #- "53:53/udp" #DNS service
+      #- "53:53/tcp" #DNS service
       - "853:853/udp" #DNS-over-QUIC service
       - "853:853/tcp" #DNS-over-TLS service
       - "443:443/udp" #DNS-over-HTTPS service (HTTP/3)
@@ -22,8 +22,8 @@ services:
     volumes:
       - ${CDATA}/dns1/config:/etc/dns
     restart: unless-stopped
-    #sysctls:  # no need if network host
-    #  - net.ipv4.ip_local_port_range=1024 65535
+    sysctls:  # no need if network host
+      - net.ipv4.ip_local_port_range=1024 65535
   mariadb:
     image: lscr.io/linuxserver/mariadb:latest
     container_name: mariadb
