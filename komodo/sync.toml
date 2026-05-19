@@ -108,7 +108,6 @@ links = ["https://shorturl.d3adc3ii.cc"]
 poll_for_updates = true
 linked_repo = "Apps"
 run_directory = "apps/chhoto-url"
-file_paths = []
 
 ##
 
@@ -186,18 +185,9 @@ WATCHTOWER_HTTP_API_TOKEN=mySecretToken123
 [[stack]]
 name = "dns1"
 [stack.config]
-server = "k1"
+server = "k4"
 linked_repo = "Apps"
 run_directory = "apps/dns1"
-pre_deploy.command = """
-  # Add multiple commands on new lines. Supports comments.
-  TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
-"""
-pre_deploy.shell_mode = false
-post_deploy.command = """
-rm .env*
-"""
-post_deploy.shell_mode = false
 environment = """
   ## VARIABLE = value
 """
@@ -2065,9 +2055,7 @@ name = "Deploy if Changed"
 enabled = true
 executions = [
   { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = """
-homepage
-bento
-authentik# Match stacks by name, id, wildcard, or \regex\.
+homepage,bento,authentik
 """, enabled = true }
 ]
 
