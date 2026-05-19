@@ -20,7 +20,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ${CDATA}/dns1/config:/etc/dns
+      - ${CDATA}/technitium/config:/etc/dns
     restart: unless-stopped
 #    sysctls:  # no need if network host
  #     - net.ipv4.ip_local_port_range=1024 65535
@@ -38,7 +38,7 @@ services:
 #      - REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
       - CLI_OPTS= #optional
     volumes:
-      - ${CDATA}/dns1/mariadb/config:/config
+      - ${CDATA}/technitium/mariadb/config:/config
     ports:
       - 3306:3306
     restart: unless-stopped
