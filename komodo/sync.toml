@@ -183,18 +183,6 @@ WATCHTOWER_HTTP_API_TOKEN=mySecretToken123
 ##
 
 [[stack]]
-name = "dns1"
-[stack.config]
-server = "k4"
-linked_repo = "Apps"
-run_directory = "apps/dns1"
-environment = """
-  ## VARIABLE = value
-"""
-
-##
-
-[[stack]]
 name = "dns2"
 [stack.config]
 run_directory = "apps/dns2"
