@@ -930,6 +930,8 @@ services:
 [[stack]]
 name = "netbird"
 [stack.config]
+server = "k1"
+linked_repo = "Apps"
 run_directory = "apps/netbird"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
@@ -1241,6 +1243,8 @@ CDATA: /mnt/cFS/appdata/paperless-ngx
 [[stack]]
 name = "patchmon"
 [stack.config]
+server = "k4"
+linked_repo = "Apps"
 run_directory = "apps/patchmon"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
