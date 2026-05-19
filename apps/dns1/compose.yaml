@@ -21,7 +21,6 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - DNS_SERVER_LOG_FOLDER_PATH=/var/log/technitium/dns
     volumes:
       - ${CDATA}/dns1/config:/etc/dns
       - ${CDATA}/dns1/logs:/var/log/technitium/dns
@@ -31,15 +30,13 @@ services:
   mariadb:
     image: lscr.io/linuxserver/mariadb:latest
     container_name: mariadb
+    env_file:
+      - .env
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Singapore
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=dns_log
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD} #optional
-#      - REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
       - CLI_OPTS= #optional
     volumes:
       - ${CDATA}/dns1/mariadb/config:/config
