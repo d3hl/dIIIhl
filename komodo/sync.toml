@@ -1860,6 +1860,15 @@ POSTHOG_HOST=
 ##
 
 [[stack]]
+name = "technitium1"
+[stack.config]
+server = "k1"
+linked_repo = "Apps"
+run_directory = "apps/dns1"
+
+##
+
+[[stack]]
 name = "template"
 template = true
 [stack.config]
