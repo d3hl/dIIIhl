@@ -21,8 +21,10 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
+      - DNS_SERVER_LOG_FOLDER_PATH=/var/log/technitium/dns
     volumes:
       - ${CDATA}/dns1/config:/etc/dns
+      - ${CDATA}/dns1/logs:/var/log/technitium/dns
     restart: unless-stopped
     sysctls:  # no need if network host
       - net.ipv4.ip_local_port_range=1024 65535
