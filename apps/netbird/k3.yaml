@@ -1,8 +1,7 @@
-
 services:
   netbird-client:
-      container_name: netbird-client
-      hostname: k4 
+      container_name: netbird-k3
+      hostname: k3 
       cap_add:
           - NET_ADMIN
           - SYS_ADMIN
@@ -14,8 +13,8 @@ services:
       environment:
           - NB_SETUP_KEY=${SETUP_KEY}
       volumes:
-          - netbird-client:/var/lib/netbird
+          - netbird-k3:/var/lib/netbird
       image: netbirdio/netbird:latest
 volumes:
-  netbird-client:
-      name: netbird-client
+  netbird-k3:
+      name: netbird-k3

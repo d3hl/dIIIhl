@@ -928,9 +928,6 @@ services:
 name = "netbird"
 [stack.config]
 run_directory = "apps/netbird"
-pre_deploy.command = """
-TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
-"""
 pre_deploy.shell_mode = false
 post_deploy.command = """
 rm .env
@@ -938,6 +935,22 @@ rm .env
 post_deploy.shell_mode = false
 environment = """
 
+"""
+[[stack]]
+name = "netbird2"
+[stack.config]
+run_directory = "apps/netbird"
+pre_deploy.shell_mode = false
+post_deploy.shell_mode = false
+environment = """
+"""
+[[stack]]
+name = "netbird3"
+[stack.config]
+run_directory = "apps/netbird"
+pre_deploy.shell_mode = false
+post_deploy.shell_mode = false
+environment = """
 """
 
 ##
