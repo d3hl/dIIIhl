@@ -810,58 +810,6 @@ CAPP=/mnt/cFS/appdata
 ##
 
 [[stack]]
-name = "komodo-import"
-[stack.config]
-file_contents = """
-services:
-  komodo-import:
-    image: foxxmd/komodo-import:latest
-    restart: no
-    volumes:
-      ## Top-most directory that contains all folders (at any level) that compose projects are found in
-      - /mnt/cFS/appdata/:/filesOnServer
-    environment:
-      ## Same as mounted directory above
-      - HOST_DIR=/mnt/cFS/appdata/
-      ## Determines what sources to generate Stacks from
-      - STACKS_FROM=compose ## Generate stacks from compose projects
-      ## Name of Server for this machine, in Komodo
-      - SERVER_NAME=kmd2
-
-      ## Configuration for interacting with Komodo API
-      - KOMODO_URL=${KOMODO_URL}
-      - API_KEY=${API_KEY}
-      - API_SECRET=${API_SECRET}
-      - OUTPUT_API_SYNC=true #Create Sync Resource in Komodo
-
-      #Tells Komodo Import how to connect to Docker
-      - DOCKER_HOST=tcp://socket-proxy:2375
-    depends_on:
-      - socket-proxy
-  socket-proxy:
-    ## used to communicate with docker daemon
-    image: lscr.io/linuxserver/socket-proxy:latest
-    environment:
-      - CONTAINERS=1
-      - INFO=1
-      - POST=0
-      - PING=1
-      - VERSION=1
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    read_only: true
-    tmpfs:
-      - /run
-"""
-environment = """
-API_KEY=K_M0o44OtTX8HZ78GIbFFjB5RTRJ8lZQj6pBI3MkQm_K
-API_SECRET=S_gORaNpzb5lEP84Qj079I5l9siQVyZhpGqcbbGUdg_S
-KOMODO_URL=http://10.10.10.35:8120
-"""
-
-##
-
-[[stack]]
 name = "mcp-komodo"
 [stack.config]
 run_directory = "apps/mcp-komodo"
