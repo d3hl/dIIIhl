@@ -2,7 +2,7 @@
 services:
   netbird-client:
       container_name: netbird-client
-      hostname: k1 
+      hostname: k3 
       cap_add:
           - NET_ADMIN
           - SYS_ADMIN
