@@ -839,6 +839,48 @@ environment = """
 ##
 
 [[stack]]
+name = "netbird2"
+[stack.config]
+server = "k2"
+linked_repo = "Apps"
+run_directory = "apps/netbird"
+file_paths = ["k2.yaml"]
+pre_deploy.command = """
+  # Add multiple commands on new lines. Supports comments and escaped newlines.
+"""
+pre_deploy.shell_mode = false
+post_deploy.command = """
+rm .env
+"""
+post_deploy.shell_mode = false
+environment = """
+
+"""
+
+##
+
+[[stack]]
+name = "netbird3"
+[stack.config]
+server = "k3"
+linked_repo = "Apps"
+run_directory = "apps/netbird"
+file_paths = ["k3.yaml"]
+pre_deploy.command = """
+  # Add multiple commands on new lines. Supports comments and escaped newlines.
+"""
+pre_deploy.shell_mode = false
+post_deploy.command = """
+rm .env
+"""
+post_deploy.shell_mode = false
+environment = """
+
+"""
+
+##
+
+[[stack]]
 name = "newt"
 tags = ["core"]
 [stack.config]
