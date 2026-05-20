@@ -1845,7 +1845,7 @@ services:
 [[stack]]
 name = "victoria"
 [stack.config]
-server = "k3"
+server = "k4"
 linked_repo = "Apps"
 run_directory = "apps/victoria"
 file_paths = ["compose-vm-single.yml"]
