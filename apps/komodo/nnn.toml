@@ -2001,7 +2001,7 @@ executions = [
   { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = """
 homepage
 bento
-authentik# Match stacks by name, id, wildcard, or \regex\.
+authentik
 """, enabled = true }
 ]
 
