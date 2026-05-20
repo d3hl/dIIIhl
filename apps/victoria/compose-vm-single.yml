@@ -37,6 +37,16 @@ services:
       - "--vmalert.proxyURL=http://vmalert:8880"
     restart: always
 
+  victorialogs:
+    image: victoriametrics/victoria-logs:v1.50.0
+    ports:
+      - "9428:9428"
+    command:
+      - "--storageDataPath=/vlogs"
+    volumes:
+      - vldata:/vlogs
+    restart: always
+
   grafana:
     image: grafana/grafana:12.2.0
     depends_on:
@@ -46,6 +56,7 @@ services:
     restart: always
     environment:
       - GF_PLUGINS_PREINSTALL=yesoreyeram-infinity-datasource
+      - "GF_INSTALL_PLUGINS=victoriametrics-logs-datasource"
     volumes:
       - grafanadata:/var/lib/grafana
       - ./provisioning/datasources/prometheus/single.yml:/etc/grafana/provisioning/datasources/single.yml
@@ -97,3 +108,4 @@ volumes:
   vmagentdata: {}
   vmdata: {}
   grafanadata: {}
+  vldata: {}
