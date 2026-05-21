@@ -46,7 +46,7 @@ services:
       - "--syslog.listenAddr.tcp=:514"
       - "--syslog.listenAddr.udp=:514"
     volumes:
-      - vldata:/vlogs
+      - /mnt/logs/vlogs:/vlogs
     restart: always
 
   grafana:
