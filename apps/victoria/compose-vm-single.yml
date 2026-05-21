@@ -41,12 +41,13 @@ services:
     image: victoriametrics/victoria-logs:v1.50.0
     ports:
       - "9428:9428"
+      - "514:514"
     command:
       - "--storageDataPath=/vlogs"
       - "--syslog.listenAddr.tcp=:514"
       - "--syslog.listenAddr.udp=:514"
     volumes:
-      - vldata:/vlogs
+      - /mnt/logs:/vlogs
     restart: always
 
   grafana:
