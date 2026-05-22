@@ -112,6 +112,17 @@ run_directory = "apps/chhoto-url"
 ##
 
 [[stack]]
+name = "fluentbit-1"
+[stack.config]
+server = "k4"
+poll_for_updates = true
+linked_repo = "Apps"
+run_directory = "apps/fluentbit"
+tags = ["logging", "platform", "edge-agent"]
+
+##
+
+[[stack]]
 name = "cv4pve-admin"
 [stack.config]
 files_on_host = true
