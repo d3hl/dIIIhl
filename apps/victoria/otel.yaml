@@ -5,8 +5,6 @@ receivers:
   filelog:
     include: [/var/lib/docker/containers/**/*.log]
     operators:
-      - type: container
-        format: docker
       - type: regex_parser
         parse_from: attributes["log.file.path"]
         regex: '^/var/lib/docker/containers/(?P<container_id>[a-f0-9]{64})/.*\.log$'
