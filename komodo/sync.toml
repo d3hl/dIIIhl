@@ -123,6 +123,40 @@ tags = ["logging", "platform", "edge-agent"]
 ##
 
 [[stack]]
+name = "fluentbit-k3"
+[stack.config]
+server = "k3"
+poll_for_updates = true
+linked_repo = "Apps"
+run_directory = "apps/fluentbit"
+tags = ["logging", "platform", "edge-agent"]
+
+
+##
+
+[[stack]]
+name = "fluentbit-k2"
+[stack.config]
+server = "k2"
+poll_for_updates = true
+linked_repo = "Apps"
+run_directory = "apps/fluentbit"
+tags = ["logging", "platform", "edge-agent"]
+
+##
+
+[[stack]]
+name = "fluentbit-k1"
+[stack.config]
+server = "k1"
+poll_for_updates = true
+linked_repo = "Apps"
+run_directory = "apps/fluentbit"
+tags = ["logging", "platform", "edge-agent"]
+
+##
+
+[[stack]]
 name = "cv4pve-admin"
 [stack.config]
 files_on_host = true
