@@ -5,5 +5,6 @@ services:
     user: 0:0
     volumes:
       - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf:ro
+      - ./parsers-custom.conf:/fluent-bit/etc/parsers-custom.conf:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/lib/fluent-bit:/var/fluent-bit/state
