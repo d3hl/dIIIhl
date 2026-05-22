@@ -112,7 +112,7 @@ run_directory = "apps/chhoto-url"
 ##
 
 [[stack]]
-name = "fluentbit-1"
+name = "fluentbit-k4"
 [stack.config]
 server = "k4"
 poll_for_updates = true
