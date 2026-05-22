@@ -1,6 +1,6 @@
 exporters:
-  loki:
-    endpoint: http://victorialogs:9428/insert/jsonline?_stream_fields=stream,path&_msg_field=log&_time_field=date
+  otlphttp:
+    logs_endpoint: http://victorialogs:9428/insert/opentelemetry/v1/logs
 receivers:
   filelog:
     include: [/var/lib/docker/containers/**/*.log]
@@ -10,4 +10,4 @@ service:
   pipelines:
     logs:
       receivers: [filelog]
-      exporters: [loki]
+      exporters: [otlphttp]
