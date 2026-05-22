@@ -4,8 +4,11 @@ exporters:
 receivers:
   filelog:
     include: [/var/lib/docker/containers/**/*.log]
+    operators:
+      - type: container
+        format: docker
     resource:
-      region: us-east-1
+      region: sgp1
 service:
   pipelines:
     logs:
