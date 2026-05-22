@@ -54,9 +54,9 @@ services:
     image: docker.io/otel/opentelemetry-collector-contrib:0.108.0
     restart: always
     volumes:
-      - ${PWD}/config.yml:/etc/otelcol-contrib/config.yaml
+      - ./otel.yaml:/etc/otelcol-contrib/config.yaml
       - /var/lib/docker/containers:/var/lib/docker/containers
-      
+
   grafana:
     image: grafana/grafana:12.2.0
     depends_on:
