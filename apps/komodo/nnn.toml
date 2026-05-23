@@ -1035,7 +1035,7 @@ destroy_before_deploy = true
 linked_repo = "Apps"
 run_directory = "apps/pankha1"
 pre_deploy.command = """
-TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
+#TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 """
 pre_deploy.shell_mode = false
 post_deploy.command = """
