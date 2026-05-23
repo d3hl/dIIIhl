@@ -5,6 +5,7 @@ POSTGRES_USER="op://d3HL/pankha/POSTGRES_USER"
 POSTGRES_PASSWORD="op://d3HL/pankha/POSTGRES_PASSWORD"
 POSTGRES_DB="db_pankha"
 POSTGRES_HOST="pankha-postgres"
+POSTGRES_PORT="5432"  # PostgreSQL port (database clients connect here) (keep unchanged unless conflicted)
 
 PANKHA_HUB_IP="op://d3HL/pankha/PANKHA_HUB_IP"     # Local LAN IP or hostname of the pankha server, used in agents deployment
 PANKHA_PORT="3143"      # HTTP/Web server port (browser connects here)
