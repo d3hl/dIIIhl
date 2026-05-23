@@ -112,51 +112,6 @@ run_directory = "apps/chhoto-url"
 ##
 
 [[stack]]
-name = "fluentbit-1"
-[stack.config]
-server = "k4"
-poll_for_updates = true
-linked_repo = "Apps"
-run_directory = "apps/fluentbit"
-tags = ["logging", "platform", "edge-agent"]
-
-##
-
-[[stack]]
-name = "fluentbit-k3"
-[stack.config]
-server = "k3"
-poll_for_updates = true
-linked_repo = "Apps"
-run_directory = "apps/fluentbit"
-tags = ["logging", "platform", "edge-agent"]
-
-
-##
-
-[[stack]]
-name = "fluentbit-k2"
-[stack.config]
-server = "k2"
-poll_for_updates = true
-linked_repo = "Apps"
-run_directory = "apps/fluentbit"
-tags = ["logging", "platform", "edge-agent"]
-
-##
-
-[[stack]]
-name = "fluentbit-k1"
-[stack.config]
-server = "k1"
-poll_for_updates = true
-linked_repo = "Apps"
-run_directory = "apps/fluentbit"
-tags = ["logging", "platform", "edge-agent"]
-
-##
-
-[[stack]]
 name = "cv4pve-admin"
 [stack.config]
 files_on_host = true
@@ -270,6 +225,46 @@ services:
       - NET_ADMIN
     restart: unless-stopped
 """
+
+##
+
+[[stack]]
+name = "fluentbit-k1"
+[stack.config]
+server = "k1"
+poll_for_updates = true
+linked_repo = "Apps"
+run_directory = "apps/fluentbit"
+
+##
+
+[[stack]]
+name = "fluentbit-k2"
+[stack.config]
+server = "k2"
+poll_for_updates = true
+linked_repo = "Apps"
+run_directory = "apps/fluentbit"
+
+##
+
+[[stack]]
+name = "fluentbit-k3"
+[stack.config]
+server = "k3"
+poll_for_updates = true
+linked_repo = "Apps"
+run_directory = "apps/fluentbit"
+
+##
+
+[[stack]]
+name = "fluentbit-k4"
+[stack.config]
+server = "k4"
+poll_for_updates = true
+linked_repo = "Apps"
+run_directory = "apps/fluentbit"
 
 ##
 
@@ -613,9 +608,11 @@ run_directory = "apps/homey"
 [[stack]]
 name = "immich-app"
 [stack.config]
+server = "kmd1"
 links = ["http://immich.d3adc3ii.cc/"]
 project_name = "immich"
 destroy_before_deploy = true
+linked_repo = "Apps"
 run_directory = "apps/immich-app"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
@@ -1404,6 +1401,8 @@ PULSE_AUTH_PASS=abcd
 [[stack]]
 name = "rackula"
 [stack.config]
+server = "k3"
+linked_repo = "Apps"
 run_directory = "apps/rackula"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
