@@ -2033,9 +2033,7 @@ executions = [
 name = "Deploy if Changed"
 enabled = true
 executions = [
-  { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = """
-homepage,bento,authentik
-""", enabled = true }
+  { execution.type = "BatchDeployStackIfChanged", execution.params.pattern = "homepage,bento,authentik,pankha1,unimus", enabled = true }
 ]
 
 ##
