@@ -48,7 +48,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./postgres_data:/var/lib/postgresql
+      - /mnt/cFS/appdata/pankha/postgres:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
@@ -56,6 +56,3 @@ services:
       retries: 5
       start_period: 10s
     restart: unless-stopped
-
-volumes:
-  postgres_data:
