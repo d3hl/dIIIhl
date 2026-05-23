@@ -93,6 +93,7 @@ run_directory = "apps/bento"
 
 [[stack]]
 name = "beszel"
+server = "k4"
 [stack.config]
 links = ["https://beszel.d3adc3ii.cc"]
 poll_for_updates = true
@@ -101,6 +102,7 @@ run_directory = "apps/beszel"
 ##
 [[stack]]
 name = "unimus"
+server = "k4"
 [stack.config]
 links = ["https://unimus.d3adc3ii.cc"]
 poll_for_updates = true
