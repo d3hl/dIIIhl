@@ -99,6 +99,14 @@ poll_for_updates = true
 run_directory = "apps/beszel"
 
 ##
+[[stack]]
+name = "unimus"
+[stack.config]
+links = ["https://unimus.d3adc3ii.cc"]
+poll_for_updates = true
+run_directory = "apps/unimus"
+
+##
 
 [[stack]]
 name = "chhoto-url"
