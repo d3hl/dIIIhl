@@ -556,6 +556,16 @@ KOMODO_URL=http://10.10.10.35:8120
 ##
 
 [[stack]]
+name = "librechat"
+tags = ["AI"]
+[stack.config]
+server = "k2"
+linked_repo = "librechat"
+file_paths = ["deploy-compose.yml"]
+
+##
+
+[[stack]]
 name = "mcp-komodo"
 [stack.config]
 server = "k2"
@@ -654,6 +664,16 @@ post_deploy.shell_mode = false
 environment = """
 
 """
+
+##
+
+[[stack]]
+name = "network-mcp-docker-suite"
+tags = ["AI"]
+[stack.config]
+server = "k2"
+linked_repo = "network-mcp-docker-suite"
+file_paths = ["docker-compose.yml"]
 
 ##
 
@@ -1310,6 +1330,7 @@ CAPP=/mnt/cFS/appdata
 [[stack]]
 name = "sure"
 [stack.config]
+server = "kmd1"
 links = ["https://sure.d3adc3ii.cc"]
 file_contents = """
 x-db-env: &db_env
@@ -1728,6 +1749,39 @@ name = "d3hl/DnsServer"
 git_provider = "Github.com"
 git_account = "d3hl"
 repo = "d3hl/DnsServer"
+
+##
+
+[[repo]]
+name = "librechat"
+[repo.config]
+server = "k2"
+git_provider = "Github.com"
+git_account = "d3hl"
+repo = "d3hl/librechat"
+on_pull.command = """
+#./start.sh
+TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
+"""
+on_pull.shell_mode = false
+
+##
+
+[[repo]]
+name = "network-mcp-docker-suite"
+[repo.config]
+server = "k2"
+git_provider = "Github.com"
+git_account = "d3hl"
+repo = "d3hl/network-mcp-docker-suite"
+on_pull.command = """
+#./start.sh
+TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
+#./deploy.sh start ios-xe  
+#./deploy.sh start meraki
+./deploy.sh start all
+"""
+on_pull.shell_mode = false
 
 ##
 
