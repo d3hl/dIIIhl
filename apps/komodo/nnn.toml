@@ -2,7 +2,7 @@
 name = "k1"
 tags = ["core"]
 [server.config]
-address = "https://10.10.10.50:8120"
+address = "https://10.10.30.50:8120"
 enabled = true
 
 ##
@@ -11,7 +11,7 @@ enabled = true
 name = "k2"
 tags = ["mcp"]
 [server.config]
-address = "https://10.10.10.51:8120"
+address = "https://10.10.30.51:8120"
 enabled = true
 
 ##
@@ -19,7 +19,7 @@ enabled = true
 [[server]]
 name = "k3"
 [server.config]
-address = "https://10.10.10.52:8120"
+address = "https://10.10.30.52:8120"
 enabled = true
 
 ##
@@ -28,7 +28,7 @@ enabled = true
 name = "k4"
 tags = ["monitor"]
 [server.config]
-address = "https://10.10.10.53:8120"
+address = "https://10.10.30.53:8120"
 enabled = true
 
 ##
@@ -45,7 +45,7 @@ enabled = true
 name = "kmd1"
 tags = ["system", "core"]
 [server.config]
-address = "https://10.10.10.36:8120"
+address = "https://10.10.30.36:8120"
 enabled = true
 
 ##
@@ -53,8 +53,16 @@ enabled = true
 [[server]]
 name = "kmd2"
 [server.config]
-address = "https://10.10.10.38:8120"
+address = "https://10.10.30.38:8120"
 enabled = true
+
+##
+
+[[swarm]]
+name = "d3hl-swarm"
+[swarm.config]
+servers = ["k1"]
+send_unhealthy_alerts = true
 
 ##
 
@@ -186,10 +194,16 @@ WATCHTOWER_HTTP_API_TOKEN=mySecretToken123
 ##
 
 [[stack]]
+name = "dns"
+[stack.config]
+
+
+##
+
+[[stack]]
 name = "dns1"
 [stack.config]
-server = "kmd1"
-links = ["https://dns.d3hl.site"]
+server = "k1"
 linked_repo = "Apps"
 run_directory = "apps/dns1"
 
@@ -207,27 +221,6 @@ post_deploy.command = """
 rm .env
 """
 post_deploy.shell_mode = false
-
-##
-
-[[stack]]
-name = "domotz"
-[stack.config]
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-file_contents = """
-services:
-  domotz-collector:
-    image: "domotz/domotz-collector"
-    network_mode: "host"
-    container_name: domotz-collector
-    volumes:
-      - /mnt/cFS/appdata/domotz/config/domotz.json:/opt/domotz/etc/domotz.json
-    cap_add:
-      - NET_ADMIN
-    restart: unless-stopped
-"""
 
 ##
 
@@ -254,7 +247,6 @@ run_directory = "apps/fluentbit"
 [[stack]]
 name = "fluentbit-k3"
 [stack.config]
-server = "k3"
 poll_for_updates = true
 linked_repo = "Apps"
 run_directory = "apps/fluentbit"
@@ -301,7 +293,7 @@ run_directory = "apps/glance"
 [[stack]]
 name = "homepage"
 [stack.config]
-server = "k3"
+server = "k1"
 links = ["https://homepage.d3adc3ii.cc"]
 poll_for_updates = true
 auto_update = true
@@ -585,23 +577,6 @@ tags = ["mcp"]
 server = "k2"
 linked_repo = "Apps"
 run_directory = "apps/mcp-terraform"
-
-##
-
-[[stack]]
-name = "metube"
-[stack.config]
-file_contents = """
-services:
-  metube:
-    image: ghcr.io/alexta69/metube
-    container_name: metube
-    restart: unless-stopped
-    ports:
-      - "8781:8081"
-    volumes:
-      - /mnt/zApps/metube/downloads:/downloads
-"""
 
 ##
 
@@ -1130,33 +1105,9 @@ NEXTAUTH_SECRET=U.9wP-jVh@GLP3X6ewo2Z2UEk82sfg72eJJ8_.kdDw*k!D6Jh-NiiXu4RRr4k4G2
 ##
 
 [[stack]]
-name = "pulse"
-[stack.config]
-file_contents = """
-services:
-  pulse:
-    image: rcourtman/pulse:latest
-    container_name: pulse
-    restart: unless-stopped
-    ports:
-      - "7655:7655"
-    volumes:
-      - $[DATA}:/data
-      - /var/run/docker.sock:/var/run/docker.sock # Optional: Monitor local Docker
-    env_file: .env
-"""
-environment = """
-DATA=/mnt/cFS/appdata/pulse
-PULSE_AUTH_USER=d3
-PULSE_AUTH_PASS=abcd
-"""
-
-##
-
-[[stack]]
 name = "rackula"
 [stack.config]
-server = "k3"
+server = "k1"
 linked_repo = "Apps"
 run_directory = "apps/rackula"
 pre_deploy.command = """
@@ -1167,100 +1118,6 @@ post_deploy.command = """
 rm .env
 """
 post_deploy.shell_mode = false
-
-##
-
-[[stack]]
-name = "scanopy"
-[stack.config]
-links = ["https://scanopy.d3adc3ii.cc"]
-file_contents = """
-name: scanopy
-
-x-scanopy-env: &scanopy-env
-  SCANOPY_LOG_LEVEL: ${SCANOPY_LOG_LEVEL:-info}
-  SCANOPY_SERVER_PORT: ${SCANOPY_SERVER_PORT:-60072}
-  SCANOPY_DAEMON_PORT: ${SCANOPY_DAEMON_PORT:-60073}
-
-services:
-  daemon:
-    image: ghcr.io/scanopy/scanopy/daemon:latest
-    container_name: scanopy-daemon
-    network_mode: host
-    privileged: true
-    restart: unless-stopped
-    ports:
-      - "${SCANOPY_DAEMON_PORT:-60073}:${SCANOPY_DAEMON_PORT:-60073}"
-    environment:
-      <<: *scanopy-env
-      SCANOPY_SERVER_URL: ${SCANOPY_SERVER_URL:-http://127.0.0.1:60072}
-      SCANOPY_PORT: ${SCANOPY_DAEMON_PORT:-60073}
-      SCANOPY_BIND_ADDRESS: ${SCANOPY_BIND_ADDRESS:-0.0.0.0}
-      SCANOPY_NAME: ${SCANOPY_NAME:-scanopy-daemon}
-      SCANOPY_HEARTBEAT_INTERVAL: ${SCANOPY_HEARTBEAT_INTERVAL:-30}
-      SCANOPY_MODE: ${SCANOPY_MODE:-Push}
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:${SCANOPY_DAEMON_PORT:-60073}/api/health || exit 1"]
-      interval: 5s
-      timeout: 3s
-      retries: 15
-    volumes:
-      - daemon-config:/root/.config/daemon
-      # Comment out the line below to disable docker discovery
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-
-  postgres:
-    image: postgres:17-alpine
-    environment:
-      POSTGRES_DB: scanopy
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-    networks:
-      - scanopy
-
-  server:
-    image: ghcr.io/scanopy/scanopy/server:latest
-    ports:
-      - "${SCANOPY_SERVER_PORT:-60072}:${SCANOPY_SERVER_PORT:-60072}"
-    environment:
-      <<: *scanopy-env
-      SCANOPY_DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-password}@postgres:5432/scanopy
-      SCANOPY_WEB_EXTERNAL_PATH: /app/static
-      SCANOPY_PUBLIC_URL: ${SCANOPY_PUBLIC_URL:-http://localhost:${SCANOPY_SERVER_PORT:-60072}}
-      # How server reaches integrated daemon
-      # 172.17.0.1 is Docker's default bridge gateway. If your's is different, make sure to change it.
-      SCANOPY_INTEGRATED_DAEMON_URL: http://172.17.0.1:${SCANOPY_DAEMON_PORT:-60073}
-    volumes:
-      - ./data:/data
-    depends_on:
-      postgres:
-        condition: service_healthy
-      daemon:
-        condition: service_healthy
-    restart: unless-stopped
-    networks:
-      - scanopy
-
-volumes:
-  postgres_data:
-  daemon-config:
-
-networks:
-  scanopy:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.31.0.0/16
-          gateway: 172.31.0.1
-"""
 
 ##
 
@@ -1691,34 +1548,6 @@ server = "k4"
 linked_repo = "Apps"
 run_directory = "apps/victoria"
 file_paths = ["compose-vm-single.yml"]
-
-##
-
-[[stack]]
-name = "yubal"
-[stack.config]
-file_contents = """
-# compose.yaml
-services:
-  yubal:
-    image: ghcr.io/guillevc/yubal:latest
-    container_name: yubal
-    user: 1000:1000
-    ports:
-      - 8000:8000
-    environment:
-      YUBAL_SCHEDULER_CRON: "0 0 * * *"
-      YUBAL_DOWNLOAD_UGC: false
-      YUBAL_TZ: Asia/Singapore
-    volumes:
-      - ${ZAPP}/Music/:/app/data
-      - ${CAPP}/yubal/config:/app/config
-    restart: unless-stopped
-"""
-environment = """
-ZAPP=/mnt/zApps
-CAPP=/mnt/cFS/appdata
-"""
 
 ##
 
