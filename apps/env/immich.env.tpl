@@ -1,5 +1,6 @@
 # Env placeholder for immich
 UPLOAD_LOCATION="op://d3HL/immich_env/UPLOAD_LOCATION"
+"op://d3HLPRV/immich_env/UPLOAD_LOCATION"
 IMMICH_VERSION="op://d3HL/immich_env/IMMICH_VERSION"
 DB_DATA_LOCATION="op://d3HL/immich_env/DB_DATA_LOCATION"
 PGID="op://d3HL/immich_env/PGID"
