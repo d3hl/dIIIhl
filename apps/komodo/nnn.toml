@@ -2016,5 +2016,5 @@ params = {}
 name = "nnn"
 [resource_sync.config]
 linked_repo = "Appps"
-resource_path = ["Appps/komodo/nnn.toml"]
+resource_path = ["apps/komodo/nnn.toml"]
 managed = true
