@@ -2,11 +2,11 @@
 set -euo pipefail
 
 ENV_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-APPS_DIR="$(dirname "$ENV_DIR")"
+Appps_DIR="$(dirname "$ENV_DIR")"
 
 for tpl_file in "$ENV_DIR"/*.env.tpl; do
     app_name="$(basename "$tpl_file" .env.tpl)"
-    app_dir="$APPS_DIR/$app_name"
+    app_dir="$Appps_DIR/$app_name"
 
     if [ -d "$app_dir" ]; then
         echo "Fetching: $app_name"

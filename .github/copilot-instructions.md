@@ -16,7 +16,7 @@ The repository is organized as a collection of tools and projects:
   - `CONTRIBUTING.md` — Development guidelines
   - `README.md` — User-facing documentation
 
-- **`dokploy/`**, **`VictoriaMetrics/`**, **`komodo/`**, **`apps/`** — Other independent projects (out of scope for this repository's main purpose)
+- **`dokploy/`**, **`VictoriaMetrics/`**, **`komodo/`**, **`Appps/`** — Other independent projects (out of scope for this repository's main purpose)
 
 ## Build, Test, and Lint Commands
 

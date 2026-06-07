@@ -203,7 +203,7 @@ HOMEPAGE_VAR_DOZZLE_URL= "https://dozzle.d3adc3ii.site"
 HOMEPAGE_VAR_PULSEXT_ICON= "sh-proxmox-light"
 HOMEPAGE_VAR_PULSEXT_URL= "https://pulse.d3adc3ii.cc"
 
-#### APPS ####################################################################################################################################################################################################
+#### Appps ####################################################################################################################################################################################################
 # Paperless
 HOMEPAGE_VAR_PAPERLESS_ICON= "sh-paperless-ngx-light"
 HOMEPAGE_VAR_PAPERLESS_URL= "https://paperless.d3adc3ii.cc"

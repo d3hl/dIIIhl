@@ -185,7 +185,7 @@
         icon: sh-metube-light
         href: {{HOMEPAGE_VAR_METUBE_URL}}
 ########################################################################################################################################################################################################
-- Apps:
+- Appps:
     - Paperless-ngx:
         #icon: {{HOMEPAGE_VAR_PAPERLESS_ICON}}
         icon: sh-paperless-ngx-light

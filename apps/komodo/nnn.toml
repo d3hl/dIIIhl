@@ -76,8 +76,8 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 destroy_before_deploy = true
-linked_repo = "Apps"
-run_directory = "apps/authentik"
+linked_repo = "Appps"
+run_directory = "Appps/authentik"
 post_deploy.command = """
 rm .env
 """
@@ -94,8 +94,8 @@ name = "bento"
 server = "kmd1"
 links = ["https://bento.d3adc3ii.cc"]
 project_name = "bento"
-linked_repo = "Apps"
-run_directory = "apps/bento"
+linked_repo = "Appps"
+run_directory = "Appps/bento"
 
 ##
 
@@ -106,8 +106,8 @@ server = "k4"
 links = ["https://beszel.d3adc3ii.cc"]
 project_name = "beszel"
 poll_for_updates = true
-linked_repo = "Apps"
-run_directory = "apps/beszel"
+linked_repo = "Appps"
+run_directory = "Appps/beszel"
 
 ##
 
@@ -117,8 +117,8 @@ name = "chhoto-url"
 server = "k3"
 links = ["https://shorturl.d3adc3ii.cc"]
 poll_for_updates = true
-linked_repo = "Apps"
-run_directory = "apps/chhoto-url"
+linked_repo = "Appps"
+run_directory = "Appps/chhoto-url"
 
 ##
 
@@ -204,15 +204,15 @@ name = "dns"
 name = "dns1"
 [stack.config]
 server = "k1"
-linked_repo = "Apps"
-run_directory = "apps/dns1"
+linked_repo = "Appps"
+run_directory = "Appps/dns1"
 
 ##
 
 [[stack]]
 name = "dns2"
 [stack.config]
-run_directory = "apps/dns2"
+run_directory = "Appps/dns2"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
@@ -229,8 +229,8 @@ name = "fluentbit-k1"
 [stack.config]
 server = "k1"
 poll_for_updates = true
-linked_repo = "Apps"
-run_directory = "apps/fluentbit"
+linked_repo = "Appps"
+run_directory = "Appps/fluentbit"
 
 ##
 
@@ -239,8 +239,8 @@ name = "fluentbit-k2"
 [stack.config]
 server = "k2"
 poll_for_updates = true
-linked_repo = "Apps"
-run_directory = "apps/fluentbit"
+linked_repo = "Appps"
+run_directory = "Appps/fluentbit"
 
 ##
 
@@ -248,8 +248,8 @@ run_directory = "apps/fluentbit"
 name = "fluentbit-k3"
 [stack.config]
 poll_for_updates = true
-linked_repo = "Apps"
-run_directory = "apps/fluentbit"
+linked_repo = "Appps"
+run_directory = "Appps/fluentbit"
 
 ##
 
@@ -258,8 +258,8 @@ name = "fluentbit-k4"
 [stack.config]
 server = "k4"
 poll_for_updates = true
-linked_repo = "Apps"
-run_directory = "apps/fluentbit"
+linked_repo = "Appps"
+run_directory = "Appps/fluentbit"
 
 ##
 
@@ -268,7 +268,7 @@ name = "freshrss"
 [stack.config]
 links = ["https://freshrss.d3adc3ii.cc"]
 poll_for_updates = true
-run_directory = "apps/freshrss"
+run_directory = "Appps/freshrss"
 
 ##
 
@@ -277,7 +277,7 @@ name = "gatus"
 [stack.config]
 links = ["https://gatus.d3adc3ii.cc"]
 poll_for_updates = true
-run_directory = "apps/gatus"
+run_directory = "Appps/gatus"
 
 ##
 
@@ -286,7 +286,7 @@ name = "glance"
 [stack.config]
 links = ["https://glance.d3adc3ii.cc"]
 poll_for_updates = true
-run_directory = "apps/glance"
+run_directory = "Appps/glance"
 
 ##
 
@@ -299,8 +299,8 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 destroy_before_deploy = true
-linked_repo = "Apps"
-run_directory = "apps/homepage"
+linked_repo = "Appps"
+run_directory = "Appps/homepage"
 file_paths = ["compose.yaml"]
 config_files = [
   { path = "config/services.yaml" },
@@ -315,8 +315,8 @@ config_files = [
 name = "homey"
 [stack.config]
 server = "kmd2"
-linked_repo = "Apps"
-run_directory = "apps/homey"
+linked_repo = "Appps"
+run_directory = "Appps/homey"
 
 ##
 
@@ -327,8 +327,8 @@ server = "k4"
 links = ["https://unimus.d3adc3ii.cc"]
 project_name = "unimus"
 poll_for_updates = true
-linked_repo = "Apps"
-run_directory = "apps/unimus"
+linked_repo = "Appps"
+run_directory = "Appps/unimus"
 
 ##
 
@@ -339,8 +339,8 @@ server = "kmd1"
 links = ["http://immich.d3adc3ii.cc/"]
 project_name = "immich"
 destroy_before_deploy = true
-linked_repo = "Apps"
-run_directory = "apps/immich-app"
+linked_repo = "Appps"
+run_directory = "Appps/immich-app"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
@@ -362,7 +362,7 @@ links = ["https://karakeep.d3adc3ii.cc"]
 project_name = "karakeep"
 auto_update = true
 destroy_before_deploy = true
-run_directory = "apps/karakeep"
+run_directory = "Appps/karakeep"
 pre_deploy.command = """
 
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
@@ -489,7 +489,7 @@ services:
     restart: unless-stopped
 """
 environment = """
-ZAPP=/mnt/zApps
+ZAPP=/mnt/zAppps
 CAPP=/mnt/cFS/appdata
 """
 
@@ -561,8 +561,8 @@ file_paths = ["deploy-compose.yml"]
 name = "mcp-komodo"
 [stack.config]
 server = "k2"
-linked_repo = "Apps"
-run_directory = "apps/mcp-komodo"
+linked_repo = "Appps"
+run_directory = "Appps/mcp-komodo"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 """
@@ -575,8 +575,8 @@ name = "mcp-terraform"
 tags = ["mcp"]
 [stack.config]
 server = "k2"
-linked_repo = "Apps"
-run_directory = "apps/mcp-terraform"
+linked_repo = "Appps"
+run_directory = "Appps/mcp-terraform"
 
 ##
 
@@ -584,8 +584,8 @@ run_directory = "apps/mcp-terraform"
 name = "netbird"
 [stack.config]
 server = "k1"
-linked_repo = "Apps"
-run_directory = "apps/netbird"
+linked_repo = "Appps"
+run_directory = "Appps/netbird"
 pre_deploy.command = """
   # Add multiple commands on new lines. Supports comments and escaped newlines.
 """
@@ -604,8 +604,8 @@ environment = """
 name = "netbird2"
 [stack.config]
 server = "k2"
-linked_repo = "Apps"
-run_directory = "apps/netbird"
+linked_repo = "Appps"
+run_directory = "Appps/netbird"
 file_paths = ["k2.yaml"]
 pre_deploy.command = """
   # Add multiple commands on new lines. Supports comments and escaped newlines.
@@ -625,8 +625,8 @@ environment = """
 name = "netbird3"
 [stack.config]
 server = "k3"
-linked_repo = "Apps"
-run_directory = "apps/netbird"
+linked_repo = "Appps"
+run_directory = "Appps/netbird"
 file_paths = ["k3.yaml"]
 pre_deploy.command = """
   # Add multiple commands on new lines. Supports comments and escaped newlines.
@@ -733,7 +733,7 @@ name = "ntfy"
 [stack.config]
 links = ["https://ntfy.d3adc3ii.cc"]
 poll_for_updates = true
-run_directory = "apps/ntfy"
+run_directory = "Appps/ntfy"
 
 ##
 
@@ -741,7 +741,7 @@ run_directory = "apps/ntfy"
 name = "pangolin"
 [stack.config]
 project_name = "pangolin"
-run_directory = "apps/pangolin"
+run_directory = "Appps/pangolin"
 config_files = [
   { path = "config/traefik/dynamic_config.yml", requires = "Restart" },
   { path = "config/traefik/traefik_config.yml", requires = "Restart" }
@@ -762,8 +762,8 @@ name = "pankha1"
 [stack.config]
 server = "k4"
 destroy_before_deploy = true
-linked_repo = "Apps"
-run_directory = "apps/pankha1"
+linked_repo = "Appps"
+run_directory = "Appps/pankha1"
 pre_deploy.command = """
 #TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 """
@@ -830,7 +830,7 @@ POSTGRES_PORT="5432"    # PostgreSQL port (database clients connect here) (keep 
 name = "pankha2"
 [stack.config]
 project_name = "pankha2"
-run_directory = "apps/pankha2"
+run_directory = "Appps/pankha2"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 """
@@ -939,7 +939,7 @@ PAPERLESS_OCR_LANGUAGE="op://d3HL/paperless-ngx/PAPERLESS_OCR_LANGUAGE"
 # for available languages.
 #PAPERLESS_OCR_LANGUAGES=tur ces
 
-ZDATA: /mnt/zApps
+ZDATA: /mnt/zAppps
 CDATA: /mnt/cFS/appdata/paperless-ngx
 """
 
@@ -949,8 +949,8 @@ CDATA: /mnt/cFS/appdata/paperless-ngx
 name = "patchmon"
 [stack.config]
 server = "k4"
-linked_repo = "Apps"
-run_directory = "apps/patchmon"
+linked_repo = "Appps"
+run_directory = "Appps/patchmon"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.tpl" -o ".env"
 """
@@ -1108,8 +1108,8 @@ NEXTAUTH_SECRET=U.9wP-jVh@GLP3X6ewo2Z2UEk82sfg72eJJ8_.kdDw*k!D6Jh-NiiXu4RRr4k4G2
 name = "rackula"
 [stack.config]
 server = "k1"
-linked_repo = "Apps"
-run_directory = "apps/rackula"
+linked_repo = "Appps"
+run_directory = "Appps/rackula"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
@@ -1307,7 +1307,7 @@ networks:
 """
 environment = """
 cDATA=/mnt/cFS/appdata
-ZDATA=/mnt/zApps
+ZDATA=/mnt/zAppps
 # Enables self hosting features (should be set to true unless you know what you're doing)
 SELF_HOSTED=true
 
@@ -1467,7 +1467,7 @@ POSTHOG_HOST=
 name = "template"
 template = true
 [stack.config]
-run_directory = "apps/netbird"
+run_directory = "Appps/netbird"
 pre_deploy.command = """
 TARGET_ENV="d3hl" op inject -f -i ".env.template" -o ".env"
 """
@@ -1545,8 +1545,8 @@ services:
 name = "victoria"
 [stack.config]
 server = "k4"
-linked_repo = "Apps"
-run_directory = "apps/victoria"
+linked_repo = "Appps"
+run_directory = "Appps/victoria"
 file_paths = ["compose-vm-single.yml"]
 
 ##
@@ -1559,14 +1559,14 @@ name = "dnsserver"
 ##
 
 [[repo]]
-name = "Apps"
+name = "Appps"
 [repo.config]
 server = "k2"
 git_provider = "Github.com"
 git_account = "d3hl"
 repo = "d3hl/dIIIhl"
 on_pull.command = """
-bash apps/env/fetch-env.sh
+bash Appps/env/fetch-env.sh
 """
 on_pull.shell_mode = false
 
@@ -1637,7 +1637,7 @@ config.webhook_secret = "7woHryRsdw7cLLCFtm8YtTzcU-jmHApTJ-KzuggPT6376gBkXvMZTuw
 name = "Pull repo"
 enabled = true
 executions = [
-  { execution.type = "PullRepo", execution.params.repo = "Apps", enabled = true }
+  { execution.type = "PullRepo", execution.params.repo = "Appps", enabled = true }
 ]
 
 [[procedure.config.stage]]
@@ -2015,6 +2015,6 @@ params = {}
 [[resource_sync]]
 name = "nnn"
 [resource_sync.config]
-linked_repo = "Apps"
-resource_path = ["apps/komodo/nnn.toml"]
+linked_repo = "Appps"
+resource_path = ["Appps/komodo/nnn.toml"]
 managed = true
